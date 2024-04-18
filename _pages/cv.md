@@ -1,6 +1,6 @@
 ---
 layout: archive
-title: "CV"
+title: "Education"
 permalink: /cv/
 author_profile: true
 redirect_from:
@@ -9,8 +9,6 @@ redirect_from:
 
 {% include base_path %}
 
-Education
-======
 + 2022.09 - 2027.06 (expected) Ph.D in Artificial Intelligence, **Shanghai Jiao Tong University**
 + 2018.09 - 2022.06 B.S. in Artificial Intelligence, Chien-Shiung Wu College, **Southeast University**. **Chien-Shiung Wu College** is a pilot college that cultivates top-notch undergraduate students selected from multiple science and engineering departments.
 
