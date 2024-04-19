@@ -13,9 +13,9 @@ author_profile: true
 
 # **Preprints**
 
-2024 TPAMI. **Chongjie Si**, Xuehui Wang, Yan Wang, Xiaokang Yang, Wei Shen. <font color='Navy'>Appeal: Allow Mislabeled Samples the Chance to be Rectified in Partial Label Learning</font>. ([PDF](https://arxiv.org/abs/2312.11034v3))
+Posted to 2024 TPAMI. **Chongjie Si**, Xuehui Wang, Yan Wang, Xiaokang Yang, Wei Shen. <font color='Navy'>Appeal: Allow Mislabeled Samples the Chance to be Rectified in Partial Label Learning</font>. ([PDF](https://arxiv.org/abs/2312.11034v3))
 
-2024 ECCV. **Chongjie Si**, Xuehui Wang, Xiaokang Yang, Wei Shen.<font color='Navy'>Tendency-driven Mutual Exclusivity for Weakly Supervised Incremental Semantic Segmentation</font>.
+Posted to 2024 ECCV. **Chongjie Si**, Xuehui Wang, Xiaokang Yang, Wei Shen.<font color='Navy'>Tendency-driven Mutual Exclusivity for Weakly Supervised Incremental Semantic Segmentation</font>. ([PDF](https://arxiv.org/abs/2404.11981))
 
 
 # **Journal**
