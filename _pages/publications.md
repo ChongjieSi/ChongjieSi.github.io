@@ -15,7 +15,9 @@ author_profile: true
 
 Arxiv. **Chongjie Si**, Xiaokang Yang, Wei Shen. <font color='Navy'>See Further for Parameter Efficient Fine-tuning by Standing on the Shoulders of Decomposition</font> ([PDF](https://arxiv.org/abs/2407.05417)).
 
-Posted to 2024 NeurIPS. **Chongjie Si**, Xuehui Wang, Xue Yang, Zhengqin Xu, Qingyun Li, Jifeng Dai, Yu Qiao, Xiaokang Yang, Wei Shen.<font color='Navy'>FLoRA: Low-Rank Core Space for N-dimension</font>. ([PDF](https://arxiv.org/abs/2405.14739))
+Under Review. **Chongjie Si**, Xuehui Wang, Xue Yang, Zhengqin Xu, Qingyun Li, Jifeng Dai, Yu Qiao, Xiaokang Yang, Wei Shen. <font color='Navy'>FLoRA: Low-Rank Core Space for N-dimension</font> ([PDF](https://arxiv.org/abs/2405.14739)).
+
+Under Review. **Chongjie Si**, Xuehui Wang, Yan Wang, Xiaokang Yang, Wei Shen. <font color='Navy'>Appeal: Allow Mislabeled Samples the Chance to be Rectified in Partial Label Learning</font> ([PDF](https://arxiv.org/abs/2312.11034v3)).
 
 # **Journal**
 
