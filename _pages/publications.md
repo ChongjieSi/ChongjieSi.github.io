@@ -11,7 +11,9 @@ author_profile: true
 
 {% include base_path %}
 
-# **Preprints**
+## **Preprints**
+
+Arxiv. **Chongjie Si**, Zhiyi Shi, Shifan Zhang, Xiaokang Yang, Hanspeter Pfister, Wei Shen. <font color='Navy'>Unleashing the Power of Task-Specific Directions in Parameter Efficient Fine-tuning</font> ([PDF](https://arxiv.org/abs/2409.01035)).
 
 Arxiv. **Chongjie Si**, Xiaokang Yang, Wei Shen. <font color='Navy'>See Further for Parameter Efficient Fine-tuning by Standing on the Shoulders of Decomposition</font> ([PDF](https://arxiv.org/abs/2407.05417)).
 
@@ -19,11 +21,11 @@ Under Review. **Chongjie Si**, Xuehui Wang, Xue Yang, Zhengqin Xu, Qingyun Li, J
 
 Under Review. **Chongjie Si**, Xuehui Wang, Yan Wang, Xiaokang Yang, Wei Shen. <font color='Navy'>Appeal: Allow Mislabeled Samples the Chance to be Rectified in Partial Label Learning</font> ([PDF](https://arxiv.org/abs/2312.11034v3)).
 
-# **Journal**
+## **Journal**
 
 2023 TKDE. **Chongjie Si**, Yuheng Jia, Ran Wang, Min-Ling Zhang, Yanghe Feng, Qu Chongxiao. <font color='Navy'>Multi-label Classification with High-rank and High-order Label Correlations</font> ([PDF](https://ieeexplore.ieee.org/abstract/document/10310153)).
 
-# **Conference**
+## **Conference**
 
 2024 ECCV. **Chongjie Si**, Xuehui Wang, Xiaokang Yang, Wei Shen. <font color='Navy'>Tendency-driven Mutual Exclusivity for Weakly Supervised Incremental Semantic Segmentation</font> ([PDF](https://arxiv.org/abs/2404.11981)).
 
