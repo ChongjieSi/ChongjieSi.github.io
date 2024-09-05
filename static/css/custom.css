@@ -1,0 +1,65 @@
+.section-heading-news {
+  margin-top: 30px; /* 增加顶部的外边距，向下移动标题 */
+  margin-bottom: -40px; /* 控制标题和新闻列表之间的间距 */
+}
+
+.news-item {
+  display: flex;
+  align-items: center;  /* 垂直居中 */
+  justify-content: space-between;  /* 如果需要水平布局，可以使用 */
+  position: relative;
+  padding: 10px 15px;
+  border-radius: 16px;
+  margin-bottom: 5px; /* 增加每条新闻之间的间距 */
+  transition: background-color 0.3s ease;
+}
+
+.news-item:hover {
+  background-color: #f7f7f7; /* 鼠标悬停时的背景色 */
+}
+.news-item h2, .news-item p {
+  line-height: 1.4;  /* 合适的行高，确保文字不会过于分散 */
+}
+
+.news-item span {
+  z-index: 10;
+  position: relative;
+}
+
+.news-list {
+  margin-top: 0px; /* 如果列表本身有额外的 margin，可以用负值减少 */
+  padding-top: 0; /* 确保新闻条目没有额外的顶部间距 */
+}
+
+
+.custom-link {
+  color: #3498db; /* 红色，可以换成您想要的颜色 */
+  text-decoration: none; /* 去除下划线 */
+}
+
+.image-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.image-grid-item {
+  flex: 1 1 calc(50% - 20px); /* 两张图片一行 */
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.image-grid-item img {
+  width: 100%;
+  height: 250px; /* 强制统一高度 */
+  object-fit: cover; /* 图片按比例裁剪，填充整个区域 */
+  border-radius: 8px; /* 圆角 */
+}
+
+.image-description {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+}
+
