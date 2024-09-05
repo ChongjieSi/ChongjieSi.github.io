@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Weakly Incremental Semantic Segmentation | Chongjie Si</title>
+    <link>http://localhost:1313/tags/weakly-incremental-semantic-segmentation/</link>
+      <atom:link href="http://localhost:1313/tags/weakly-incremental-semantic-segmentation/index.xml" rel="self" type="application/rss+xml" />
+    <description>Weakly Incremental Semantic Segmentation</description>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Thu, 18 Apr 2024 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>http://localhost:1313/media/icon_hu14735102492158276428.png</url>
+      <title>Weakly Incremental Semantic Segmentation</title>
+      <link>http://localhost:1313/tags/weakly-incremental-semantic-segmentation/</link>
+    </image>
+    
+    <item>
+      <title>Tendency-driven Mutual Exclusivity for Weakly Supervised Incremental Semantic Segmentation</title>
+      <link>http://localhost:1313/full-publications/2024-eccv-teddy/</link>
+      <pubDate>Thu, 18 Apr 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2024-eccv-teddy/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

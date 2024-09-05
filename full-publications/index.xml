@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Publications | Chongjie Si</title>
+    <link>http://localhost:1313/full-publications/</link>
+      <atom:link href="http://localhost:1313/full-publications/index.xml" rel="self" type="application/rss+xml" />
+    <description>Publications</description>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Mon, 02 Sep 2024 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>http://localhost:1313/media/icon_hu14735102492158276428.png</url>
+      <title>Publications</title>
+      <link>http://localhost:1313/full-publications/</link>
+    </image>
+    
+    <item>
+      <title>Unleashing the Power of Task-Specific Directions in Parameter Efficient Fine-tuning</title>
+      <link>http://localhost:1313/full-publications/2024-arxiv-lora-dash/</link>
+      <pubDate>Mon, 02 Sep 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2024-arxiv-lora-dash/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>See Further for Parameter Efficient Fine-tuning by Standing on the Shoulders of Decomposition</title>
+      <link>http://localhost:1313/full-publications/2024-arxiv-subspace-tuning/</link>
+      <pubDate>Sun, 07 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2024-arxiv-subspace-tuning/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>FLoRA: Low-Rank Core Space for N-dimension</title>
+      <link>http://localhost:1313/full-publications/2024-arxiv-flora/</link>
+      <pubDate>Thu, 23 May 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2024-arxiv-flora/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Tendency-driven Mutual Exclusivity for Weakly Supervised Incremental Semantic Segmentation</title>
+      <link>http://localhost:1313/full-publications/2024-eccv-teddy/</link>
+      <pubDate>Thu, 18 Apr 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2024-eccv-teddy/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Appeal: Allow Mislabeled Samples the Chance to be Rectified in Partial Label Learning</title>
+      <link>http://localhost:1313/full-publications/2024-arxiv-appeal/</link>
+      <pubDate>Thu, 28 Mar 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2024-arxiv-appeal/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Partial Label Learning with a Partner</title>
+      <link>http://localhost:1313/full-publications/2024-aaai-plcp/</link>
+      <pubDate>Sun, 24 Mar 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2024-aaai-plcp/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Multi-label Classification with High-rank and High-order Label Correlations</title>
+      <link>http://localhost:1313/full-publications/2023-tkde-homi/</link>
+      <pubDate>Wed, 06 Sep 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2023-tkde-homi/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Complementary Classifier Induced Partial Label Learning</title>
+      <link>http://localhost:1313/full-publications/2023-kdd-plcl/</link>
+      <pubDate>Fri, 04 Aug 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2023-kdd-plcl/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
