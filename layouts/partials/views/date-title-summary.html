@@ -1,0 +1,25 @@
+{{ $item := .item }}
+{{ $page := .page }}
+{{ $summary := $item.Params.summary | default $item.Params.description | default $item.Summary }}
+{{ $summary =  $summary | page.RenderString }}
+{{ $newsItems := $item.Params.news }}
+<article class="md:grid md:grid-cols-4 md:gap-4 md:items-baseline">
+  {{ range $news := $newsItems }}
+    <!-- 日期部分 -->
+    <div class="md:col-span-1 group relative flex items-start">
+      <time
+        class="text-sm text-zinc-400 dark:text-zinc-500"
+        datetime="{{ $news.date }}">
+        {{ $news.date | time.Format "Jan, 2006" }}
+      </time>
+    </div>
+
+    <!-- 新闻内容部分 -->
+    <div class="md:col-span-3 news-item group relative flex flex-col items-start bg-white dark:bg-zinc-900">
+      <h2 class="text-base font-semibold tracking-tight text-zinc-800 dark:text-zinc-100">
+        <span class="relative z-10">{{ $news.title | safeHTML }}</span>
+      </h2>
+      <p class="relative z-10 mt-2 text-sm text-zinc-600 dark:text-zinc-400">{{ $news.summary | safeHTML }}</p>
+    </div>
+  {{ end }}
+</article>
