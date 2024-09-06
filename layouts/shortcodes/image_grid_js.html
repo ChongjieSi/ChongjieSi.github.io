@@ -1,0 +1,113 @@
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+  const largeImageContainer = document.getElementById("largeImageContainer");
+  const largeImage = document.getElementById("largeImage");
+  const images = document.querySelectorAll('.image-scroll-item');
+  const imageScroll = document.getElementById('imageScroll');
+  let currentIndex = 0;
+  let fullscreenOverlay;  // 用于检测是否在全屏模式
+
+  // Function to create fullscreen overlay and add arrows
+  function showFullscreenImage() {
+    fullscreenOverlay = document.createElement("div");
+    fullscreenOverlay.classList.add("fullscreen-image");
+
+    // Clone the large image
+    const fullscreenImage = largeImage.cloneNode();
+    fullscreenImage.style.padding = "10px"; // Add padding to fullscreen image
+    fullscreenOverlay.appendChild(fullscreenImage);
+
+    // Add left arrow
+    const leftArrow = document.createElement("button");
+    leftArrow.classList.add("arrow", "left-arrow");
+    leftArrow.innerHTML = "&#10094;";
+    fullscreenOverlay.appendChild(leftArrow);
+
+    // Add right arrow
+    const rightArrow = document.createElement("button");
+    rightArrow.classList.add("arrow", "right-arrow");
+    rightArrow.innerHTML = "&#10095;";
+    fullscreenOverlay.appendChild(rightArrow);
+
+    document.body.appendChild(fullscreenOverlay);
+
+    // Update fullscreen image based on current index
+    function updateFullscreenImage() {
+      const fullImageUrl = images[currentIndex].getAttribute("data-full-image");
+      fullscreenImage.src = fullImageUrl;
+    }
+
+    // Left arrow click: show previous image
+    leftArrow.addEventListener("click", function (event) {
+      event.stopPropagation(); // Prevent closing fullscreen
+      currentIndex = (currentIndex > 0) ? currentIndex - 1 : images.length - 1;
+      updateFullscreenImage();
+    });
+
+    // Right arrow click: show next image
+    rightArrow.addEventListener("click", function (event) {
+      event.stopPropagation(); // Prevent closing fullscreen
+      currentIndex = (currentIndex < images.length - 1) ? currentIndex + 1 : 0;
+      updateFullscreenImage();
+    });
+
+    // Keydown event listener for arrow keys and ESC key
+    document.addEventListener("keydown", function (event) {
+      if (fullscreenOverlay) {
+        if (event.key === "ArrowLeft") {
+          currentIndex = (currentIndex > 0) ? currentIndex - 1 : images.length - 1;
+          updateFullscreenImage();
+        } else if (event.key === "ArrowRight") {
+          currentIndex = (currentIndex < images.length - 1) ? currentIndex + 1 : 0;
+          updateFullscreenImage();
+        } else if (event.key === "Escape") {
+          // Remove fullscreen on ESC press
+          document.body.removeChild(fullscreenOverlay);
+          fullscreenOverlay = null; // 清除全屏标识
+
+          // Sync large image with the last fullscreen image
+          largeImage.src = images[currentIndex].getAttribute("data-full-image");
+
+          // Scroll small images to the selected one
+          images[currentIndex].scrollIntoView({ behavior: 'smooth', inline: 'center' });
+        }
+      }
+    });
+
+    // Click to exit fullscreen mode (only if clicking outside of the image or arrows)
+    fullscreenOverlay.addEventListener("click", function (event) {
+      if (event.target === fullscreenOverlay) {
+        document.body.removeChild(fullscreenOverlay);
+        fullscreenOverlay = null; // 清除全屏标识
+
+        // Sync large image with the last fullscreen image
+        largeImage.src = images[currentIndex].getAttribute("data-full-image");
+
+        // Scroll small images to the selected one
+        images[currentIndex].scrollIntoView({ behavior: 'smooth', inline: 'center' });
+      }
+    });
+
+    // Show the initial fullscreen image
+    updateFullscreenImage();
+  }
+
+  // Add click event to large image to enter fullscreen
+  largeImageContainer.addEventListener("click", function () {
+    showFullscreenImage();
+  });
+
+  // Update large image on hover in small images
+  imageScroll.addEventListener("mouseover", function (event) {
+    const target = event.target.closest('.image-scroll-item');
+    if (target) {
+      const fullImageUrl = target.getAttribute('data-full-image');
+      largeImage.src = fullImageUrl; // Update the large image's source
+      currentIndex = [...images].indexOf(target); // Update the current index
+    }
+  });
+});
+
+  </script>
+  

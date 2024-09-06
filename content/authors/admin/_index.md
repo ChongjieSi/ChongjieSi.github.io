@@ -35,12 +35,12 @@ profiles:
     label: E-mail Me
   - icon: brands/weixin
     url: uploads/weixin.jpg
-  # - icon: brands/instagram
-  #   url: https://www.instagram.com/
   - icon: brands/github
     url: https://github.com/Chongjie-Si
   - icon: brands/linkedin
     url: https://www.linkedin.com/in/翀杰-司-b55a5a326/
+  # - icon: brands/arxiv
+  #   url: https://www.instagram.com/
   - icon: academicons/google-scholar
     url: https://scholar.google.com/citations?user=wXc2EtsAAAAJ&hl=zh-CN
   - icon: academicons/orcid
