@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Click to exit fullscreen mode (only if clicking outside of the image or arrows)
     fullscreenOverlay.addEventListener("click", function (event) {
-      if (event.target === fullscreenOverlay) {
+      if (event.target === fullscreenImage) {
         document.body.removeChild(fullscreenOverlay);
         fullscreenOverlay = null; // 清除全屏标识
 

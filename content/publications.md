@@ -11,7 +11,8 @@ sections:
   - block: collection
     id: papers
     content:
-      title: Featured Publications
+      title: Selected Publications
+      text: You can find my articles on <a href="/full-publications"><strong>Full-Publications</strong></a> page or my <a href="https://scholar.google.com/citations?user=wXc2EtsAAAAJ&hl=zh-CN"><strong>Google Scholar</strong></a> profile.
       filters:
         folders:
           - full-publications
@@ -22,7 +23,7 @@ sections:
   - block: collection
     content:
       title: Recent Publications
-      text: You can also find my articles on my <a href="https://scholar.google.com/citations?user=wXc2EtsAAAAJ&hl=zh-CN"><strong>Google Scholar</strong></a> profile.
+      text: You can find my articles on <a href="/full-publications"><strong>Full-Publications</strong></a> page or my <a href="https://scholar.google.com/citations?user=wXc2EtsAAAAJ&hl=zh-CN"><strong>Google Scholar</strong></a> profile.
       count: 5
       filters:
         folders:

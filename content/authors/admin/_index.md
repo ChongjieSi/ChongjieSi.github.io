@@ -34,7 +34,7 @@ profiles:
     url: 'mailto:chongjiesi@sjtu.edu.cn'
     label: E-mail Me
   - icon: brands/weixin
-    url: uploads/weixin.jpg
+    url: images/weixin.jpg
   - icon: brands/github
     url: https://github.com/Chongjie-Si
   - icon: brands/linkedin
