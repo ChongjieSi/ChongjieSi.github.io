@@ -152,6 +152,7 @@
       "fa-creative-commons-by",
       "fa-creative-commons-nc",
       "fa-creative-commons-nd",
+      "fa-eye",
       "fa-file-alt",
       "fa-info-circle",
       "fa-user",
@@ -469,7 +470,6 @@
       "text-zinc-800",
       "theme-toggle",
       "to-primary-100",
-      "top-0",
       "top-16",
       "tracking-tight",
       "tracking-wide",
@@ -495,12 +495,13 @@
       "xl:block",
       "xl:px-5",
       "xl:space-x-8",
-      "z-10",
-      "z-30"
+      "z-10"
     ],
     "ids": [
       "about-me",
       "busuanzi_value_site_pv",
+      "busuanzi_value_site_uv",
+      "comments",
       "hide-button",
       "imageScroll",
       "largeImage",

@@ -34,7 +34,7 @@ header:
   navbar:
     enable: true
     blox: "navbar"
-    fixed_to_top: true
+    fixed_to_top: false
     show_search: true
     show_theme_chooser: true
     logo:
@@ -61,23 +61,15 @@ features:
     enable: false
   privacy_pack:
     enable: false
-
   comment:
     # Choose a provider: giscus, disqus, commento, or '' to disable commenting
     provider: 'giscus'
     giscus:
-      repo: ''
-      repo_id: ''
-      category: ''
-      category_id: ''
+      enable: true
+      repo: 'ChongjieSi/ChongjieSi.github.io'
+      repo_id: 'R_kgDOLvx5HQ'
+      category: 'Announcements'
+      category_id: 'DIC_kwDOLvx5Hc4CiXjG'
       theme: preferred_color_scheme
       language_code: en
       mapping: pathname
-    disqus:
-      # Paste the shortname from your Disqus dashboard.
-      shortname: ''
-      # Show comment count in page header? (true/false)
-      show_count: true
-    commento:
-      # If you self-host Commento, enter your custom Commento URL here.
-      url: ''
