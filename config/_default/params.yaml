@@ -8,13 +8,17 @@ appearance:
   mode: system
   color: emerald
 
+
+busuanzi:
+  enable: true
+
 # SEO
 marketing:
   seo:
     site_type: Person
     local_business_type: ''
     org_name: ''
-    description: ''
+    description: 'Chongjie Si'
     twitter: ''
   analytics:
     google_analytics: ''

@@ -26,5 +26,15 @@
       {{ $i18n_published_with | replaceRE "{year}" now.Year | markdownify | emojify | safeHTML }}
     {{ end }}
   </p> -->
+  <!-- busuanzi -->
+{{ if .Site.Params.busuanzi.enable -}}
+<center>
+<div class="busuanzi-footer">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <i class="fa fa-user"></i>  <span id="busuanzi_value_site_pv"></span>|
+    <i class="fa fa-eye"></i> <span id="busuanzi_value_site_uv"></span>
+</div>
+</center>
+{{- end -}}
 
 </footer>
