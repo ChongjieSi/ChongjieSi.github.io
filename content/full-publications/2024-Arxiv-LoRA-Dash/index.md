@@ -38,6 +38,8 @@ featured: true
 links:
 - name: Project
   url: /project/2024-lora-dash.html
+- name: ZHIHU
+  url: https://zhuanlan.zhihu.com/p/719930225
 url_pdf: https://arxiv.org/abs/2409.01035
 url_code: 'https://github.com/Chongjie-Si/Subspace-Tuning'
 
