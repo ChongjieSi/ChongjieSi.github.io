@@ -9,10 +9,10 @@ authors:
   - Admin
   - Min-Ling Zhang
 # Author notes (optional)
-author_notes:
-  - Equal contribution
-  - Equal contribution
-  - Southeast University
+# author_notes:
+#   - Equal contribution
+#   - Equal contribution
+#   - Southeast University
 
 date: '2023-08-04T00:00:00Z'
 doi: ''

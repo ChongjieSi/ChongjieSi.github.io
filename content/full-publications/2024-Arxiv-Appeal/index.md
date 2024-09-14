@@ -2,7 +2,6 @@
 title: "Appeal: Allow Mislabeled Samples the Chance to be Rectified in Partial Label Learning"
 authors:
   - Admin
-  - Zekun Jiang
   - Xuehui Wang
   - Yan Wang
   - Xiaokang Yang

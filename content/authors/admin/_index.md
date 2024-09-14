@@ -58,9 +58,9 @@ education:
     date_end: ''
     summary: |
       Now interested in LLM related areas. Supervised by Prof. Wei Shen.
-    button:
-      text: 'DeepVision Lab'
-      url: 'https://shenwei1231.github.io/team/'
+    # button:
+    #   text: 'DeepVision Lab'
+    #   url: 'https://shenwei1231.github.io/team/'
   
   - area: BSc Chien-Shiung Wu College
     institution: Southeast University
@@ -70,6 +70,9 @@ education:
       Chien-Shiung Wu College is a pilot college that cultivates top-notch undergraduate students selected from multiple science and engineering departments.
 
       Rank 1/22 in Artificial Intelligence
+    button:
+      text: Download CV
+      url: /uploads/chongjie-cv.pdf
 
 # work:
 #   - position: Director of Cloud Infrastructure
