@@ -38,6 +38,8 @@ featured: true
 links:
 - name: Project
   url: /project/2024-lora-dash.html
+- name: QbitAI
+  url: https://mp.weixin.qq.com/s/4S8ORbMpwcB_iXDbxgrHEw
 - name: ZHIHU
   url: https://zhuanlan.zhihu.com/p/719930225
 url_pdf: https://arxiv.org/abs/2409.01035
