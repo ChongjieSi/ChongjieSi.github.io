@@ -35,6 +35,8 @@ profiles:
     label: E-mail Me
   - icon: brands/weixin
     url: images/weixin.jpg
+  - icon: brands/x
+    url: https://x.com/chongjiesi
   - icon: academicons/google-scholar
     url: https://scholar.google.com/citations?user=wXc2EtsAAAAJ&hl=zh-CN
   - icon: brands/github
