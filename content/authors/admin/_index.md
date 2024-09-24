@@ -43,8 +43,8 @@ profiles:
     url: https://github.com/Chongjie-Si
   - icon: brands/linkedin
     url: https://www.linkedin.com/in/翀杰-司-b55a5a326/
-  # - icon: brands/arxiv
-  #   url: https://www.instagram.com/
+  - icon: brands/zhihu
+    url: https://www.zhihu.com/people/89-47-66-58-20
   - icon: academicons/orcid
     url: https://orcid.org/0009-0001-3017-7574
 
