@@ -151,6 +151,12 @@ skills:
 #   Only `title`, `awarder`, and `date` are required.
 #   Begin multi-line `summary` with YAML's `|` or `|2-` multi-line prefix and indent 2 spaces below.
 awards:
+  - title: Doctoral National Scholarship
+    date: '2024-09-30'
+    awarder: MoE of PRC
+    icon: building-library
+    summary: |
+
   - title: Outstanding Graduate Student
     date: '2022-06-30'
     awarder: Southeast University

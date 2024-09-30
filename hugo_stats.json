@@ -1,7 +1,6 @@
 {
   "htmlElements": {
     "tags": [
-      "?xml",
       "a",
       "article",
       "aside",
@@ -42,7 +41,6 @@
       "strong",
       "style",
       "svg",
-      "text",
       "time",
       "title",
       "ul"
