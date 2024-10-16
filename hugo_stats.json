@@ -151,7 +151,6 @@
       "fa-creative-commons-by",
       "fa-creative-commons-nc",
       "fa-creative-commons-nd",
-      "fa-eye",
       "fa-file-alt",
       "fa-user",
       "fab",
@@ -497,7 +496,6 @@
     "ids": [
       "about-me",
       "busuanzi_value_site_pv",
-      "busuanzi_value_site_uv",
       "comments",
       "hide-button",
       "imageScroll",
