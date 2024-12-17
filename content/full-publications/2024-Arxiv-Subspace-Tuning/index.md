@@ -35,6 +35,8 @@ featured: true
 links:
 - name: QbitAI
   url: https://mp.weixin.qq.com/s/J_e_7svrpDuxxefes-s7Xw
+- name: MIT Technology
+  url: https://www.mittrchina.com/news/detail/14173
 - name: AIGC
   url: https://mp.weixin.qq.com/s/F49cI9NQmDWvH-Zm0AtI-w
 url_pdf: https://arxiv.org/abs/2407.05417

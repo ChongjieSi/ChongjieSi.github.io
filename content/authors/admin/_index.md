@@ -51,8 +51,8 @@ profiles:
     url: https://orcid.org/0009-0001-3017-7574
 
 interests:
+  - AI For Math
   - Parameter Efficient Fine-tuning
-  - Semantic Segmentation
   - Weakly Supervised Learning
 
 education:
@@ -183,4 +183,4 @@ awards:
 
 ## About Me
 
-**Chongjie Si** is a Ph.D Candidate at the Artificial Intelligence Institute, Shanghai Jiao Tong University (SJTU), advised by [Prof. Wei Shen](https://shenwei1231.github.io), since Sept. 2022. He previously obtained the Bachelor’s degree from Chien-Shiung Wu College, Southeast University (SEU) in 2022.
+**Chongjie Si** is a Ph.D Candidate at the Artificial Intelligence Institute, Shanghai Jiao Tong University (SJTU), advised by [Prof. Wei Shen](https://shenwei1231.github.io). His research interests are as diverse as his personal hobbies. If you are interested in collaboration, feel free to get in touch.

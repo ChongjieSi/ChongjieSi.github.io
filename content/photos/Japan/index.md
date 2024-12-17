@@ -1,6 +1,6 @@
 ---
 title: Japan
-summary: Taken during my trip.
+summary: Taken during my trip. I've been to Osaka, Kyoto, Fuji Mountain, and Tokyo.
 date: 2023-07-24
 
 # Featured image
