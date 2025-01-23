@@ -2,6 +2,8 @@
 title: "Recent News"
 date: 2023-09-05
 news:
+  - title: "📘 Two papers have been accepted to ICLR 2025."
+    date: "2025-01-23"
   - title: "🎁 Our work Subspace Tuning has been reported by MIT Technology Review."
     date: "2024-12-17"
     summary: "Please refer to <a href='https://www.mittrchina.com/news/detail/14173' target='_blank' class='custom-link'>this page</a> for more details"
