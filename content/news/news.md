@@ -2,6 +2,9 @@
 title: "Recent News"
 date: 2023-09-05
 news:
+  - title: "🎯 We conduct extensive observations and analyses of LFM’s weights and arrive at a series of striking conclusions."
+    date: "2025-02-05"
+    summary: "Please refer to <a href='https://chongjiesi.github.io/full-publications/2025-arxiv-gaussian/' target='_blank' class='custom-link'>this page</a> for more details"
   - title: "📘 Two papers have been accepted to ICLR 2025."
     date: "2025-01-23"
   - title: "🎁 Our work Subspace Tuning has been reported by MIT Technology Review."
@@ -12,7 +15,7 @@ news:
     # summary: "Please refer to <a href='https://www.aidd.vip/DMXXLYPC-2024bj' target='_blank' class='custom-link'>this page</a> for more details"
   - title: "🎯 We propose LoRA-Dash, which unleashes the power of task-specific directions in parameter efficient fine-tuning."
     date: "2024-09-02"
-    summary: "Please refer to <a href='https://chongjiesi.github.io/full-publications/2024-arxiv-lora-dash' target='_blank' class='custom-link'>this page</a> for more details"
+    summary: "Please refer to <a href='https://chongjiesi.github.io/full-publications/2025-iclr-lora-dash' target='_blank' class='custom-link'>this page</a> for more details"
   - title: "🎁 Our work Subspace Tuning and FLoRA has been invited for presentation at AiDD 2024, Beijing Station."
     date: "2024-08-15"
     summary: "Please refer to <a href='https://www.aidd.vip/DMXXLYPC-2024bj' target='_blank' class='custom-link'>this page</a> for more details."
@@ -23,7 +26,7 @@ news:
     date: "2024-07-01"
   - title: "🎯 We propose FLoRA, aiming to preserve the topological structure of N-dimensional parameter space while seeking low-rank representations."
     date: "2024-05-23"
-    summary: "Please refer to <a href='https://chongjiesi.github.io/full-publications/2024-arxiv-flora' target='_blank' class='custom-link'>this page</a> for more details."
+    summary: "Please refer to <a href='https://chongjiesi.github.io/full-publications/2025-iclr-flora' target='_blank' class='custom-link'>this page</a> for more details."
   - title: "📘 One paper has been accepted to AAAI 2024 as an <span style='color:#FF79BC'>Oral</span> Presentation."
     date: "2023-12-09"
   - title: "📘 One paper has been accepted to TKDE 2023."
