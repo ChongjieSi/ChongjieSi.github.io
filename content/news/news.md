@@ -2,6 +2,9 @@
 title: "Recent News"
 date: 2023-09-05
 news:
+  - title: "🎁 The book ''Hands on CV'' which we spent three years writing is finally on the market."
+    date: "2025-02-17"
+    summary: "Please refer to <a href='https://www.ptpress.com.cn/shopping/buy?bookId=c6cf15a9-7366-4212-b418-c30e3cdbd65d' target='_blank' class='custom-link'>this page</a> for more details"
   - title: "🎯 We conduct extensive observations and analyses of LFM’s weights and arrive at a series of striking conclusions."
     date: "2025-02-05"
     summary: "Please refer to <a href='https://chongjiesi.github.io/full-publications/2025-arxiv-gaussian/' target='_blank' class='custom-link'>this page</a> for more details"
