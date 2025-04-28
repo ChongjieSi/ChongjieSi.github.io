@@ -2,6 +2,8 @@
 title: "Recent News"
 date: 2023-09-05
 news:
+  - title: "🎁 See you in Singapore, ICLR 2025!"
+    date: "2025-04-23"
   - title: "🎁 The book ''Hands on CV'' which we spent three years writing is finally on the market."
     date: "2025-02-17"
     summary: "Please refer to <a href='https://www.ptpress.com.cn/shopping/buy?bookId=c6cf15a9-7366-4212-b418-c30e3cdbd65d' target='_blank' class='custom-link'>this page</a> for more details"
@@ -15,7 +17,6 @@ news:
     summary: "Please refer to <a href='https://www.mittrchina.com/news/detail/14173' target='_blank' class='custom-link'>this page</a> for more details"
   - title: "🎁 I have won the 2024 Doctoral National Scholarship."
     date: "2024-09-30"
-    # summary: "Please refer to <a href='https://www.aidd.vip/DMXXLYPC-2024bj' target='_blank' class='custom-link'>this page</a> for more details"
   - title: "🎯 We propose LoRA-Dash, which unleashes the power of task-specific directions in parameter efficient fine-tuning."
     date: "2024-09-02"
     summary: "Please refer to <a href='https://chongjiesi.github.io/full-publications/2025-iclr-lora-dash' target='_blank' class='custom-link'>this page</a> for more details"
