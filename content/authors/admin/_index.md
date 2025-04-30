@@ -78,18 +78,17 @@ education:
       text: Download CV
       url: /uploads/chongjie-cv.pdf
 
-# work:
-#   - position: Director of Cloud Infrastructure
-#     company_name: GenCoin
-#     company_url: ''
-#     company_logo: ''
-#     date_start: 2021-01-01
-#     date_end: ''
-#     summary: |2-
-#       Responsibilities include:
-#       - lorem ipsum dolor sit amet, consectetur adipiscing elit
-#       - lorem ipsum dolor sit amet, consectetur adipiscing elit
-#       - lorem ipsum dolor sit amet, consectetur adipiscing elit
+work:
+  - position: LLM Algorithm Intern 
+    company_name: Alibaba
+    company_url: ''
+    company_logo: ''
+    date_start: 2025-03-17
+    date_end: ''
+    summary: |2-
+      Responsibilities include:
+      - Efficient Training for SFT
+      - Continue Training to Enhance the Ability of the Base Model
 #   - position: Backend Software Engineer
 #     company_name: X
 #     company_url: ''
