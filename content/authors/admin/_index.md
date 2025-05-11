@@ -78,17 +78,17 @@ education:
       text: Download CV
       url: /uploads/chongjie-cv.pdf
 
-work:
-  - position: LLM Algorithm Intern 
-    company_name: Alibaba
-    company_url: ''
-    company_logo: ''
-    date_start: 2025-03-17
-    date_end: ''
-    summary: |2-
-      Responsibilities include:
-      - Efficient Training for SFT
-      - Continue Training to Enhance the Ability of the Base Model
+# work:
+#  - position: LLM Algorithm Intern 
+#    company_name: Alibaba
+#    company_url: ''
+#    company_logo: ''
+#    date_start: 2025-03-17
+#    date_end: ''
+#    summary: |2-
+#      Responsibilities include:
+#      - Efficient Training for SFT
+#      - Continue Training to Enhance the Ability of the Base Model
 #   - position: Backend Software Engineer
 #     company_name: X
 #     company_url: ''
