@@ -34,7 +34,7 @@ sections:
       text: |-
         I have experience in the fields of machine learning, computer vision, and natural language processing, and have worked on projects in all of these areas.
 
-        I'm now interested in AI for math and LLM related areas.
+        I'm now interested in LLM related areas.
         
         Please reach out for collaboration! 😃
     design:

@@ -51,9 +51,10 @@ profiles:
     url: https://orcid.org/0009-0001-3017-7574
 
 interests:
-  - AI For Math
-  - Parameter Efficient Fine-tuning
-  - Weakly Supervised Learning
+  - LLM Optimizer
+  - LLM Initialization and Explanation
+  - LLM Efficient Training
+  # - Weakly Supervised Learning
 
 education:
   - area: Ph.D Artificial Intelligence
