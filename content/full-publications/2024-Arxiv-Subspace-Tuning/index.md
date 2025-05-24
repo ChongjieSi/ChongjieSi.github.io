@@ -30,7 +30,7 @@ tags:
 - Machine Learning
 - Natural Language Processing
 
-featured: true
+featured: false
 
 links:
 - name: QbitAI

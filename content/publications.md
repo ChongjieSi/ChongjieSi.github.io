@@ -24,7 +24,7 @@ sections:
     content:
       title: Recent Publications
       text: You can find my articles on <a href="/full-publications"><strong>Full-Publications</strong></a> page or my <a href="https://scholar.google.com/citations?user=wXc2EtsAAAAJ&hl=zh-CN"><strong>Google Scholar</strong></a> profile.
-      count: 5
+      count: 6
       filters:
         folders:
           - full-publications

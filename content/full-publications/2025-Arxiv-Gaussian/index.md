@@ -31,7 +31,7 @@ tags:
 - Natural Language Processing
 - Computer Vision
 
-featured: false
+featured: true
 
 links:
 url_pdf: https://arxiv.org/abs/2501.10661
