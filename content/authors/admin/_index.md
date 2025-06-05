@@ -62,7 +62,7 @@ education:
     date_start: 2022-09-01
     date_end: ''
     summary: |
-      Now interested in LLM related areas. Supervised by Prof. Wei Shen.
+      Interested in LLM related areas. Supervised by Prof. Wei Shen.
     # button:
     #   text: 'DeepVision Lab'
     #   url: 'https://shenwei1231.github.io/team/'
@@ -80,7 +80,17 @@ education:
       url: /uploads/chongjie-cv.pdf
 
 work:
- - position: Research Intern 
+ - position: REDstar Intern 
+   company_name: Xiaohongshu
+   company_url: ''
+   company_logo: ''
+   date_start: 2025-06-04
+  #  date_end: ''
+   summary: |2-
+     Responsibilities include:
+     - Efficient Training for Pre-training
+     - Focus on LLM Training, Optimizer, and Explanation
+ - position: LLM Research Intern 
    company_name: Alibaba Group
    company_url: ''
    company_logo: ''
