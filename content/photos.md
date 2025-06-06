@@ -12,10 +12,10 @@ sections:
     id: photos
     content:
       title: Photos
+      count: 6
       filters:
         folders:
-          - photos
-      count: 100
+          - photo
     design:
       view: article-grid
       columns: 3

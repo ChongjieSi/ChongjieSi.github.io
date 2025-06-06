@@ -2,7 +2,12 @@
 title: "Recent News"
 date: 2023-09-05
 news:
-  - title: "🎁 See you in Singapore, ICLR 2025!"
+  - title: "🎯 See you in Zhuhai, Valse 2025!"
+    date: "2025-06-06"
+  - title: "🎁 I'm now working as a REDstar Intern in Xiaohongshu!"
+    date: "2025-06-04"
+    summary: "Please refer to <a href='https://job.xiaohongshu.com/campus/landing/top_intern' target='_blank' class='custom-link'>this page</a> for more details"
+  - title: "🎯 See you in Singapore, ICLR 2025!"
     date: "2025-04-23"
   - title: "🎁 The book ''Hands on CV'' which we spent three years writing is finally on the market."
     date: "2025-02-17"
