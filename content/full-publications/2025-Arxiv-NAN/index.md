@@ -39,6 +39,8 @@ tags:
 featured: false
 
 links:
+- name: Zhihu
+  url: https://zhuanlan.zhihu.com/p/1916806999116612547
 url_pdf: https://arxiv.org/abs/2505.16148
 
 

@@ -33,6 +33,9 @@ tags:
 featured: true
 
 links:
+- name: Zhihu
+  url: https://zhuanlan.zhihu.com/p/1916081425578455316
+url_code: 'https://github.com/Chongjie-Si/LIP'
 url_pdf: https://arxiv.org/abs/2505.16159
 
 
