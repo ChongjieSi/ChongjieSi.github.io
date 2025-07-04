@@ -1,0 +1,3884 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Chongjie Si</title>
+    <link>http://localhost:1313/</link>
+      <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <description>Chongjie Si</description>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Mon, 24 Oct 2022 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>http://localhost:1313/media/icon_hu14735102492158276428.png</url>
+      <title>Chongjie Si</title>
+      <link>http://localhost:1313/</link>
+    </image>
+    
+    <item>
+      <title>MAP: Revisiting Weight Decomposition for Low-Rank Adaptation</title>
+      <link>http://localhost:1313/full-publications/2025-arxiv-map/</link>
+      <pubDate>Thu, 29 May 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2025-arxiv-map/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Weight Spectra Induced Efficient Model Adaptation</title>
+      <link>http://localhost:1313/full-publications/2025-arxiv-speclora/</link>
+      <pubDate>Thu, 29 May 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2025-arxiv-speclora/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Revisiting Sparsity Constraint Under High-Rank Property in Partial Multi-Label Learning</title>
+      <link>http://localhost:1313/full-publications/2025-arxiv-schirn/</link>
+      <pubDate>Tue, 27 May 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2025-arxiv-schirn/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>NAN: A Training-Free Solution to Coefficient Estimation in Model Merging</title>
+      <link>http://localhost:1313/full-publications/2025-arxiv-nan/</link>
+      <pubDate>Thu, 22 May 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2025-arxiv-nan/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Why Can Accurate Models Be Learned from Inaccurate Annotations?</title>
+      <link>http://localhost:1313/full-publications/2025-arxiv-lip/</link>
+      <pubDate>Thu, 22 May 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2025-arxiv-lip/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Singapore</title>
+      <link>http://localhost:1313/photo/singapore/</link>
+      <pubDate>Wed, 23 Apr 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/photo/singapore/</guid>
+      <description>&lt;style&gt;
+
+ 
+.image-scroll {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 10px;
+  white-space: nowrap;
+  max-width: 100vw;
+  height: 170px;
+  scroll-behavior: smooth;
+}
+
+ 
+.image-scroll-item {
+  flex: 0 0 auto;
+  width: 170px;
+  height: 80%;
+  margin-right: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease;
+}
+
+.image-scroll-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+ 
+.image-scroll-item:hover {
+  transform: scale(1.1);
+}
+
+
+ 
+.dark .large-image-container img {
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.9);
+}
+
+ 
+@media (max-width: 1200px) {
+  .large-image-container {
+    height: 500px;
+  }
+
+  .image-scroll-item {
+    width: 130px;
+  }
+}
+
+@media (max-width: 768px) {
+  .large-image-container {
+    height: 400px;
+  }
+
+  .image-scroll-item {
+    width: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .large-image-container {
+    height: 300px;
+  }
+
+  .image-scroll-item {
+    width: 80px;
+  }
+}
+
+ 
+.large-image-container {
+  position: relative;
+  margin-top: 20px;
+  text-align: center;
+  max-width: 100%;
+  height: 600px;  
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: height 0.3s ease;
+  cursor: zoom-in;  
+}
+
+ 
+.large-image-container img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease;  
+}
+
+
+ 
+.large-image-container:hover img {
+  transform: scale(1.02);  
+}
+
+
+ 
+ 
+.fullscreen-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 70px;   
+}
+
+ 
+.fullscreen-image img {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 10px 20px rgba(255, 255, 255, 0.5);
+  cursor: zoom-out;
+}
+
+
+
+ 
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.2);
+  border: none;
+  padding: 10px;
+  font-size: 40px;
+  cursor: pointer;
+  border-radius: 50%;
+  z-index: 11;
+  transition: background-color 0.3s ease;
+}
+
+.left-arrow {
+  left: 30px;
+}
+
+.right-arrow {
+  right: 30px;
+}
+
+.arrow:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+
+&lt;/style&gt;
+&lt;div class=&#34;image-scroll&#34; id=&#34;imageScroll&#34;&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic4.zhimg.com/80/v2-3a2fa81ccbd2f7198008e70c086a4013_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic4.zhimg.com/80/v2-3a2fa81ccbd2f7198008e70c086a4013_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pica.zhimg.com/80/v2-babf4b0d086da36660ed9ba963a25b16_1440w.jpg&gt;
+    &lt;img src=&#34;https://pica.zhimg.com/80/v2-babf4b0d086da36660ed9ba963a25b16_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pica.zhimg.com/80/v2-d7ed646e84bac2e8ecf671306353c880_1440w.webp&gt;
+    &lt;img src=&#34;https://pica.zhimg.com/80/v2-d7ed646e84bac2e8ecf671306353c880_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic3.zhimg.com/80/v2-63a9c9b77af1e0880910e62e22268d74_1440w.webp&gt;
+    &lt;img src=&#34;https://pic3.zhimg.com/80/v2-63a9c9b77af1e0880910e62e22268d74_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic2.zhimg.com/80/v2-e728b5dfa41bfb1a294874dd1f593991_1440w.webp&gt;
+    &lt;img src=&#34;https://pic2.zhimg.com/80/v2-e728b5dfa41bfb1a294874dd1f593991_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic4.zhimg.com/80/v2-a4b4e0cc8ab0778d7dac6f449bf3cd83_1440w.webp&gt;
+    &lt;img src=&#34;https://pic4.zhimg.com/80/v2-a4b4e0cc8ab0778d7dac6f449bf3cd83_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic2.zhimg.com/80/v2-fa439a84d54fcc4aaf390a9059ff0961_1440w.webp&gt;
+    &lt;img src=&#34;https://pic2.zhimg.com/80/v2-fa439a84d54fcc4aaf390a9059ff0961_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pica.zhimg.com/80/v2-dff97d3c53e97b85e07708f159603172_1440w.webp&gt;
+    &lt;img src=&#34;https://pica.zhimg.com/80/v2-dff97d3c53e97b85e07708f159603172_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://picx.zhimg.com/80/v2-822834a3e903ee87c33de7ea2ce6cc1d_1440w.webp&gt;
+    &lt;img src=&#34;https://picx.zhimg.com/80/v2-822834a3e903ee87c33de7ea2ce6cc1d_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pica.zhimg.com/80/v2-a2a1888fa4152a7847b64996792d6d0e_1440w.webp&gt;
+    &lt;img src=&#34;https://pica.zhimg.com/80/v2-a2a1888fa4152a7847b64996792d6d0e_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic2.zhimg.com/80/v2-7fc6a74cc967688d999ac44b45b06379_1440w.webp&gt;
+    &lt;img src=&#34;https://pic2.zhimg.com/80/v2-7fc6a74cc967688d999ac44b45b06379_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pica.zhimg.com/80/v2-4c99aad893a4d09c6c1b3af0c34199fc_1440w.webp&gt;
+    &lt;img src=&#34;https://pica.zhimg.com/80/v2-4c99aad893a4d09c6c1b3af0c34199fc_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic1.zhimg.com/80/v2-182c2b870ba362627df228d625a18e22_1440w.webp&gt;
+    &lt;img src=&#34;https://pic1.zhimg.com/80/v2-182c2b870ba362627df228d625a18e22_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic1.zhimg.com/80/v2-ac1e0ee6b32e23e66a5fd17431ab0628_1440w.webp&gt;
+    &lt;img src=&#34;https://pic1.zhimg.com/80/v2-ac1e0ee6b32e23e66a5fd17431ab0628_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic2.zhimg.com/80/v2-73f56843f7414f1850bec2dc2cc862c9_1440w.webp&gt;
+    &lt;img src=&#34;https://pic2.zhimg.com/80/v2-73f56843f7414f1850bec2dc2cc862c9_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic3.zhimg.com/80/v2-8e20a8f78bb490c17eb36b350d2982ee_1440w.webp&gt;
+    &lt;img src=&#34;https://pic3.zhimg.com/80/v2-8e20a8f78bb490c17eb36b350d2982ee_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;!-- The large image display area --&gt;
+&lt;div class=&#34;large-image-container&#34; id=&#34;largeImageContainer&#34;&gt;
+  &lt;img src=&#34;https://pic4.zhimg.com/80/v2-3a2fa81ccbd2f7198008e70c086a4013_1440w.jpg&#34; alt=&#34;Large Image&#34; id=&#34;largeImage&#34;&gt;
+&lt;/div&gt;
+&lt;script&gt;
+
+document.addEventListener(&#34;DOMContentLoaded&#34;, function () {
+  const largeImageContainer = document.getElementById(&#34;largeImageContainer&#34;);
+  const largeImage = document.getElementById(&#34;largeImage&#34;);
+  const images = document.querySelectorAll(&#39;.image-scroll-item&#39;);
+  const imageScroll = document.getElementById(&#39;imageScroll&#39;);
+  let currentIndex = 0;
+  let fullscreenOverlay;  
+
+  
+  function showFullscreenImage() {
+    fullscreenOverlay = document.createElement(&#34;div&#34;);
+    fullscreenOverlay.classList.add(&#34;fullscreen-image&#34;);
+
+    
+    const fullscreenImage = largeImage.cloneNode();
+    fullscreenImage.style.padding = &#34;10px&#34;; 
+    fullscreenOverlay.appendChild(fullscreenImage);
+
+    
+    const leftArrow = document.createElement(&#34;button&#34;);
+    leftArrow.classList.add(&#34;arrow&#34;, &#34;left-arrow&#34;);
+    leftArrow.innerHTML = &#34;&amp;#10094;&#34;;
+    fullscreenOverlay.appendChild(leftArrow);
+
+    
+    const rightArrow = document.createElement(&#34;button&#34;);
+    rightArrow.classList.add(&#34;arrow&#34;, &#34;right-arrow&#34;);
+    rightArrow.innerHTML = &#34;&amp;#10095;&#34;;
+    fullscreenOverlay.appendChild(rightArrow);
+
+    document.body.appendChild(fullscreenOverlay);
+
+    
+    function updateFullscreenImage() {
+      const fullImageUrl = images[currentIndex].getAttribute(&#34;data-full-image&#34;);
+      fullscreenImage.src = fullImageUrl;
+    }
+
+    
+    leftArrow.addEventListener(&#34;click&#34;, function (event) {
+      event.stopPropagation(); 
+      currentIndex = (currentIndex &gt; 0) ? currentIndex - 1 : images.length - 1;
+      updateFullscreenImage();
+    });
+
+    
+    rightArrow.addEventListener(&#34;click&#34;, function (event) {
+      event.stopPropagation(); 
+      currentIndex = (currentIndex &lt; images.length - 1) ? currentIndex + 1 : 0;
+      updateFullscreenImage();
+    });
+
+    
+    document.addEventListener(&#34;keydown&#34;, function (event) {
+      if (fullscreenOverlay) {
+        if (event.key === &#34;ArrowLeft&#34;) {
+          currentIndex = (currentIndex &gt; 0) ? currentIndex - 1 : images.length - 1;
+          updateFullscreenImage();
+        } else if (event.key === &#34;ArrowRight&#34;) {
+          currentIndex = (currentIndex &lt; images.length - 1) ? currentIndex + 1 : 0;
+          updateFullscreenImage();
+        } else if (event.key === &#34;Escape&#34;) {
+          
+          document.body.removeChild(fullscreenOverlay);
+          fullscreenOverlay = null; 
+
+          
+          largeImage.src = images[currentIndex].getAttribute(&#34;data-full-image&#34;);
+
+          
+          images[currentIndex].scrollIntoView({ behavior: &#39;smooth&#39;, inline: &#39;center&#39; });
+        }
+      }
+    });
+
+    
+    fullscreenOverlay.addEventListener(&#34;click&#34;, function (event) {
+      if (event.target === fullscreenImage) {
+        document.body.removeChild(fullscreenOverlay);
+        fullscreenOverlay = null; 
+
+        
+        largeImage.src = images[currentIndex].getAttribute(&#34;data-full-image&#34;);
+
+        
+        images[currentIndex].scrollIntoView({ behavior: &#39;smooth&#39;, inline: &#39;center&#39; });
+      }
+    });
+
+    
+    updateFullscreenImage();
+  }
+
+  
+  largeImageContainer.addEventListener(&#34;click&#34;, function () {
+    showFullscreenImage();
+  });
+
+  
+  imageScroll.addEventListener(&#34;mouseover&#34;, function (event) {
+    const target = event.target.closest(&#39;.image-scroll-item&#39;);
+    if (target) {
+      const fullImageUrl = target.getAttribute(&#39;data-full-image&#39;);
+      largeImage.src = fullImageUrl; 
+      currentIndex = [...images].indexOf(target); 
+    }
+  });
+});
+
+  &lt;/script&gt;
+  
+</description>
+    </item>
+    
+    <item>
+      <title>Generalized Tensor-based Parameter-Efficient Fine-Tuning via Lie Group Transformations</title>
+      <link>http://localhost:1313/full-publications/2025-iccv-liera/</link>
+      <pubDate>Tue, 01 Apr 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2025-iccv-liera/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Maintaining Structural Integrity in Parameter Spaces for Parameter Efficient Fine-Tuning</title>
+      <link>http://localhost:1313/full-publications/2025-iclr-flora/</link>
+      <pubDate>Thu, 23 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2025-iclr-flora/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Unleashing the Power of Task-Specific Directions in Parameter Efficient Fine-tuning</title>
+      <link>http://localhost:1313/full-publications/2025-iclr-lora-dash/</link>
+      <pubDate>Thu, 23 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2025-iclr-lora-dash/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Unveiling the Mystery of Weight in Large Foundation Models: Gaussian Distribution Never Fades</title>
+      <link>http://localhost:1313/full-publications/2025-arxiv-gaussian/</link>
+      <pubDate>Mon, 20 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2025-arxiv-gaussian/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Vatican</title>
+      <link>http://localhost:1313/photo/vatican/</link>
+      <pubDate>Wed, 04 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/photo/vatican/</guid>
+      <description>&lt;style&gt;
+
+ 
+.image-scroll {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 10px;
+  white-space: nowrap;
+  max-width: 100vw;
+  height: 170px;
+  scroll-behavior: smooth;
+}
+
+ 
+.image-scroll-item {
+  flex: 0 0 auto;
+  width: 170px;
+  height: 80%;
+  margin-right: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease;
+}
+
+.image-scroll-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+ 
+.image-scroll-item:hover {
+  transform: scale(1.1);
+}
+
+
+ 
+.dark .large-image-container img {
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.9);
+}
+
+ 
+@media (max-width: 1200px) {
+  .large-image-container {
+    height: 500px;
+  }
+
+  .image-scroll-item {
+    width: 130px;
+  }
+}
+
+@media (max-width: 768px) {
+  .large-image-container {
+    height: 400px;
+  }
+
+  .image-scroll-item {
+    width: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .large-image-container {
+    height: 300px;
+  }
+
+  .image-scroll-item {
+    width: 80px;
+  }
+}
+
+ 
+.large-image-container {
+  position: relative;
+  margin-top: 20px;
+  text-align: center;
+  max-width: 100%;
+  height: 600px;  
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: height 0.3s ease;
+  cursor: zoom-in;  
+}
+
+ 
+.large-image-container img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease;  
+}
+
+
+ 
+.large-image-container:hover img {
+  transform: scale(1.02);  
+}
+
+
+ 
+ 
+.fullscreen-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 70px;   
+}
+
+ 
+.fullscreen-image img {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 10px 20px rgba(255, 255, 255, 0.5);
+  cursor: zoom-out;
+}
+
+
+
+ 
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.2);
+  border: none;
+  padding: 10px;
+  font-size: 40px;
+  cursor: pointer;
+  border-radius: 50%;
+  z-index: 11;
+  transition: background-color 0.3s ease;
+}
+
+.left-arrow {
+  left: 30px;
+}
+
+.right-arrow {
+  right: 30px;
+}
+
+.arrow:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+
+&lt;/style&gt;
+&lt;div class=&#34;image-scroll&#34; id=&#34;imageScroll&#34;&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic2.zhimg.com/80/v2-60ebf545007ddfc943a7016dce4f7efd_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic2.zhimg.com/80/v2-60ebf545007ddfc943a7016dce4f7efd_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pica.zhimg.com/80/v2-df29e40934300ea5334e02173e9baa00_1440w.jpg&gt;
+    &lt;img src=&#34;https://pica.zhimg.com/80/v2-df29e40934300ea5334e02173e9baa00_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic4.zhimg.com/80/v2-bb082a102d9ca7431007477a09ba5585_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic4.zhimg.com/80/v2-bb082a102d9ca7431007477a09ba5585_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic2.zhimg.com/80/v2-24a8a95dc1f6f38c793fdcbb3182b73b_1440w.webp&gt;
+    &lt;img src=&#34;https://pic2.zhimg.com/80/v2-24a8a95dc1f6f38c793fdcbb3182b73b_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic3.zhimg.com/80/v2-9eaf191f053a49eb5fab43f5b3ac1088_1440w.webp&gt;
+    &lt;img src=&#34;https://pic3.zhimg.com/80/v2-9eaf191f053a49eb5fab43f5b3ac1088_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic1.zhimg.com/80/v2-e3deb907e9b61db2010b03c2fa2643d4_1440w.webp&gt;
+    &lt;img src=&#34;https://pic1.zhimg.com/80/v2-e3deb907e9b61db2010b03c2fa2643d4_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic3.zhimg.com/80/v2-9bc7f3e89771bc8b7bc9d4e6c47db93e_1440w.webp&gt;
+    &lt;img src=&#34;https://pic3.zhimg.com/80/v2-9bc7f3e89771bc8b7bc9d4e6c47db93e_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic3.zhimg.com/80/v2-1123e07296ff48248d9f517b59e1702a_1440w.webp&gt;
+    &lt;img src=&#34;https://pic3.zhimg.com/80/v2-1123e07296ff48248d9f517b59e1702a_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;!-- The large image display area --&gt;
+&lt;div class=&#34;large-image-container&#34; id=&#34;largeImageContainer&#34;&gt;
+  &lt;img src=&#34;https://pic2.zhimg.com/80/v2-60ebf545007ddfc943a7016dce4f7efd_1440w.jpg&#34; alt=&#34;Large Image&#34; id=&#34;largeImage&#34;&gt;
+&lt;/div&gt;
+&lt;script&gt;
+
+document.addEventListener(&#34;DOMContentLoaded&#34;, function () {
+  const largeImageContainer = document.getElementById(&#34;largeImageContainer&#34;);
+  const largeImage = document.getElementById(&#34;largeImage&#34;);
+  const images = document.querySelectorAll(&#39;.image-scroll-item&#39;);
+  const imageScroll = document.getElementById(&#39;imageScroll&#39;);
+  let currentIndex = 0;
+  let fullscreenOverlay;  
+
+  
+  function showFullscreenImage() {
+    fullscreenOverlay = document.createElement(&#34;div&#34;);
+    fullscreenOverlay.classList.add(&#34;fullscreen-image&#34;);
+
+    
+    const fullscreenImage = largeImage.cloneNode();
+    fullscreenImage.style.padding = &#34;10px&#34;; 
+    fullscreenOverlay.appendChild(fullscreenImage);
+
+    
+    const leftArrow = document.createElement(&#34;button&#34;);
+    leftArrow.classList.add(&#34;arrow&#34;, &#34;left-arrow&#34;);
+    leftArrow.innerHTML = &#34;&amp;#10094;&#34;;
+    fullscreenOverlay.appendChild(leftArrow);
+
+    
+    const rightArrow = document.createElement(&#34;button&#34;);
+    rightArrow.classList.add(&#34;arrow&#34;, &#34;right-arrow&#34;);
+    rightArrow.innerHTML = &#34;&amp;#10095;&#34;;
+    fullscreenOverlay.appendChild(rightArrow);
+
+    document.body.appendChild(fullscreenOverlay);
+
+    
+    function updateFullscreenImage() {
+      const fullImageUrl = images[currentIndex].getAttribute(&#34;data-full-image&#34;);
+      fullscreenImage.src = fullImageUrl;
+    }
+
+    
+    leftArrow.addEventListener(&#34;click&#34;, function (event) {
+      event.stopPropagation(); 
+      currentIndex = (currentIndex &gt; 0) ? currentIndex - 1 : images.length - 1;
+      updateFullscreenImage();
+    });
+
+    
+    rightArrow.addEventListener(&#34;click&#34;, function (event) {
+      event.stopPropagation(); 
+      currentIndex = (currentIndex &lt; images.length - 1) ? currentIndex + 1 : 0;
+      updateFullscreenImage();
+    });
+
+    
+    document.addEventListener(&#34;keydown&#34;, function (event) {
+      if (fullscreenOverlay) {
+        if (event.key === &#34;ArrowLeft&#34;) {
+          currentIndex = (currentIndex &gt; 0) ? currentIndex - 1 : images.length - 1;
+          updateFullscreenImage();
+        } else if (event.key === &#34;ArrowRight&#34;) {
+          currentIndex = (currentIndex &lt; images.length - 1) ? currentIndex + 1 : 0;
+          updateFullscreenImage();
+        } else if (event.key === &#34;Escape&#34;) {
+          
+          document.body.removeChild(fullscreenOverlay);
+          fullscreenOverlay = null; 
+
+          
+          largeImage.src = images[currentIndex].getAttribute(&#34;data-full-image&#34;);
+
+          
+          images[currentIndex].scrollIntoView({ behavior: &#39;smooth&#39;, inline: &#39;center&#39; });
+        }
+      }
+    });
+
+    
+    fullscreenOverlay.addEventListener(&#34;click&#34;, function (event) {
+      if (event.target === fullscreenImage) {
+        document.body.removeChild(fullscreenOverlay);
+        fullscreenOverlay = null; 
+
+        
+        largeImage.src = images[currentIndex].getAttribute(&#34;data-full-image&#34;);
+
+        
+        images[currentIndex].scrollIntoView({ behavior: &#39;smooth&#39;, inline: &#39;center&#39; });
+      }
+    });
+
+    
+    updateFullscreenImage();
+  }
+
+  
+  largeImageContainer.addEventListener(&#34;click&#34;, function () {
+    showFullscreenImage();
+  });
+
+  
+  imageScroll.addEventListener(&#34;mouseover&#34;, function (event) {
+    const target = event.target.closest(&#39;.image-scroll-item&#39;);
+    if (target) {
+      const fullImageUrl = target.getAttribute(&#39;data-full-image&#39;);
+      largeImage.src = fullImageUrl; 
+      currentIndex = [...images].indexOf(target); 
+    }
+  });
+});
+
+  &lt;/script&gt;
+  
+</description>
+    </item>
+    
+    <item>
+      <title>Italy</title>
+      <link>http://localhost:1313/photo/italy/</link>
+      <pubDate>Mon, 02 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/photo/italy/</guid>
+      <description>&lt;style&gt;
+
+ 
+.image-scroll {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 10px;
+  white-space: nowrap;
+  max-width: 100vw;
+  height: 170px;
+  scroll-behavior: smooth;
+}
+
+ 
+.image-scroll-item {
+  flex: 0 0 auto;
+  width: 170px;
+  height: 80%;
+  margin-right: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease;
+}
+
+.image-scroll-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+ 
+.image-scroll-item:hover {
+  transform: scale(1.1);
+}
+
+
+ 
+.dark .large-image-container img {
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.9);
+}
+
+ 
+@media (max-width: 1200px) {
+  .large-image-container {
+    height: 500px;
+  }
+
+  .image-scroll-item {
+    width: 130px;
+  }
+}
+
+@media (max-width: 768px) {
+  .large-image-container {
+    height: 400px;
+  }
+
+  .image-scroll-item {
+    width: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .large-image-container {
+    height: 300px;
+  }
+
+  .image-scroll-item {
+    width: 80px;
+  }
+}
+
+ 
+.large-image-container {
+  position: relative;
+  margin-top: 20px;
+  text-align: center;
+  max-width: 100%;
+  height: 600px;  
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: height 0.3s ease;
+  cursor: zoom-in;  
+}
+
+ 
+.large-image-container img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease;  
+}
+
+
+ 
+.large-image-container:hover img {
+  transform: scale(1.02);  
+}
+
+
+ 
+ 
+.fullscreen-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 70px;   
+}
+
+ 
+.fullscreen-image img {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 10px 20px rgba(255, 255, 255, 0.5);
+  cursor: zoom-out;
+}
+
+
+
+ 
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.2);
+  border: none;
+  padding: 10px;
+  font-size: 40px;
+  cursor: pointer;
+  border-radius: 50%;
+  z-index: 11;
+  transition: background-color 0.3s ease;
+}
+
+.left-arrow {
+  left: 30px;
+}
+
+.right-arrow {
+  right: 30px;
+}
+
+.arrow:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+
+&lt;/style&gt;
+&lt;div class=&#34;image-scroll&#34; id=&#34;imageScroll&#34;&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic1.zhimg.com/80/v2-0c4a86890ad20eee62665eae0fce6c70_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic1.zhimg.com/80/v2-0c4a86890ad20eee62665eae0fce6c70_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pica.zhimg.com/80/v2-727311640124980a396350f2540c2ab8_1440w.jpg&gt;
+    &lt;img src=&#34;https://pica.zhimg.com/80/v2-727311640124980a396350f2540c2ab8_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic2.zhimg.com/80/v2-74c358547aa86a8be8d08994397bf77f_1440w.webp&gt;
+    &lt;img src=&#34;https://pic2.zhimg.com/80/v2-74c358547aa86a8be8d08994397bf77f_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://picx.zhimg.com/80/v2-5720b1242f9ebc054a042380136574b5_1440w.webp&gt;
+    &lt;img src=&#34;https://picx.zhimg.com/80/v2-5720b1242f9ebc054a042380136574b5_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic4.zhimg.com/80/v2-103b12d78623f96b87aefd0bec038337_1440w.webp&gt;
+    &lt;img src=&#34;https://pic4.zhimg.com/80/v2-103b12d78623f96b87aefd0bec038337_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pica.zhimg.com/80/v2-7b2298de3433799bf399c962d3b83590_1440w.webp&gt;
+    &lt;img src=&#34;https://pica.zhimg.com/80/v2-7b2298de3433799bf399c962d3b83590_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic4.zhimg.com/80/v2-428989823a8f7bf98842503a76328851_1440w.webp&gt;
+    &lt;img src=&#34;https://pic4.zhimg.com/80/v2-428989823a8f7bf98842503a76328851_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pica.zhimg.com/80/v2-afe942195e94a209c075e494f4e76e28_1440w.webp&gt;
+    &lt;img src=&#34;https://pica.zhimg.com/80/v2-afe942195e94a209c075e494f4e76e28_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic1.zhimg.com/80/v2-ab3b074ec24de7aca0dff89c8abd3362_1440w.webp&gt;
+    &lt;img src=&#34;https://pic1.zhimg.com/80/v2-ab3b074ec24de7aca0dff89c8abd3362_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pica.zhimg.com/80/v2-b00629d276f16823e315b9e159039526_1440w.webp&gt;
+    &lt;img src=&#34;https://pica.zhimg.com/80/v2-b00629d276f16823e315b9e159039526_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://picx.zhimg.com/80/v2-33ebc3769a461b991560556958d4ae31_1440w.webp&gt;
+    &lt;img src=&#34;https://picx.zhimg.com/80/v2-33ebc3769a461b991560556958d4ae31_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pica.zhimg.com/80/v2-9ed94a3686ba7c8441c47fb1a73b4058_1440w.webp&gt;
+    &lt;img src=&#34;https://pica.zhimg.com/80/v2-9ed94a3686ba7c8441c47fb1a73b4058_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic1.zhimg.com/80/v2-5e785df87f2f6c8a14d8960f9bf4a12a_1440w.webp&gt;
+    &lt;img src=&#34;https://pic1.zhimg.com/80/v2-5e785df87f2f6c8a14d8960f9bf4a12a_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic4.zhimg.com/80/v2-45ec8a97dbbe56ee5c829b836e99cd95_1440w.webp&gt;
+    &lt;img src=&#34;https://pic4.zhimg.com/80/v2-45ec8a97dbbe56ee5c829b836e99cd95_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic4.zhimg.com/80/v2-d2b66b26bfd72a536697d32b88ed814d_1440w.webp&gt;
+    &lt;img src=&#34;https://pic4.zhimg.com/80/v2-d2b66b26bfd72a536697d32b88ed814d_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic2.zhimg.com/80/v2-bed74ad51d08fe2383fc5bb5d78a2abd_1440w.webp&gt;
+    &lt;img src=&#34;https://pic2.zhimg.com/80/v2-bed74ad51d08fe2383fc5bb5d78a2abd_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic3.zhimg.com/80/v2-0263d7ee1876fb00fbc172b458e74d56_1440w.webp&gt;
+    &lt;img src=&#34;https://pic3.zhimg.com/80/v2-0263d7ee1876fb00fbc172b458e74d56_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;!-- The large image display area --&gt;
+&lt;div class=&#34;large-image-container&#34; id=&#34;largeImageContainer&#34;&gt;
+  &lt;img src=&#34;https://pic1.zhimg.com/80/v2-0c4a86890ad20eee62665eae0fce6c70_1440w.jpg&#34; alt=&#34;Large Image&#34; id=&#34;largeImage&#34;&gt;
+&lt;/div&gt;
+&lt;script&gt;
+
+document.addEventListener(&#34;DOMContentLoaded&#34;, function () {
+  const largeImageContainer = document.getElementById(&#34;largeImageContainer&#34;);
+  const largeImage = document.getElementById(&#34;largeImage&#34;);
+  const images = document.querySelectorAll(&#39;.image-scroll-item&#39;);
+  const imageScroll = document.getElementById(&#39;imageScroll&#39;);
+  let currentIndex = 0;
+  let fullscreenOverlay;  
+
+  
+  function showFullscreenImage() {
+    fullscreenOverlay = document.createElement(&#34;div&#34;);
+    fullscreenOverlay.classList.add(&#34;fullscreen-image&#34;);
+
+    
+    const fullscreenImage = largeImage.cloneNode();
+    fullscreenImage.style.padding = &#34;10px&#34;; 
+    fullscreenOverlay.appendChild(fullscreenImage);
+
+    
+    const leftArrow = document.createElement(&#34;button&#34;);
+    leftArrow.classList.add(&#34;arrow&#34;, &#34;left-arrow&#34;);
+    leftArrow.innerHTML = &#34;&amp;#10094;&#34;;
+    fullscreenOverlay.appendChild(leftArrow);
+
+    
+    const rightArrow = document.createElement(&#34;button&#34;);
+    rightArrow.classList.add(&#34;arrow&#34;, &#34;right-arrow&#34;);
+    rightArrow.innerHTML = &#34;&amp;#10095;&#34;;
+    fullscreenOverlay.appendChild(rightArrow);
+
+    document.body.appendChild(fullscreenOverlay);
+
+    
+    function updateFullscreenImage() {
+      const fullImageUrl = images[currentIndex].getAttribute(&#34;data-full-image&#34;);
+      fullscreenImage.src = fullImageUrl;
+    }
+
+    
+    leftArrow.addEventListener(&#34;click&#34;, function (event) {
+      event.stopPropagation(); 
+      currentIndex = (currentIndex &gt; 0) ? currentIndex - 1 : images.length - 1;
+      updateFullscreenImage();
+    });
+
+    
+    rightArrow.addEventListener(&#34;click&#34;, function (event) {
+      event.stopPropagation(); 
+      currentIndex = (currentIndex &lt; images.length - 1) ? currentIndex + 1 : 0;
+      updateFullscreenImage();
+    });
+
+    
+    document.addEventListener(&#34;keydown&#34;, function (event) {
+      if (fullscreenOverlay) {
+        if (event.key === &#34;ArrowLeft&#34;) {
+          currentIndex = (currentIndex &gt; 0) ? currentIndex - 1 : images.length - 1;
+          updateFullscreenImage();
+        } else if (event.key === &#34;ArrowRight&#34;) {
+          currentIndex = (currentIndex &lt; images.length - 1) ? currentIndex + 1 : 0;
+          updateFullscreenImage();
+        } else if (event.key === &#34;Escape&#34;) {
+          
+          document.body.removeChild(fullscreenOverlay);
+          fullscreenOverlay = null; 
+
+          
+          largeImage.src = images[currentIndex].getAttribute(&#34;data-full-image&#34;);
+
+          
+          images[currentIndex].scrollIntoView({ behavior: &#39;smooth&#39;, inline: &#39;center&#39; });
+        }
+      }
+    });
+
+    
+    fullscreenOverlay.addEventListener(&#34;click&#34;, function (event) {
+      if (event.target === fullscreenImage) {
+        document.body.removeChild(fullscreenOverlay);
+        fullscreenOverlay = null; 
+
+        
+        largeImage.src = images[currentIndex].getAttribute(&#34;data-full-image&#34;);
+
+        
+        images[currentIndex].scrollIntoView({ behavior: &#39;smooth&#39;, inline: &#39;center&#39; });
+      }
+    });
+
+    
+    updateFullscreenImage();
+  }
+
+  
+  largeImageContainer.addEventListener(&#34;click&#34;, function () {
+    showFullscreenImage();
+  });
+
+  
+  imageScroll.addEventListener(&#34;mouseover&#34;, function (event) {
+    const target = event.target.closest(&#39;.image-scroll-item&#39;);
+    if (target) {
+      const fullImageUrl = target.getAttribute(&#39;data-full-image&#39;);
+      largeImage.src = fullImageUrl; 
+      currentIndex = [...images].indexOf(target); 
+    }
+  });
+});
+
+  &lt;/script&gt;
+  
+</description>
+    </item>
+    
+    <item>
+      <title>Switzerland</title>
+      <link>http://localhost:1313/photo/switzerland/</link>
+      <pubDate>Sat, 30 Nov 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/photo/switzerland/</guid>
+      <description>&lt;style&gt;
+
+ 
+.image-scroll {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 10px;
+  white-space: nowrap;
+  max-width: 100vw;
+  height: 170px;
+  scroll-behavior: smooth;
+}
+
+ 
+.image-scroll-item {
+  flex: 0 0 auto;
+  width: 170px;
+  height: 80%;
+  margin-right: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease;
+}
+
+.image-scroll-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+ 
+.image-scroll-item:hover {
+  transform: scale(1.1);
+}
+
+
+ 
+.dark .large-image-container img {
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.9);
+}
+
+ 
+@media (max-width: 1200px) {
+  .large-image-container {
+    height: 500px;
+  }
+
+  .image-scroll-item {
+    width: 130px;
+  }
+}
+
+@media (max-width: 768px) {
+  .large-image-container {
+    height: 400px;
+  }
+
+  .image-scroll-item {
+    width: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .large-image-container {
+    height: 300px;
+  }
+
+  .image-scroll-item {
+    width: 80px;
+  }
+}
+
+ 
+.large-image-container {
+  position: relative;
+  margin-top: 20px;
+  text-align: center;
+  max-width: 100%;
+  height: 600px;  
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: height 0.3s ease;
+  cursor: zoom-in;  
+}
+
+ 
+.large-image-container img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease;  
+}
+
+
+ 
+.large-image-container:hover img {
+  transform: scale(1.02);  
+}
+
+
+ 
+ 
+.fullscreen-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 70px;   
+}
+
+ 
+.fullscreen-image img {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 10px 20px rgba(255, 255, 255, 0.5);
+  cursor: zoom-out;
+}
+
+
+
+ 
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.2);
+  border: none;
+  padding: 10px;
+  font-size: 40px;
+  cursor: pointer;
+  border-radius: 50%;
+  z-index: 11;
+  transition: background-color 0.3s ease;
+}
+
+.left-arrow {
+  left: 30px;
+}
+
+.right-arrow {
+  right: 30px;
+}
+
+.arrow:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+
+&lt;/style&gt;
+&lt;div class=&#34;image-scroll&#34; id=&#34;imageScroll&#34;&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic4.zhimg.com/80/v2-e8732a33a24c69e342cdbb7514137f2f_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic4.zhimg.com/80/v2-e8732a33a24c69e342cdbb7514137f2f_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pica.zhimg.com/80/v2-c4efafb8f20c251aca6d3381e2b80b4e_1440w.jpg&gt;
+    &lt;img src=&#34;https://pica.zhimg.com/80/v2-c4efafb8f20c251aca6d3381e2b80b4e_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://picx.zhimg.com/80/v2-89ff6f0d95c4f3ddfb0322c7fe5b5aab_1440w.jpg&gt;
+    &lt;img src=&#34;https://picx.zhimg.com/80/v2-89ff6f0d95c4f3ddfb0322c7fe5b5aab_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic3.zhimg.com/80/v2-71d038b736614ef2ebe44c61eaade8f0_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic3.zhimg.com/80/v2-71d038b736614ef2ebe44c61eaade8f0_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic2.zhimg.com/80/v2-bcdf6909418eaf56b1d84f28ac000235_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic2.zhimg.com/80/v2-bcdf6909418eaf56b1d84f28ac000235_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pica.zhimg.com/80/v2-34fdc68ee46a36cc3eda20ab2970a7e0_1440w.jpg&gt;
+    &lt;img src=&#34;https://pica.zhimg.com/80/v2-34fdc68ee46a36cc3eda20ab2970a7e0_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic1.zhimg.com/80/v2-cf981b1c9297f6586c6c3a7eb9ce4d8c_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic1.zhimg.com/80/v2-cf981b1c9297f6586c6c3a7eb9ce4d8c_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://picx.zhimg.com/80/v2-316e5fb6e00f383063c180978dcb1215_1440w.jpg&gt;
+    &lt;img src=&#34;https://picx.zhimg.com/80/v2-316e5fb6e00f383063c180978dcb1215_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic4.zhimg.com/80/v2-c8ea3ab159795f99d0d8c571c821673d_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic4.zhimg.com/80/v2-c8ea3ab159795f99d0d8c571c821673d_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic4.zhimg.com/80/v2-b67d3446c64728374fae94f7b4e6804f_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic4.zhimg.com/80/v2-b67d3446c64728374fae94f7b4e6804f_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic2.zhimg.com/80/v2-e4aab85400ce5291de3e740fbfecaf8d_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic2.zhimg.com/80/v2-e4aab85400ce5291de3e740fbfecaf8d_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic1.zhimg.com/80/v2-e084f3d0b31848a404ab70ffd12b691c_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic1.zhimg.com/80/v2-e084f3d0b31848a404ab70ffd12b691c_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic2.zhimg.com/80/v2-c76229f0a40058d6eb00f9eff81b4ac3_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic2.zhimg.com/80/v2-c76229f0a40058d6eb00f9eff81b4ac3_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://picx.zhimg.com/80/v2-7376d33a2a7503b77593c332e53cb46b_1440w.jpg&gt;
+    &lt;img src=&#34;https://picx.zhimg.com/80/v2-7376d33a2a7503b77593c332e53cb46b_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic1.zhimg.com/80/v2-958eb5d5f0c6e93271dd827807af6ac2_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic1.zhimg.com/80/v2-958eb5d5f0c6e93271dd827807af6ac2_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic1.zhimg.com/80/v2-5dbcfbfeb039ba9aec639b79b13c101a_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic1.zhimg.com/80/v2-5dbcfbfeb039ba9aec639b79b13c101a_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic4.zhimg.com/80/v2-fe5a53c30d2101b911abcb2f629a005f_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic4.zhimg.com/80/v2-fe5a53c30d2101b911abcb2f629a005f_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;!-- The large image display area --&gt;
+&lt;div class=&#34;large-image-container&#34; id=&#34;largeImageContainer&#34;&gt;
+  &lt;img src=&#34;https://pic4.zhimg.com/80/v2-e8732a33a24c69e342cdbb7514137f2f_1440w.jpg&#34; alt=&#34;Large Image&#34; id=&#34;largeImage&#34;&gt;
+&lt;/div&gt;
+&lt;script&gt;
+
+document.addEventListener(&#34;DOMContentLoaded&#34;, function () {
+  const largeImageContainer = document.getElementById(&#34;largeImageContainer&#34;);
+  const largeImage = document.getElementById(&#34;largeImage&#34;);
+  const images = document.querySelectorAll(&#39;.image-scroll-item&#39;);
+  const imageScroll = document.getElementById(&#39;imageScroll&#39;);
+  let currentIndex = 0;
+  let fullscreenOverlay;  
+
+  
+  function showFullscreenImage() {
+    fullscreenOverlay = document.createElement(&#34;div&#34;);
+    fullscreenOverlay.classList.add(&#34;fullscreen-image&#34;);
+
+    
+    const fullscreenImage = largeImage.cloneNode();
+    fullscreenImage.style.padding = &#34;10px&#34;; 
+    fullscreenOverlay.appendChild(fullscreenImage);
+
+    
+    const leftArrow = document.createElement(&#34;button&#34;);
+    leftArrow.classList.add(&#34;arrow&#34;, &#34;left-arrow&#34;);
+    leftArrow.innerHTML = &#34;&amp;#10094;&#34;;
+    fullscreenOverlay.appendChild(leftArrow);
+
+    
+    const rightArrow = document.createElement(&#34;button&#34;);
+    rightArrow.classList.add(&#34;arrow&#34;, &#34;right-arrow&#34;);
+    rightArrow.innerHTML = &#34;&amp;#10095;&#34;;
+    fullscreenOverlay.appendChild(rightArrow);
+
+    document.body.appendChild(fullscreenOverlay);
+
+    
+    function updateFullscreenImage() {
+      const fullImageUrl = images[currentIndex].getAttribute(&#34;data-full-image&#34;);
+      fullscreenImage.src = fullImageUrl;
+    }
+
+    
+    leftArrow.addEventListener(&#34;click&#34;, function (event) {
+      event.stopPropagation(); 
+      currentIndex = (currentIndex &gt; 0) ? currentIndex - 1 : images.length - 1;
+      updateFullscreenImage();
+    });
+
+    
+    rightArrow.addEventListener(&#34;click&#34;, function (event) {
+      event.stopPropagation(); 
+      currentIndex = (currentIndex &lt; images.length - 1) ? currentIndex + 1 : 0;
+      updateFullscreenImage();
+    });
+
+    
+    document.addEventListener(&#34;keydown&#34;, function (event) {
+      if (fullscreenOverlay) {
+        if (event.key === &#34;ArrowLeft&#34;) {
+          currentIndex = (currentIndex &gt; 0) ? currentIndex - 1 : images.length - 1;
+          updateFullscreenImage();
+        } else if (event.key === &#34;ArrowRight&#34;) {
+          currentIndex = (currentIndex &lt; images.length - 1) ? currentIndex + 1 : 0;
+          updateFullscreenImage();
+        } else if (event.key === &#34;Escape&#34;) {
+          
+          document.body.removeChild(fullscreenOverlay);
+          fullscreenOverlay = null; 
+
+          
+          largeImage.src = images[currentIndex].getAttribute(&#34;data-full-image&#34;);
+
+          
+          images[currentIndex].scrollIntoView({ behavior: &#39;smooth&#39;, inline: &#39;center&#39; });
+        }
+      }
+    });
+
+    
+    fullscreenOverlay.addEventListener(&#34;click&#34;, function (event) {
+      if (event.target === fullscreenImage) {
+        document.body.removeChild(fullscreenOverlay);
+        fullscreenOverlay = null; 
+
+        
+        largeImage.src = images[currentIndex].getAttribute(&#34;data-full-image&#34;);
+
+        
+        images[currentIndex].scrollIntoView({ behavior: &#39;smooth&#39;, inline: &#39;center&#39; });
+      }
+    });
+
+    
+    updateFullscreenImage();
+  }
+
+  
+  largeImageContainer.addEventListener(&#34;click&#34;, function () {
+    showFullscreenImage();
+  });
+
+  
+  imageScroll.addEventListener(&#34;mouseover&#34;, function (event) {
+    const target = event.target.closest(&#39;.image-scroll-item&#39;);
+    if (target) {
+      const fullImageUrl = target.getAttribute(&#39;data-full-image&#39;);
+      largeImage.src = fullImageUrl; 
+      currentIndex = [...images].indexOf(target); 
+    }
+  });
+});
+
+  &lt;/script&gt;
+  
+</description>
+    </item>
+    
+    <item>
+      <title>Paris, France</title>
+      <link>http://localhost:1313/photo/france/</link>
+      <pubDate>Wed, 27 Nov 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/photo/france/</guid>
+      <description>&lt;style&gt;
+
+ 
+.image-scroll {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 10px;
+  white-space: nowrap;
+  max-width: 100vw;
+  height: 170px;
+  scroll-behavior: smooth;
+}
+
+ 
+.image-scroll-item {
+  flex: 0 0 auto;
+  width: 170px;
+  height: 80%;
+  margin-right: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease;
+}
+
+.image-scroll-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+ 
+.image-scroll-item:hover {
+  transform: scale(1.1);
+}
+
+
+ 
+.dark .large-image-container img {
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.9);
+}
+
+ 
+@media (max-width: 1200px) {
+  .large-image-container {
+    height: 500px;
+  }
+
+  .image-scroll-item {
+    width: 130px;
+  }
+}
+
+@media (max-width: 768px) {
+  .large-image-container {
+    height: 400px;
+  }
+
+  .image-scroll-item {
+    width: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .large-image-container {
+    height: 300px;
+  }
+
+  .image-scroll-item {
+    width: 80px;
+  }
+}
+
+ 
+.large-image-container {
+  position: relative;
+  margin-top: 20px;
+  text-align: center;
+  max-width: 100%;
+  height: 600px;  
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: height 0.3s ease;
+  cursor: zoom-in;  
+}
+
+ 
+.large-image-container img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease;  
+}
+
+
+ 
+.large-image-container:hover img {
+  transform: scale(1.02);  
+}
+
+
+ 
+ 
+.fullscreen-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 70px;   
+}
+
+ 
+.fullscreen-image img {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 10px 20px rgba(255, 255, 255, 0.5);
+  cursor: zoom-out;
+}
+
+
+
+ 
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.2);
+  border: none;
+  padding: 10px;
+  font-size: 40px;
+  cursor: pointer;
+  border-radius: 50%;
+  z-index: 11;
+  transition: background-color 0.3s ease;
+}
+
+.left-arrow {
+  left: 30px;
+}
+
+.right-arrow {
+  right: 30px;
+}
+
+.arrow:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+
+&lt;/style&gt;
+&lt;div class=&#34;image-scroll&#34; id=&#34;imageScroll&#34;&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pica.zhimg.com/80/v2-34306d7be472734fd084bc12f9bf7dd4_1440w.jpg&gt;
+    &lt;img src=&#34;https://pica.zhimg.com/80/v2-34306d7be472734fd084bc12f9bf7dd4_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic1.zhimg.com/80/v2-7000c8353fdf27ebbd4056574838b206_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic1.zhimg.com/80/v2-7000c8353fdf27ebbd4056574838b206_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://picx.zhimg.com/80/v2-b76788c796bcc66d7c90fbc053608699_1440w.jpg&gt;
+    &lt;img src=&#34;https://picx.zhimg.com/80/v2-b76788c796bcc66d7c90fbc053608699_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic3.zhimg.com/80/v2-d414f9fd187c3fc976067e83d7912746_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic3.zhimg.com/80/v2-d414f9fd187c3fc976067e83d7912746_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://picx.zhimg.com/80/v2-2e31b149c6996b79845a1602731779bd_1440w.jpg&gt;
+    &lt;img src=&#34;https://picx.zhimg.com/80/v2-2e31b149c6996b79845a1602731779bd_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pica.zhimg.com/80/v2-1d9730d4e0f9344ea5add9db8d555a62_1440w.jpg&gt;
+    &lt;img src=&#34;https://pica.zhimg.com/80/v2-1d9730d4e0f9344ea5add9db8d555a62_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic1.zhimg.com/80/v2-8560872a06dca2b8219b0cba23a57c36_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic1.zhimg.com/80/v2-8560872a06dca2b8219b0cba23a57c36_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic3.zhimg.com/80/v2-7912fafb8a0c641da7304bee1d46afdc_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic3.zhimg.com/80/v2-7912fafb8a0c641da7304bee1d46afdc_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic1.zhimg.com/80/v2-6250fcf5687624897721a4f12f1c5c82_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic1.zhimg.com/80/v2-6250fcf5687624897721a4f12f1c5c82_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic1.zhimg.com/80/v2-09f8eea1938a5c9ec84df4a5731d0bd2_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic1.zhimg.com/80/v2-09f8eea1938a5c9ec84df4a5731d0bd2_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic1.zhimg.com/80/v2-727693535d9cd21e9a7d164408f4dd96_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic1.zhimg.com/80/v2-727693535d9cd21e9a7d164408f4dd96_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic3.zhimg.com/80/v2-92da11d3304cb94b72ad1eaf0fd0c248_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic3.zhimg.com/80/v2-92da11d3304cb94b72ad1eaf0fd0c248_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic2.zhimg.com/80/v2-93fc773aee2c4b92a1414e2e0ca0246d_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic2.zhimg.com/80/v2-93fc773aee2c4b92a1414e2e0ca0246d_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic2.zhimg.com/80/v2-f2599e1a4469479af2d5cd8489f3b515_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic2.zhimg.com/80/v2-f2599e1a4469479af2d5cd8489f3b515_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic4.zhimg.com/80/v2-0065f73efeda16b71cea71a5f0d510e7_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic4.zhimg.com/80/v2-0065f73efeda16b71cea71a5f0d510e7_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic2.zhimg.com/80/v2-21ed74d7551ccc2db0d5fd9cd47a601b_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic2.zhimg.com/80/v2-21ed74d7551ccc2db0d5fd9cd47a601b_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic1.zhimg.com/80/v2-203b2a9015134fbfc639c8d38570a266_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic1.zhimg.com/80/v2-203b2a9015134fbfc639c8d38570a266_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic3.zhimg.com/80/v2-4f0bfe70d19c5db4cca3c4b51d7c1694_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic3.zhimg.com/80/v2-4f0bfe70d19c5db4cca3c4b51d7c1694_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic4.zhimg.com/80/v2-01fe1e213ddec3da02c995dd26009cb7_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic4.zhimg.com/80/v2-01fe1e213ddec3da02c995dd26009cb7_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pica.zhimg.com/80/v2-b0cc8205e8e42a497a9254180aed41e2_1440w.jpg&gt;
+    &lt;img src=&#34;https://pica.zhimg.com/80/v2-b0cc8205e8e42a497a9254180aed41e2_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic1.zhimg.com/80/v2-068a6d62cd5df80ccbacdfe8b7294f2c_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic1.zhimg.com/80/v2-068a6d62cd5df80ccbacdfe8b7294f2c_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic1.zhimg.com/80/v2-682a23ad897775ff8689b7fedc192cf4_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic1.zhimg.com/80/v2-682a23ad897775ff8689b7fedc192cf4_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic1.zhimg.com/80/v2-c008ba452f8a57a451230be668330198_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic1.zhimg.com/80/v2-c008ba452f8a57a451230be668330198_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pica.zhimg.com/80/v2-e52c7cb95c8a5f9be94ea6bf9fcbeb7c_1440w.jpg&gt;
+    &lt;img src=&#34;https://pica.zhimg.com/80/v2-e52c7cb95c8a5f9be94ea6bf9fcbeb7c_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pica.zhimg.com/80/v2-80e5a7965547dd5e11e7d31472c616a2_1440w.jpg&gt;
+    &lt;img src=&#34;https://pica.zhimg.com/80/v2-80e5a7965547dd5e11e7d31472c616a2_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic4.zhimg.com/80/v2-23401444755a729f019967542636eee3_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic4.zhimg.com/80/v2-23401444755a729f019967542636eee3_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic1.zhimg.com/80/v2-97bc09aab0c209fd8e57c3732e38d48c_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic1.zhimg.com/80/v2-97bc09aab0c209fd8e57c3732e38d48c_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pica.zhimg.com/80/v2-6c3fc3a371ac12c20051b8cf2ea987c4_1440w.jpg&gt;
+    &lt;img src=&#34;https://pica.zhimg.com/80/v2-6c3fc3a371ac12c20051b8cf2ea987c4_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic1.zhimg.com/80/v2-2f3f82f87169d947e18e8c298817b56a_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic1.zhimg.com/80/v2-2f3f82f87169d947e18e8c298817b56a_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic2.zhimg.com/80/v2-f1f20254bb24690e79370c36e4fc34a5_1440w.webp&gt;
+    &lt;img src=&#34;https://pic2.zhimg.com/80/v2-f1f20254bb24690e79370c36e4fc34a5_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;!-- The large image display area --&gt;
+&lt;div class=&#34;large-image-container&#34; id=&#34;largeImageContainer&#34;&gt;
+  &lt;img src=&#34;https://pica.zhimg.com/80/v2-34306d7be472734fd084bc12f9bf7dd4_1440w.jpg&#34; alt=&#34;Large Image&#34; id=&#34;largeImage&#34;&gt;
+&lt;/div&gt;
+&lt;script&gt;
+
+document.addEventListener(&#34;DOMContentLoaded&#34;, function () {
+  const largeImageContainer = document.getElementById(&#34;largeImageContainer&#34;);
+  const largeImage = document.getElementById(&#34;largeImage&#34;);
+  const images = document.querySelectorAll(&#39;.image-scroll-item&#39;);
+  const imageScroll = document.getElementById(&#39;imageScroll&#39;);
+  let currentIndex = 0;
+  let fullscreenOverlay;  
+
+  
+  function showFullscreenImage() {
+    fullscreenOverlay = document.createElement(&#34;div&#34;);
+    fullscreenOverlay.classList.add(&#34;fullscreen-image&#34;);
+
+    
+    const fullscreenImage = largeImage.cloneNode();
+    fullscreenImage.style.padding = &#34;10px&#34;; 
+    fullscreenOverlay.appendChild(fullscreenImage);
+
+    
+    const leftArrow = document.createElement(&#34;button&#34;);
+    leftArrow.classList.add(&#34;arrow&#34;, &#34;left-arrow&#34;);
+    leftArrow.innerHTML = &#34;&amp;#10094;&#34;;
+    fullscreenOverlay.appendChild(leftArrow);
+
+    
+    const rightArrow = document.createElement(&#34;button&#34;);
+    rightArrow.classList.add(&#34;arrow&#34;, &#34;right-arrow&#34;);
+    rightArrow.innerHTML = &#34;&amp;#10095;&#34;;
+    fullscreenOverlay.appendChild(rightArrow);
+
+    document.body.appendChild(fullscreenOverlay);
+
+    
+    function updateFullscreenImage() {
+      const fullImageUrl = images[currentIndex].getAttribute(&#34;data-full-image&#34;);
+      fullscreenImage.src = fullImageUrl;
+    }
+
+    
+    leftArrow.addEventListener(&#34;click&#34;, function (event) {
+      event.stopPropagation(); 
+      currentIndex = (currentIndex &gt; 0) ? currentIndex - 1 : images.length - 1;
+      updateFullscreenImage();
+    });
+
+    
+    rightArrow.addEventListener(&#34;click&#34;, function (event) {
+      event.stopPropagation(); 
+      currentIndex = (currentIndex &lt; images.length - 1) ? currentIndex + 1 : 0;
+      updateFullscreenImage();
+    });
+
+    
+    document.addEventListener(&#34;keydown&#34;, function (event) {
+      if (fullscreenOverlay) {
+        if (event.key === &#34;ArrowLeft&#34;) {
+          currentIndex = (currentIndex &gt; 0) ? currentIndex - 1 : images.length - 1;
+          updateFullscreenImage();
+        } else if (event.key === &#34;ArrowRight&#34;) {
+          currentIndex = (currentIndex &lt; images.length - 1) ? currentIndex + 1 : 0;
+          updateFullscreenImage();
+        } else if (event.key === &#34;Escape&#34;) {
+          
+          document.body.removeChild(fullscreenOverlay);
+          fullscreenOverlay = null; 
+
+          
+          largeImage.src = images[currentIndex].getAttribute(&#34;data-full-image&#34;);
+
+          
+          images[currentIndex].scrollIntoView({ behavior: &#39;smooth&#39;, inline: &#39;center&#39; });
+        }
+      }
+    });
+
+    
+    fullscreenOverlay.addEventListener(&#34;click&#34;, function (event) {
+      if (event.target === fullscreenImage) {
+        document.body.removeChild(fullscreenOverlay);
+        fullscreenOverlay = null; 
+
+        
+        largeImage.src = images[currentIndex].getAttribute(&#34;data-full-image&#34;);
+
+        
+        images[currentIndex].scrollIntoView({ behavior: &#39;smooth&#39;, inline: &#39;center&#39; });
+      }
+    });
+
+    
+    updateFullscreenImage();
+  }
+
+  
+  largeImageContainer.addEventListener(&#34;click&#34;, function () {
+    showFullscreenImage();
+  });
+
+  
+  imageScroll.addEventListener(&#34;mouseover&#34;, function (event) {
+    const target = event.target.closest(&#39;.image-scroll-item&#39;);
+    if (target) {
+      const fullImageUrl = target.getAttribute(&#39;data-full-image&#39;);
+      largeImage.src = fullImageUrl; 
+      currentIndex = [...images].indexOf(target); 
+    }
+  });
+});
+
+  &lt;/script&gt;
+  
+</description>
+    </item>
+    
+    <item>
+      <title>Luxembourg</title>
+      <link>http://localhost:1313/photo/luxembourg/</link>
+      <pubDate>Tue, 26 Nov 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/photo/luxembourg/</guid>
+      <description>&lt;style&gt;
+
+ 
+.image-scroll {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 10px;
+  white-space: nowrap;
+  max-width: 100vw;
+  height: 170px;
+  scroll-behavior: smooth;
+}
+
+ 
+.image-scroll-item {
+  flex: 0 0 auto;
+  width: 170px;
+  height: 80%;
+  margin-right: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease;
+}
+
+.image-scroll-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+ 
+.image-scroll-item:hover {
+  transform: scale(1.1);
+}
+
+
+ 
+.dark .large-image-container img {
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.9);
+}
+
+ 
+@media (max-width: 1200px) {
+  .large-image-container {
+    height: 500px;
+  }
+
+  .image-scroll-item {
+    width: 130px;
+  }
+}
+
+@media (max-width: 768px) {
+  .large-image-container {
+    height: 400px;
+  }
+
+  .image-scroll-item {
+    width: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .large-image-container {
+    height: 300px;
+  }
+
+  .image-scroll-item {
+    width: 80px;
+  }
+}
+
+ 
+.large-image-container {
+  position: relative;
+  margin-top: 20px;
+  text-align: center;
+  max-width: 100%;
+  height: 600px;  
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: height 0.3s ease;
+  cursor: zoom-in;  
+}
+
+ 
+.large-image-container img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease;  
+}
+
+
+ 
+.large-image-container:hover img {
+  transform: scale(1.02);  
+}
+
+
+ 
+ 
+.fullscreen-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 70px;   
+}
+
+ 
+.fullscreen-image img {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 10px 20px rgba(255, 255, 255, 0.5);
+  cursor: zoom-out;
+}
+
+
+
+ 
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.2);
+  border: none;
+  padding: 10px;
+  font-size: 40px;
+  cursor: pointer;
+  border-radius: 50%;
+  z-index: 11;
+  transition: background-color 0.3s ease;
+}
+
+.left-arrow {
+  left: 30px;
+}
+
+.right-arrow {
+  right: 30px;
+}
+
+.arrow:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+
+&lt;/style&gt;
+&lt;div class=&#34;image-scroll&#34; id=&#34;imageScroll&#34;&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic4.zhimg.com/80/v2-93fcd2bdb504210fe2c09f3bc75d23ff_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic4.zhimg.com/80/v2-93fcd2bdb504210fe2c09f3bc75d23ff_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic2.zhimg.com/80/v2-bf3bd34006b241bbe3da4c9a799d6801_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic2.zhimg.com/80/v2-bf3bd34006b241bbe3da4c9a799d6801_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic2.zhimg.com/80/v2-962b46b3c34038370d6493795aa3f3f1_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic2.zhimg.com/80/v2-962b46b3c34038370d6493795aa3f3f1_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://picx.zhimg.com/80/v2-b7544a68d1b2e1c2b3cc0fb60de003fb_1440w.webp&gt;
+    &lt;img src=&#34;https://picx.zhimg.com/80/v2-b7544a68d1b2e1c2b3cc0fb60de003fb_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic2.zhimg.com/80/v2-9f1d1a4c3e07855d614c90799c5daa4f_1440w.webp&gt;
+    &lt;img src=&#34;https://pic2.zhimg.com/80/v2-9f1d1a4c3e07855d614c90799c5daa4f_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic3.zhimg.com/80/v2-d02fc9cccaa279d5b2141567ca56b0ae_1440w.webp&gt;
+    &lt;img src=&#34;https://pic3.zhimg.com/80/v2-d02fc9cccaa279d5b2141567ca56b0ae_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic1.zhimg.com/80/v2-e4b06dfd810bf32a0f541f9114a37c5c_1440w.webp&gt;
+    &lt;img src=&#34;https://pic1.zhimg.com/80/v2-e4b06dfd810bf32a0f541f9114a37c5c_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;!-- The large image display area --&gt;
+&lt;div class=&#34;large-image-container&#34; id=&#34;largeImageContainer&#34;&gt;
+  &lt;img src=&#34;https://pic4.zhimg.com/80/v2-93fcd2bdb504210fe2c09f3bc75d23ff_1440w.jpg&#34; alt=&#34;Large Image&#34; id=&#34;largeImage&#34;&gt;
+&lt;/div&gt;
+&lt;script&gt;
+
+document.addEventListener(&#34;DOMContentLoaded&#34;, function () {
+  const largeImageContainer = document.getElementById(&#34;largeImageContainer&#34;);
+  const largeImage = document.getElementById(&#34;largeImage&#34;);
+  const images = document.querySelectorAll(&#39;.image-scroll-item&#39;);
+  const imageScroll = document.getElementById(&#39;imageScroll&#39;);
+  let currentIndex = 0;
+  let fullscreenOverlay;  
+
+  
+  function showFullscreenImage() {
+    fullscreenOverlay = document.createElement(&#34;div&#34;);
+    fullscreenOverlay.classList.add(&#34;fullscreen-image&#34;);
+
+    
+    const fullscreenImage = largeImage.cloneNode();
+    fullscreenImage.style.padding = &#34;10px&#34;; 
+    fullscreenOverlay.appendChild(fullscreenImage);
+
+    
+    const leftArrow = document.createElement(&#34;button&#34;);
+    leftArrow.classList.add(&#34;arrow&#34;, &#34;left-arrow&#34;);
+    leftArrow.innerHTML = &#34;&amp;#10094;&#34;;
+    fullscreenOverlay.appendChild(leftArrow);
+
+    
+    const rightArrow = document.createElement(&#34;button&#34;);
+    rightArrow.classList.add(&#34;arrow&#34;, &#34;right-arrow&#34;);
+    rightArrow.innerHTML = &#34;&amp;#10095;&#34;;
+    fullscreenOverlay.appendChild(rightArrow);
+
+    document.body.appendChild(fullscreenOverlay);
+
+    
+    function updateFullscreenImage() {
+      const fullImageUrl = images[currentIndex].getAttribute(&#34;data-full-image&#34;);
+      fullscreenImage.src = fullImageUrl;
+    }
+
+    
+    leftArrow.addEventListener(&#34;click&#34;, function (event) {
+      event.stopPropagation(); 
+      currentIndex = (currentIndex &gt; 0) ? currentIndex - 1 : images.length - 1;
+      updateFullscreenImage();
+    });
+
+    
+    rightArrow.addEventListener(&#34;click&#34;, function (event) {
+      event.stopPropagation(); 
+      currentIndex = (currentIndex &lt; images.length - 1) ? currentIndex + 1 : 0;
+      updateFullscreenImage();
+    });
+
+    
+    document.addEventListener(&#34;keydown&#34;, function (event) {
+      if (fullscreenOverlay) {
+        if (event.key === &#34;ArrowLeft&#34;) {
+          currentIndex = (currentIndex &gt; 0) ? currentIndex - 1 : images.length - 1;
+          updateFullscreenImage();
+        } else if (event.key === &#34;ArrowRight&#34;) {
+          currentIndex = (currentIndex &lt; images.length - 1) ? currentIndex + 1 : 0;
+          updateFullscreenImage();
+        } else if (event.key === &#34;Escape&#34;) {
+          
+          document.body.removeChild(fullscreenOverlay);
+          fullscreenOverlay = null; 
+
+          
+          largeImage.src = images[currentIndex].getAttribute(&#34;data-full-image&#34;);
+
+          
+          images[currentIndex].scrollIntoView({ behavior: &#39;smooth&#39;, inline: &#39;center&#39; });
+        }
+      }
+    });
+
+    
+    fullscreenOverlay.addEventListener(&#34;click&#34;, function (event) {
+      if (event.target === fullscreenImage) {
+        document.body.removeChild(fullscreenOverlay);
+        fullscreenOverlay = null; 
+
+        
+        largeImage.src = images[currentIndex].getAttribute(&#34;data-full-image&#34;);
+
+        
+        images[currentIndex].scrollIntoView({ behavior: &#39;smooth&#39;, inline: &#39;center&#39; });
+      }
+    });
+
+    
+    updateFullscreenImage();
+  }
+
+  
+  largeImageContainer.addEventListener(&#34;click&#34;, function () {
+    showFullscreenImage();
+  });
+
+  
+  imageScroll.addEventListener(&#34;mouseover&#34;, function (event) {
+    const target = event.target.closest(&#39;.image-scroll-item&#39;);
+    if (target) {
+      const fullImageUrl = target.getAttribute(&#39;data-full-image&#39;);
+      largeImage.src = fullImageUrl; 
+      currentIndex = [...images].indexOf(target); 
+    }
+  });
+});
+
+  &lt;/script&gt;
+  
+</description>
+    </item>
+    
+    <item>
+      <title>Frankfurt, Germany</title>
+      <link>http://localhost:1313/photo/germany/</link>
+      <pubDate>Mon, 25 Nov 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/photo/germany/</guid>
+      <description>&lt;style&gt;
+
+ 
+.image-scroll {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 10px;
+  white-space: nowrap;
+  max-width: 100vw;
+  height: 170px;
+  scroll-behavior: smooth;
+}
+
+ 
+.image-scroll-item {
+  flex: 0 0 auto;
+  width: 170px;
+  height: 80%;
+  margin-right: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease;
+}
+
+.image-scroll-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+ 
+.image-scroll-item:hover {
+  transform: scale(1.1);
+}
+
+
+ 
+.dark .large-image-container img {
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.9);
+}
+
+ 
+@media (max-width: 1200px) {
+  .large-image-container {
+    height: 500px;
+  }
+
+  .image-scroll-item {
+    width: 130px;
+  }
+}
+
+@media (max-width: 768px) {
+  .large-image-container {
+    height: 400px;
+  }
+
+  .image-scroll-item {
+    width: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .large-image-container {
+    height: 300px;
+  }
+
+  .image-scroll-item {
+    width: 80px;
+  }
+}
+
+ 
+.large-image-container {
+  position: relative;
+  margin-top: 20px;
+  text-align: center;
+  max-width: 100%;
+  height: 600px;  
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: height 0.3s ease;
+  cursor: zoom-in;  
+}
+
+ 
+.large-image-container img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease;  
+}
+
+
+ 
+.large-image-container:hover img {
+  transform: scale(1.02);  
+}
+
+
+ 
+ 
+.fullscreen-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 70px;   
+}
+
+ 
+.fullscreen-image img {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 10px 20px rgba(255, 255, 255, 0.5);
+  cursor: zoom-out;
+}
+
+
+
+ 
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.2);
+  border: none;
+  padding: 10px;
+  font-size: 40px;
+  cursor: pointer;
+  border-radius: 50%;
+  z-index: 11;
+  transition: background-color 0.3s ease;
+}
+
+.left-arrow {
+  left: 30px;
+}
+
+.right-arrow {
+  right: 30px;
+}
+
+.arrow:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+
+&lt;/style&gt;
+&lt;div class=&#34;image-scroll&#34; id=&#34;imageScroll&#34;&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic2.zhimg.com/80/v2-748ceb22e3b4542b3a7d14595d5bc82d_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic2.zhimg.com/80/v2-748ceb22e3b4542b3a7d14595d5bc82d_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic4.zhimg.com/80/v2-5ad739dd49526c5b96bae8b6130a4733_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic4.zhimg.com/80/v2-5ad739dd49526c5b96bae8b6130a4733_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic3.zhimg.com/80/v2-48ba79c3bf1cb784387810ded7042332_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic3.zhimg.com/80/v2-48ba79c3bf1cb784387810ded7042332_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://picx.zhimg.com/80/v2-aa296dc097451871483bf1d6f735672f_1440w.webp&gt;
+    &lt;img src=&#34;https://picx.zhimg.com/80/v2-aa296dc097451871483bf1d6f735672f_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic2.zhimg.com/80/v2-12ee3c2c2e861b22889633d61d6f5f7d_1440w.webp&gt;
+    &lt;img src=&#34;https://pic2.zhimg.com/80/v2-12ee3c2c2e861b22889633d61d6f5f7d_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://picx.zhimg.com/80/v2-e2338e36dd51c729f41874b5d71489d1_1440w.webp&gt;
+    &lt;img src=&#34;https://picx.zhimg.com/80/v2-e2338e36dd51c729f41874b5d71489d1_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic2.zhimg.com/80/v2-56f74651558dd7b66c4a406deff8051b_1440w.webp&gt;
+    &lt;img src=&#34;https://pic2.zhimg.com/80/v2-56f74651558dd7b66c4a406deff8051b_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic4.zhimg.com/80/v2-3b26bca029d36f04bce2dd171bcee0b3_1440w.webp&gt;
+    &lt;img src=&#34;https://pic4.zhimg.com/80/v2-3b26bca029d36f04bce2dd171bcee0b3_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;!-- The large image display area --&gt;
+&lt;div class=&#34;large-image-container&#34; id=&#34;largeImageContainer&#34;&gt;
+  &lt;img src=&#34;https://pic2.zhimg.com/80/v2-748ceb22e3b4542b3a7d14595d5bc82d_1440w.jpg&#34; alt=&#34;Large Image&#34; id=&#34;largeImage&#34;&gt;
+&lt;/div&gt;
+&lt;script&gt;
+
+document.addEventListener(&#34;DOMContentLoaded&#34;, function () {
+  const largeImageContainer = document.getElementById(&#34;largeImageContainer&#34;);
+  const largeImage = document.getElementById(&#34;largeImage&#34;);
+  const images = document.querySelectorAll(&#39;.image-scroll-item&#39;);
+  const imageScroll = document.getElementById(&#39;imageScroll&#39;);
+  let currentIndex = 0;
+  let fullscreenOverlay;  
+
+  
+  function showFullscreenImage() {
+    fullscreenOverlay = document.createElement(&#34;div&#34;);
+    fullscreenOverlay.classList.add(&#34;fullscreen-image&#34;);
+
+    
+    const fullscreenImage = largeImage.cloneNode();
+    fullscreenImage.style.padding = &#34;10px&#34;; 
+    fullscreenOverlay.appendChild(fullscreenImage);
+
+    
+    const leftArrow = document.createElement(&#34;button&#34;);
+    leftArrow.classList.add(&#34;arrow&#34;, &#34;left-arrow&#34;);
+    leftArrow.innerHTML = &#34;&amp;#10094;&#34;;
+    fullscreenOverlay.appendChild(leftArrow);
+
+    
+    const rightArrow = document.createElement(&#34;button&#34;);
+    rightArrow.classList.add(&#34;arrow&#34;, &#34;right-arrow&#34;);
+    rightArrow.innerHTML = &#34;&amp;#10095;&#34;;
+    fullscreenOverlay.appendChild(rightArrow);
+
+    document.body.appendChild(fullscreenOverlay);
+
+    
+    function updateFullscreenImage() {
+      const fullImageUrl = images[currentIndex].getAttribute(&#34;data-full-image&#34;);
+      fullscreenImage.src = fullImageUrl;
+    }
+
+    
+    leftArrow.addEventListener(&#34;click&#34;, function (event) {
+      event.stopPropagation(); 
+      currentIndex = (currentIndex &gt; 0) ? currentIndex - 1 : images.length - 1;
+      updateFullscreenImage();
+    });
+
+    
+    rightArrow.addEventListener(&#34;click&#34;, function (event) {
+      event.stopPropagation(); 
+      currentIndex = (currentIndex &lt; images.length - 1) ? currentIndex + 1 : 0;
+      updateFullscreenImage();
+    });
+
+    
+    document.addEventListener(&#34;keydown&#34;, function (event) {
+      if (fullscreenOverlay) {
+        if (event.key === &#34;ArrowLeft&#34;) {
+          currentIndex = (currentIndex &gt; 0) ? currentIndex - 1 : images.length - 1;
+          updateFullscreenImage();
+        } else if (event.key === &#34;ArrowRight&#34;) {
+          currentIndex = (currentIndex &lt; images.length - 1) ? currentIndex + 1 : 0;
+          updateFullscreenImage();
+        } else if (event.key === &#34;Escape&#34;) {
+          
+          document.body.removeChild(fullscreenOverlay);
+          fullscreenOverlay = null; 
+
+          
+          largeImage.src = images[currentIndex].getAttribute(&#34;data-full-image&#34;);
+
+          
+          images[currentIndex].scrollIntoView({ behavior: &#39;smooth&#39;, inline: &#39;center&#39; });
+        }
+      }
+    });
+
+    
+    fullscreenOverlay.addEventListener(&#34;click&#34;, function (event) {
+      if (event.target === fullscreenImage) {
+        document.body.removeChild(fullscreenOverlay);
+        fullscreenOverlay = null; 
+
+        
+        largeImage.src = images[currentIndex].getAttribute(&#34;data-full-image&#34;);
+
+        
+        images[currentIndex].scrollIntoView({ behavior: &#39;smooth&#39;, inline: &#39;center&#39; });
+      }
+    });
+
+    
+    updateFullscreenImage();
+  }
+
+  
+  largeImageContainer.addEventListener(&#34;click&#34;, function () {
+    showFullscreenImage();
+  });
+
+  
+  imageScroll.addEventListener(&#34;mouseover&#34;, function (event) {
+    const target = event.target.closest(&#39;.image-scroll-item&#39;);
+    if (target) {
+      const fullImageUrl = target.getAttribute(&#39;data-full-image&#39;);
+      largeImage.src = fullImageUrl; 
+      currentIndex = [...images].indexOf(target); 
+    }
+  });
+});
+
+  &lt;/script&gt;
+  
+</description>
+    </item>
+    
+    <item>
+      <title>Experience</title>
+      <link>http://localhost:1313/experience/</link>
+      <pubDate>Mon, 02 Sep 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/experience/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>See Further for Parameter Efficient Fine-tuning by Standing on the Shoulders of Decomposition</title>
+      <link>http://localhost:1313/full-publications/2024-arxiv-subspace-tuning/</link>
+      <pubDate>Sun, 07 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2024-arxiv-subspace-tuning/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Photos</title>
+      <link>http://localhost:1313/photos/</link>
+      <pubDate>Sun, 19 May 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/photos/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Publications</title>
+      <link>http://localhost:1313/publications/</link>
+      <pubDate>Sun, 19 May 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/publications/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Tendency-driven Mutual Exclusivity for Weakly Supervised Incremental Semantic Segmentation</title>
+      <link>http://localhost:1313/full-publications/2024-eccv-teddy/</link>
+      <pubDate>Thu, 18 Apr 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2024-eccv-teddy/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Appeal: Allow Mislabeled Samples the Chance to be Rectified in Partial Label Learning</title>
+      <link>http://localhost:1313/full-publications/2024-arxiv-appeal/</link>
+      <pubDate>Thu, 28 Mar 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2024-arxiv-appeal/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Partial Label Learning with a Partner</title>
+      <link>http://localhost:1313/full-publications/2024-aaai-plcp/</link>
+      <pubDate>Sun, 24 Mar 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2024-aaai-plcp/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Vancouver, Canada</title>
+      <link>http://localhost:1313/photo/vancouver/</link>
+      <pubDate>Wed, 21 Feb 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/photo/vancouver/</guid>
+      <description>&lt;style&gt;
+
+ 
+.image-scroll {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 10px;
+  white-space: nowrap;
+  max-width: 100vw;
+  height: 170px;
+  scroll-behavior: smooth;
+}
+
+ 
+.image-scroll-item {
+  flex: 0 0 auto;
+  width: 170px;
+  height: 80%;
+  margin-right: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease;
+}
+
+.image-scroll-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+ 
+.image-scroll-item:hover {
+  transform: scale(1.1);
+}
+
+
+ 
+.dark .large-image-container img {
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.9);
+}
+
+ 
+@media (max-width: 1200px) {
+  .large-image-container {
+    height: 500px;
+  }
+
+  .image-scroll-item {
+    width: 130px;
+  }
+}
+
+@media (max-width: 768px) {
+  .large-image-container {
+    height: 400px;
+  }
+
+  .image-scroll-item {
+    width: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .large-image-container {
+    height: 300px;
+  }
+
+  .image-scroll-item {
+    width: 80px;
+  }
+}
+
+ 
+.large-image-container {
+  position: relative;
+  margin-top: 20px;
+  text-align: center;
+  max-width: 100%;
+  height: 600px;  
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: height 0.3s ease;
+  cursor: zoom-in;  
+}
+
+ 
+.large-image-container img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease;  
+}
+
+
+ 
+.large-image-container:hover img {
+  transform: scale(1.02);  
+}
+
+
+ 
+ 
+.fullscreen-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 70px;   
+}
+
+ 
+.fullscreen-image img {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 10px 20px rgba(255, 255, 255, 0.5);
+  cursor: zoom-out;
+}
+
+
+
+ 
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.2);
+  border: none;
+  padding: 10px;
+  font-size: 40px;
+  cursor: pointer;
+  border-radius: 50%;
+  z-index: 11;
+  transition: background-color 0.3s ease;
+}
+
+.left-arrow {
+  left: 30px;
+}
+
+.right-arrow {
+  right: 30px;
+}
+
+.arrow:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+
+&lt;/style&gt;
+&lt;div class=&#34;image-scroll&#34; id=&#34;imageScroll&#34;&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=&#34;https://pica.zhimg.com/80/v2-d90fb0eede5003664249ff3ac17f1042_1440w.jpg&#34;&gt;
+    &lt;img src=&#34;https://pica.zhimg.com/80/v2-d90fb0eede5003664249ff3ac17f1042_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=&#34;https://pic3.zhimg.com/80/v2-9aa1d5b0f4632257e51450dc3b1ce114_1440w.jpg&#34;&gt;
+    &lt;img src=&#34;https://pic3.zhimg.com/80/v2-9aa1d5b0f4632257e51450dc3b1ce114_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=&#34;https://picx.zhimg.com/80/v2-0128f2a3202737efab3da2fbde8bb4db_1440w.jpg&#34;&gt;
+    &lt;img src=&#34;https://picx.zhimg.com/80/v2-0128f2a3202737efab3da2fbde8bb4db_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=&#34;https://pic2.zhimg.com/80/v2-950149ad6b5a1875de92c8caa3f13345_1440w.jpg&#34;&gt;
+    &lt;img src=&#34;https://pic2.zhimg.com/80/v2-950149ad6b5a1875de92c8caa3f13345_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=&#34;https://pic1.zhimg.com/80/v2-6a226aba850f59aaadcc86b5f30732cc_1440w.jpg&#34;&gt;
+    &lt;img src=&#34;https://pic1.zhimg.com/80/v2-6a226aba850f59aaadcc86b5f30732cc_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pica.zhimg.com/80/v2-e8136e3c0c4ea9bb349e016b46c47932_1440w.jpg&gt;
+    &lt;img src=&#34;https://pica.zhimg.com/80/v2-e8136e3c0c4ea9bb349e016b46c47932_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic2.zhimg.com/80/v2-2e48aa89745e27a18458fc84290ff5a7_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic2.zhimg.com/80/v2-2e48aa89745e27a18458fc84290ff5a7_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic1.zhimg.com/80/v2-ab931b9d73d128f8ec682c699133640e_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic1.zhimg.com/80/v2-ab931b9d73d128f8ec682c699133640e_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic1.zhimg.com/80/v2-108e437211884b77584f90fc67dcb80e_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic1.zhimg.com/80/v2-108e437211884b77584f90fc67dcb80e_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic1.zhimg.com/80/v2-35c84dd459a80a9923a12592246c2322_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic1.zhimg.com/80/v2-35c84dd459a80a9923a12592246c2322_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic4.zhimg.com/80/v2-c1b8c2efbcae0dfdbae2d9b0dcbc9381_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic4.zhimg.com/80/v2-c1b8c2efbcae0dfdbae2d9b0dcbc9381_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;!-- The large image display area --&gt;
+&lt;div class=&#34;large-image-container&#34; id=&#34;largeImageContainer&#34;&gt;
+  &lt;img src=&#34;https://pica.zhimg.com/80/v2-d90fb0eede5003664249ff3ac17f1042_1440w.jpg&#34; alt=&#34;Large Image&#34; id=&#34;largeImage&#34;&gt;
+&lt;/div&gt;
+&lt;script&gt;
+
+document.addEventListener(&#34;DOMContentLoaded&#34;, function () {
+  const largeImageContainer = document.getElementById(&#34;largeImageContainer&#34;);
+  const largeImage = document.getElementById(&#34;largeImage&#34;);
+  const images = document.querySelectorAll(&#39;.image-scroll-item&#39;);
+  const imageScroll = document.getElementById(&#39;imageScroll&#39;);
+  let currentIndex = 0;
+  let fullscreenOverlay;  
+
+  
+  function showFullscreenImage() {
+    fullscreenOverlay = document.createElement(&#34;div&#34;);
+    fullscreenOverlay.classList.add(&#34;fullscreen-image&#34;);
+
+    
+    const fullscreenImage = largeImage.cloneNode();
+    fullscreenImage.style.padding = &#34;10px&#34;; 
+    fullscreenOverlay.appendChild(fullscreenImage);
+
+    
+    const leftArrow = document.createElement(&#34;button&#34;);
+    leftArrow.classList.add(&#34;arrow&#34;, &#34;left-arrow&#34;);
+    leftArrow.innerHTML = &#34;&amp;#10094;&#34;;
+    fullscreenOverlay.appendChild(leftArrow);
+
+    
+    const rightArrow = document.createElement(&#34;button&#34;);
+    rightArrow.classList.add(&#34;arrow&#34;, &#34;right-arrow&#34;);
+    rightArrow.innerHTML = &#34;&amp;#10095;&#34;;
+    fullscreenOverlay.appendChild(rightArrow);
+
+    document.body.appendChild(fullscreenOverlay);
+
+    
+    function updateFullscreenImage() {
+      const fullImageUrl = images[currentIndex].getAttribute(&#34;data-full-image&#34;);
+      fullscreenImage.src = fullImageUrl;
+    }
+
+    
+    leftArrow.addEventListener(&#34;click&#34;, function (event) {
+      event.stopPropagation(); 
+      currentIndex = (currentIndex &gt; 0) ? currentIndex - 1 : images.length - 1;
+      updateFullscreenImage();
+    });
+
+    
+    rightArrow.addEventListener(&#34;click&#34;, function (event) {
+      event.stopPropagation(); 
+      currentIndex = (currentIndex &lt; images.length - 1) ? currentIndex + 1 : 0;
+      updateFullscreenImage();
+    });
+
+    
+    document.addEventListener(&#34;keydown&#34;, function (event) {
+      if (fullscreenOverlay) {
+        if (event.key === &#34;ArrowLeft&#34;) {
+          currentIndex = (currentIndex &gt; 0) ? currentIndex - 1 : images.length - 1;
+          updateFullscreenImage();
+        } else if (event.key === &#34;ArrowRight&#34;) {
+          currentIndex = (currentIndex &lt; images.length - 1) ? currentIndex + 1 : 0;
+          updateFullscreenImage();
+        } else if (event.key === &#34;Escape&#34;) {
+          
+          document.body.removeChild(fullscreenOverlay);
+          fullscreenOverlay = null; 
+
+          
+          largeImage.src = images[currentIndex].getAttribute(&#34;data-full-image&#34;);
+
+          
+          images[currentIndex].scrollIntoView({ behavior: &#39;smooth&#39;, inline: &#39;center&#39; });
+        }
+      }
+    });
+
+    
+    fullscreenOverlay.addEventListener(&#34;click&#34;, function (event) {
+      if (event.target === fullscreenImage) {
+        document.body.removeChild(fullscreenOverlay);
+        fullscreenOverlay = null; 
+
+        
+        largeImage.src = images[currentIndex].getAttribute(&#34;data-full-image&#34;);
+
+        
+        images[currentIndex].scrollIntoView({ behavior: &#39;smooth&#39;, inline: &#39;center&#39; });
+      }
+    });
+
+    
+    updateFullscreenImage();
+  }
+
+  
+  largeImageContainer.addEventListener(&#34;click&#34;, function () {
+    showFullscreenImage();
+  });
+
+  
+  imageScroll.addEventListener(&#34;mouseover&#34;, function (event) {
+    const target = event.target.closest(&#39;.image-scroll-item&#39;);
+    if (target) {
+      const fullImageUrl = target.getAttribute(&#39;data-full-image&#39;);
+      largeImage.src = fullImageUrl; 
+      currentIndex = [...images].indexOf(target); 
+    }
+  });
+});
+
+  &lt;/script&gt;
+  
+</description>
+    </item>
+    
+    <item>
+      <title>Multi-label Classification with High-rank and High-order Label Correlations</title>
+      <link>http://localhost:1313/full-publications/2023-tkde-homi/</link>
+      <pubDate>Wed, 06 Sep 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2023-tkde-homi/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Recent News</title>
+      <link>http://localhost:1313/news/news/</link>
+      <pubDate>Tue, 05 Sep 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/news/news/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Complementary Classifier Induced Partial Label Learning</title>
+      <link>http://localhost:1313/full-publications/2023-kdd-plcl/</link>
+      <pubDate>Fri, 04 Aug 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2023-kdd-plcl/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Japan</title>
+      <link>http://localhost:1313/photo/japan/</link>
+      <pubDate>Mon, 24 Jul 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/photo/japan/</guid>
+      <description>&lt;style&gt;
+
+ 
+.image-scroll {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 10px;
+  white-space: nowrap;
+  max-width: 100vw;
+  height: 170px;
+  scroll-behavior: smooth;
+}
+
+ 
+.image-scroll-item {
+  flex: 0 0 auto;
+  width: 170px;
+  height: 80%;
+  margin-right: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease;
+}
+
+.image-scroll-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+ 
+.image-scroll-item:hover {
+  transform: scale(1.1);
+}
+
+
+ 
+.dark .large-image-container img {
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.9);
+}
+
+ 
+@media (max-width: 1200px) {
+  .large-image-container {
+    height: 500px;
+  }
+
+  .image-scroll-item {
+    width: 130px;
+  }
+}
+
+@media (max-width: 768px) {
+  .large-image-container {
+    height: 400px;
+  }
+
+  .image-scroll-item {
+    width: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .large-image-container {
+    height: 300px;
+  }
+
+  .image-scroll-item {
+    width: 80px;
+  }
+}
+
+ 
+.large-image-container {
+  position: relative;
+  margin-top: 20px;
+  text-align: center;
+  max-width: 100%;
+  height: 600px;  
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: height 0.3s ease;
+  cursor: zoom-in;  
+}
+
+ 
+.large-image-container img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease;  
+}
+
+
+ 
+.large-image-container:hover img {
+  transform: scale(1.02);  
+}
+
+
+ 
+ 
+.fullscreen-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 70px;   
+}
+
+ 
+.fullscreen-image img {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 10px 20px rgba(255, 255, 255, 0.5);
+  cursor: zoom-out;
+}
+
+
+
+ 
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.2);
+  border: none;
+  padding: 10px;
+  font-size: 40px;
+  cursor: pointer;
+  border-radius: 50%;
+  z-index: 11;
+  transition: background-color 0.3s ease;
+}
+
+.left-arrow {
+  left: 30px;
+}
+
+.right-arrow {
+  right: 30px;
+}
+
+.arrow:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+
+&lt;/style&gt;
+&lt;div class=&#34;image-scroll&#34; id=&#34;imageScroll&#34;&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://picx.zhimg.com/80/v2-16588a10dac0ae2d32cf9ee0e76688cd_1440w.jpg&gt;
+    &lt;img src=&#34;https://picx.zhimg.com/80/v2-16588a10dac0ae2d32cf9ee0e76688cd_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+   &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic4.zhimg.com/80/v2-0a0e2e1876e2c5c6479f7005da452599_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic4.zhimg.com/80/v2-0a0e2e1876e2c5c6479f7005da452599_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+ &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic1.zhimg.com/80/v2-9d887dfe7e9749ebeafbe42f9bc82e36_1440w.jpg&gt;
+    &lt;img src=&#34;https://pic1.zhimg.com/80/v2-9d887dfe7e9749ebeafbe42f9bc82e36_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+ &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://picx.zhimg.com/80/v2-92834f0af9ab8cd7bf54802b35006a0d_1440w.webp&gt;
+    &lt;img src=&#34;https://picx.zhimg.com/80/v2-92834f0af9ab8cd7bf54802b35006a0d_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+ &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic2.zhimg.com/80/v2-34e7b0333fb5d90806d12ecfb4ad26d9_1440w.webp&gt;
+    &lt;img src=&#34;https://pic2.zhimg.com/80/v2-34e7b0333fb5d90806d12ecfb4ad26d9_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+ &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pica.zhimg.com/80/v2-d013936e34fd6b508e1f29134be5bde0_1440w.webp&gt;
+    &lt;img src=&#34;https://pica.zhimg.com/80/v2-d013936e34fd6b508e1f29134be5bde0_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+ &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pica.zhimg.com/80/v2-f12a91c3e62991496e8c0a950d3e585e_1440w.webp&gt;
+    &lt;img src=&#34;https://pica.zhimg.com/80/v2-f12a91c3e62991496e8c0a950d3e585e_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+ &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pica.zhimg.com/80/v2-b48f244689c0ad9948cf31ec370fd0b4_1440w.webp&gt;
+    &lt;img src=&#34;https://pica.zhimg.com/80/v2-b48f244689c0ad9948cf31ec370fd0b4_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+ &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic1.zhimg.com/80/v2-e1a7765f878b3e79b1794610983203be_1440w.webp&gt;
+    &lt;img src=&#34;https://pic1.zhimg.com/80/v2-e1a7765f878b3e79b1794610983203be_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+ &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic3.zhimg.com/80/v2-3d9f75bc6622233580f6dfd6b3f44684_1440w.webp&gt;
+    &lt;img src=&#34;https://pic3.zhimg.com/80/v2-3d9f75bc6622233580f6dfd6b3f44684_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+ &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pica.zhimg.com/80/v2-34ad0bc93e4f4fc7f75d055867e49b46_1440w.webp&gt;
+    &lt;img src=&#34;https://pica.zhimg.com/80/v2-34ad0bc93e4f4fc7f75d055867e49b46_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+ &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://picx.zhimg.com/80/v2-06fffd001da9305530b98905d9acfb99_1440w.webp&gt;
+    &lt;img src=&#34;https://picx.zhimg.com/80/v2-06fffd001da9305530b98905d9acfb99_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+ &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic4.zhimg.com/80/v2-41b0c18593ac5fe0837eeb9b1291301d_1440w.webp&gt;
+    &lt;img src=&#34;https://pic4.zhimg.com/80/v2-41b0c18593ac5fe0837eeb9b1291301d_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+ &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic1.zhimg.com/80/v2-72e913bb6d49f5bd04e1bac3458c0c36_1440w.webp&gt;
+    &lt;img src=&#34;https://pic1.zhimg.com/80/v2-72e913bb6d49f5bd04e1bac3458c0c36_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+ &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic3.zhimg.com/80/v2-3f3b35961229c6f2bbb75ad46b86c116_1440w.webp&gt;
+    &lt;img src=&#34;https://pic3.zhimg.com/80/v2-3f3b35961229c6f2bbb75ad46b86c116_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+ &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pica.zhimg.com/80/v2-e2c464b2e26f622e7f65abd1db39d228_1440w.webp&gt;
+    &lt;img src=&#34;https://pica.zhimg.com/80/v2-e2c464b2e26f622e7f65abd1db39d228_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+ &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://picx.zhimg.com/80/v2-46b2a7f8b2d072ff46012a62d9e26783_1440w.webp&gt;
+    &lt;img src=&#34;https://picx.zhimg.com/80/v2-46b2a7f8b2d072ff46012a62d9e26783_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+ &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pica.zhimg.com/80/v2-34478b263a9254db09857878460abdf6_1440w.webp&gt;
+    &lt;img src=&#34;https://pica.zhimg.com/80/v2-34478b263a9254db09857878460abdf6_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+ &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://picx.zhimg.com/80/v2-f93a3b543106788cbd53305f37002aa1_1440w.webp&gt;
+    &lt;img src=&#34;https://picx.zhimg.com/80/v2-f93a3b543106788cbd53305f37002aa1_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+ &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://picx.zhimg.com/80/v2-6bd6fc01cc0ad5faa7cd80d540fa076f_1440w.webp&gt;
+    &lt;img src=&#34;https://picx.zhimg.com/80/v2-6bd6fc01cc0ad5faa7cd80d540fa076f_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+ &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic4.zhimg.com/80/v2-0876e04d29a5c1b97bdb2f3b0b04ca1f_1440w.webp&gt;
+    &lt;img src=&#34;https://pic4.zhimg.com/80/v2-0876e04d29a5c1b97bdb2f3b0b04ca1f_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+ &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic3.zhimg.com/80/v2-4ef91e14ca0d343492405d0a41b6a5b0_1440w.webp&gt;
+    &lt;img src=&#34;https://pic3.zhimg.com/80/v2-4ef91e14ca0d343492405d0a41b6a5b0_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+ &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic2.zhimg.com/80/v2-fb9f902fe5c1526a224ad4482be54fdf_1440w.webp&gt;
+    &lt;img src=&#34;https://pic2.zhimg.com/80/v2-fb9f902fe5c1526a224ad4482be54fdf_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+ &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic4.zhimg.com/80/v2-2479b868ddaa928f153a50d0f4f58095_1440w.webp&gt;
+    &lt;img src=&#34;https://pic4.zhimg.com/80/v2-2479b868ddaa928f153a50d0f4f58095_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+ &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://picx.zhimg.com/80/v2-fded91ed8a22a84b59a4f0808c19543b_1440w.webp&gt;
+    &lt;img src=&#34;https://picx.zhimg.com/80/v2-fded91ed8a22a84b59a4f0808c19543b_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+ &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic1.zhimg.com/80/v2-7f66e4b173ea9804ecdd2dbe64a4aa36_1440w.webp&gt;
+    &lt;img src=&#34;https://pic1.zhimg.com/80/v2-7f66e4b173ea9804ecdd2dbe64a4aa36_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;!-- The large image display area --&gt;
+&lt;div class=&#34;large-image-container&#34; id=&#34;largeImageContainer&#34;&gt;
+  &lt;img src=&#34;https://picx.zhimg.com/80/v2-16588a10dac0ae2d32cf9ee0e76688cd_1440w.jpg&#34; alt=&#34;Large Image&#34; id=&#34;largeImage&#34;&gt;
+&lt;/div&gt;
+&lt;script&gt;
+
+document.addEventListener(&#34;DOMContentLoaded&#34;, function () {
+  const largeImageContainer = document.getElementById(&#34;largeImageContainer&#34;);
+  const largeImage = document.getElementById(&#34;largeImage&#34;);
+  const images = document.querySelectorAll(&#39;.image-scroll-item&#39;);
+  const imageScroll = document.getElementById(&#39;imageScroll&#39;);
+  let currentIndex = 0;
+  let fullscreenOverlay;  
+
+  
+  function showFullscreenImage() {
+    fullscreenOverlay = document.createElement(&#34;div&#34;);
+    fullscreenOverlay.classList.add(&#34;fullscreen-image&#34;);
+
+    
+    const fullscreenImage = largeImage.cloneNode();
+    fullscreenImage.style.padding = &#34;10px&#34;; 
+    fullscreenOverlay.appendChild(fullscreenImage);
+
+    
+    const leftArrow = document.createElement(&#34;button&#34;);
+    leftArrow.classList.add(&#34;arrow&#34;, &#34;left-arrow&#34;);
+    leftArrow.innerHTML = &#34;&amp;#10094;&#34;;
+    fullscreenOverlay.appendChild(leftArrow);
+
+    
+    const rightArrow = document.createElement(&#34;button&#34;);
+    rightArrow.classList.add(&#34;arrow&#34;, &#34;right-arrow&#34;);
+    rightArrow.innerHTML = &#34;&amp;#10095;&#34;;
+    fullscreenOverlay.appendChild(rightArrow);
+
+    document.body.appendChild(fullscreenOverlay);
+
+    
+    function updateFullscreenImage() {
+      const fullImageUrl = images[currentIndex].getAttribute(&#34;data-full-image&#34;);
+      fullscreenImage.src = fullImageUrl;
+    }
+
+    
+    leftArrow.addEventListener(&#34;click&#34;, function (event) {
+      event.stopPropagation(); 
+      currentIndex = (currentIndex &gt; 0) ? currentIndex - 1 : images.length - 1;
+      updateFullscreenImage();
+    });
+
+    
+    rightArrow.addEventListener(&#34;click&#34;, function (event) {
+      event.stopPropagation(); 
+      currentIndex = (currentIndex &lt; images.length - 1) ? currentIndex + 1 : 0;
+      updateFullscreenImage();
+    });
+
+    
+    document.addEventListener(&#34;keydown&#34;, function (event) {
+      if (fullscreenOverlay) {
+        if (event.key === &#34;ArrowLeft&#34;) {
+          currentIndex = (currentIndex &gt; 0) ? currentIndex - 1 : images.length - 1;
+          updateFullscreenImage();
+        } else if (event.key === &#34;ArrowRight&#34;) {
+          currentIndex = (currentIndex &lt; images.length - 1) ? currentIndex + 1 : 0;
+          updateFullscreenImage();
+        } else if (event.key === &#34;Escape&#34;) {
+          
+          document.body.removeChild(fullscreenOverlay);
+          fullscreenOverlay = null; 
+
+          
+          largeImage.src = images[currentIndex].getAttribute(&#34;data-full-image&#34;);
+
+          
+          images[currentIndex].scrollIntoView({ behavior: &#39;smooth&#39;, inline: &#39;center&#39; });
+        }
+      }
+    });
+
+    
+    fullscreenOverlay.addEventListener(&#34;click&#34;, function (event) {
+      if (event.target === fullscreenImage) {
+        document.body.removeChild(fullscreenOverlay);
+        fullscreenOverlay = null; 
+
+        
+        largeImage.src = images[currentIndex].getAttribute(&#34;data-full-image&#34;);
+
+        
+        images[currentIndex].scrollIntoView({ behavior: &#39;smooth&#39;, inline: &#39;center&#39; });
+      }
+    });
+
+    
+    updateFullscreenImage();
+  }
+
+  
+  largeImageContainer.addEventListener(&#34;click&#34;, function () {
+    showFullscreenImage();
+  });
+
+  
+  imageScroll.addEventListener(&#34;mouseover&#34;, function (event) {
+    const target = event.target.closest(&#39;.image-scroll-item&#39;);
+    if (target) {
+      const fullImageUrl = target.getAttribute(&#39;data-full-image&#39;);
+      largeImage.src = fullImageUrl; 
+      currentIndex = [...images].indexOf(target); 
+    }
+  });
+});
+
+  &lt;/script&gt;
+  
+</description>
+    </item>
+    
+    <item>
+      <title>Qinghai</title>
+      <link>http://localhost:1313/photo/qinghai/</link>
+      <pubDate>Mon, 13 Sep 2021 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/photo/qinghai/</guid>
+      <description>&lt;style&gt;
+
+ 
+.image-scroll {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 10px;
+  white-space: nowrap;
+  max-width: 100vw;
+  height: 170px;
+  scroll-behavior: smooth;
+}
+
+ 
+.image-scroll-item {
+  flex: 0 0 auto;
+  width: 170px;
+  height: 80%;
+  margin-right: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease;
+}
+
+.image-scroll-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+ 
+.image-scroll-item:hover {
+  transform: scale(1.1);
+}
+
+
+ 
+.dark .large-image-container img {
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.9);
+}
+
+ 
+@media (max-width: 1200px) {
+  .large-image-container {
+    height: 500px;
+  }
+
+  .image-scroll-item {
+    width: 130px;
+  }
+}
+
+@media (max-width: 768px) {
+  .large-image-container {
+    height: 400px;
+  }
+
+  .image-scroll-item {
+    width: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .large-image-container {
+    height: 300px;
+  }
+
+  .image-scroll-item {
+    width: 80px;
+  }
+}
+
+ 
+.large-image-container {
+  position: relative;
+  margin-top: 20px;
+  text-align: center;
+  max-width: 100%;
+  height: 600px;  
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: height 0.3s ease;
+  cursor: zoom-in;  
+}
+
+ 
+.large-image-container img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease;  
+}
+
+
+ 
+.large-image-container:hover img {
+  transform: scale(1.02);  
+}
+
+
+ 
+ 
+.fullscreen-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 70px;   
+}
+
+ 
+.fullscreen-image img {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 10px 20px rgba(255, 255, 255, 0.5);
+  cursor: zoom-out;
+}
+
+
+
+ 
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.2);
+  border: none;
+  padding: 10px;
+  font-size: 40px;
+  cursor: pointer;
+  border-radius: 50%;
+  z-index: 11;
+  transition: background-color 0.3s ease;
+}
+
+.left-arrow {
+  left: 30px;
+}
+
+.right-arrow {
+  right: 30px;
+}
+
+.arrow:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+
+&lt;/style&gt;
+&lt;div class=&#34;image-scroll&#34; id=&#34;imageScroll&#34;&gt;
+  &lt;!-- Small images in the preview row --&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic2.zhimg.com/80/v2-75fbfa6a7975c074cb9ac1bc9f3d582f_1440w.jpg&gt;
+    &lt;img src=https://pic2.zhimg.com/80/v2-75fbfa6a7975c074cb9ac1bc9f3d582f_1440w.jpg&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pica.zhimg.com/80/v2-6b3cbfba4caf315d9bf3b615cb98ca94_1440w.jpg&gt;
+    &lt;img src=https://pica.zhimg.com/80/v2-6b3cbfba4caf315d9bf3b615cb98ca94_1440w.jpg&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic1.zhimg.com/80/v2-158d2b29a9ba29dc594af80919223550_1440w.jpg&gt;
+    &lt;img src=https://pic1.zhimg.com/80/v2-158d2b29a9ba29dc594af80919223550_1440w.jpg&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic2.zhimg.com/80/v2-a4c734f1073aaed5a5dfc570e129d765_1440w.webp&gt;
+    &lt;img src=https://pic2.zhimg.com/80/v2-a4c734f1073aaed5a5dfc570e129d765_1440w.webp&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic1.zhimg.com/80/v2-5cd6301245a6351408af3eeeded96f30_1440w.webp&gt;
+    &lt;img src=https://pic1.zhimg.com/80/v2-5cd6301245a6351408af3eeeded96f30_1440w.webp&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic2.zhimg.com/80/v2-07b6c5d880bb27b32546ebc8a652c2c9_1440w.webp&gt;
+    &lt;img src=https://pic2.zhimg.com/80/v2-07b6c5d880bb27b32546ebc8a652c2c9_1440w.webp&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic3.zhimg.com/80/v2-9ecab039b95ce09e0a94ed236dc901fa_1440w.webp&gt;
+    &lt;img src=https://pic3.zhimg.com/80/v2-9ecab039b95ce09e0a94ed236dc901fa_1440w.webp&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic2.zhimg.com/80/v2-b63a224f638e3059ef2f3318f6bf45c1_1440w.webp&gt;
+    &lt;img src=https://pic2.zhimg.com/80/v2-b63a224f638e3059ef2f3318f6bf45c1_1440w.webp&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://picx.zhimg.com/80/v2-18ca5f22e74614fc76aecbb50ed92ae3_1440w.webp&gt;
+    &lt;img src=https://picx.zhimg.com/80/v2-18ca5f22e74614fc76aecbb50ed92ae3_1440w.webp&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://picx.zhimg.com/80/v2-66ef77b8218186772d971577f39db455_1440w.webp&gt;
+    &lt;img src=https://picx.zhimg.com/80/v2-66ef77b8218186772d971577f39db455_1440w.webp&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pica.zhimg.com/80/v2-f690ab5d1033eb190af593a146133e74_1440w.webp&gt;
+    &lt;img src=https://pica.zhimg.com/80/v2-f690ab5d1033eb190af593a146133e74_1440w.webp&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic2.zhimg.com/80/v2-afdbd762024bbb758cdab8e453d1e43f_1440w.webp&gt;
+    &lt;img src=https://pic2.zhimg.com/80/v2-afdbd762024bbb758cdab8e453d1e43f_1440w.webp&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic2.zhimg.com/80/v2-bcfd294e6002589a796009cd6a6f95e3_1440w.webp&gt;
+    &lt;img src=https://pic2.zhimg.com/80/v2-bcfd294e6002589a796009cd6a6f95e3_1440w.webp&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic4.zhimg.com/80/v2-133f923736f090c2033100b61dd70095_1440w.webp&gt;
+    &lt;img src=https://pic4.zhimg.com/80/v2-133f923736f090c2033100b61dd70095_1440w.webp&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic4.zhimg.com/80/v2-61002503e3e6147582824f3b7aafd407_1440w.webp&gt;
+    &lt;img src=https://pic4.zhimg.com/80/v2-61002503e3e6147582824f3b7aafd407_1440w.webp&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic2.zhimg.com/80/v2-8b9679a96f71294e7bade766da2a2421_1440w.webp&gt;
+    &lt;img src=https://pic2.zhimg.com/80/v2-8b9679a96f71294e7bade766da2a2421_1440w.webp&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pica.zhimg.com/80/v2-e6bbfc1b624ccc659ed94d3a9b6f673c_1440w.webp&gt;
+    &lt;img src=https://pica.zhimg.com/80/v2-e6bbfc1b624ccc659ed94d3a9b6f673c_1440w.webp&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic4.zhimg.com/80/v2-883aa27d30842b64179c7331246da553_1440w.webp&gt;
+    &lt;img src=https://pic4.zhimg.com/80/v2-883aa27d30842b64179c7331246da553_1440w.webp&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic4.zhimg.com/80/v2-406c7c7ea58c6a26a7181cfa22605a2d_1440w.webp&gt;
+    &lt;img src=https://pic4.zhimg.com/80/v2-406c7c7ea58c6a26a7181cfa22605a2d_1440w.webp&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic3.zhimg.com/80/v2-77fa9155a8cacf42f1301bce49b037dc_1440w.webp&gt;
+    &lt;img src=https://pic3.zhimg.com/80/v2-77fa9155a8cacf42f1301bce49b037dc_1440w.webp&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic3.zhimg.com/80/v2-36441fcee1e77b5479dcf6e188bb4164_1440w.webp&gt;
+    &lt;img src=https://pic3.zhimg.com/80/v2-36441fcee1e77b5479dcf6e188bb4164_1440w.webp&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic1.zhimg.com/80/v2-e0dd5ce2b24cec7bdfb93ba023dd20c0_1440w.webp&gt;
+    &lt;img src=https://pic1.zhimg.com/80/v2-e0dd5ce2b24cec7bdfb93ba023dd20c0_1440w.webp&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic2.zhimg.com/80/v2-8a3ec18c24c85104f7cc3db397fb490d_1440w.webp&gt;
+    &lt;img src=https://pic2.zhimg.com/80/v2-8a3ec18c24c85104f7cc3db397fb490d_1440w.webp&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic1.zhimg.com/80/v2-cdbb98271f68853d9ad5978b5566c8e2_1440w.webp&gt;
+    &lt;img src=https://pic1.zhimg.com/80/v2-cdbb98271f68853d9ad5978b5566c8e2_1440w.webp&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://picx.zhimg.com/80/v2-d36f8d0d53dc2906fd111711f435fdb3_1440w.webp&gt;
+    &lt;img src=https://picx.zhimg.com/80/v2-d36f8d0d53dc2906fd111711f435fdb3_1440w.webp&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic4.zhimg.com/80/v2-80ef333553cda93cc33860439df50889_1440w.webp&gt;
+    &lt;img src=https://pic4.zhimg.com/80/v2-80ef333553cda93cc33860439df50889_1440w.webp&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic4.zhimg.com/80/v2-11d8fe58121f5a303528545c3d8501f9_1440w.webp&gt;
+    &lt;img src=https://pic4.zhimg.com/80/v2-11d8fe58121f5a303528545c3d8501f9_1440w.webp&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic2.zhimg.com/80/v2-3bccd620d1a3ac42e4214782f990e989_1440w.webp&gt;
+    &lt;img src=https://pic2.zhimg.com/80/v2-3bccd620d1a3ac42e4214782f990e989_1440w.webp&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic3.zhimg.com/80/v2-e50db8a0af837a0bb8c095e88291ce9e_1440w.webp&gt;
+    &lt;img src=https://pic3.zhimg.com/80/v2-e50db8a0af837a0bb8c095e88291ce9e_1440w.webp&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=https://pic1.zhimg.com/80/v2-8f5b1a83eaa7c341d59a1fc2a356d5a8_1440w.webp&gt;
+    &lt;img src=https://pic1.zhimg.com/80/v2-8f5b1a83eaa7c341d59a1fc2a356d5a8_1440w.webp&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;!-- The large image display area --&gt;
+&lt;div class=&#34;large-image-container&#34; id=&#34;largeImageContainer&#34;&gt;
+  &lt;img src=&#34;https://pic2.zhimg.com/80/v2-75fbfa6a7975c074cb9ac1bc9f3d582f_1440w.jpg&#34; alt=&#34;Large Image&#34; id=&#34;largeImage&#34;&gt;
+&lt;/div&gt;
+&lt;script&gt;
+
+document.addEventListener(&#34;DOMContentLoaded&#34;, function () {
+  const largeImageContainer = document.getElementById(&#34;largeImageContainer&#34;);
+  const largeImage = document.getElementById(&#34;largeImage&#34;);
+  const images = document.querySelectorAll(&#39;.image-scroll-item&#39;);
+  const imageScroll = document.getElementById(&#39;imageScroll&#39;);
+  let currentIndex = 0;
+  let fullscreenOverlay;  
+
+  
+  function showFullscreenImage() {
+    fullscreenOverlay = document.createElement(&#34;div&#34;);
+    fullscreenOverlay.classList.add(&#34;fullscreen-image&#34;);
+
+    
+    const fullscreenImage = largeImage.cloneNode();
+    fullscreenImage.style.padding = &#34;10px&#34;; 
+    fullscreenOverlay.appendChild(fullscreenImage);
+
+    
+    const leftArrow = document.createElement(&#34;button&#34;);
+    leftArrow.classList.add(&#34;arrow&#34;, &#34;left-arrow&#34;);
+    leftArrow.innerHTML = &#34;&amp;#10094;&#34;;
+    fullscreenOverlay.appendChild(leftArrow);
+
+    
+    const rightArrow = document.createElement(&#34;button&#34;);
+    rightArrow.classList.add(&#34;arrow&#34;, &#34;right-arrow&#34;);
+    rightArrow.innerHTML = &#34;&amp;#10095;&#34;;
+    fullscreenOverlay.appendChild(rightArrow);
+
+    document.body.appendChild(fullscreenOverlay);
+
+    
+    function updateFullscreenImage() {
+      const fullImageUrl = images[currentIndex].getAttribute(&#34;data-full-image&#34;);
+      fullscreenImage.src = fullImageUrl;
+    }
+
+    
+    leftArrow.addEventListener(&#34;click&#34;, function (event) {
+      event.stopPropagation(); 
+      currentIndex = (currentIndex &gt; 0) ? currentIndex - 1 : images.length - 1;
+      updateFullscreenImage();
+    });
+
+    
+    rightArrow.addEventListener(&#34;click&#34;, function (event) {
+      event.stopPropagation(); 
+      currentIndex = (currentIndex &lt; images.length - 1) ? currentIndex + 1 : 0;
+      updateFullscreenImage();
+    });
+
+    
+    document.addEventListener(&#34;keydown&#34;, function (event) {
+      if (fullscreenOverlay) {
+        if (event.key === &#34;ArrowLeft&#34;) {
+          currentIndex = (currentIndex &gt; 0) ? currentIndex - 1 : images.length - 1;
+          updateFullscreenImage();
+        } else if (event.key === &#34;ArrowRight&#34;) {
+          currentIndex = (currentIndex &lt; images.length - 1) ? currentIndex + 1 : 0;
+          updateFullscreenImage();
+        } else if (event.key === &#34;Escape&#34;) {
+          
+          document.body.removeChild(fullscreenOverlay);
+          fullscreenOverlay = null; 
+
+          
+          largeImage.src = images[currentIndex].getAttribute(&#34;data-full-image&#34;);
+
+          
+          images[currentIndex].scrollIntoView({ behavior: &#39;smooth&#39;, inline: &#39;center&#39; });
+        }
+      }
+    });
+
+    
+    fullscreenOverlay.addEventListener(&#34;click&#34;, function (event) {
+      if (event.target === fullscreenImage) {
+        document.body.removeChild(fullscreenOverlay);
+        fullscreenOverlay = null; 
+
+        
+        largeImage.src = images[currentIndex].getAttribute(&#34;data-full-image&#34;);
+
+        
+        images[currentIndex].scrollIntoView({ behavior: &#39;smooth&#39;, inline: &#39;center&#39; });
+      }
+    });
+
+    
+    updateFullscreenImage();
+  }
+
+  
+  largeImageContainer.addEventListener(&#34;click&#34;, function () {
+    showFullscreenImage();
+  });
+
+  
+  imageScroll.addEventListener(&#34;mouseover&#34;, function (event) {
+    const target = event.target.closest(&#39;.image-scroll-item&#39;);
+    if (target) {
+      const fullImageUrl = target.getAttribute(&#39;data-full-image&#39;);
+      largeImage.src = fullImageUrl; 
+      currentIndex = [...images].indexOf(target); 
+    }
+  });
+});
+
+  &lt;/script&gt;
+  
+</description>
+    </item>
+    
+    <item>
+      <title>San Francisco, USA</title>
+      <link>http://localhost:1313/photo/san-francisco/</link>
+      <pubDate>Sat, 20 Jul 2019 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/photo/san-francisco/</guid>
+      <description>&lt;style&gt;
+
+ 
+.image-scroll {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 10px;
+  white-space: nowrap;
+  max-width: 100vw;
+  height: 170px;
+  scroll-behavior: smooth;
+}
+
+ 
+.image-scroll-item {
+  flex: 0 0 auto;
+  width: 170px;
+  height: 80%;
+  margin-right: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease;
+}
+
+.image-scroll-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+ 
+.image-scroll-item:hover {
+  transform: scale(1.1);
+}
+
+
+ 
+.dark .large-image-container img {
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.9);
+}
+
+ 
+@media (max-width: 1200px) {
+  .large-image-container {
+    height: 500px;
+  }
+
+  .image-scroll-item {
+    width: 130px;
+  }
+}
+
+@media (max-width: 768px) {
+  .large-image-container {
+    height: 400px;
+  }
+
+  .image-scroll-item {
+    width: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .large-image-container {
+    height: 300px;
+  }
+
+  .image-scroll-item {
+    width: 80px;
+  }
+}
+
+ 
+.large-image-container {
+  position: relative;
+  margin-top: 20px;
+  text-align: center;
+  max-width: 100%;
+  height: 600px;  
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: height 0.3s ease;
+  cursor: zoom-in;  
+}
+
+ 
+.large-image-container img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease;  
+}
+
+
+ 
+.large-image-container:hover img {
+  transform: scale(1.02);  
+}
+
+
+ 
+ 
+.fullscreen-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 70px;   
+}
+
+ 
+.fullscreen-image img {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 10px 20px rgba(255, 255, 255, 0.5);
+  cursor: zoom-out;
+}
+
+
+
+ 
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.2);
+  border: none;
+  padding: 10px;
+  font-size: 40px;
+  cursor: pointer;
+  border-radius: 50%;
+  z-index: 11;
+  transition: background-color 0.3s ease;
+}
+
+.left-arrow {
+  left: 30px;
+}
+
+.right-arrow {
+  right: 30px;
+}
+
+.arrow:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+
+&lt;/style&gt;
+&lt;div class=&#34;image-scroll&#34; id=&#34;imageScroll&#34;&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=&#34;https://pic3.zhimg.com/80/v2-bd121900b00750977c50a2ff6c210796_1440w.jpg&#34;&gt;
+    &lt;img src=&#34;https://pic3.zhimg.com/80/v2-bd121900b00750977c50a2ff6c210796_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=&#34;https://pica.zhimg.com/80/v2-3580b33ca2c443fb5c9501aee482ad66_1440w.jpg&#34;&gt;
+    &lt;img src=&#34;https://pica.zhimg.com/80/v2-3580b33ca2c443fb5c9501aee482ad66_1440w.jpg&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=&#34;https://pic1.zhimg.com/80/v2-35246f75efd7b7cd6938c79d9832b2a2_1440w.webp&#34;&gt;
+    &lt;img src=&#34;https://pic1.zhimg.com/80/v2-35246f75efd7b7cd6938c79d9832b2a2_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=&#34;https://picx.zhimg.com/80/v2-7727c2ec8942a5ee4a9dd1617476e153_1440w.webp&#34;&gt;
+    &lt;img src=&#34;https://picx.zhimg.com/80/v2-7727c2ec8942a5ee4a9dd1617476e153_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;image-scroll-item&#34; data-full-image=&#34;https://picx.zhimg.com/80/v2-656807a8cfbdaf96906d089817929573_1440w.webp&#34;&gt;
+    &lt;img src=&#34;https://picx.zhimg.com/80/v2-656807a8cfbdaf96906d089817929573_1440w.webp&#34;&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;!-- The large image display area --&gt;
+&lt;div class=&#34;large-image-container&#34; id=&#34;largeImageContainer&#34;&gt;
+  &lt;img src=&#34;https://pic3.zhimg.com/80/v2-bd121900b00750977c50a2ff6c210796_1440w.jpg&#34; alt=&#34;Large Image&#34; id=&#34;largeImage&#34;&gt;
+&lt;/div&gt;
+&lt;script&gt;
+
+document.addEventListener(&#34;DOMContentLoaded&#34;, function () {
+  const largeImageContainer = document.getElementById(&#34;largeImageContainer&#34;);
+  const largeImage = document.getElementById(&#34;largeImage&#34;);
+  const images = document.querySelectorAll(&#39;.image-scroll-item&#39;);
+  const imageScroll = document.getElementById(&#39;imageScroll&#39;);
+  let currentIndex = 0;
+  let fullscreenOverlay;  
+
+  
+  function showFullscreenImage() {
+    fullscreenOverlay = document.createElement(&#34;div&#34;);
+    fullscreenOverlay.classList.add(&#34;fullscreen-image&#34;);
+
+    
+    const fullscreenImage = largeImage.cloneNode();
+    fullscreenImage.style.padding = &#34;10px&#34;; 
+    fullscreenOverlay.appendChild(fullscreenImage);
+
+    
+    const leftArrow = document.createElement(&#34;button&#34;);
+    leftArrow.classList.add(&#34;arrow&#34;, &#34;left-arrow&#34;);
+    leftArrow.innerHTML = &#34;&amp;#10094;&#34;;
+    fullscreenOverlay.appendChild(leftArrow);
+
+    
+    const rightArrow = document.createElement(&#34;button&#34;);
+    rightArrow.classList.add(&#34;arrow&#34;, &#34;right-arrow&#34;);
+    rightArrow.innerHTML = &#34;&amp;#10095;&#34;;
+    fullscreenOverlay.appendChild(rightArrow);
+
+    document.body.appendChild(fullscreenOverlay);
+
+    
+    function updateFullscreenImage() {
+      const fullImageUrl = images[currentIndex].getAttribute(&#34;data-full-image&#34;);
+      fullscreenImage.src = fullImageUrl;
+    }
+
+    
+    leftArrow.addEventListener(&#34;click&#34;, function (event) {
+      event.stopPropagation(); 
+      currentIndex = (currentIndex &gt; 0) ? currentIndex - 1 : images.length - 1;
+      updateFullscreenImage();
+    });
+
+    
+    rightArrow.addEventListener(&#34;click&#34;, function (event) {
+      event.stopPropagation(); 
+      currentIndex = (currentIndex &lt; images.length - 1) ? currentIndex + 1 : 0;
+      updateFullscreenImage();
+    });
+
+    
+    document.addEventListener(&#34;keydown&#34;, function (event) {
+      if (fullscreenOverlay) {
+        if (event.key === &#34;ArrowLeft&#34;) {
+          currentIndex = (currentIndex &gt; 0) ? currentIndex - 1 : images.length - 1;
+          updateFullscreenImage();
+        } else if (event.key === &#34;ArrowRight&#34;) {
+          currentIndex = (currentIndex &lt; images.length - 1) ? currentIndex + 1 : 0;
+          updateFullscreenImage();
+        } else if (event.key === &#34;Escape&#34;) {
+          
+          document.body.removeChild(fullscreenOverlay);
+          fullscreenOverlay = null; 
+
+          
+          largeImage.src = images[currentIndex].getAttribute(&#34;data-full-image&#34;);
+
+          
+          images[currentIndex].scrollIntoView({ behavior: &#39;smooth&#39;, inline: &#39;center&#39; });
+        }
+      }
+    });
+
+    
+    fullscreenOverlay.addEventListener(&#34;click&#34;, function (event) {
+      if (event.target === fullscreenImage) {
+        document.body.removeChild(fullscreenOverlay);
+        fullscreenOverlay = null; 
+
+        
+        largeImage.src = images[currentIndex].getAttribute(&#34;data-full-image&#34;);
+
+        
+        images[currentIndex].scrollIntoView({ behavior: &#39;smooth&#39;, inline: &#39;center&#39; });
+      }
+    });
+
+    
+    updateFullscreenImage();
+  }
+
+  
+  largeImageContainer.addEventListener(&#34;click&#34;, function () {
+    showFullscreenImage();
+  });
+
+  
+  imageScroll.addEventListener(&#34;mouseover&#34;, function (event) {
+    const target = event.target.closest(&#39;.image-scroll-item&#39;);
+    if (target) {
+      const fullImageUrl = target.getAttribute(&#39;data-full-image&#39;);
+      largeImage.src = fullImageUrl; 
+      currentIndex = [...images].indexOf(target); 
+    }
+  });
+});
+
+  &lt;/script&gt;
+  
+</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Natural Language Processing | Chongjie Si</title>
+    <link>http://localhost:1313/tags/natural-language-processing/</link>
+      <atom:link href="http://localhost:1313/tags/natural-language-processing/index.xml" rel="self" type="application/rss+xml" />
+    <description>Natural Language Processing</description>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Thu, 29 May 2025 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>http://localhost:1313/media/icon_hu14735102492158276428.png</url>
+      <title>Natural Language Processing</title>
+      <link>http://localhost:1313/tags/natural-language-processing/</link>
+    </image>
+    
+    <item>
+      <title>MAP: Revisiting Weight Decomposition for Low-Rank Adaptation</title>
+      <link>http://localhost:1313/full-publications/2025-arxiv-map/</link>
+      <pubDate>Thu, 29 May 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2025-arxiv-map/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Weight Spectra Induced Efficient Model Adaptation</title>
+      <link>http://localhost:1313/full-publications/2025-arxiv-speclora/</link>
+      <pubDate>Thu, 29 May 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2025-arxiv-speclora/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>NAN: A Training-Free Solution to Coefficient Estimation in Model Merging</title>
+      <link>http://localhost:1313/full-publications/2025-arxiv-nan/</link>
+      <pubDate>Thu, 22 May 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2025-arxiv-nan/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Generalized Tensor-based Parameter-Efficient Fine-Tuning via Lie Group Transformations</title>
+      <link>http://localhost:1313/full-publications/2025-iccv-liera/</link>
+      <pubDate>Tue, 01 Apr 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2025-iccv-liera/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Maintaining Structural Integrity in Parameter Spaces for Parameter Efficient Fine-Tuning</title>
+      <link>http://localhost:1313/full-publications/2025-iclr-flora/</link>
+      <pubDate>Thu, 23 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2025-iclr-flora/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Unleashing the Power of Task-Specific Directions in Parameter Efficient Fine-tuning</title>
+      <link>http://localhost:1313/full-publications/2025-iclr-lora-dash/</link>
+      <pubDate>Thu, 23 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2025-iclr-lora-dash/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Unveiling the Mystery of Weight in Large Foundation Models: Gaussian Distribution Never Fades</title>
+      <link>http://localhost:1313/full-publications/2025-arxiv-gaussian/</link>
+      <pubDate>Mon, 20 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2025-arxiv-gaussian/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>See Further for Parameter Efficient Fine-tuning by Standing on the Shoulders of Decomposition</title>
+      <link>http://localhost:1313/full-publications/2024-arxiv-subspace-tuning/</link>
+      <pubDate>Sun, 07 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2024-arxiv-subspace-tuning/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

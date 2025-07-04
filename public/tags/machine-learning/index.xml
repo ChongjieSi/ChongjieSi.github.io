@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Machine Learning | Chongjie Si</title>
+    <link>http://localhost:1313/tags/machine-learning/</link>
+      <atom:link href="http://localhost:1313/tags/machine-learning/index.xml" rel="self" type="application/rss+xml" />
+    <description>Machine Learning</description>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Thu, 29 May 2025 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>http://localhost:1313/media/icon_hu14735102492158276428.png</url>
+      <title>Machine Learning</title>
+      <link>http://localhost:1313/tags/machine-learning/</link>
+    </image>
+    
+    <item>
+      <title>MAP: Revisiting Weight Decomposition for Low-Rank Adaptation</title>
+      <link>http://localhost:1313/full-publications/2025-arxiv-map/</link>
+      <pubDate>Thu, 29 May 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2025-arxiv-map/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Weight Spectra Induced Efficient Model Adaptation</title>
+      <link>http://localhost:1313/full-publications/2025-arxiv-speclora/</link>
+      <pubDate>Thu, 29 May 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2025-arxiv-speclora/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Revisiting Sparsity Constraint Under High-Rank Property in Partial Multi-Label Learning</title>
+      <link>http://localhost:1313/full-publications/2025-arxiv-schirn/</link>
+      <pubDate>Tue, 27 May 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2025-arxiv-schirn/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>NAN: A Training-Free Solution to Coefficient Estimation in Model Merging</title>
+      <link>http://localhost:1313/full-publications/2025-arxiv-nan/</link>
+      <pubDate>Thu, 22 May 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2025-arxiv-nan/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Why Can Accurate Models Be Learned from Inaccurate Annotations?</title>
+      <link>http://localhost:1313/full-publications/2025-arxiv-lip/</link>
+      <pubDate>Thu, 22 May 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2025-arxiv-lip/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Generalized Tensor-based Parameter-Efficient Fine-Tuning via Lie Group Transformations</title>
+      <link>http://localhost:1313/full-publications/2025-iccv-liera/</link>
+      <pubDate>Tue, 01 Apr 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2025-iccv-liera/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Unleashing the Power of Task-Specific Directions in Parameter Efficient Fine-tuning</title>
+      <link>http://localhost:1313/full-publications/2025-iclr-lora-dash/</link>
+      <pubDate>Thu, 23 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2025-iclr-lora-dash/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Unveiling the Mystery of Weight in Large Foundation Models: Gaussian Distribution Never Fades</title>
+      <link>http://localhost:1313/full-publications/2025-arxiv-gaussian/</link>
+      <pubDate>Mon, 20 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2025-arxiv-gaussian/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>See Further for Parameter Efficient Fine-tuning by Standing on the Shoulders of Decomposition</title>
+      <link>http://localhost:1313/full-publications/2024-arxiv-subspace-tuning/</link>
+      <pubDate>Sun, 07 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2024-arxiv-subspace-tuning/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Appeal: Allow Mislabeled Samples the Chance to be Rectified in Partial Label Learning</title>
+      <link>http://localhost:1313/full-publications/2024-arxiv-appeal/</link>
+      <pubDate>Thu, 28 Mar 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2024-arxiv-appeal/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Partial Label Learning with a Partner</title>
+      <link>http://localhost:1313/full-publications/2024-aaai-plcp/</link>
+      <pubDate>Sun, 24 Mar 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2024-aaai-plcp/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Multi-label Classification with High-rank and High-order Label Correlations</title>
+      <link>http://localhost:1313/full-publications/2023-tkde-homi/</link>
+      <pubDate>Wed, 06 Sep 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2023-tkde-homi/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Complementary Classifier Induced Partial Label Learning</title>
+      <link>http://localhost:1313/full-publications/2023-kdd-plcl/</link>
+      <pubDate>Fri, 04 Aug 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2023-kdd-plcl/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
