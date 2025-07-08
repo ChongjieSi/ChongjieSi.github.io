@@ -19,7 +19,7 @@ publication_types: ["article"]
 
 # Publication name and optional abbreviated publication name.
 publication: ""
-publication_short: "<b>Arxiv</b>"
+publication_short: "arXiv"
 
 abstract: This paper presents a pioneering exploration of the mechanisms underlying large foundation models' (LFMs) weights, aiming to simplify AI research. Through extensive observation and analysis on prevailing LFMs, we find that regardless of initialization strategies, their weights predominantly follow a Gaussian distribution, with occasional sharp, inverted T-shaped, or linear patterns. We further discover that the weights share the i.i.d. properties of Gaussian noise, and explore their direct relationship. We find that transformation weights can be derived from Gaussian noise, and they primarily serve to increase the standard deviation of pre-trained weights, with their standard deviation growing with layer depth. In other words, transformation weights broaden the acceptable deviation from the optimal weights, facilitating adaptation to downstream tasks. Building upon the above conclusions, we thoroughly discussed the nature of optimal weights, ultimately concluding that they should exhibit zero-mean, symmetry, and sparsity, with the sparse values being a truncated Gaussian distribution and a few outliers. Our experiments in LFM adaptation and editing demonstrate the effectiveness of these insights. We hope these findings can provide a foundational understanding to pave the way for future advancements in the LFM community.
 

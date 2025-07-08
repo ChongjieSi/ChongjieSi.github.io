@@ -24,7 +24,7 @@ publication_types: paper-conference
 
 # Publication name and optional abbreviated publication name.
 publication: "The Thirteenth International Conference on Learning Representations"
-publication_short: "<b>ICLR</b>"
+publication_short: "ICLR"
 
 abstract: Adapting pre-trained foundation models for various downstream tasks has been prevalent in artificial intelligence. Due to the vast number of tasks and high costs, adjusting all parameters becomes unfeasible. To mitigate this, several fine-tuning techniques have been developed to update the pre-trained model weights in a more resource-efficient manner, such as through low-rank adjustments. Yet, almost all of these methods focus on linear weights, neglecting the intricacies of parameter spaces in higher dimensions like 4D. Alternatively, some methods can be adapted for high-dimensional parameter space by compressing changes in the original space into two dimensions and then employing low-rank matrix adaptations. However, these approaches destructs the structural integrity of the involved high-dimensional spaces. To tackle the diversity of dimensional spaces across different foundation models and provide a more precise representation of the changes within these spaces, this paper introduces a generalized parameter-efficient fine-tuning framework, designed for various dimensional parameter space. Specifically, our method asserts that changes in each dimensional parameter space are based on a low-rank core space which maintains the consistent topological structure with the original space. It then models the changes through this core space alongside corresponding weights to reconstruct alterations in the original space. It effectively preserves the structural integrity of the change of original N-dimensional parameter space, meanwhile models it via low-rank tensor adaptation. Extensive experiments on computer vision, natural language processing and multi-modal tasks validate the effectiveness of our method.
 
@@ -47,6 +47,7 @@ links:
   url: https://zhuanlan.zhihu.com/p/705909337
 url_pdf: https://arxiv.org/abs/2405.14739
 url_code: 'https://github.com/Chongjie-Si/Subspace-Tuning'
+url_poster: 'paper-poster/2025-ICLR-FLoRA.pdf'
 
 # Featured image
 # To use, add an image named `featured.jpg/png` to your page's folder. 

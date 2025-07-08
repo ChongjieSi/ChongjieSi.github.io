@@ -20,7 +20,7 @@ publication_types: ["article"]
 
 # Publication name and optional abbreviated publication name.
 publication: ""
-publication_short: "<b>Arxiv</b>"
+publication_short: "arXiv"
 
 abstract: Partial Multi-Label Learning (PML) extends the multi-label learning paradigm to scenarios where each sample is associated with a candidate label set containing both ground-truth labels and noisy labels. Existing PML methods commonly rely on two assumptions sparsity of the noise label matrix and low-rankness of the ground-truth label matrix. However, these assumptions are inherently conflicting and impractical for real-world scenarios, where the true label matrix is typically full-rank or close to full-rank. To address these limitations, we demonstrate that the sparsity constraint contributes to the high-rank property of the predicted label matrix. Based on this, we propose a novel method Schirn, which introduces a sparsity constraint on the noise label matrix while enforcing a high-rank property on the predicted label matrix. Extensive experiments demonstrate the superior performance of Schirn compared to state-of-the-art methods, validating its effectiveness in tackling real-world PML challenges.
 

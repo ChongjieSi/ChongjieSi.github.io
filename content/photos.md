@@ -12,7 +12,7 @@ sections:
     id: photos
     content:
       title: Photos
-      count: 6
+      count: 9
       filters:
         folders:
           - photo

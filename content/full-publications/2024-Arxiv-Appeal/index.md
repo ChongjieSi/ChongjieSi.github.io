@@ -20,7 +20,7 @@ publication_types: article
 
 # Publication name and optional abbreviated publication name.
 publication: ""
-publication_short: "<b>Arxiv</b>"
+publication_short: "arXiv"
 
 abstract: In partial label learning (PLL), each instance is associated with a set of candidate labels among which only one is ground-truth. The majority of the existing works focuses on constructing robust classifiers to estimate the labeling confidence of candidate labels in order to identify the correct one. However, these methods usually struggle to identify and rectify mislabeled samples. To help these mislabeled samples "appeal" for themselves and help existing PLL methods identify and rectify mislabeled samples, in this paper, we propose the first appeal-based PLL framework. Specifically, we introduce a novel partner classifier and instantiate it predicated on the implicit fact that non-candidate labels of a sample should not be assigned to it, which is inherently accurate and has not been fully investigated in PLL. Furthermore, a novel collaborative term is formulated to link the base classifier and the partner one. During each stage of mutual supervision, both classifiers will blur each other's predictions through a blurring mechanism to prevent overconfidence in a specific label. Extensive experiments demonstrate that the appeal and disambiguation ability of several well-established stand-alone and deep-learning based PLL approaches can be significantly improved by coupling with this learning paradigm.
 

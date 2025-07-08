@@ -63,6 +63,9 @@ education:
     date_end: ''
     summary: |
       Interested in LLM related areas. Supervised by Prof. Wei Shen.
+    button:
+      text: Download CV
+      url: /uploads/chongjie-cv.pdf
     # button:
     #   text: 'DeepVision Lab'
     #   url: 'https://shenwei1231.github.io/team/'
@@ -75,9 +78,6 @@ education:
       Chien-Shiung Wu College is a pilot college that cultivates top-notch undergraduate students selected from multiple science and engineering departments.
 
       Rank 1/22 in Artificial Intelligence
-    button:
-      text: Download CV
-      url: /uploads/chongjie-cv.pdf
 
 work:
  - position: REDstar Intern 
@@ -115,7 +115,7 @@ work:
 # Skills
 # Add your own SVG icons to `assets/media/icons/`
 skills:
-  - name: Technical Skills
+  - name: Technics
     items:
       - name: Python
         description: ''
@@ -140,22 +140,22 @@ skills:
       - name: Japanese
         percent: 30
 
-  - name: Hobbies
-    color: '#eeac02'
-    color_border: '#f0bf23'
-    items:
-      - name: Music
-        description: ''
-        percent: 100
-        icon: musical-note
-      - name: Snooker
-        description: ''
-        percent: 100
-        icon: fire
-      - name: Photography
-        description: ''
-        percent: 80
-        icon: camera
+  # - name: Hobbies
+  #   color: '#eeac02'
+  #   color_border: '#f0bf23'
+  #   items:
+  #     - name: Music
+  #       description: ''
+  #       percent: 100
+  #       icon: musical-note
+  #     - name: Snooker
+  #       description: ''
+  #       percent: 100
+  #       icon: fire
+  #     - name: Photography
+  #       description: ''
+  #       percent: 80
+  #       icon: camera
   
 
 # Awards.
@@ -186,8 +186,8 @@ awards:
     icon: building-library
     summary: |
      
-  - title: And More...
-    awarder: ...
+  # - title: And More...
+  #   awarder: ...
     
 ---
 

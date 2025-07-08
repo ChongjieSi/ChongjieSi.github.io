@@ -21,7 +21,7 @@ publication_types: paper-conference
 
 # Publication name and optional abbreviated publication name.
 publication: "The Thirteenth International Conference on Learning Representations"
-publication_short: "<b>ICLR</b>"
+publication_short: "ICLR"
 
 abstract: Large language models demonstrate impressive performance on downstream tasks, yet requiring extensive resource consumption when fully fine-tuning all parameters. To mitigate this, Parameter Efficient Fine-Tuning (PEFT) strategies, such as LoRA, have been developed. In this paper, we delve into the concept of task-specific directions (TSDs)—critical for transitioning large models from pretrained states to task-specific enhancements in PEFT. We propose a framework to clearly define these directions and explore their properties, and practical utilization challenges. We then introduce a novel approach, LoRA-Dash, which aims to maximize the impact of TSDs during the fine-tuning process, thereby enhancing model performance on targeted tasks. Extensive experiments have conclusively demonstrated the effectiveness of LoRA-Dash, and in-depth analyses further reveal the underlying mechanisms of LoRA-Dash.
 
@@ -44,6 +44,7 @@ links:
   url: https://zhuanlan.zhihu.com/p/719930225
 url_pdf: https://arxiv.org/abs/2409.01035
 url_code: 'https://github.com/Chongjie-Si/Subspace-Tuning'
+url_poster: 'paper-poster/2025-ICLR-LoRADash.pdf'
 
 
 
