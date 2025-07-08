@@ -41,7 +41,7 @@ url_pdf: https://arxiv.org/abs/2501.10661
 # Featured image
 # To use, add an image named `featured.jpg/png` to your page's folder. 
 image:
-  caption: 'Framework'
+  caption: 'Observation'
   focal_point: ""
   preview_only: false
 

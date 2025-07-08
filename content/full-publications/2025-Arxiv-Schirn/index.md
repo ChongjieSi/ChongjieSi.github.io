@@ -39,7 +39,7 @@ url_pdf: https://arxiv.org/abs/2505.20938
 # Featured image
 # To use, add an image named `featured.jpg/png` to your page's folder. 
 image:
-  caption: 'Framework'
+  caption: 'Experiment'
   focal_point: ""
   preview_only: false
 

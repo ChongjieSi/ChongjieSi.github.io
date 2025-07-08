@@ -2,6 +2,8 @@
 title: "Recent News"
 date: 2023-09-05
 news:
+  - title: "📘 One paper has been accepted to COLM 2025."
+    date: "2025-07-08"
   - title: "📘 One paper has been accepted to ICCV 2025."
     date: "2025-06-26"
   - title: "🎯 See you in Zhuhai, Valse 2025!"

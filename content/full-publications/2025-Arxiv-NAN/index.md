@@ -35,6 +35,7 @@ tags:
 - Machine Learning
 - Computer Vision
 - Natural Language Processing
+- Model Editing
 
 featured: false
 
@@ -48,7 +49,7 @@ url_pdf: https://arxiv.org/abs/2505.16148
 # Featured image
 # To use, add an image named `featured.jpg/png` to your page's folder. 
 image:
-  caption: 'Framework'
+  caption: 'Experiment'
   focal_point: ""
   preview_only: false
 
