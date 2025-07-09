@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns="http://chongjiesi.site" lang="-zh-CN -en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chongjie Si</title>
+
+  <link rel="stylesheet" type="text/css" href="/js/scr_home/normalize.css">
+  <link rel="stylesheet" type="text/css" href="/js/scr_home/demo.css">
+  <!--必要样式-->
+  <link rel="stylesheet" type="text/css" href="/js/scr_home/component.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+  <style type="text/css">
+    #Layer1 {position:absolute; width:100%; z-index:2; top: 60%;}
+    .STYLE3 {font-size: medium}
+    .large-header {position: relative; overflow: hidden;}
+    .slide {position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; 
+      background-position: center; opacity: 0; transition: opacity 1s ease-in-out; z-index: 0;}
+    .slide.active {opacity: 1;}
+    .large-header .content { position: relative; z-index: 1;}
+  </style>
+
+</head>
+<body>
+
+<div class="container demo-1">
+ <div class="content">
+
+  <div id="large-header" class="large-header" style="height: 917px;">
+  <!-- 背景滑动层（保持不变） -->
+  <div class="slide" id="slide1"></div>
+  <div class="slide" id="slide2"></div>
+
+  <!-- 文字内容层 -->
+  <div class="content">
+    <canvas id="demo-canvas" width="1920" height="917"></canvas>
+
+    <h1 class="main-title">
+      <span class="animated-text crush-text">CRUSH</span><br>
+      
+      <div class="styled-text-container">
+        <a href="/home/" class="styled-text begin-link">
+          <span class="animated-text">begin</span>
+          <!-- 精致阴影，作为伪元素生成 -->
+        </a>
+      </div>
+    </h1>
+
+    <audio id="music-player" autoplay>
+      <source src="/404/bghome.mp3" type="audio/mp3">
+    </audio>
+  </div>
+</div>
+
+
+
+  <!-- <div id="Layer1">
+  <div class="navbar-container">
+   <nav class="codrops-demos">
+    <a href="home/">Home</a>
+    <a href="home/#news">News</a>
+    <a href="publications/">Publications</a>
+    <a href="blogs/">Blogs</a>
+    <a href="cv/">CV</a>
+    <a href="photos/">Photos</a>
+   </nav>
+   </div>
+  </div>
+  
+ </div> -->
+
+</div>
+
+ <footer class="footer">
+    <div class="footer-inner">
+
+
+{{ $copyright_license := .Params.copyright.license | default site.Params.footer.copyright.license }}
+{{ $notice := .Params.copyright.notice | default site.Params.footer.copyright.notice }}
+
+{{ if ($copyright_license.enable | default false) }}
+
+  {{ $allow_commercial := $copyright_license.allow_commercial | default false }}
+  {{ $allow_derivatives := $copyright_license.allow_derivatives | default false }}
+  {{ $share_alike := $copyright_license.share_alike | default true }}
+
+  {{ $cc_code := "by" }}
+  {{ if not $allow_commercial }}
+    {{ $cc_code = printf "%s-nc" $cc_code }}
+  {{end}}
+  {{ if and $allow_derivatives $share_alike }}
+    {{ $cc_code = printf "%s-sa" $cc_code }}
+  {{ else if not $allow_derivatives }}
+    {{ $cc_code = printf "%s-nd" $cc_code }}
+  {{end}}
+
+  {{ $license_url := printf "https://creativecommons.org/licenses/%s/4.0" ($cc_code | urlize) }}
+
+  {{ with $notice }}
+  <p class="powered-by text-center">
+    {{ replace (replace . "{year}" now.Year) "{license}" (printf "<a href=\"%s\" rel=\"noopener noreferrer\" target=\"_blank\">CC %s 4.0</a>" $license_url (replace $cc_code "-" " " | upper)) | markdownify }}
+  </p>
+  {{ end }}
+
+{{ else }}
+
+  {{ with $notice }}
+  <p class="powered-by text-center">
+    {{ replace . "{year}" now.Year | markdownify }}
+  </p>
+  {{ end }}
+
+{{ end }}
+
+
+<center>
+<div class="busuanzi-footer">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <i class="fa fa-user"></i>  <span id="busuanzi_value_site_pv"></span>
+</div>
+</center>
+
+
+
+<script src="/js/scr_home/TweenLite.min.js"></script>
+<script src="/js/scr_home/EasePack.min.js"></script>
+<script src="/js/scr_home/rAF.js"></script>
+<script src="/js/scr_home/demo-1.js"></script>
+<script src="/js/scr_home/music_player.js"></script>
+<script src="/js/scr_home/fetch_count.js"></script>
+<script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="/js/scr_home/bg_slide.js"></script>
+
+</body>
+</html>

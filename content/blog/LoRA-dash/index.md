@@ -1,7 +1,7 @@
 ---
 title: 深入解析LoRA-Dash：释放特定任务方向性能的微调方法
 summary: LoRA-Dash
-date: 2024-09-13
+date: 2024-11-13
 type: docs
 math: true
 tags:

@@ -5,10 +5,10 @@
 
 main:
   - name: Home
-    url: /
+    url: home/
     weight: 10
   - name: News
-    url: /#news
+    url: home/#news
     weight: 15
   - name: Publications
     url: publications/
@@ -20,7 +20,7 @@ main:
     url: blogs/
     weight: 19
   - name: CV
-    url: experience/
+    url: cv/
     weight: 20
   - name: Photos
     url: photos/
