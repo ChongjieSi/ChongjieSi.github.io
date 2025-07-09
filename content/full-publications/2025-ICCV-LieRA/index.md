@@ -37,6 +37,8 @@ tags:
 featured: true
 
 links:
+- name: Zhihu
+  url: https://zhuanlan.zhihu.com/p/1918253225078948567
 url_pdf: https://arxiv.org/abs/2504.00851
 url_code: 'https://github.com/Chongjie-Si/Subspace-Tuning'
 
