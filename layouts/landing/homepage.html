@@ -17,9 +17,6 @@
     #Layer1 {position:absolute; width:100%; z-index:2; top: 60%;}
     .STYLE3 {font-size: medium}
     .large-header {position: relative; overflow: hidden;}
-    .slide {position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; 
-      background-position: center; opacity: 0; transition: opacity 1s ease-in-out; z-index: 0;}
-    .slide.active {opacity: 1;}
     .large-header .content { position: relative; z-index: 1;}
   </style>
 
@@ -30,9 +27,10 @@
  <div class="content">
 
   <div id="large-header" class="large-header" style="height: 917px;">
-  <!-- 背景滑动层（保持不变） -->
-  <div class="slide" id="slide1"></div>
-  <div class="slide" id="slide2"></div>
+
+    <!-- 背景滑动层（保持不变） -->
+  <div class="slide" id="slide1" loading="lazy"></div>
+<div class="slide" id="slide2" loading="lazy"></div>
 
   <!-- 文字内容层 -->
   <div class="content">
@@ -134,5 +132,30 @@
 <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 <script src="/js/scr_home/bg_slide.js"></script>
 
+<script>
+// 检测WebP支持
+function checkWebPSupport(callback) {
+  var img = new Image();
+  img.onload = function() {
+    callback(true);
+  };
+  img.onerror = function() {
+    callback(false);
+  };
+  img.src = 'data:image/webp;base64,UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA==';
+}
+
+checkWebPSupport(function(isSupported) {
+  if (!isSupported) {
+    // 如果不支持WebP，替换图片路径为JPEG
+    const bgImages = document.querySelectorAll('.slide');
+    bgImages.forEach(slide => {
+      if (slide.style.backgroundImage) {
+        slide.style.backgroundImage = slide.style.backgroundImage.replace('.webp', '.jpg');
+      }
+    });
+  }
+});
+</script>
 </body>
 </html>

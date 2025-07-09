@@ -1,121 +1,115 @@
 /* Header */
 .large-header {
-	background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center center;
-	position: relative;
-  	overflow: hidden;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  position: relative;
+  overflow: hidden;
 }
 
 .demo-1 .large-header {
-	background-size: cover;
+  background-size: cover;
 }
 
-
 .demo-2 .large-header {
-	background-image: url("../img/demo-2-bg.jpg"/*tpa=http://www.52xl.club/img/demo-2-bg.jpg*/);
-	background-position: center bottom;
+  background-image: url("../img/demo-2-bg.jpg");
+  background-position: center bottom;
 }
 
 .demo-3 .large-header {
-	background: #7f8c8d;
+  background: #7f8c8d;
 }
 
 .demo-4 .large-header {
-	background: #f9f1e9;
+  background: #f9f1e9;
 }
 
 .main-title {
-	position: absolute;
-	margin: 0;
-	padding: 0;
-	color: #f9f1e9;
-	text-align: center;
-	top: 50%;
-	left: 50%;
-	-webkit-transform: translate3d(-50%,-50%,0);
-	transform: translate3d(-50%,-50%,0);
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  color: #f9f1e9;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate3d(-50%, -50%, 0);
+  transform: translate3d(-50%, -50%, 0);
 }
 
-
-.demo-1 .main-title, 
+.demo-1 .main-title,
 .demo-3 .main-title {
-	text-transform: uppercase;
-	font-size: 4.2em;
-	letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-size: 4.2em;
+  letter-spacing: 0.1em;
 }
 
 .demo-2 .main-title {
-	font-family: 'Clicker Script', cursive;
-	font-weight: normal;
-	font-size: 8em;
-	padding-left: 10px;
-	text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+  font-family: 'Clicker Script', cursive;
+  font-weight: normal;
+  font-size: 8em;
+  padding-left: 10px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
 }
 
 .demo-2 .main-title::before {
-	content: '';
-	width: 20vw;
-	height: 20vw;
-	min-width: 3.5em;
-	min-height: 3.5em;
-	background: url("../img/deco.svg"/*tpa=http://www.52xl.club/img/deco.svg*/) no-repeat center center;
-	background-size: cover;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	border-radius: 50%;
-	z-index: -1;
-	-webkit-transform: translate3d(-50%,-50%,0);
-	transform: translate3d(-50%,-50%,0);
+  content: '';
+  width: 20vw;
+  height: 20vw;
+  min-width: 3.5em;
+  min-height: 3.5em;
+  background: url("../img/deco.svg") no-repeat center center;
+  background-size: cover;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  z-index: -1;
+  -webkit-transform: translate3d(-50%, -50%, 0);
+  transform: translate3d(-50%, -50%, 0);
 }
 
 .demo-3 .main-title {
-	padding: 10px 40px;
-	border: 10px double #f9f1e9;
-	text-transform: uppercase;
-	font-family: Londrina Outline, sans-serif;
+  padding: 10px 40px;
+  border: 10px double #f9f1e9;
+  text-transform: uppercase;
+  font-family: Londrina Outline, sans-serif;
 }
 
 .demo-4 .main-title {
-	font-size: 6em;
-	font-weight: 300;
-	padding: 10px 30px;
-	text-transform: uppercase;
-	color: #222;
+  font-size: 6em;
+  font-weight: 300;
+  padding: 10px 30px;
+  text-transform: uppercase;
+  color: #222;
 }
 
 .main-title .thin {
-	font-weight: 200;
+  font-weight: 200;
 }
 
-@media only screen and (max-width : 768px) {
-	.demo-1 .main-title, 
-	.demo-3 .main-title,
-	.demo-4 .main-title {
-		font-size: 3em;
-	}
-
-	.demo-2 .main-title {
-		font-size: 4em;
-	}
+@media only screen and (max-width: 768px) {
+  .demo-1 .main-title,
+  .demo-3 .main-title,
+  .demo-4 .main-title {
+    font-size: 3em;
+  }
+  
+  .demo-2 .main-title {
+    font-size: 4em;
+  }
 }
 
-
-/* 一、提高主标题与背景对比度 */
+/* 提高主标题与背景对比度 */
 .crush-text,
 .begin-link .animated-text {
-  color: #ffffff;                /* 纯白或你喜欢的高对比色 */
-  text-shadow:
-    0 2px 4px rgba(0,0,0,0.4),   /* 深色投影加深可读性 */
-    0 4px 8px rgba(0,0,0,0.4);
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4), 0 4px 8px rgba(0, 0, 0, 0.4);
   display: inline-block;
   position: relative;
 }
 
-/* 二、“begin”下方的精致椭圆阴影 */
+/* "begin"下方的精致椭圆阴影 */
 .begin-link {
-  /* 使链接本身相对定位，以便伪元素定位 */
   position: relative;
   text-decoration: none;
   cursor: pointer;
@@ -125,7 +119,7 @@
   content: "";
   position: absolute;
   left: 50%;
-  bottom: -0.5em;               /* 根据文字大小微调 */
+  bottom: -0.5em;
   transform: translateX(-50%) scaleX(1.5);
   width: 1em;
   height: 0.25em;
@@ -136,14 +130,14 @@
   transition: opacity 1s ease-in-out, transform 1s ease-in-out;
 }
 
-/* 三、与文字一起淡入 */
+/* 与文字一起淡入 */
 .begin-link.active::after,
 .begin-link:hover::after {
   opacity: 1;
-  transform: translateX(-50%) scaleX(2); /* 放大一点，营造浮起感 */
+  transform: translateX(-50%) scaleX(2);
 }
 
-/* 四、给主标题整体淡入效果 */
+/* 主标题整体淡入效果 */
 .main-title .crush-text,
 .main-title .begin-link {
   opacity: 0;
@@ -167,5 +161,61 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes loading {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+/* 加载动画优化 */
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1s cubic-bezier(0.25, 0.1, 0.45, 1);
+  z-index: 0;
+  background-color: #f0f0f0;
+  background-image: linear-gradient(100deg, #f0f0f0 40%, #e0e0e0 50%, #f0f0f0 60%);
+  animation: loading 7s linear infinite;
+  
+  /* GPU加速优化 */
+  will-change: opacity, background-image;
+  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  
+  /* 添加动画重置能力 */
+  animation-play-state: running;
+}
+
+.slide.active {
+  opacity: 1;
+}
+
+/* 添加动画重置类 */
+.slide.reset-animation {
+  animation: none;
+}
+
+/* 新添加：平滑的图片切换效果 */
+.slide.transitioning {
+  transition: opacity 1.2s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* 新添加：优化移动设备性能 */
+@media (prefers-reduced-motion: reduce) {
+  .slide {
+    animation: none !important;
+    transition: opacity 1.2s ease !important;
   }
 }
