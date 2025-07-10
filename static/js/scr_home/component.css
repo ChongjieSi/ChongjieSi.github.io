@@ -246,37 +246,52 @@
   }
 }
 
-/* —— 左下角慢浮小字 —— */
-.micro-wrapper {
+/* —— 诗句固定盒子 —— */
+.poem-box {
   position: absolute;
   left: 5%;
   bottom: 10%;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5em;         /* 行间距 */
-  pointer-events: none;
-}
-
-.micro-wrapper .micro-text {
-  font-family: 'Italianno', cursive;
-  font-size: 1.4em;
-  color: rgba(255, 255, 255, 0.75);
-  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  width: 500px;
+  height: 120px;
+  overflow: hidden;
+  /* background: rgba(0,0,0,0.3); */
+  border-radius: 0.5rem;
+  padding: 0.8em;
+  /* box-shadow: 0 4px 8px rgba(0,0,0,0.4); */
   opacity: 0;
   transform: translateY(20px);
   animation: floatUp 1s ease forwards;
+  animation-delay: 1s;
 }
 
-/* 顺序延迟 */
-.micro-wrapper .micro-text:nth-child(1) { animation-delay: 1.0s; }
-.micro-wrapper .micro-text:nth-child(2) { animation-delay: 1.3s; }
-.micro-wrapper .micro-text:nth-child(3) { animation-delay: 1.6s; }
-.micro-wrapper .micro-text:nth-child(4) { animation-delay: 1.9s; }
+/* 包含两份诗句 */
+.poem-content {
+  display: flex;
+  flex-direction: column;
+  /* 总长度是两份；下面动画往上移动一份的高度 */
+  animation: scrollLoop 50s linear infinite;
+  animation-delay: 2s; /* 浮入之后再开始滚动 */
+}
 
-/* keyframes：从下方慢慢浮上来，然后停在原位 */
+/* 诗句行样式 */
+.poem-lines p {
+  font-family: 'Italianno', cursive;
+  font-size: 1.3em;
+  line-height: 1.4em;
+  color: rgba(255,255,255,0.85);
+  margin: 0;
+}
+
+/* 浮入动画 */
 @keyframes floatUp {
   to {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* 无限滚动：从 translateY(0) 到 -50%，循环 */
+@keyframes scrollLoop {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
 }
