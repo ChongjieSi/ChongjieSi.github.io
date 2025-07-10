@@ -88,7 +88,18 @@
 }
 
 @media only screen and (max-width: 768px) {
-  .demo-1 .main-title,
+  /* 之前已有的 crush 缩放规则… */
+  .demo-1 .main-title {
+    font-size: 3em;
+  }
+
+  /* 新增：让 begin 链接也等比缩放 */
+  .demo-1 .main-title .begin-link {
+    /* 先回到原本居中位置，再缩小 */
+    transform: translate3d(-50%, -50%, 0) scale(0.7143);
+    transform-origin: center center;
+  }
+
   .demo-3 .main-title,
   .demo-4 .main-title {
     font-size: 3em;
@@ -238,20 +249,14 @@
   transition: opacity 1.2s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
-/* 新添加：优化移动设备性能 */
-@media (prefers-reduced-motion: reduce) {
-  .slide {
-    animation: none !important;
-    transition: opacity 1.2s ease !important;
-  }
-}
-
 /* —— 诗句固定盒子 —— */
+/* —— 修改诗句固定盒子 —— */
 .poem-box {
   position: absolute;
-  left: 5%;
-  bottom: 10%;
-  width: 500px;
+  left: 5vw;              /* 用视口单位，保持边距 */
+  bottom: 7vh;
+  width: auto;            /* 宽度自适应内容 */
+  max-width: 90vw;        /* 不超过视口宽度的 90% */
   height: 120px;
   overflow: hidden;
   /* background: rgba(0,0,0,0.3); */
@@ -262,6 +267,8 @@
   transform: translateY(20px);
   animation: floatUp 1s ease forwards;
   animation-delay: 1s;
+  /* 保证在小屏时不会被遮挡 */
+  z-index: 10;
 }
 
 /* 包含两份诗句 */
@@ -294,4 +301,28 @@
 @keyframes scrollLoop {
   0%   { transform: translateY(0); }
   100% { transform: translateY(-50%); }
+}
+
+/* —— 响应式：手机端微调 —— */
+@media (max-width: 768px) {
+  .poem-box {
+    left: 3vw;
+    bottom: 7vh;
+    height: 100px;         /* 适当减小高度 */
+    padding: 0.5em;
+  }
+  .poem-box .poem-lines p {
+    font-size: 0.9em;      /* 字体稍微小一点 */
+    line-height: 1.3em;
+  }
+}
+
+/* 4. 小屏时再微调 */
+@media (max-width: 480px) {
+  .begin-link {
+    padding: 0.3em 0.8em;
+  }
+  .begin-link .animated-text {
+    font-size: 0.9rem;
+  }
 }
