@@ -327,6 +327,16 @@
 
 /* 4. 小屏时再微调 */
 @media (max-width: 480px) {
+  .poem-box {
+    left: 3vw;
+    bottom: 14vh;
+    height: 80px;         /* 适当减小高度 */
+    padding: 0.5em;
+  }
+  .poem-box .poem-lines p {
+    font-size: 0.9em;      /* 字体稍微小一点 */
+    line-height: 1.3em;
+  }
   .begin-link {
     padding: 0.3em 0.8em;
   }
