@@ -315,7 +315,7 @@
 @media (max-width: 768px) {
   .poem-box {
     left: 3vw;
-    bottom: 8vh;
+    bottom: 14vh;
     height: 80px;         /* 适当减小高度 */
     padding: 0.5em;
   }
