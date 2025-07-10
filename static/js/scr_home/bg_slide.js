@@ -12,6 +12,7 @@ const bgImages = [
   "/images/background/bg10.webp",
   "/images/background/bg11.webp",
   "/images/background/bg13.webp",
+  "/images/background/bg15.webp",
 ];
 
 const interval = 5000; // 5 秒切换一次
@@ -131,7 +132,7 @@ function resetTimer() {
 // 7) 点击背景时切换并重置计时
 document.getElementById("large-header").addEventListener("click", () => {
   // 防止频繁点击（至少间隔1秒）
-  if (Date.now() - lastSwitchTime > 1000) {
+  if (Date.now() - lastSwitchTime > 10) {
     switchBackground(true); // 传入 true 表示手动切换
     lastSwitchTime = Date.now();
   }
