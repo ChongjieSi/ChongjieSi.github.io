@@ -262,7 +262,7 @@
 .poem-box {
   position: absolute;
   left: 5vw;              /* 用视口单位，保持边距 */
-  bottom: 7vh;
+  bottom: 10vh;
   width: auto;            /* 宽度自适应内容 */
   max-width: 90vw;        /* 不超过视口宽度的 90% */
   height: 120px;
@@ -315,8 +315,8 @@
 @media (max-width: 768px) {
   .poem-box {
     left: 3vw;
-    bottom: 7vh;
-    height: 100px;         /* 适当减小高度 */
+    bottom: 8vh;
+    height: 80px;         /* 适当减小高度 */
     padding: 0.5em;
   }
   .poem-box .poem-lines p {
