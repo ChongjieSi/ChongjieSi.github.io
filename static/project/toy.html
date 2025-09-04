@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8" />
+  <title>科研小助手</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root { --bg:#f7f8fa; --card:#fff; --user:#eef1ff; --assistant:#ecfbe6; --border:#e6e8eb; --text:#1f2328; }
+    html, body { height: 100%; }
+    body { margin:0; background:var(--bg); color:var(--text); font-family: ui-sans-serif,-apple-system,Segoe UI,Roboto,PingFang SC,Hiragino Sans GB,Noto Sans CJK SC,Microsoft YaHei,Arial; }
+    .container { max-width: 900px; margin: 24px auto; padding: 0 16px; }
+    .chat {
+      background: var(--card); border:1px solid var(--border); border-radius:12px;
+      padding:16px; min-height:320px; max-height:65vh; overflow:auto; scroll-behavior:smooth;
+    }
+    .msg { margin:10px 0; padding:12px 14px; border-radius:10px; line-height:1.6; word-wrap:break-word; overflow-wrap:anywhere; border:1px solid var(--border); }
+    .user { background: var(--user); }
+    .assistant { background: var(--assistant); }
+    .toolbar { display:flex; gap:8px; align-items:center; margin:12px 0 6px; color:#6b7280; font-size:12px; }
+    .input-wrap {
+      background: var(--card); border:1px solid var(--border); border-radius:12px;
+      padding:12px; display:grid; grid-template-columns: 1fr auto; gap:10px; align-items:end; position:sticky; bottom:0; margin-top:12px;
+    }
+    /* 固定高度 + 垂直滚动条 */
+    textarea {
+      width:100%; height:140px;                     /* 固定高度 */
+      overflow-y:auto;                               /* 垂直滚动条 */
+      border:none; outline:none; resize: none;       /* 禁止拖拽改变尺寸 */
+      font: inherit; line-height:1.6; padding:6px; background:transparent;
+    }
+    button { appearance:none; border:1px solid var(--border); background:#111827; color:#fff; border-radius:10px; padding:10px 16px; cursor:pointer; font-weight:600; }
+    button:disabled { opacity:.6; cursor:not-allowed; }
+    .hint { font-size:12px; color:#6b7280; text-align:right; }
+
+    .typing { display:inline-flex; gap:4px; vertical-align:middle; margin-right:8px; }
+    .typing span { width:6px; height:6px; background:#111827; border-radius:50%; animation: blink 1.2s infinite ease-in-out; }
+    .typing span:nth-child(2) { animation-delay:.2s; }
+    .typing span:nth-child(3) { animation-delay:.4s; }
+    @keyframes blink { 0%,80%,100%{opacity:.2} 40%{opacity:1} }
+
+    .assistant :is(code, pre, blockquote) { background:#f6f8fa; }
+    pre { padding:12px; border-radius:8px; overflow:auto; border:1px solid var(--border); }
+    code { padding:2px 4px; border-radius:4px; }
+    th, td { border:1px solid var(--border); padding:6px 8px; }
+  </style>
+
+  <!-- 渲染库 -->
+  <script src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.7/dist/purify.min.js"></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/common.min.js"></script>
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+      svg: { fontCache: 'global' },
+      options: { skipHtmlTags: {'[+]': ['code','pre']} }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+
+<body>
+  <div class="container">
+    <h2>Toy Chat</h2>
+
+    <div class="toolbar">
+      <div>支持 **Markdown**、代码高亮、以及 $\\LaTeX$ 公式。</div>
+      <div style="margin-left:auto;">快捷键：Ctrl/⌘ + Enter</div>
+    </div>
+
+    <div id="chat" class="chat" aria-live="polite"></div>
+
+    <div class="input-wrap">
+      <textarea id="input" placeholder="固定高度，可滚动粘贴大段文本…"></textarea>
+      <div style="display:flex; flex-direction:column; gap:6px; align-items:end;">
+        <button id="send">发送</button>
+        <div id="hint" class="hint"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // toy.html 里：
+    const API = "https://api.chongjiesi.sites/chat_stream";
+    const sessionId = crypto.randomUUID();
+
+    marked.setOptions({
+      breaks: true,
+      highlight: (code, lang) => {
+        if (lang && hljs.getLanguage(lang)) return hljs.highlight(code, { language: lang }).value;
+        return hljs.highlightAuto(code).value;
+      }
+    });
+
+    const chatBox = document.getElementById('chat');
+    const input   = document.getElementById('input');
+    const sendBtn = document.getElementById('send');
+    const hint    = document.getElementById('hint');
+
+    input.addEventListener('input', () => {
+      hint.textContent = `长度：${input.value.length.toLocaleString()} 字符`;
+    });
+
+    function addMsg(role, htmlOrText, isHTML=false) {
+      const div = document.createElement('div');
+      div.className = `msg ${role}`;
+      if (isHTML) div.innerHTML = htmlOrText; else div.textContent = htmlOrText;
+      chatBox.appendChild(div);
+      chatBox.scrollTop = chatBox.scrollHeight;
+      return div;
+    }
+
+    function addTypingBubble() {
+      const html = `<div class="msg assistant">
+        <span class="typing" aria-label="模型正在生成"><span></span><span></span><span></span></span>
+        <span id="stream-text"></span>
+      </div>`;
+      const wrapper = document.createElement('div');
+      wrapper.innerHTML = html;
+      const node = wrapper.firstElementChild;
+      chatBox.appendChild(node);
+      chatBox.scrollTop = chatBox.scrollHeight;
+      return node; // 含 .typing + #stream-text
+    }
+
+    function showError(text) {
+      addMsg('assistant', `❌ ${text}`);
+    }
+
+    // 简单的超时封装（默认 15s）
+    async function fetchWithTimeout(resource, options = {}, timeout = 15000) {
+      const controller = new AbortController();
+      const id = setTimeout(() => controller.abort(), timeout);
+      try {
+        const resp = await fetch(resource, { ...options, signal: controller.signal });
+        return resp;
+      } finally {
+        clearTimeout(id);
+      }
+    }
+
+    async function send() {
+      const text = input.value.trim();
+      if (!text || sendBtn.disabled) return;
+
+      addMsg('user', `我：${text}`);
+      input.value = ''; hint.textContent = '';
+      sendBtn.disabled = true;
+
+      let typingNode = null;
+      let streamSpan = null;
+      let gotAnyToken = false;
+
+      try {
+        // 先试探请求；失败就直接在对话区提示，不显示三点
+        const resp = await fetchWithTimeout(API, {
+          method: 'POST',
+          headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({
+            session_id: sessionId,
+            user_input: text,
+            max_new_tokens: 768,
+            temperature: 0.7,
+            top_p: 0.9
+          })
+        }, 2000); // 15s 超时可按需调整
+
+        if (!resp.ok) {
+          const body = await resp.text().catch(()=>'(no body)');
+          throw new Error(`HTTP ${resp.status} ${resp.statusText} :: ${body.slice(0,200)}`);
+        }
+
+        // 要求是 SSE；如果不是，读取文本返回错误
+        const ctype = resp.headers.get('content-type') || '';
+        if (!ctype.includes('text/event-stream')) {
+          const body = await resp.text().catch(()=>'(no body)');
+          throw new Error(`服务器未按流式返回 (content-type=${ctype}) :: ${body.slice(0,200)}`);
+        }
+
+        // 到这里才显示“三点”气泡
+        typingNode = addTypingBubble();
+        streamSpan = typingNode.querySelector('#stream-text');
+
+        // 逐块读取 SSE
+        const reader = resp.body.getReader();
+        const decoder = new TextDecoder();
+        let buf = "";
+
+        while (true) {
+          const { value, done } = await reader.read();
+          if (done) break;
+          buf += decoder.decode(value, { stream: true });
+
+          let idx;
+          while ((idx = buf.indexOf("\n\n")) !== -1) {
+            const line = buf.slice(0, idx).trim();
+            buf = buf.slice(idx + 2);
+
+            if (!line.startsWith("data:")) continue;
+            const payload = line.slice(5).trim();
+            if (!payload) continue;
+
+            try {
+              const msg = JSON.parse(payload);
+              if (msg.event === "end") {
+                // 没有任何 token 也结束了，提示一下
+                if (!gotAnyToken) {
+                  // 移除气泡，给出错误
+                  typingNode.remove();
+                  typingNode = null;
+                  showError("服务器返回结束事件，但没有任何内容。");
+                  break;
+                }
+                // 正常结束：把累积文本做 Markdown + LaTeX 渲染
+                const md = streamSpan.textContent || "";
+                const raw = marked.parse(md);
+                const clean = DOMPurify.sanitize(raw, {USE_PROFILES:{html:true, svg:true}});
+                typingNode.innerHTML = clean;
+                if (window.MathJax && window.MathJax.typesetPromise) {
+                  await MathJax.typesetPromise([typingNode]);
+                }
+              } else if (typeof msg.token === "string") {
+                // 收到第一个 token 就移除三点
+                const dots = typingNode.querySelector('.typing');
+                if (dots) dots.remove();
+                gotAnyToken = true;
+                streamSpan.textContent += msg.token;
+                chatBox.scrollTop = chatBox.scrollHeight;
+              }
+            } catch (e) {
+              // SSE 单条解析失败
+              if (typingNode) { typingNode.remove(); typingNode = null; }
+              showError(`SSE 解析失败：${e}`);
+              console.warn("SSE parse error:", e, payload);
+              return; // 结束本次
+            }
+          }
+        }
+      } catch (err) {
+        // 全局失败处理：不显示三点，或移除已有三点，然后显示错误
+        if (typingNode) { typingNode.remove(); typingNode = null; }
+        const msg = (err && err.name === 'AbortError')
+          ? '请求超时（可能服务器未连接或网络不通）。'
+          : (err?.message || String(err));
+        showError(msg);
+        console.error(err);
+      } finally {
+        sendBtn.disabled = false;
+        input.focus();
+      }
+    }
+
+    sendBtn.addEventListener('click', send);
+    input.addEventListener('keydown', e => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') send();
+    });
+  </script>
+</body>
+</html>
