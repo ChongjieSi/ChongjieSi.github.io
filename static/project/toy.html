@@ -2,259 +2,548 @@
 <html lang="zh">
 <head>
   <meta charset="utf-8" />
-  <title>科研小助手</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
+  <title>AI 狗狗 · 家园互动演示</title>
   <style>
-    :root { --bg:#f7f8fa; --card:#fff; --user:#eef1ff; --assistant:#ecfbe6; --border:#e6e8eb; --text:#1f2328; }
-    html, body { height: 100%; }
-    body { margin:0; background:var(--bg); color:var(--text); font-family: ui-sans-serif,-apple-system,Segoe UI,Roboto,PingFang SC,Hiragino Sans GB,Noto Sans CJK SC,Microsoft YaHei,Arial; }
-    .container { max-width: 900px; margin: 24px auto; padding: 0 16px; }
-    .chat {
-      background: var(--card); border:1px solid var(--border); border-radius:12px;
-      padding:16px; min-height:320px; max-height:65vh; overflow:auto; scroll-behavior:smooth;
+    :root{
+      --bg:#0b0d10; --panel:#14171c; --card:#0f1319; --muted:#94a3b8; --text:#e8edf3;
+      --accent:#56b1ff; --accent2:#ffb352; --ok:#4ade80; --warn:#fbbf24; --bad:#fb7185;
+      --border:#1f2937; --bar:#223047; --barfill:#56b1ff; --bar2:#2a3a55; --barfill2:#ffb352;
+      --radius:16px;
     }
-    .msg { margin:10px 0; padding:12px 14px; border-radius:10px; line-height:1.6; word-wrap:break-word; overflow-wrap:anywhere; border:1px solid var(--border); }
-    .user { background: var(--user); }
-    .assistant { background: var(--assistant); }
-    .toolbar { display:flex; gap:8px; align-items:center; margin:12px 0 6px; color:#6b7280; font-size:12px; }
-    .input-wrap {
-      background: var(--card); border:1px solid var(--border); border-radius:12px;
-      padding:12px; display:grid; grid-template-columns: 1fr auto; gap:10px; align-items:end; position:sticky; bottom:0; margin-top:12px;
-    }
-    /* 固定高度 + 垂直滚动条 */
-    textarea {
-      width:100%; height:140px;                     /* 固定高度 */
-      overflow-y:auto;                               /* 垂直滚动条 */
-      border:none; outline:none; resize: none;       /* 禁止拖拽改变尺寸 */
-      font: inherit; line-height:1.6; padding:6px; background:transparent;
-    }
-    button { appearance:none; border:1px solid var(--border); background:#111827; color:#fff; border-radius:10px; padding:10px 16px; cursor:pointer; font-weight:600; }
-    button:disabled { opacity:.6; cursor:not-allowed; }
-    .hint { font-size:12px; color:#6b7280; text-align:right; }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;background:linear-gradient(180deg,#0b0d10,#0a1017);color:var(--text);font:14px/1.6 system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial,"PingFang SC","Noto Sans CJK SC"}
+    .wrap{max-width:1100px;margin:0 auto;padding:18px}
+    header{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+    .logo{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:grid;place-items:center;color:#0b0d10;font-weight:800}
+    h1{font-size:18px;margin:0}
+    .muted{color:var(--muted)}
 
-    .typing { display:inline-flex; gap:4px; vertical-align:middle; margin-right:8px; }
-    .typing span { width:6px; height:6px; background:#111827; border-radius:50%; animation: blink 1.2s infinite ease-in-out; }
-    .typing span:nth-child(2) { animation-delay:.2s; }
-    .typing span:nth-child(3) { animation-delay:.4s; }
-    @keyframes blink { 0%,80%,100%{opacity:.2} 40%{opacity:1} }
+    /* 舞台区域：留出大片空地 */
+    .stage-card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);box-shadow:0 12px 32px rgba(0,0,0,.25);padding:0;overflow:hidden}
+    .stage{position:relative;height:540px;background:
+      linear-gradient(180deg,#111826 0%,#0f1722 40%,#0d121b 100%)}
+    .wall{position:absolute;inset:0;pointer-events:none}
+    .wall:before{content:"";position:absolute;left:0;right:0;top:0;height:64px;background:linear-gradient(180deg,#0e1520,#0c121b)}
+    .floor{position:absolute;left:0;right:0;bottom:0;height:160px;background:
+      linear-gradient(180deg,#0a0f17 0%,#0a0f17 1px,#0c141f 2px),
+      repeating-linear-gradient(90deg,#0e1a27 0 22px,#0d1824 22px 44px);border-top:1px solid #152131}
 
-    .assistant :is(code, pre, blockquote) { background:#f6f8fa; }
-    pre { padding:12px; border-radius:8px; overflow:auto; border:1px solid var(--border); }
-    code { padding:2px 4px; border-radius:4px; }
-    th, td { border:1px solid var(--border); padding:6px 8px; }
+    /* 道具与家 */
+    .house{position:absolute;right:36px;bottom:90px;width:160px;height:120px}
+    .house .roof{position:absolute;left:0;right:0;top:-36px;height:0;border-left:80px solid transparent;border-right:80px solid transparent;border-bottom:36px solid #324965}
+    .house .body{position:absolute;inset:0;background:#1a2637;border:1px solid #2a3a55;border-radius:12px}
+    .house .door{position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:70px;height:80px;background:#0f1622;border:1px solid #25334a;border-top-left-radius:50px;border-top-right-radius:50px}
+
+    .bowl{position:absolute;left:90px;bottom:104px;width:64px;height:24px;background:#1b2a3e;border:2px solid #2e4160;border-radius:12px;box-shadow:inset 0 6px 10px rgba(0,0,0,.35)}
+    .toy{position:absolute;left:220px;bottom:120px;width:16px;height:16px;border-radius:50%;background:#ff9b4d;border:2px solid #ffb97d;box-shadow:0 2px 6px rgba(0,0,0,.4);display:none}
+
+    /* 互动热点 */
+    .rug{position:absolute;left:40px;bottom:90px;width:140px;height:70px;background:radial-gradient(60% 80% at 50% 50%,#152132,#0f1722);border:1px solid #243246;border-radius:24px;opacity:.9}
+    .sofa{position:absolute;left:40px;bottom:180px;width:220px;height:80px;background:#1a2637;border:1px solid #2a3a55;border-radius:18px}
+    .sofa:before{content:"";position:absolute;left:12px;right:12px;top:-26px;height:28px;background:#1a2637;border:1px solid #2a3a55;border-top-left-radius:16px;border-top-right-radius:16px}
+    .window{position:absolute;left:300px;top:24px;width:140px;height:88px;background:linear-gradient(180deg,#1e2c44,#111c2e);border:1px solid #2a3a55;border-radius:10px;box-shadow:inset 0 0 24px rgba(86,177,255,.15)}
+
+    /* 狗狗 */
+    .dog{position:absolute;left:140px;bottom:100px;width:220px;aspect-ratio:1/1}
+    .dog svg{width:100%;height:100%}
+    .flip{transform:scaleX(-1)}
+    .blink{animation: blink 4.5s infinite; transform-origin: center}
+    @keyframes blink{0%,2%,60%,100%{transform:scaleY(1)}1%,1.2%{transform:scaleY(.1)}}
+    .wag{animation: wag 1.2s infinite ease-in-out; transform-origin: 190px 120px}
+    @keyframes wag{0%,100%{transform:rotate(0deg)}50%{transform:rotate(12deg)}}
+
+    /* 小猫（路过） */
+    .cat{position:absolute;bottom:105px;width:90px;height:60px;border-radius:10px;background:linear-gradient(180deg,#3a2b2b,#2b2222);border:1px solid #4b3a3a;display:none}
+    .cat:before{content:"";position:absolute;left:10px;top:-8px;width:18px;height:18px;background:#3a2b2b;border:1px solid #4b3a3a;border-radius:4px;transform:rotate(30deg)}
+
+    /* 说话气泡 */
+    .bubble{position:absolute;left:50%;top:-8px;transform:translate(-50%,-100%);max-width:260px;background:#0f1319;border:1px solid #2a3550;color:var(--text);padding:8px 10px;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.3);opacity:0;pointer-events:none}
+    .bubble.show{opacity:1;animation:fade 2s ease both}
+    @keyframes fade{0%{opacity:0;transform:translate(-50%,-90%)}12%,88%{opacity:1;transform:translate(-50%,-100%)}100%{opacity:0;transform:translate(-50%,-90%)}}
+
+    /* 底部 HUD：参数与动作 */
+    .hud{margin-top:12px;display:grid;gap:12px}
+    .hud .card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);box-shadow:0 12px 32px rgba(0,0,0,.25)}
+    .bars{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:12px}
+    .bar{background:var(--bar);border-radius:999px;overflow:hidden;border:1px solid #263246;height:10px}
+    .bar > div{height:100%;background:var(--barfill);width:40%;transition:width .3s}
+    .bar.alt{background:var(--bar2)}
+    .bar.alt > div{background:var(--barfill2)}
+    .bar-wrap{display:flex;flex-direction:column;gap:6px}
+    .bar-wrap .label{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
+
+    .dock{display:grid;grid-template-columns: 1fr auto;gap:10px;padding:10px;align-items:center}
+    .dock .left{display:flex;gap:10px;align-items:center}
+    .dock input,.dock select{padding:8px 10px;border-radius:10px;border:1px solid #243146;background:#0c1118;color:var(--text)}
+    .actions{display:flex;flex-wrap:wrap;gap:8px}
+    .btn{background:#0f1319;border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:12px;cursor:pointer}
+    .btn:hover{border-color:#2a3750}
+
+    .pill{font-size:12px;border:1px solid #27334a;color:var(--muted);padding:4px 8px;border-radius:999px}
+
+    .toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#0f1319;border:1px solid #2a3550;color:var(--text);padding:10px 14px;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.35);opacity:0;pointer-events:none}
+    .toast.show{opacity:1;animation:fade 2.2s ease both}
   </style>
-
-  <!-- 渲染库 -->
-  <script src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.7/dist/purify.min.js"></script>
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/common.min.js"></script>
-  <script>
-    window.MathJax = {
-      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
-      svg: { fontCache: 'global' },
-      options: { skipHtmlTags: {'[+]': ['code','pre']} }
-    };
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 </head>
-
 <body>
-  <div class="container">
-    <h2>Toy Chat</h2>
-
-    <div class="toolbar">
-      <div>支持 **Markdown**、代码高亮、以及 $\\LaTeX$ 公式。</div>
-      <div style="margin-left:auto;">快捷键：Ctrl/⌘ + Enter</div>
-    </div>
-
-    <div id="chat" class="chat" aria-live="polite"></div>
-
-    <div class="input-wrap">
-      <textarea id="input" placeholder="固定高度，可滚动粘贴大段文本…"></textarea>
-      <div style="display:flex; flex-direction:column; gap:6px; align-items:end;">
-        <button id="send">发送</button>
-        <div id="hint" class="hint"></div>
+  <div class="wrap">
+    <header>
+      <div class="logo">狗</div>
+      <div>
+        <h1>AI 狗狗 · 家园互动演示</h1>
+        <div class="muted">更丰富的表情，上方是可活动的大空间，右下角有小家。狗狗会在家里<strong>乱逛</strong>；偶尔会有<strong>小猫路过</strong>；你可以<strong>抛球逗它</strong>。</div>
       </div>
-    </div>
+    </header>
+
+    <!-- 舞台：家园 -->
+    <section class="stage-card">
+      <div class="stage" id="stage">
+        <div class="wall"></div>
+        <div class="floor"></div>
+        <div class="house" id="house" aria-label="小家">
+          <div class="roof"></div>
+          <div class="body"></div>
+          <div class="door"></div>
+        </div>
+        <div class="bowl" id="bowl" title="食盆"></div>
+        <div class="toy" id="toy" title="小球"></div>
+        <div class="rug" id="rug" title="地毯"></div>
+        <div class="sofa" id="sofa" title="沙发"></div>
+        <div class="window" id="window" title="窗户"></div>
+
+        <!-- 狗狗角色 -->
+        <div class="dog" id="dog">
+          <div class="bubble" id="bubble">汪</div>
+          <svg viewBox="0 0 220 220" id="dogSvg" aria-label="小狗">
+            <defs>
+              <radialGradient id="furNeutral" cx="50%" cy="35%" r="60%">
+                <stop offset="0%" stop-color="#ffe0bf"/>
+                <stop offset="100%" stop-color="#ffc78f"/>
+              </radialGradient>
+              <radialGradient id="furHappy" cx="50%" cy="35%" r="60%">
+                <stop offset="0%" stop-color="#eaffd2"/>
+                <stop offset="100%" stop-color="#b9f59a"/>
+              </radialGradient>
+              <radialGradient id="furSad" cx="50%" cy="35%" r="60%">
+                <stop offset="0%" stop-color="#ffd9e0"/>
+                <stop offset="100%" stop-color="#ffb0c0"/>
+              </radialGradient>
+            </defs>
+            <!-- 身体与尾巴 -->
+            <ellipse id="body" cx="110" cy="115" rx="64" ry="66" fill="url(#furNeutral)" stroke="#d78b46" stroke-width="2"/>
+            <g class="wag"><path d="M174,120 q34,12 22,32 q-22,-8 -22,-32 z" fill="#ffcf9f" stroke="#d78b46" stroke-width="2"/></g>
+            <!-- 耳朵（耷拉） -->
+            <path d="M60,58 q-20,26 6,36 q20,6 26,-10 q-16,-6 -32,-26 z" fill="#ffcf9f" stroke="#d78b46" stroke-width="2"/>
+            <path d="M160,58 q20,26 -6,36 q-20,6 -26,-10 q16,-6 32,-26 z" fill="#ffcf9f" stroke="#d78b46" stroke-width="2"/>
+
+            <!-- 表情：更多分支 -->
+            <g id="faceNeutral">
+              <ellipse class="blink" cx="88" cy="98" rx="6" ry="8" fill="#2b2b2b"/>
+              <ellipse class="blink" cx="132" cy="98" rx="6" ry="8" fill="#2b2b2b"/>
+              <circle cx="110" cy="112" r="10" fill="#3b2b2b"/>
+              <rect x="106" y="118" width="8" height="6" rx="2" fill="#2b2b2b"/>
+            </g>
+            <g id="faceHappy" style="display:none">
+              <ellipse cx="86" cy="98" rx="4" ry="8" fill="#2b2b2b"/>
+              <ellipse cx="134" cy="98" rx="4" ry="8" fill="#2b2b2b"/>
+              <circle cx="110" cy="112" r="10" fill="#3b2b2b"/>
+              <path d="M96,126 q14,18 28,0" stroke="#2b2b2b" stroke-width="4" fill="none"/>
+              <path d="M110,126 q6,10 12,0" stroke="#e66" stroke-width="4" fill="none"/>
+              <circle cx="82" cy="114" r="4" fill="#ff8faa"/>
+              <circle cx="138" cy="114" r="4" fill="#ff8faa"/>
+            </g>
+            <g id="faceSad" style="display:none">
+              <ellipse cx="88" cy="98" rx="6" ry="8" fill="#2b2b2b"/>
+              <ellipse cx="132" cy="98" rx="6" ry="8" fill="#2b2b2b"/>
+              <circle cx="110" cy="112" r="10" fill="#3b2b2b"/>
+              <path d="M96,132 q14,-10 28,0" stroke="#2b2b2b" stroke-width="4" fill="none"/>
+            </g>
+            <g id="faceSleep" style="display:none">
+              <rect x="76" y="96" width="22" height="4" rx="2" fill="#2b2b2b"/>
+              <rect x="122" y="96" width="22" height="4" rx="2" fill="#2b2b2b"/>
+              <path d="M96,128 q14,10 28,0" stroke="#2b2b2b" stroke-width="4" fill="none"/>
+            </g>
+            <g id="faceExcited" style="display:none">
+              <ellipse cx="86" cy="98" rx="4" ry="8" fill="#2b2b2b"/>
+              <ellipse cx="134" cy="98" rx="4" ry="8" fill="#2b2b2b"/>
+              <path d="M92,124 q18,22 36,0" stroke="#2b2b2b" stroke-width="4" fill="none"/>
+              <circle cx="100" cy="126" r="6" fill="#e66"/>
+            </g>
+            <g id="faceWink" style="display:none">
+              <rect x="82" y="96" width="12" height="4" rx="2" fill="#2b2b2b"/>
+              <ellipse cx="134" cy="98" rx="5" ry="8" fill="#2b2b2b"/>
+              <path d="M96,124 q14,14 28,0" stroke="#2b2b2b" stroke-width="4" fill="none"/>
+            </g>
+            <g id="faceAngry" style="display:none">
+              <path d="M82,92 q8,-8 16,0" stroke="#2b2b2b" stroke-width="4" fill="none"/>
+              <path d="M122,92 q8,-8 16,0" stroke="#2b2b2b" stroke-width="4" fill="none"/>
+              <circle cx="110" cy="112" r="10" fill="#3b2b2b"/>
+              <rect x="104" y="122" width="12" height="4" rx="2" fill="#2b2b2b"/>
+            </g>
+            <g id="faceSurprised" style="display:none">
+              <ellipse cx="86" cy="98" rx="6" ry="8" fill="#2b2b2b"/>
+              <ellipse cx="134" cy="98" rx="6" ry="8" fill="#2b2b2b"/>
+              <circle cx="110" cy="120" r="8" fill="#e66"/>
+            </g>
+          </svg>
+        </div>
+
+        <!-- 路过的小猫 -->
+        <div class="cat" id="cat"></div>
+      </div>
+    </section>
+
+    <!-- 底部 HUD：参数 + 控制 -->
+    <section class="hud">
+      <div class="card bars">
+        <div class="bar-wrap">
+          <div class="label"><span>亲密度</span><span id="affectionVal">—</span></div>
+          <div class="bar"><div id="affectionBar" style="width:30%"></div></div>
+        </div>
+        <div class="bar-wrap">
+          <div class="label"><span>能量</span><span id="energyVal">—</span></div>
+          <div class="bar alt"><div id="energyBar" style="width:60%"></div></div>
+        </div>
+        <div class="bar-wrap">
+          <div class="label"><span>饱腹</span><span id="fullnessVal">—</span></div>
+          <div class="bar"><div id="fullnessBar" style="width:50%"></div></div>
+        </div>
+        <div class="bar-wrap">
+          <div class="label"><span>清洁</span><span id="cleanVal">—</span></div>
+          <div class="bar alt"><div id="cleanBar" style="width:80%"></div></div>
+        </div>
+      </div>
+
+      <div class="card dock">
+        <div class="left">
+          <input id="name" placeholder="给狗狗起个名字" />
+          <select id="userMood" title="你的心情会影响狗狗叫声">
+            <option value="calm">平静</option>
+            <option value="happy">开心</option>
+            <option value="sad">难过</option>
+            <option value="anxious">焦虑</option>
+            <option value="tired">疲惫</option>
+          </select>
+          <span class="pill" id="moodPill">心情：—</span>
+          <span class="pill" id="lvlPill">等级：1</span>
+        </div>
+        <div class="actions">
+          <button class="btn" id="actPet">抚摸</button>
+          <button class="btn" id="actFeed">喂食</button>
+          <button class="btn" id="actPlay">玩耍</button>
+          <button class="btn" id="actBall">抛球</button>
+          <button class="btn" id="actTease">逗狗</button>
+          <button class="btn" id="actTalk">“汪”一下</button>
+          <button class="btn" id="actSleep">睡/醒</button>
+          <button class="btn" id="actClean">清洁</button>
+          <button class="btn" id="exportBtn">导出</button>
+          <button class="btn" id="importBtn">导入</button>
+          <button class="btn" id="resetBtn">重置</button>
+        </div>
+      </div>
+    </section>
   </div>
 
+  <div class="toast" id="toast">已同步</div>
+
   <script>
-    // toy.html 里：
-    const API = "https://api.chongjiesi.site/chat_stream";
-    const sessionId = crypto.randomUUID();
+    // ====== 状态与持久化 ======
+    const $ = (s)=>document.querySelector(s);
+    const stageEl = $('#stage');
+    const dogEl = $('#dog');
+    const toyEl = $('#toy');
+    const catEl = $('#cat');
 
-    marked.setOptions({
-      breaks: true,
-      highlight: (code, lang) => {
-        if (lang && hljs.getLanguage(lang)) return hljs.highlight(code, { language: lang }).value;
-        return hljs.highlightAuto(code).value;
-      }
-    });
+    const dog = {
+      name:'Clover', level:1, xp:0,
+      mood:'neutral', // happy | neutral | sad | sleep | excited | wink | angry | surprised
+      pos:{x:160,y:110}, target:null, facing:1,
+      needs:{ affection:30, energy:60, fullness:50, clean:80 },
+      traits:{ warmth:60, energy:55, curiosity:65 },
+      stats:{ interactions:0, moodSwings:0 },
+      lastSeen:Date.now(), teaseUntil:0,
+      carryingBall:false
+    };
 
-    const chatBox = document.getElementById('chat');
-    const input   = document.getElementById('input');
-    const sendBtn = document.getElementById('send');
-    const hint    = document.getElementById('hint');
+    const cat = {active:false, x:-100, y:110, dir:1, speed:2.2};
 
-    input.addEventListener('input', () => {
-      hint.textContent = `长度：${input.value.length.toLocaleString()} 字符`;
-    });
+    const KEY='ai-dog-home-v2';
+    function load(){ const raw=localStorage.getItem(KEY); if(raw){ try{Object.assign(dog, JSON.parse(raw));}catch(e){} } save(); }
+    function save(){ localStorage.setItem(KEY, JSON.stringify(dog)); }
 
-    function addMsg(role, htmlOrText, isHTML=false) {
-      const div = document.createElement('div');
-      div.className = `msg ${role}`;
-      if (isHTML) div.innerHTML = htmlOrText; else div.textContent = htmlOrText;
-      chatBox.appendChild(div);
-      chatBox.scrollTop = chatBox.scrollHeight;
-      return div;
+    // ====== 渲染与表情 ======
+    function clamp(v,min=0,max=100){ return Math.max(min, Math.min(max, v)); }
+    function setMood(m){
+      if(dog.mood!==m){ dog.stats.moodSwings++; }
+      dog.mood=m; save();
+      const faces=['Neutral','Happy','Sad','Sleep','Excited','Wink','Angry','Surprised'];
+      faces.forEach(f=>{ const n=document.getElementById('face'+f); if(n) n.style.display='none'; });
+      let fill='furNeutral';
+      if(m==='happy'){ fill='furHappy'; $('#faceHappy').style.display=''; }
+      else if(m==='sad'){ fill='furSad'; $('#faceSad').style.display=''; }
+      else if(m==='sleep'){ $('#faceSleep').style.display=''; }
+      else if(m==='excited'){ fill='furHappy'; $('#faceExcited').style.display=''; }
+      else if(m==='wink'){ $('#faceWink').style.display=''; }
+      else if(m==='angry'){ $('#faceAngry').style.display=''; }
+      else if(m==='surprised'){ $('#faceSurprised').style.display=''; }
+      else{ $('#faceNeutral').style.display=''; }
+      document.getElementById('body').setAttribute('fill', `url(#${fill})`);
+      document.getElementById('moodPill').textContent='心情：'+({happy:'开心',neutral:'平静',sad:'难过',sleep:'睡眠',excited:'兴奋',wink:'眨眼',angry:'噘嘴',surprised:'惊讶'})[m];
     }
 
-    function addTypingBubble() {
-      const html = `<div class="msg assistant">
-        <span class="typing" aria-label="模型正在生成"><span></span><span></span><span></span></span>
-        <span id="stream-text"></span>
-      </div>`;
-      const wrapper = document.createElement('div');
-      wrapper.innerHTML = html;
-      const node = wrapper.firstElementChild;
-      chatBox.appendChild(node);
-      chatBox.scrollTop = chatBox.scrollHeight;
-      return node; // 含 .typing + #stream-text
+    function renderBars(){
+      $('#affectionBar').style.width=dog.needs.affection+'%';
+      $('#energyBar').style.width=dog.needs.energy+'%';
+      $('#fullnessBar').style.width=dog.needs.fullness+'%';
+      $('#cleanBar').style.width=dog.needs.clean+'%';
+      $('#affectionVal').textContent=dog.needs.affection.toFixed(0);
+      $('#energyVal').textContent=dog.needs.energy.toFixed(0);
+      $('#fullnessVal').textContent=dog.needs.fullness.toFixed(0);
+      $('#cleanVal').textContent=dog.needs.clean.toFixed(0);
+      $('#name').value=dog.name||'';
+      $('#lvlPill').textContent='等级：'+dog.level;
     }
 
-    function showError(text) {
-      addMsg('assistant', `❌ ${text}`);
+    function toast(msg='已同步'){ const t=$('#toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'), 1800); }
+
+    // ====== 行为与心情判定 ======
+    function applyDecay(){
+      const now=Date.now(); const mins=Math.max(0,(now-dog.lastSeen)/60000); const d=Math.min(120,mins);
+      dog.needs.energy = clamp(dog.needs.energy - d*0.15);
+      dog.needs.fullness = clamp(dog.needs.fullness - d*0.20);
+      dog.needs.clean = clamp(dog.needs.clean - d*0.10);
+      dog.needs.affection = clamp(dog.needs.affection - d*0.12);
+      dog.lastSeen=now; save(); decideMood();
+    }
+    function decideMood(){
+      const {affection, energy, fullness, clean}=dog.needs;
+      const score = affection*0.35 + fullness*0.25 + energy*0.25 + clean*0.15 + (dog.traits.warmth-50)*0.2;
+      let m='neutral'; if(score>220) m='happy'; else if(score<140) m='sad'; if(energy<15) m='sleep'; setMood(m);
     }
 
-    // 简单的超时封装（默认 15s）
-    async function fetchWithTimeout(resource, options = {}, timeout = 15000) {
-      const controller = new AbortController();
-      const id = setTimeout(() => controller.abort(), timeout);
-      try {
-        const resp = await fetch(resource, { ...options, signal: controller.signal });
-        return resp;
-      } finally {
-        clearTimeout(id);
-      }
+    // ====== 舞台坐标 ======
+    function stageBounds(){ const r=stageEl.getBoundingClientRect(); return {x:0,y:0,w:r.width,h:r.height}; }
+    function placeDog(x,y){ dog.pos.x=x; dog.pos.y=y; dogEl.style.left=x+'px'; dogEl.style.bottom=y+'px'; }
+
+    // ====== 随机逛家 & 热点行为 ======
+    const hotspots=[
+      {id:'rug', x:80, y:110, onArrive:()=>{ setMood('happy'); speak('汪～'); rollOnRug(); dog.xp+=2; dog.needs.affection=clamp(dog.needs.affection+6); }},
+      {id:'sofa', x:120, y:200, onArrive:()=>{ setMood('sleep'); speak('汪…'); setTimeout(()=>{ if(dog.mood==='sleep'){ setMood('neutral'); dog.needs.energy=clamp(dog.needs.energy+12); } }, 2200); }},
+      {id:'window', x:320, y:260, onArrive:()=>{ setMood('wink'); speak('汪？'); dog.needs.curiosity = clamp((dog.needs.curiosity||50)+1); }}
+    ];
+
+    function pickRandomTarget(){
+      const pad=40; const b=stageBounds();
+      // 30% 概率去热点
+      if(Math.random()<0.3){ const h=hotspots[Math.floor(Math.random()*hotspots.length)]; dog.target={x:h.x, y:h.y, hotspot:h}; return; }
+      const tx=pad+Math.random()*(b.w-280);
+      const ty=80+Math.random()*(b.h-230);
+      dog.target={x:tx,y:ty,hotspot:null};
     }
 
-    async function send() {
-      const text = input.value.trim();
-      if (!text || sendBtn.disabled) return;
+    function onArrive(){
+      if(dog.target && dog.target.hotspot){ dog.target.hotspot.onArrive?.(); }
+      if(Math.random()<0.25) setMood('wink'); else if(Math.random()<0.25) setMood('excited'); else decideMood();
+      dog.target=null; // 停留后重新决策
+    }
 
-      addMsg('user', `我：${text}`);
-      input.value = ''; hint.textContent = '';
-      sendBtn.disabled = true;
+    // ====== 只会“汪”的发声 ======
+    function barkForUserMood(){ const u=$('#userMood').value; if(u==='happy')return '汪！汪汪！'; if(u==='sad')return '汪……'; if(u==='anxious')return '汪！汪！？'; if(u==='tired')return '汪…'; return '汪～'; }
+    function speak(text){
+      const allowed = new Set(['汪','!','！','?','？','～','~','…','。','.', ' ']);
+      const filtered = (text||'汪').split('').filter(ch=>allowed.has(ch)).join('');
+      const b=$('#bubble'); b.textContent=filtered; b.classList.remove('show'); void b.offsetWidth; b.classList.add('show');
+    }
+    function speakForMood(){ speak(barkForUserMood()); }
 
-      let typingNode = null;
-      let streamSpan = null;
-      let gotAnyToken = false;
+    // ====== 逗狗：追随鼠标 ======
+    function followPointer(e){ if(Date.now()>dog.teaseUntil) return; const r=stageEl.getBoundingClientRect(); dog.target={x: e.clientX - r.left - 100, y: (r.bottom - e.clientY) - 110}; }
 
-      try {
-        // 先试探请求；失败就直接在对话区提示，不显示三点
-        const resp = await fetchWithTimeout(API, {
-          method: 'POST',
-          headers: {'Content-Type':'application/json'},
-          body: JSON.stringify({
-            session_id: sessionId,
-            user_input: text,
-            max_new_tokens: 768,
-            temperature: 0.7,
-            top_p: 0.9
-          })
-        }, 2000); // 15s 超时可按需调整
+    // ====== 抛球：弹道 + 叼回家门口 ======
+    let ballState=null; // {x,y,vx,vy,carry:false}
+    function throwBall(){
+      const b=stageBounds();
+      const start={x: (b.w*0.5)-40, y: 140};
+      const angle= (Math.random()*0.4+0.6); // 约 35°～55°
+      const speed= 6 + Math.random()*3;
+      ballState={x:start.x,y:start.y,vx:speed*angle,vy:speed*(1-angle),carry:false};
+      toyEl.style.display='block';
+      dog.target={x:ballState.x,y:ballState.y};
+    }
+    function stepBall(){
+      if(!ballState) return;
+      // 简化重力模型
+      ballState.x += ballState.vx;
+      ballState.y += ballState.vy;
+      ballState.vy -= 0.25; // 重力
+      // 反弹
+      if(ballState.y<90){ ballState.y=90; ballState.vy*=-0.55; ballState.vx*=0.88; }
+      const b=stageBounds();
+      if(ballState.x<20||ballState.x>b.w-40){ ballState.vx*=-0.8; }
 
-        if (!resp.ok) {
-          const body = await resp.text().catch(()=>'(no body)');
-          throw new Error(`HTTP ${resp.status} ${resp.statusText} :: ${body.slice(0,200)}`);
+      // 狗捡球
+      const dx=ballState.x - dog.pos.x; const dy=ballState.y - dog.pos.y; const dist=Math.hypot(dx,dy);
+      if(!ballState.carry && dist<30){ ballState.carry=true; dog.carryingBall=true; speak('汪！'); setMood('excited'); }
+
+      // 叼回家门口
+      if(ballState.carry){
+        const home={x:b.w-170, y:110};
+        ballState.x = dog.pos.x+40; ballState.y = dog.pos.y+60;
+        dog.target=home;
+        const dHome=Math.hypot(home.x-dog.pos.x, home.y-dog.pos.y);
+        if(dHome<10){
+          // 完成
+          toyEl.style.display='none'; ballState=null; dog.carryingBall=false;
+          dog.needs.affection=clamp(dog.needs.affection+12);
+          dog.needs.energy=clamp(dog.needs.energy-12);
+          dog.needs.clean=clamp(dog.needs.clean-2);
+          dog.xp+=6; decideMood(); renderBars(); toast('叼回来了！');
         }
-
-        // 要求是 SSE；如果不是，读取文本返回错误
-        const ctype = resp.headers.get('content-type') || '';
-        if (!ctype.includes('text/event-stream')) {
-          const body = await resp.text().catch(()=>'(no body)');
-          throw new Error(`服务器未按流式返回 (content-type=${ctype}) :: ${body.slice(0,200)}`);
-        }
-
-        // 到这里才显示“三点”气泡
-        typingNode = addTypingBubble();
-        streamSpan = typingNode.querySelector('#stream-text');
-
-        // 逐块读取 SSE
-        const reader = resp.body.getReader();
-        const decoder = new TextDecoder();
-        let buf = "";
-
-        while (true) {
-          const { value, done } = await reader.read();
-          if (done) break;
-          buf += decoder.decode(value, { stream: true });
-
-          let idx;
-          while ((idx = buf.indexOf("\n\n")) !== -1) {
-            const line = buf.slice(0, idx).trim();
-            buf = buf.slice(idx + 2);
-
-            if (!line.startsWith("data:")) continue;
-            const payload = line.slice(5).trim();
-            if (!payload) continue;
-
-            try {
-              const msg = JSON.parse(payload);
-              if (msg.event === "end") {
-                // 没有任何 token 也结束了，提示一下
-                if (!gotAnyToken) {
-                  // 移除气泡，给出错误
-                  typingNode.remove();
-                  typingNode = null;
-                  showError("服务器返回结束事件，但没有任何内容。");
-                  break;
-                }
-                // 正常结束：把累积文本做 Markdown + LaTeX 渲染
-                const md = streamSpan.textContent || "";
-                const raw = marked.parse(md);
-                const clean = DOMPurify.sanitize(raw, {USE_PROFILES:{html:true, svg:true}});
-                typingNode.innerHTML = clean;
-                if (window.MathJax && window.MathJax.typesetPromise) {
-                  await MathJax.typesetPromise([typingNode]);
-                }
-              } else if (typeof msg.token === "string") {
-                // 收到第一个 token 就移除三点
-                const dots = typingNode.querySelector('.typing');
-                if (dots) dots.remove();
-                gotAnyToken = true;
-                streamSpan.textContent += msg.token;
-                chatBox.scrollTop = chatBox.scrollHeight;
-              }
-            } catch (e) {
-              // SSE 单条解析失败
-              if (typingNode) { typingNode.remove(); typingNode = null; }
-              showError(`SSE 解析失败：${e}`);
-              console.warn("SSE parse error:", e, payload);
-              return; // 结束本次
-            }
-          }
-        }
-      } catch (err) {
-        // 全局失败处理：不显示三点，或移除已有三点，然后显示错误
-        if (typingNode) { typingNode.remove(); typingNode = null; }
-        const msg = (err && err.name === 'AbortError')
-          ? '请求超时（可能服务器未连接或网络不通）。'
-          : (err?.message || String(err));
-        showError(msg);
-        console.error(err);
-      } finally {
-        sendBtn.disabled = false;
-        input.focus();
       }
+
+      toyEl.style.left = ballState.x+'px';
+      toyEl.style.bottom = ballState.y+'px';
     }
 
-    sendBtn.addEventListener('click', send);
-    input.addEventListener('keydown', e => {
-      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') send();
-    });
+    // ====== 小猫：随机路过 + 追逐 ======
+    function maybeSpawnCat(){
+      if(cat.active) return;
+      if(Math.random()<0.02){ // ~每帧 2% 概率 -> 平均几十秒一次
+        const b=stageBounds();
+        cat.active=true; cat.dir = Math.random()<0.5?1:-1; cat.x = (cat.dir>0? -100 : b.w+100); cat.y=110; cat.speed = 1.8+Math.random()*1.2;
+        catEl.style.display='block'; catEl.style.bottom=cat.y+'px';
+        speak('汪！？'); setMood('surprised');
+      }
+    }
+    function stepCat(){
+      if(!cat.active) return;
+      const b=stageBounds();
+      cat.x += cat.dir*cat.speed;
+      catEl.style.left = cat.x+'px';
+      if(cat.dir>0 && cat.x>b.w+120) { cat.active=false; catEl.style.display='none'; return; }
+      if(cat.dir<0 && cat.x<-120) { cat.active=false; catEl.style.display='none'; return; }
+      // 狗追猫
+      dog.target={x:cat.x-40*cat.dir, y:cat.y};
+      const dx=cat.x - dog.pos.x; const dy=cat.y - dog.pos.y; const dist=Math.hypot(dx,dy);
+      if(dist<40){ setMood('angry'); speak('汪！汪！？'); dog.needs.energy=clamp(dog.needs.energy-8); dog.xp+=2; }
+    }
+
+    // ====== 行走主循环 ======
+    function step(){
+      // ball & cat updates
+      stepBall(); maybeSpawnCat(); stepCat();
+
+      const speed= (dog.carryingBall? 1.6 : 1.2) + dog.traits.energy*0.01;
+      if(!dog.target) pickRandomTarget();
+      const dx=dog.target.x - dog.pos.x; const dy=dog.target.y - dog.pos.y; const dist=Math.hypot(dx,dy);
+      if(dist<2){ onArrive(); }
+      else{
+        dog.facing = dx>=0 ? 1 : -1; dogEl.style.transform = (dog.facing<0? 'scaleX(-1)' : 'scaleX(1)');
+        const nx = dog.pos.x + dx/dist*speed; const ny = dog.pos.y + dy/dist*speed;
+        placeDog(nx,ny);
+      }
+      requestAnimationFrame(step);
+    }
+
+    // ====== 互动动作 ======
+    function interact(type){
+      dog.stats.interactions++;
+      if(type==='pet'){
+        dog.needs.affection = clamp(dog.needs.affection + 10 + dog.traits.warmth*0.05);
+        dog.xp += 3; setMood('happy'); animateHearts(); speak('汪～');
+      }
+      if(type==='feed'){
+        const bowl=$('#bowl'); bowl.style.display='block';
+        dog.needs.fullness = clamp(dog.needs.fullness + 22);
+        dog.needs.clean = clamp(dog.needs.clean - 4);
+        dog.xp += 2; setMood('excited'); speak('汪汪！');
+        setTimeout(()=>{ bowl.style.display=''; }, 1600);
+      }
+      if(type==='play'){
+        dog.needs.energy = clamp(dog.needs.energy - 10);
+        dog.needs.affection = clamp(dog.needs.affection + 8);
+        dog.xp += 4; setMood('excited'); speak('汪！汪汪！');
+      }
+      if(type==='ball'){
+        throwBall();
+      }
+      if(type==='tease'){
+        dog.teaseUntil = Date.now()+8000; // 8 秒追随鼠标
+        speak('汪！');
+      }
+      if(type==='talk'){
+        speakForMood();
+      }
+      if(type==='sleep'){
+        if(dog.mood==='sleep'){ dog.needs.energy = clamp(dog.needs.energy + 24); setMood('neutral'); speak('汪~'); }
+        else { setMood('sleep'); speak('汪…'); moveToHouseAndSleep(); }
+      }
+      if(type==='clean'){
+        dog.needs.clean = clamp(100); dog.xp += 2; speak('汪！');
+      }
+      save(); renderBars(); levelUpIfNeeded(); decideMood();
+    }
+
+    // ====== 小动画 ======
+    function animateHearts(){
+      for(let i=0;i<4;i++){
+        const s=document.createElement('div'); const x=dogEl.offsetLeft+100+(Math.random()*60-30);
+        s.style.cssText=`position:absolute;left:${x}px;bottom:${dogEl.offsetTop+180}px;color:#ff82a1;opacity:0;pointer-events:none;`;
+        s.textContent='❤'; stageEl.appendChild(s);
+        setTimeout(()=>{ s.animate([
+          { transform:'translateY(0)', opacity:0 },
+          { transform:'translateY(-24px)', opacity:1 },
+          { transform:'translateY(-60px)', opacity:0 }
+        ], {duration:1000, easing:'ease-out'}).finished.then(()=>s.remove()); }, i*120);
+      }
+    }
+    function rollOnRug(){
+      dogEl.animate([
+        { transform: (dog.facing<0? 'scaleX(-1) ' : '') + 'rotate(0deg)' },
+        { transform: (dog.facing<0? 'scaleX(-1) ' : '') + 'rotate(12deg)' },
+        { transform: (dog.facing<0? 'scaleX(-1) ' : '') + 'rotate(-10deg)' },
+        { transform: (dog.facing<0? 'scaleX(-1) ' : '') + 'rotate(0deg)' }
+      ], {duration:700, iterations:2});
+    }
+
+    function driftTrait(key,delta){ dog.traits[key]=clamp(dog.traits[key]+delta,0,100); }
+    function levelUpIfNeeded(){ const need=20+dog.level*10; if(dog.xp>=need){ dog.level++; dog.xp=0; $('#lvlPill').textContent='等级：'+dog.level; toast('升级了！等级 '+dog.level); } }
+
+    // ====== 回家睡觉 ======
+    function moveToHouseAndSleep(){
+      const b=stageBounds(); const tx=b.w-190; const ty=110; dog.target={x:tx,y:ty};
+      setTimeout(()=>{ if(dog.mood==='sleep'){ setMood('sleep'); } }, 1200);
+    }
+
+    // ====== 绑定事件 ======
+    function bind(){
+      $('#actPet').onclick=()=>interact('pet');
+      $('#actFeed').onclick=()=>interact('feed');
+      $('#actPlay').onclick=()=>interact('play');
+      $('#actBall').onclick=()=>interact('ball');
+      $('#actTease').onclick=()=>interact('tease');
+      $('#actTalk').onclick=()=>interact('talk');
+      $('#actSleep').onclick=()=>interact('sleep');
+      $('#actClean').onclick=()=>interact('clean');
+      $('#name').onchange=e=>{ dog.name=e.target.value.trim()||'Clover'; save(); toast('已改名为 '+dog.name); };
+      $('#exportBtn').onclick=()=>{ const blob=new Blob([JSON.stringify(dog,null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='ai-dog-home.json'; a.click(); URL.revokeObjectURL(a.href); };
+      $('#importBtn').onclick=()=>{ const i=document.createElement('input'); i.type='file'; i.accept='.json,application/json'; i.onchange=e=>{ const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=()=>{ try{ Object.assign(dog, JSON.parse(r.result)); save(); renderBars(); decideMood(); toast('导入成功'); }catch(err){ toast('导入失败'); } }; r.readAsText(f); }; i.click(); };
+      $('#resetBtn').onclick=()=>{ if(confirm('确定要清空本地数据吗？')){ localStorage.removeItem(KEY); location.reload(); } };
+
+      // 舞台：点击抚摸；移动用于逗狗时跟随
+      stageEl.addEventListener('click',()=>interact('pet'));
+      stageEl.addEventListener('mousemove',followPointer);
+    }
+
+    // ====== 启动 ======
+    function init(){
+      load(); placeDog(dog.pos.x,dog.pos.y); renderBars(); decideMood(); bind();
+      requestAnimationFrame(step); // 漫游循环
+      applyDecay(); setInterval(()=>{ applyDecay(); renderBars(); }, 60000);
+    }
+    init();
   </script>
 </body>
 </html>
