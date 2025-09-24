@@ -2,6 +2,8 @@
 title: "Recent News"
 date: 2023-09-05
 news:
+  - title: "📘 Two papers have been accepted to NeurIPS 2025."
+    date: "2025-09-18"
   - title: "📘 One paper has been accepted to COLM 2025."
     date: "2025-07-08"
   - title: "📘 One paper has been accepted to ICCV 2025."
