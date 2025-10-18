@@ -20,7 +20,7 @@ publication_types: paper-conference
 
 # Publication name and optional abbreviated publication name.
 publication: ""
-publication_short: "NeurIPS"
+publication_short: NeurIPS, <font color="#FF79BC">**Spotlight**</font>
 
 abstract: Open-vocabulary semantic segmentation assigns every pixel a label drawn from an open-ended, text-defined space. Vision–language models such as CLIP excel at zero-shot recognition, yet their image-level pre-training hinders dense prediction. Current approaches either fine-tune CLIP—at high computational cost—or adopt training-free attention refinements that favor local smoothness while overlooking global semantics. In this paper, we present OPMapper, a lightweight, plug-and-play module that injects both local compactness and global connectivity into attention maps of CLIP. It combines Context-aware Attention Injection, which embeds spatial and semantic correlations, and Semantic Attention Alignment, which iteratively aligns the enriched weights with textual prompts. By jointly modeling token dependencies and leveraging textual guidance, OPMapper enhances visual understanding. OPMapper is highly flexible and can be seamlessly integrated into both training-based and training-free paradigms with minimal computational overhead. Extensive experiments demonstrate its effectiveness, yielding significant improvements across 8 open-vocabulary segmentation benchmarks.
 

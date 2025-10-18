@@ -35,20 +35,22 @@ profiles:
     label: E-mail Me
   - icon: brands/weixin
     url: images/weixin.jpg
-  - icon: brands/x
-    url: https://x.com/chongjiesi
+  # - icon: brands/x
+  #   url: https://x.com/chongjiesi
   - icon: academicons/google-scholar
     url: https://scholar.google.com/citations?user=wXc2EtsAAAAJ&hl=zh-CN
   - icon: brands/github
     url: https://github.com/Chongjie-Si
   - icon: brands/linkedin
     url: https://www.linkedin.com/in/翀杰-司-b55a5a326/
-  - icon: brands/xhs
-    url: https://www.xiaohongshu.com/user/profile/63975d07000000002702aa09
+  # - icon: brands/xhs
+  #   url: https://www.xiaohongshu.com/user/profile/63975d07000000002702aa09
   - icon: brands/zhihu
     url: https://www.zhihu.com/people/89-47-66-58-20
-  - icon: academicons/orcid
-    url: https://orcid.org/0009-0001-3017-7574
+  # - icon: academicons/orcid
+  #   url: https://orcid.org/0009-0001-3017-7574
+  - icon: brands/cv
+    url: /uploads/chongjie-cv.pdf
 
 interests:
   - LLM Optimizer
