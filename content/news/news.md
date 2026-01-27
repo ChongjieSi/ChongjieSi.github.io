@@ -2,6 +2,13 @@
 title: "Recent News"
 date: 2023-09-05
 news:
+  - title: "📘 One papers has been accepted to TPAMI 2026."
+    date: "2026-01-26"
+  - title: "📘 One papers has been accepted to ICLR 2026."
+    date: "2026-01-26"
+  - title: "🎁 I'm now working as a Research Intern in Anuttacon!"
+    date: "2026-01-19"
+    summary: "Please refer to <a href='https://www.anuttacon.com' target='_blank' class='custom-link'>this page</a> for more details"
   - title: "📘 Two papers have been accepted to NeurIPS 2025."
     date: "2025-09-18"
   - title: "📘 One paper has been accepted to COLM 2025."
