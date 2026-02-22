@@ -82,12 +82,20 @@ education:
       Rank 1/22 in Artificial Intelligence
 
 work:
+ - position: LLM Research Intern 
+   company_name: Anuttacon
+   company_url: ''
+   company_logo: ''
+   date_start: 2026-01-19
+  #  date_end: ''
+   summary: |1-
+     LLM Pre-training
  - position: REDstar Intern 
    company_name: Xiaohongshu
    company_url: ''
    company_logo: ''
    date_start: 2025-06-04
-  #  date_end: ''
+   date_end: 2025-12-25
    summary: |2-
      Responsibilities include:
      - Efficient Training for Pre-training

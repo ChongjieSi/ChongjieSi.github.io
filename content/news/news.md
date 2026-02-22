@@ -2,9 +2,11 @@
 title: "Recent News"
 date: 2023-09-05
 news:
-  - title: "📘 One papers has been accepted to TPAMI 2026."
+  - title: "📘 One paper has been accepted to CVPR 2026."
+    date: "2026-02-21"
+  - title: "📘 One paper has been accepted to TPAMI 2026."
     date: "2026-01-26"
-  - title: "📘 One papers has been accepted to ICLR 2026."
+  - title: "📘 One paper has been accepted to ICLR 2026."
     date: "2026-01-26"
   - title: "🎁 I'm now working as a Research Intern in Anuttacon!"
     date: "2026-01-19"
