@@ -2,6 +2,11 @@
 title: "Recent News"
 date: 2023-09-05
 news:
+  - title: "🎯 See you in Wuhan, Valse 2026!"
+    date: "2026-04-20"
+  - title: "🎁 I have been awarded the Optiver AI PhD Scholarship!"
+    date: "2026-04-07"
+    summary: "Pleaser refer to <a href='https://mp.weixin.qq.com/s/oBr_OIb81CL9W3Zrf1bU6g?scene=1&click_id=24' target='_blank' class='custom-link'>this page</a> for more details"
   - title: "📘 One paper has been accepted to CVPR 2026."
     date: "2026-02-21"
   - title: "📘 One paper has been accepted to TPAMI 2026."

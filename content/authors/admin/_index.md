@@ -53,9 +53,9 @@ profiles:
     url: /uploads/chongjie-cv.pdf
 
 interests:
-  - LLM Optimizer
-  - LLM Initialization and Explanation
-  - LLM Efficient Training
+  - LLM Data Pipeline
+  - LLM Pre-train
+  - LLM Supervised Fine-tuning
   # - Weakly Supervised Learning
 
 education:
@@ -177,7 +177,7 @@ awards:
     date: '2024-09-30'
     awarder: MoE of PRC
     icon: building-library
-    summary: |
+    summary:
 
   - title: Outstanding Graduate Student
     date: '2022-06-30'
@@ -188,13 +188,13 @@ awards:
     date: '2020-04-01'
     awarder: COMAP
     icon: building-library
-    summary: |
+    summary:
 
   - title: National Scholarship
     date: '2019-09-01'
     awarder: MoE of PRC
     icon: building-library
-    summary: |
+    summary:
      
   # - title: And More...
   #   awarder: ...
