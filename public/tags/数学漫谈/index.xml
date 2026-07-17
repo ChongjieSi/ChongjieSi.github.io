@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>数学漫谈 | Chongjie Si</title>
+    <link>http://localhost:1313/tags/%E6%95%B0%E5%AD%A6%E6%BC%AB%E8%B0%88/</link>
+      <atom:link href="http://localhost:1313/tags/%E6%95%B0%E5%AD%A6%E6%BC%AB%E8%B0%88/index.xml" rel="self" type="application/rss+xml" />
+    <description>数学漫谈</description>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Wed, 16 Oct 2024 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>http://localhost:1313/media/icon_hue006528a12cd6926ef214d6e0d83c455_38865_512x512_fill_lanczos_center_3.png</url>
+      <title>数学漫谈</title>
+      <link>http://localhost:1313/tags/%E6%95%B0%E5%AD%A6%E6%BC%AB%E8%B0%88/</link>
+    </image>
+    
+    <item>
+      <title>代数不等式4：三角变换</title>
+      <link>http://localhost:1313/blog/%E4%BB%A3%E6%95%B0%E4%B8%8D%E7%AD%89%E5%BC%8F4/</link>
+      <pubDate>Wed, 16 Oct 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/%E4%BB%A3%E6%95%B0%E4%B8%8D%E7%AD%89%E5%BC%8F4/</guid>
+      <description>&lt;p&gt;三角变换是指把一些变量等价代换为三角函数的形式。&lt;/p&gt;
+&lt;h2 id=&#34;例1&#34;&gt;例1&lt;/h2&gt;
+&lt;p&gt; $a,b,c\in \mathbb{R}$ 
+，求证： $\Pi_{cyc}(a^2+2) \geq 9 \sum_{cyc}ab$ 
+&lt;/p&gt;
+&lt;p&gt;证明：&lt;/p&gt;
+&lt;p&gt;令 $a=\sqrt{2}\tan A$ 
+， $b=\sqrt{2}\tan B$ 
+， $c=\sqrt{2}\tan C$ 
+，其中 $A,B,C \in(0,\frac{\pi}{2})$ 
+，即需证&lt;/p&gt;
+ $$\frac{4}{9}\geq (\Pi_{cyc}\cos A)  (\sum_{cyc} \cos A \sin B \sin C) \\ =\cos A\cos B\cos C(\cos A\cos B\cos C-\cos(A+B+C)) $$ 
+
+&lt;p&gt;令 $\theta = \frac{A+B+C}{3}$ 
+，则&lt;/p&gt;
+ $$\cos A\cos B\cos C \leq (\frac{\cos A+\cos B +\cos C}{3})^3 \leq \cos^3\theta $$ 
+
+&lt;p&gt;即证 $\frac{4}{9} \geq \cos^3\theta(\cos^3\theta-\cos3\theta)$ 
+。又因 $\cos 3\theta = 4\cos ^3\theta -3 \cos\theta$ 
+，即证 $\frac{4}{27} \geq \cos^3\theta(\cos\theta-\cos^3\theta)$ 
+。又&lt;/p&gt;
+
+$$
+\begin{aligned}
+  &amp;\cos^3\theta(\cos\theta-\cos^3\theta) \\&amp;= \cos^4\theta - \cos^6\theta \\ &amp;=4 \frac{\cos^2\theta}{2} \frac{\cos^2\theta}{2} (1-\cos^2\theta) \\ &amp;\leq \frac{4}{27}(\frac{\cos^2\theta}{2}+\frac{\cos^2\theta}{2}+1-\cos^2\theta)^3 \\ &amp;=\frac{4}{27} 
+\end{aligned}
+$$
+
+
+&lt;p&gt;证毕。&lt;/p&gt;
+&lt;h2 id=&#34;例2&#34;&gt;例2&lt;/h2&gt;
+&lt;p&gt; $a,b,c\in \mathbb{R}^{+}$ 
+，且 $a+b+c=abc$ 
+。求证： $\sum_{cyc}\frac{1}{\sqrt{1+a^2}} \leq \frac{3}{2}$ 
+&lt;/p&gt;
+&lt;p&gt;证明：&lt;/p&gt;
+&lt;p&gt;令 $a=\tan A$ 
+， $b=\tan B$ 
+， $c=\tan C$ 
+，其中 $A,B,C \in(0,\frac{\pi}{2})$ 
+。由等式的性质可知 $A,B,C$ 
+为三角形的内角。即需证： $\sum_{cyc}\cos A \leq \frac{3}{2}$ 
+。显然成立。&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>代数不等式3：算术平均-几何平均不等式</title>
+      <link>http://localhost:1313/blog/%E4%BB%A3%E6%95%B0%E4%B8%8D%E7%AD%89%E5%BC%8F3/</link>
+      <pubDate>Tue, 15 Oct 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/%E4%BB%A3%E6%95%B0%E4%B8%8D%E7%AD%89%E5%BC%8F3/</guid>
+      <description>&lt;!--  $$ 
+ --&gt;
+&lt;p&gt;继续来看一个非常优美的不等式： $\frac{1}{2}(a+b) \geq \sqrt{ab}$ 
+，其中 $a,b$ 
+是两个正实数。我们称 $\frac{1}{2}(a+b)$ 
+为算术平均，而 $ \sqrt{ab}$ 
+为几何平均。其实很容易理解，算术平均可以看作是矩形两条边长的均值，几何平均就是面积的根号。最早使用算术平均和几何平均概念的有可能是毕达哥拉斯学派。&lt;/p&gt;
+&lt;p&gt;我们把上式拓展成多个变量的形式：&lt;/p&gt;
+ $$ \frac{\sum_{i=1}^n x_i}{n} \geq (\Pi_{i=1}^n x_i)^{\frac{1}{n}} $$ 
+
+&lt;p&gt;这就是算术平均-几何平均不等式。算术平均-几何平均不等式可以由柯西不等式优雅的证明，我这里再提供一种其他的证明方式。&lt;/p&gt;
+&lt;p&gt;由柯西不等式，&lt;/p&gt;
+ $$\frac{\sum_{i=1}^n x_i}{n} \geq (\frac{\sum_{i=1}^n\sqrt{ x_i}}{n})^2$$ 
+
+&lt;p&gt;令&lt;/p&gt;
+
+$$
+\begin{aligned}
+M_r(x) &amp;= (\frac{1}{n}  \sum_{i=1}^n x_i^r)^{\frac{1}{r}} \\ &amp;=\exp(\frac{1}{r}\ln (\frac{1}{n}  \sum_{i=1}^n x_i^r) )  \\ &amp;=\exp( \frac{1}{r}\ln (1 + r  \sum_{i=1}^n \frac{\ln x_i}{n}+o(r^2)  ) )
+\end{aligned}
+$$
+
+
+&lt;p&gt; $r\rightarrow0$ 
+时， $M_r(x) \rightarrow \exp(\sum_{i=1}^n(\frac{\ln x_i}{n})) = \Pi_{i=1}^nx_i^{\frac{1}{n}}$ 
+。所以&lt;/p&gt;
+ $$\frac{\sum_{i=1}^n x_i}{n} =M_1 (x) \geq  M_{r\rightarrow0}(x) = (\Pi_{i=1}^n x_i)^{\frac{1}{n}} $$ 
+
+</description>
+    </item>
+    
+    <item>
+      <title>代数不等式2：一些简单不等式的证明</title>
+      <link>http://localhost:1313/blog/%E4%BB%A3%E6%95%B0%E4%B8%8D%E7%AD%89%E5%BC%8F2/</link>
+      <pubDate>Mon, 14 Oct 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/%E4%BB%A3%E6%95%B0%E4%B8%8D%E7%AD%89%E5%BC%8F2/</guid>
+      <description>&lt;!--  $$ 
+ --&gt;
+&lt;h2 id=&#34;例1&#34;&gt;例1&lt;/h2&gt;
+&lt;p&gt; $x,y,z\in \mathbb{R}^+$ 
+，求证： $(\sum_{cyc}xy)(\sum_{cyc} \frac{1}{(x+y)^2}) \ge \frac{9}{4}$ 
+&lt;/p&gt;
+&lt;p&gt;证明：无脑展开，把分母项去掉。&lt;/p&gt;
+
+$$
+\begin{aligned}
+&amp; 4(\sum_{cyc}yz)(\sum_{cyc} {(x+y)^2(x+z) ^2}) -9\Pi_{cyc}(x+y)^2 \\ =&amp; \sum_{cyc}yz(y-z)^2(4y^2+7yz+4z^2)+\frac{xyz}{x+y+z}\sum_{cyc}(y-z)^2(2yz+(y+z-x)^2) \\ \ge &amp; 0
+
+\end{aligned}
+$$ 
+
+&lt;h2 id=&#34;例2&#34;&gt;例2&lt;/h2&gt;
+&lt;p&gt; $x,y,z\in \mathbb{R}^+$ 
+，且 $\sum_{cyc}xy =1 $ 
+，求证： $\sum_{cyc}\frac{1+x^2y^2}{(x+y)^2} \ge \frac{5}{2}$ 
+&lt;/p&gt;
+&lt;p&gt;证明：无脑展开，配平.&lt;/p&gt;
+
+$$
+\begin{aligned}
+&amp; \sum_{cyc}\frac{1+x^2y^2}{(x+y)^2} - \frac{5}{2} \\ =&amp; \frac{\Pi_{cyc}(x-y)^2}{2\Pi_{cyc}(x+y)^2} + \sum_{cyc}\frac{( x(y+z)(y^2+z^2-2x^2) +(y-z)^2(x^2+yz))^2 }{6\Pi_{cyc}(x+y)^2}\\ \ge &amp; 0
+\end{aligned}
+$$
+
+
+&lt;h2 id=&#34;例3&#34;&gt;例3&lt;/h2&gt;
+&lt;p&gt; $a,b,c,d\in \mathbb{R}^+$ 
+，且 $\sum_{cyc}a =4 $ 
+。求证： $\sum_{cyc}a^2(b+c) + 8abcd \le 16$ 
+&lt;/p&gt;
+&lt;p&gt;证明：
+ $a^2(b+c)$ 
+次数为3， $abcd$ 
+次数为4，先将次数配齐。考虑到&lt;/p&gt;
+ $$(\sum_{cyc}a) (\sum_{cyc} bcd) \ge(4\sum_{cyc}\sqrt{abcd})^2=16abcd $$ 
+
+&lt;p&gt;即 $ \sum_{cyc} bcd \ge4abcd $ 
+。若能证明 $\sum_{cyc}a^2(b+c) +2\sum_{cyc}bcd \le 16$ 
+，即可得证。因为&lt;/p&gt;
+
+$$
+\begin{aligned}
+&amp; \frac{(a+b+c+d)^2}{4} -\sum_{cyc}a^2(b+c) -2\sum_{cyc}bcd \\ = &amp; \sum_{cyc}\frac{a}{4}(a-b-d+d)^2 \ge 0
+\end{aligned}
+$$
+
+
+&lt;p&gt;证毕&lt;/p&gt;
+&lt;p&gt;在处理上述不等式时，还有一种最简单最暴力的算法，就是努力构造平方项。先构造以 $a $ 
+为变量的平方项，不断的提取公因数不断的配平，再分别对其他变量构造平方项。这个方法可以应用在绝大部分例题中，不过缺点就是计算量大。我之前在处理不等式的问题中，如果走投无路，便会使用这一方法。&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>代数不等式1：柯西不等式与拉格朗日恒等式</title>
+      <link>http://localhost:1313/blog/%E4%BB%A3%E6%95%B0%E4%B8%8D%E7%AD%89%E5%BC%8F1/</link>
+      <pubDate>Sun, 13 Oct 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/%E4%BB%A3%E6%95%B0%E4%B8%8D%E7%AD%89%E5%BC%8F1/</guid>
+      <description>&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;
+&lt;!--  $$ 
+ --&gt;
+&lt;p&gt;我准备开一个专栏，专门写一些不等式的内容，主要是我对一些不等式的理解。参考书籍：《代数不等式》。&lt;/p&gt;
+&lt;p&gt;首先定义轮换求和  $\sum_{cyc}$ 
+ 与对称求和  $\sum_{sym}$ 
+：&lt;/p&gt;
+&lt;p&gt;若  $x$ 
+ 是三个变量  $x,y,z$ 
+中的一个，定义
+ $$\sum_{cyc}f(x,y,z) =f(x,y,z)+f(y,z,x)+f(z,x,y)$$ 
+
+ $$\sum_{sym}f(x,y,z) =f(x,y,z)+f(x,z,y)+f(y,x,z)+f(y,z,x)+f(z,x,y)+f(z,y,x)$$ 
+&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;柯西不等式可能是我使用最多的一个不等式。具体来说，对任意实数变量，有
+ $$\sum_{i=1}^na_i^2\sum_{i=1}^nb_i^2\geq (\sum_{i=1}^na_ib_i)^2$$ 
+
+柯西不等式的证明：&lt;/p&gt;
+&lt;p&gt;
+
+$$
+\begin{aligned}
+&amp;\sum_{i=1}^n a_i^2 \sum_{i=1}^n b_i^2
+  - \bigl(\sum_{i=1}^n a_i b_i\bigr)^2 \\[6pt]
+=&amp; \sum_{i=1}^n\sum_{j=1}^n a_i^2 b_j^2
+  - \sum_{i=1}^n\sum_{j=1}^n a_i b_i a_j b_j \\[6pt]
+=&amp; \tfrac12\sum_{i=1}^n\sum_{j=1}^n
+   \bigl(a_i^2 b_j^2 + a_j^2 b_i^2 - 2a_i b_i a_j b_j\bigr) \\[6pt]
+=&amp; \tfrac12\sum_{i=1}^n\sum_{j=1}^n (a_i b_j - a_j b_i)^2 \\[6pt]
+=&amp; \sum_{1\le i&lt; j\le n} (a_i b_j - a_j b_i)^2 \;\ge\;0
+\end{aligned}
+
+$$
+
+
+
+其中，
+ $\sum_{i=1}^na_i^2\sum_{i=1}^nb_i^2 - (\sum_{i=1}^na_ib_i)^2  = \sum_{1\leq i \leq j \leq n} (a_ib_j-a_jb_i)^2 $ 
+即为拉格朗日恒等式。&lt;/p&gt;
+&lt;h2 id=&#34;例1&#34;&gt;例1&lt;/h2&gt;
+&lt;p&gt;已知  $\{a,b,c,d\}$ 
+， $ \sum_{cyc}a^2=1$ 
+，求证：
+ $$(a+b)^4+(a+c)^4+(a+d)^4+(b+c)^4+(b+d)^4+(c+d)^4\leq 6$$ 
+&lt;/p&gt;
+&lt;p&gt;思路：在处理不等式时，我会将两边的次数配平。上式左边为4次，右边为0次，先利用等式配齐，再进行处理。&lt;/p&gt;
+&lt;p&gt;证明：&lt;/p&gt;
+&lt;p&gt;需证明&lt;/p&gt;
+&lt;p&gt; $$(a+b)^4+(a+c)^4+(a+d)^4+(b+c)^4+(b+d)^4+(c+d)^4 \leq 6$$ 
+
+ $$\Rightarrow (a+b)^4+(a+c)^4+(a+d)^4+(b+c)^4+(b+d)^4+(c+d)^4\leq 6(\sum_{cyc}a^2)^2 $$ 
+
+又
+ $$6(\sum_{cyc}a^2)^2 = (a+b)^4+(a-b)^4+(a+c)^4+(a-c)^4+(a+d)^4+(a-d)^4\\+(b+c)^4+(b-c)^4+(b+d)^4+(b-d)^4+(c+d)^4+(c-d)^4 $$ 
+&lt;/p&gt;
+&lt;p&gt;证毕。&lt;/p&gt;
+&lt;h2 id=&#34;例2&#34;&gt;例2&lt;/h2&gt;
+&lt;p&gt; $x,y,z\in\mathbb{R}^+$ 
+， $xyz(x+y+z)=1$ 
+，求  $(x+y)(x+z)$ 
+ 的最小值。&lt;/p&gt;
+&lt;p&gt;解： $(x+y)(x+z)=x(x+y+z)+yz=yz+\frac{1}{yz}\geq 2$ 
+&lt;/p&gt;
+&lt;h2 id=&#34;例3&#34;&gt;例3&lt;/h2&gt;
+&lt;p&gt;证： $(\sum_{i=1}^na_i)(\sum_{i=1}^nb_i )- \sum_{i=1}^na_ib_i \geq \sqrt{(\sum_{sym}a_ia_j )(\sum_{sym}b_ib_j))}$ 
+&lt;/p&gt;
+&lt;p&gt;证明：
+
+$$
+\begin{aligned}
+&amp; \sum_{i=1}^na_ib_i  + \sqrt{(\sum_{sym}a_ia_j )(\sum_{sym}b_ib_j))} \\ \leq &amp; \sqrt{(\sum_{i=1}^n a_i^2 +\sum_{sym}a_ia_j) (\sum_{i=1}^n b_i^2 +\sum_{sym}b_ib_j) } \\ \leq &amp; (\sum_{i=1}^n a_i)(\sum_{i=1}^n b_i)
+\end{aligned}
+$$
+
+
+&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>矩阵的秩：MA=BM，B、M满秩，A一定满秩吗？</title>
+      <link>http://localhost:1313/blog/%E6%BB%A1%E7%A7%A9%E8%BF%90%E7%AE%97/</link>
+      <pubDate>Sat, 12 Oct 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/%E6%BB%A1%E7%A7%A9%E8%BF%90%E7%AE%97/</guid>
+      <description>&lt;!--  $$ 
+ --&gt;
+&lt;p&gt;科研过程中遇到了一个如下的问题：&lt;/p&gt;
+&lt;p&gt;已知矩阵 $\mathbf{M}$ 
+是 $m\times n$ 
+的满秩矩阵（ $m &gt; n$ 
+）， $\mathbf{A}$ 
+是 $n$ 
+阶方阵， $\mathbf{B}$ 
+是 $m$ 
+阶满秩方阵，且满足 $\mathbf{MA} = \mathbf{BM}$ 
+，问： $\mathbf{A}$ 
+一定满秩吗？&lt;/p&gt;
+&lt;p&gt;答案： $\mathbf{A}$ 
+ 一定满秩。&lt;/p&gt;
+&lt;p&gt;直观理解：矩阵 $\mathbf{BM}$ 
+可以覆盖 $\mathbf{M}$ 
+的像空间中的所有向量。由于 $\mathbf{MA}$ 
+也必须能够映射到同样的 $n$ 
+维子空间，这意味着 $\mathbf{A}$ 
+必须在 $\mathbb{R}^n$ 
+上保持该映射的完整性。如果 $\mathbf{A}$ 
+不是满秩矩阵，那么它会降低 $\mathbb{R}^n$ 
+上的维度，导致 $\mathbf{MA}$ 
+的像空间的维数小于 $n$ 
+，这与 $\mathbf{BM}$ 
+的像空间（即  $\mathbf{M}$ 
+的像空间，维度为 $n$ 
+）相矛盾。因此， $\mathbf{A}$ 
+必须是满秩的。&lt;/p&gt;
+&lt;p&gt;数学证明：&lt;/p&gt;
+ $$ r(\mathbf{MA})=r(\mathbf{BM})=r(\mathbf{M})=n $$  
+
+ $$ r(\mathbf{MA})\leq\min\{r(\mathbf{M}), r(\mathbf{A})\}=\min \{n,r(\mathbf{A})\} $$ 
+
+&lt;p&gt;即  $n\leq \min\{n,r(\mathbf{A})\}$ 
+， $\therefore r(\mathbf{A})=n$ 
+。&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>矩阵的秩、矩阵的子空间、SVD分解</title>
+      <link>http://localhost:1313/blog/%E7%9F%A9%E9%98%B5%E7%9A%84%E7%A7%A9/</link>
+      <pubDate>Fri, 11 Oct 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/%E7%9F%A9%E9%98%B5%E7%9A%84%E7%A7%A9/</guid>
+      <description>&lt;!--  $$ 
+ --&gt;
+&lt;p&gt;写一点我对矩阵的秩、矩阵的子空间以及SVD分解的理解。&lt;/p&gt;
+&lt;h2 id=&#34;矩阵的秩&#34;&gt;矩阵的秩&lt;/h2&gt;
+&lt;h3 id=&#34;一个简单的例子&#34;&gt;一个简单的例子&lt;/h3&gt;
+&lt;p&gt;我对矩阵秩的最初直观认识源于在多标签学习中的实践。在多标签学习中，一个关键的挑战在于标签之间并非独立，而是存在一定的关联性。以一个简单的例子说明：若某个样本同时具有“雨林”和“足球”两个标签，我们自然会推测它是否也会有“巴西”标签。这表明标签之间存在某种关联结构，而非完全独立。为了进一步说明，我们假设有三个样本，并将它们的标签用一个矩阵来表示，其中矩阵的列依次代表“雨林”、“足球”和“巴西”，每一行则对应一个样本的标签： $\left[\begin{matrix} 1 &amp; 0 &amp; 1 \\ 0 &amp; 1 &amp; 0 \\ 1 &amp; 1 &amp; 1 \end{matrix}\right]$ 
+。不难发现，矩阵的秩为 2。这反映了样本的标签之间存在一定的关联性或冗余性，换句话说，并不是每个标签都独立于其他标签。具体到多标签学习中，矩阵的低秩说明标签之间的相关性较强，部分标签可以通过其他标签的组合来近似表示。对于这个矩阵而言，尽管它包含三个标签，但实际上只有两个潜在的“信息源”或“特征维度”，这解释了为什么秩为 2。&lt;/p&gt;
+&lt;h3 id=&#34;秩的含义与作用&#34;&gt;秩的含义与作用&lt;/h3&gt;
+&lt;p&gt;从数学的角度来看，矩阵的秩（rank）是指矩阵中独立行或独立列的最大数目。换句话说，秩衡量的是矩阵中能产生线性独立向量的数量。对于一个 $ m \times n$ 
+的矩阵 $\mathbf{A}$ 
+，秩 $r$ 
+ 表示矩阵 $\mathbf{A}$ 
+中有 $r$ 
+个线性独立的列或行，其余的列或行可以通过这些线性独立向量的线性组合表示。&lt;/p&gt;
+&lt;p&gt;矩阵秩在多个领域中扮演重要角色，尤其在数据分析和机器学习中，它具有以下几个关键作用：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;线性独立性：秩还反映了矩阵中数据的线性独立性。高秩矩阵表示大部分行或列之间是线性独立的，信息量较高。低秩矩阵表示数据中存在线性相关性，部分信息可以由其他信息推导出。在线性代数中，这一性质可以用于解线性方程组、评估系统的自由度等。&lt;/li&gt;
+&lt;li&gt;冗余信息的识别：当矩阵的秩小于其行或列的数量时，这表明矩阵中存在冗余信息。例如，在多标签学习中，如果标签之间高度相关，标签矩阵的秩会比标签的总数小。通过分析矩阵的秩，可以发现并去除这些冗余信息，从而提高学习算法的效率。&lt;/li&gt;
+&lt;li&gt;信号与噪声的分离：在信号处理和机器学习中，秩常用于将信号与噪声分离出来。例如，通过低秩近似，可以滤除噪声并保留数据的核心信息。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;用一句话概括，秩衡量了矩阵行或者列之间的线性无关性。&lt;/p&gt;
+&lt;p&gt;在理解了矩阵的秩之后，我们可以进一步探讨与秩密切相关的概念：矩阵的子空间。矩阵的秩不仅揭示了其行或列之间的线性独立性，还引导我们理解矩阵所作用的空间结构。为了更好地理解这一点，我们引入矩阵的子空间这一概念。&lt;/p&gt;
+&lt;h2 id=&#34;矩阵的子空间&#34;&gt;矩阵的子空间&lt;/h2&gt;
+&lt;h3 id=&#34;定义&#34;&gt;定义&lt;/h3&gt;
+&lt;p&gt;在线性代数中，子空间是一个由向量构成的线性空间，它封闭于向量加法和数乘运算。对矩阵而言，主要关注的是列空间（column space）、行空间（row space）和零空间（null space）。这些子空间是理解矩阵映射几何特性的核心要素，能够帮助我们揭示矩阵如何将向量从一个空间映射到另一个空间。&lt;/p&gt;
+&lt;h3 id=&#34;列空间column-space&#34;&gt;列空间（Column Space）&lt;/h3&gt;
+&lt;p&gt;列空间是矩阵的所有列向量的线性组合所张成的向量空间。给定一个 $ m \times n$ 
+的矩阵 $\mathbf{A}$ 
+，其列空间是 $  \mathbb{R}^m  $ 
+ 中的一个子空间。列空间中的任何向量都可以由矩阵 $\mathbf{A}$ 
+的列向量通过线性组合得到。列空间的维度称为秩，表示该矩阵能够张成的线性独立方向的数量。&lt;/p&gt;
+&lt;p&gt;例如，如果矩阵 $\mathbf{A}$ 
+的列向量中有线性相关的列，则这些相关的列不贡献新的独立方向，从而列空间的维度会小于矩阵的列数。因此，矩阵的秩实际上等于列空间的维度。&lt;/p&gt;
+&lt;p&gt;几何上，列空间描述了矩阵 $\mathbf{A}$ 
+如何将输入向量（通常来自 $  \mathbb{R}^m  $ 
+ ）映射到其输出空间（通常是 $  \mathbb{R}^m  $ 
+ 中的一个子空间）。列空间张成的维度越小，说明矩阵能够覆盖的方向越少，矩阵的映射效果越“压缩”。&lt;/p&gt;
+&lt;h3 id=&#34;行空间row-space&#34;&gt;行空间（Row Space）&lt;/h3&gt;
+&lt;p&gt;行空间是由矩阵的所有行向量的线性组合所构成的向量空间。行空间与列空间密切相关，但存在于不同的维度中：行空间位于 $  \mathbb{R}^n $ 
+，而列空间位于 $  \mathbb{R}^m  $ 
+。行空间的维度同样为矩阵的秩，即矩阵的行中有多少是线性独立的。&lt;/p&gt;
+&lt;p&gt;行空间可以看作是矩阵 $\mathbf{A}$ 
+的“左零空间”的正交补。几何上，行空间描述了矩阵的输入空间中所有可以由行向量表示的方向。换句话说，矩阵的行空间反映了哪些方向的输入向量会对输出产生影响，其他方向则被“映射到零”。&lt;/p&gt;
+&lt;h3 id=&#34;零空间null-space&#34;&gt;零空间（Null Space）&lt;/h3&gt;
+&lt;p&gt;零空间，也称为核（kernel），是矩阵 $\mathbf{A}$ 
+映射到零向量的所有输入向量的集合。零空间的维度称为零空间维度（nullity），它反映了矩阵映射中失去的信息量。换句话说，零空间的维度告诉我们有多少个输入方向被矩阵映射到零。&lt;/p&gt;
+&lt;p&gt;零空间不仅仅是一个抽象的概念，它在解线性方程组时扮演着重要角色。假设我们解方程 $\mathbf{A} \mathbf{x} = \mathbf{0}$ 
+，零空间正是所有满足此方程的向量  $x$ 
+的集合。零空间的维度与秩相关，由秩-零空间定理（Rank-Nullity Theorem）给出：&lt;/p&gt;
+ $$\text{rank}(\mathbf{A}) + \text{nullity}(\mathbf{A}) = n$$ 
+
+&lt;p&gt;其中 $n$ 
+是矩阵 $\mathbf{A}$ 
+的列数。这个定理表明，矩阵的零空间维度与矩阵的秩共同决定了输入空间的整体结构。
+几何上，零空间对应于矩阵无法区分的输入方向。这意味着，输入空间中的一些方向对输出空间没有贡献，它们被映射到零。因此，零空间的维度越大，矩阵的信息损失就越严重。&lt;/p&gt;
+&lt;h3 id=&#34;左零空间left-null-space&#34;&gt;左零空间（Left Null Space）&lt;/h3&gt;
+&lt;p&gt;与零空间相对的，还有左零空间。左零空间是矩阵 $\mathbf{A}^\mathsf{T}$ 
+的零空间，即所有满足 $\mathbf{A}^T \mathbf{x} = \mathbf{0} $ 
+的向量构成的子空间。几何上，左零空间表示的是输入向量对行空间的正交部分。在矩阵分解中，左零空间与行空间的正交性起着重要作用。它帮助我们理解哪些输入方向与矩阵的行没有重叠，从而被完全“忽略”。&lt;/p&gt;
+&lt;h3 id=&#34;子空间与秩的关系&#34;&gt;子空间与秩的关系&lt;/h3&gt;
+&lt;p&gt;一个非常重要的事实是：矩阵的行空间和零空间是正交的，矩阵的列空间和左零空间也是正交的。这种正交性提供了一种简化分析矩阵映射的方式。如果一个向量位于矩阵的零空间，它与行空间中的所有向量正交，这意味着它不会对矩阵的输出产生贡献。同理，左零空间中的向量不会影响矩阵的输入行为。&lt;/p&gt;
+&lt;p&gt;秩实际上是列空间和行空间维度的共同度量。换句话说，秩代表了矩阵可以在其列空间和行空间中张成的最大独立方向数。因此，理解子空间之间的正交性和秩之间的关系，是理解矩阵如何作用于向量空间的关键。&lt;/p&gt;
+&lt;h2 id=&#34;奇异值分解&#34;&gt;奇异值分解&lt;/h2&gt;
+&lt;p&gt;在之前的讨论中，我们介绍了矩阵的子空间，如列空间、行空间和零空间，及其在理解矩阵结构和行为中的作用。然而，子空间分析并不足以揭示矩阵的全部复杂性。为此，我们引入奇异值分解（Singular Value Decomposition, SVD）这一工具。SVD 不仅揭示矩阵的秩和子空间，还通过一系列几何操作（旋转和缩放）解析矩阵的深层结构。SVD 分解能够紧凑地表示矩阵的主要特性，使其作用过程更加直观。接下来，我们将深入探讨 SVD 的具体细节及其几何意义。&lt;/p&gt;
+&lt;h3 id=&#34;奇异值分解的复杂数学背景&#34;&gt;奇异值分解的复杂数学背景&lt;/h3&gt;
+&lt;p&gt;给定一个任意的 $ m \times n$ 
+的矩阵 $\mathbf{A}$ 
+，我们可以通过 SVD 分解将其表示为：&lt;/p&gt;
+ $$ \mathbf{A} = \mathbf{U} \mathbf{\Sigma} \mathbf{V}^\mathsf{T} $$ 
+
+&lt;p&gt;其中：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt; $\mathbf{U}$ 
+是一个 $ m \times m$ 
+的正交矩阵，表示矩阵 $\mathbf{A}$ 
+的左奇异向量，这些向量构成了 $\mathbf{A}$ 
+的列空间的正交基；&lt;/li&gt;
+&lt;li&gt; $ \mathbf{\Sigma} $ 
+是一个 $ m \times n$ 
+的对角矩阵，其中的对角元素是矩阵 $\mathbf{A}$ 
+的奇异值，表示矩阵在不同方向上的伸缩比例；&lt;/li&gt;
+&lt;li&gt; $\mathbf{V}$ 
+是一个 $ n \times n$ 
+的正交矩阵，表示矩阵 $\mathbf{A}$ 
+的右奇异向量，它们构成了 $\mathbf{A}$ 
+的行空间的正交基。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;SVD 分解展示了矩阵如何在三个步骤中作用于输入向量：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;旋转输入向量到右奇异向量基下的空间（通过 $\mathbf{V}^\mathsf{T}$ 
+）；&lt;/li&gt;
+&lt;li&gt;沿着每个奇异值的方向进行缩放（通过 $\mathbf{\Sigma}$ 
+）；&lt;/li&gt;
+&lt;li&gt;将缩放后的向量再次旋转到左奇异向量基下的空间（通过 $\mathbf{U}$ 
+）。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;奇异值矩阵几何行为的核心&#34;&gt;奇异值：矩阵几何行为的核心&lt;/h3&gt;
+&lt;p&gt;奇异值是 SVD 分解中的核心元素，它们揭示了矩阵在不同方向上的缩放强度。对于一个矩阵 $\mathbf{A}$ 
+，奇异值 $\sigma_i$ 
+是矩阵 $\mathbf{A}$ 
+的拉伸或压缩比例，且总是非负的。通过奇异值的排列，矩阵可以分解为一系列基于强度递减的作用方向。&lt;/p&gt;
+&lt;p&gt;奇异值的数量等于矩阵的秩，因此，非零奇异值的个数决定了矩阵能够张成的线性独立方向的数量。奇异值为零意味着矩阵在某些方向上完全压缩，这些方向正是矩阵的零空间。换句话说，零奇异值描述了哪些方向在映射过程中被“丢失”或映射到零。&lt;/p&gt;
+&lt;p&gt;几何上，奇异值控制了矩阵将单位球体拉伸为一个椭球体的形状。每个奇异值对应椭球体的一个半轴的长度，非零奇异值的数量决定了椭球体的维数。此时，我们可以将矩阵看作是一个在高维空间中的变换，它通过奇异值来描述不同维度的拉伸和压缩。&lt;/p&gt;
+&lt;h3 id=&#34;左奇异向量与右奇异向量矩阵映射的几何旋转&#34;&gt;左奇异向量与右奇异向量：矩阵映射的几何旋转&lt;/h3&gt;
+&lt;p&gt;SVD 中的 $\mathbf{U}$ 
+和 $\mathbf{V}$ 
+分别是矩阵 $\mathbf{A}$ 
+的左奇异向量和右奇异向量，它们构成了矩阵作用空间的正交基。在几何上，右奇异向量 $\mathbf{V}$ 
+是矩阵的输入空间的特征方向，它们描述了矩阵在这些方向上对输入向量的作用。左奇异向量 $\mathbf{U}$ 
+是输出空间的特征方向，表示矩阵在输出空间中将输入向量映射到的结果方向。&lt;/p&gt;
+&lt;p&gt;右奇异向量可以理解为矩阵在输入空间中的“首选”方向，矩阵在这些方向上表现得最为明显。通过 $\mathbf{V}^\mathsf{T}$ 
+，矩阵将任意输入向量旋转到这些特定的方向上。左奇异向量则是输出空间的“首选”方向，通过 $\mathbf{U}$ 
+，矩阵将缩放后的向量旋转到输出空间的这些特定方向上。&lt;/p&gt;
+&lt;p&gt;这两个正交基的存在确保了 SVD 分解在高维空间中依然能够精确地描述矩阵的行为。尤其是在维度压缩、特征提取等问题中，右奇异向量对应于数据的主方向，而左奇异向量则对应于数据在新空间中的主成分。&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

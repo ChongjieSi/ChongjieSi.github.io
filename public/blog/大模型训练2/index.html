@@ -1,0 +1,1995 @@
+<!doctype html>
+<!-- This site was created with Hugo Blox. https://hugoblox.com -->
+<!-- Last Published: July 18, 2026 --><html lang="en-us" dir="ltr"
+      data-wc-theme-default="system">
+  
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="generator" content="Hugo Blox Builder 0.2.0" />
+  <link rel="stylesheet" href="/css/custom.css">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Chongjie Si" />
+
+  
+  
+  
+    
+  
+  <meta name="description" content="大模型训练" />
+
+  
+  <link rel="alternate" hreflang="en-us" href="http://localhost:1313/blog/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%832/" />
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="/css/themes/emerald.min.css" />
+  
+
+  
+  
+    
+    <link href="/dist/wc.min.css" rel="stylesheet" />
+  
+
+  
+  
+  
+
+  
+
+  <script>
+     
+    window.hbb = {
+       defaultTheme: document.documentElement.dataset.wcThemeDefault,
+       setDarkTheme: () => {
+        document.documentElement.classList.add("dark");
+        document.documentElement.style.colorScheme = "dark";
+      },
+       setLightTheme: () => {
+        document.documentElement.classList.remove("dark");
+        document.documentElement.style.colorScheme = "light";
+      }
+    }
+
+    console.debug(`Default Hugo Blox Builder theme is ${window.hbb.defaultTheme}`);
+
+    if ("wc-color-theme" in localStorage) {
+      localStorage.getItem("wc-color-theme") === "dark" ? window.hbb.setDarkTheme() : window.hbb.setLightTheme();
+    } else {
+      window.hbb.defaultTheme === "dark" ? window.hbb.setDarkTheme() : window.hbb.setLightTheme();
+      if (window.hbb.defaultTheme === "system") {
+        window.matchMedia("(prefers-color-scheme: dark)").matches ? window.hbb.setDarkTheme() : window.hbb.setLightTheme();
+      }
+    }
+  </script>
+
+  <script>
+    
+    document.addEventListener('DOMContentLoaded', function () {
+      
+      let checkboxes = document.querySelectorAll('li input[type=\'checkbox\'][disabled]');
+      checkboxes.forEach(e => {
+        e.parentElement.parentElement.classList.add('task-list');
+      });
+
+      
+      const liNodes = document.querySelectorAll('.task-list li');
+      liNodes.forEach(nodes => {
+        let textNodes = Array.from(nodes.childNodes).filter(node => node.nodeType === 3 && node.textContent.trim().length > 1);
+        if (textNodes.length > 0) {
+          const span = document.createElement('label');
+          textNodes[0].after(span);  
+          span.appendChild(nodes.querySelector('input[type=\'checkbox\']'));
+          span.appendChild(textNodes[0]);
+        }
+      });
+    });
+  </script>
+
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+  <link rel="icon" type="image/png" href="/media/icon_hue006528a12cd6926ef214d6e0d83c455_38865_32x32_fill_lanczos_center_3.png" />
+  <link rel="apple-touch-icon" type="image/png" href="/media/icon_hue006528a12cd6926ef214d6e0d83c455_38865_180x180_fill_lanczos_center_3.png" />
+
+  <link rel="canonical" href="http://localhost:1313/blog/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%832/" />
+
+  
+  
+  
+  
+  
+  
+  
+  
+    
+  
+  
+
+  
+  
+    
+    
+  
+  <meta property="twitter:card" content="summary_large_image" />
+  
+  <meta property="og:site_name" content="Chongjie Si" />
+  <meta property="og:url" content="http://localhost:1313/blog/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%832/" />
+  <meta property="og:title" content="大模型训练2：TPU是如何工作的？ | Chongjie Si" />
+  <meta property="og:description" content="大模型训练" /><meta property="og:image" content="http://localhost:1313/blog/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%832/featured.png" />
+    <meta property="twitter:image" content="http://localhost:1313/blog/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%832/featured.png" /><meta property="og:locale" content="en-us" />
+  
+    
+      <meta
+        property="article:published_time"
+        content="2025-08-04T00:00:00&#43;00:00"
+      />
+    
+    <meta property="article:modified_time" content="2025-08-04T00:00:00&#43;00:00">
+  
+
+  
+
+
+
+  
+
+
+  <title>大模型训练2：TPU是如何工作的？ | Chongjie Si</title>
+
+  
+  
+  
+  
+  
+    
+    
+  
+  
+  <style>
+    @font-face {
+      font-family: 'Inter var';
+      font-style: normal;
+      font-weight: 100 900;
+      font-display: swap;
+      src: url(/dist/font/Inter.var.woff2) format(woff2);
+    }
+  </style>
+
+  
+
+  
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+  
+  
+  
+  
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+  
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    
+  
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+  
+  
+  
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+  
+
+
+
+
+
+
+
+<link type="text/css" rel="stylesheet" href="/dist/pagefind/pagefind-ui.be766eb419317a14ec769d216e9779bfe8f3737c80e780f4ba0dafb57a41a482.css" integrity="sha256-vnZutBkxehTsdp0hbpd5v&#43;jzc3yA54D0ug2vtXpBpII=" />
+
+
+<script src="/dist/pagefind/pagefind-ui.87693d7c6f2b3b347ce359d0ede762c033419f0a32b22ce508c335a81d841f1b.js" integrity="sha256-h2k9fG8rOzR841nQ7ediwDNBnwoysizlCMM1qB2EHxs="></script>
+
+
+<script>window.hbb.pagefind = {"baseUrl":"/"};</script>
+
+<style>
+  html.dark {
+    --pagefind-ui-primary: #eeeeee;
+    --pagefind-ui-text: #eeeeee;
+    --pagefind-ui-background: #152028;
+    --pagefind-ui-border: #152028;
+    --pagefind-ui-tag: #152028;
+  }
+</style>
+
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    new PagefindUI({
+      element: "#search",
+      showSubResults: true,
+      baseUrl: window.hbb.pagefind.baseUrl,
+      bundlePath: window.hbb.pagefind.baseUrl + "pagefind/",
+    });
+  });
+  document.addEventListener('DOMContentLoaded', () => {
+    let element = document.getElementById('search');
+    let trigger = document.getElementById('search_toggle');
+
+    if (trigger) {
+      trigger.addEventListener('click', () => {
+        element.classList.toggle('hidden');
+        element.querySelector("input").value = ""
+        element.querySelector("input").focus()
+
+        if (!element.classList.contains('hidden')) {
+          let clear_trigger = document.querySelector('.pagefind-ui__search-clear');
+
+          if (clear_trigger && !clear_trigger.hasAttribute('listenerOnClick')) {
+            clear_trigger.setAttribute('listenerOnClick', 'true');
+
+            clear_trigger.addEventListener('click', () => {
+              element.classList.toggle('hidden');
+            });
+          }
+        }
+
+      });
+    }
+  });
+</script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link type="text/css" rel="stylesheet" href="/dist/lib/katex/katex.min.505d5f829022bb7b4f24dfee0aa1141cd7bba67afe411d1240335f820960b5c3.css" integrity="sha256-UF1fgpAiu3tPJN/uCqEUHNe7pnr&#43;QR0SQDNfgglgtcM=" />
+  
+  
+  <script defer src="/dist/lib/katex/katex.min.dc84b296ec3e884de093158f760fd9d45b6c7abe58b5381557f4e138f46a58ae.js" integrity="sha256-3ISyluw&#43;iE3gkxWPdg/Z1Ftser5YtTgVV/ThOPRqWK4="></script>
+  
+  
+  
+  
+  <script defer src="/js/katex-renderer.6579ec9683211cfb952064aedf3a3baea5eeb17a061775b32b70917474637c80.js" integrity="sha256-ZXnsloMhHPuVIGSu3zo7rqXusXoGF3WzK3CRdHRjfIA="></script>
+  
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  <script
+    defer
+    src="/js/hugo-blox-en.min.js"
+    integrity=""
+  ></script>
+
+  
+  
+
+
+
+
+
+
+
+
+  
+    
+      
+      <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+      
+    
+  
+
+
+
+
+</head>
+
+  <body class="dark:bg-hb-dark dark:text-white page-wrapper" id="top">
+    <div id="page-bg"></div>
+    <div class="page-header ">
+      
+      
+      
+        
+        
+        
+          <header id="site-header" class="header">
+  <nav class="navbar px-3 flex justify-left">
+    <div class="order-0 h-100">
+      
+      <a class="navbar-brand" href="/" title="Chongjie Si">
+        Chongjie Si
+      </a>
+    </div>
+    
+    <input id="nav-toggle" type="checkbox" class="hidden" />
+    <label
+      for="nav-toggle"
+      class="order-3 cursor-pointer flex items-center lg:hidden text-dark dark:text-white lg:order-1">
+      <svg id="show-button" class="h-6 fill-current block" viewBox="0 0 20 20">
+        <title>Open Menu</title>
+        <path d="M0 3h20v2H0V3z m0 6h20v2H0V9z m0 6h20v2H0V0z"></path>
+      </svg>
+      <svg id="hide-button" class="h-6 fill-current hidden" viewBox="0 0 20 20">
+        <title>Close Menu</title>
+        <polygon
+          points="11 9 22 9 22 11 11 11 11 22 9 22 9 11 -2 11 -2 9 9 9 9 -2 11 -2"
+          transform="rotate(45 10 10)"></polygon>
+      </svg>
+    </label>
+    
+
+    
+    
+    <ul
+      id="nav-menu"
+      class="navbar-nav order-3 hidden lg:flex w-full pb-6 lg:order-1 lg:w-auto lg:space-x-2 lg:pb-0 xl:space-x-8 justify-left
+      ">
+      
+      
+      
+      
+      
+      
+      <li class="nav-item">
+        <a
+          class="nav-link "
+          
+          href="/home/"
+        >Home</a
+        >
+      </li>
+      
+      
+      
+      
+      
+      
+      <li class="nav-item">
+        <a
+          class="nav-link "
+          
+          href="/home/#news"
+        >News</a
+        >
+      </li>
+      
+      
+      
+      
+      
+      
+      <li class="nav-item">
+        <a
+          class="nav-link "
+          
+          href="/publications/"
+        >Publications</a
+        >
+      </li>
+      
+      
+      
+      
+      
+      
+      <li class="nav-item">
+        <a
+          class="nav-link "
+          
+          href="/blogs/"
+        >Blogs</a
+        >
+      </li>
+      
+      
+      
+      
+      
+      
+      <li class="nav-item">
+        <a
+          class="nav-link "
+          
+          href="/cv/"
+        >CV</a
+        >
+      </li>
+      
+      
+      
+      
+      
+      
+      <li class="nav-item">
+        <a
+          class="nav-link "
+          
+          href="/photos/"
+        >Photos</a
+        >
+      </li>
+      
+      
+      
+    </ul>
+
+    <div class="order-1 ml-auto flex items-center md:order-2 lg:ml-0">
+
+      
+      
+      
+      <button
+        aria-label="search"
+        class="text-black hover:text-primary  inline-block px-3 text-xl dark:text-white"
+        id="search_toggle">
+        <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512" fill="currentColor"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
+      </button>
+      
+
+      
+      
+      <div class="px-3 text-black hover:text-primary-700 dark:text-white dark:hover:text-primary-300
+            [&.active]:font-bold [&.active]:text-black/90 dark:[&.active]:text-white">
+        <button class="theme-toggle mt-1" accesskey="t" title="appearance">
+          <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+               stroke-linejoin="round" class="dark:hidden">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+               stroke-linejoin="round" class=" dark:block [&:not(dark)]:hidden">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+      </div>
+      
+
+      
+      
+
+      
+      
+    </div>
+  </nav>
+</header>
+
+
+<div id="search" class="hidden p-3"></div>
+
+
+        
+      
+    </div>
+    <div class="page-body  my-10">
+      <div class="mx-auto flex max-w-screen-xl">
+  
+
+  
+  <div class="hb-sidebar-mobile-menu fixed inset-0 z-10 bg-white dark:bg-black/80 hidden"></div>
+
+
+
+<aside class="hb-sidebar-container max-lg:[transform:translate3d(0,-100%,0)] lg:sticky">
+  
+  <div class="px-4 pt-4 lg:hidden">
+    
+    
+  </div>
+  <div class="hb-scrollbar lg:h-[calc(100vh-var(--navbar-height))]">
+    <ul class="flex flex-col gap-1 lg:hidden">
+      
+      
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/"
+    
+  >Publications
+        <span data-hb-sidebar-toggle>
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-[18px] min-w-[18px] rounded-sm p-0.5 hover:bg-gray-800/5 dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="origin-center transition-transform rtl:-rotate-180"></path></svg>
+        </span>
+    </a><div class="ltr:pr-0 overflow-hidden">
+        <ul class="hb-sidebar-list"><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2026-cvpr-schirn/"
+    
+  >Revisiting Sparsity Constraint Under High-Rank Property in Partial Multi-Label Learning
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2026-tpami-tsd/"
+    
+  >Task-Specific Directions: Definition, Exploration, and Utilization in Parameter Efficient Fine-Tuning
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2026-iclr-flexlora/"
+    
+  >FlexLoRA: Entropy-Guided Flexible Low-Rank Adaptation
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2025-nips-corl/"
+    
+  >Co-Reinforcement Learning for Unified Multimodal Understanding and Generation
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2025-nips-opmapper/"
+    
+  >OPMapper: Enhancing Open-Vocabulary Semantic Segmentation with Multi-Guidance Information
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2025-colm-dualedit/"
+    
+  >DualEdit: Dual Editing for Knowledge Updating in Vision-Language Models
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2025-arxiv-map/"
+    
+  >MAP: Revisiting Weight Decomposition for Low-Rank Adaptation
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2025-arxiv-speclora/"
+    
+  >Weight Spectra Induced Efficient Model Adaptation
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2025-arxiv-nan/"
+    
+  >NAN: A Training-Free Solution to Coefficient Estimation in Model Merging
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2025-arxiv-lip/"
+    
+  >Why Can Accurate Models Be Learned from Inaccurate Annotations?
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2025-iccv-liera/"
+    
+  >Generalized Tensor-based Parameter-Efficient Fine-Tuning via Lie Group Transformations
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2025-iclr-flora/"
+    
+  >Maintaining Structural Integrity in Parameter Spaces for Parameter Efficient Fine-Tuning
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2025-iclr-lora-dash/"
+    
+  >Unleashing the Power of Task-Specific Directions in Parameter Efficient Fine-tuning
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2025-arxiv-gaussian/"
+    
+  >Unveiling the Mystery of Weight in Large Foundation Models: Gaussian Distribution Never Fades
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2024-arxiv-subspace-tuning/"
+    
+  >See Further for Parameter Efficient Fine-tuning by Standing on the Shoulders of Decomposition
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2024-eccv-teddy/"
+    
+  >Tendency-driven Mutual Exclusivity for Weakly Supervised Incremental Semantic Segmentation
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2024-arxiv-appeal/"
+    
+  >Appeal: Allow Mislabeled Samples the Chance to be Rectified in Partial Label Learning
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2024-aaai-plcp/"
+    
+  >Partial Label Learning with a Partner
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2023-tkde-homi/"
+    
+  >Multi-label Classification with High-rank and High-order Label Correlations
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2023-kdd-plcl/"
+    
+  >Complementary Classifier Induced Partial Label Learning
+    </a>
+              
+            </li></ul>
+      </div></li>
+        <li class="open"><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/"
+    
+  >Blogs
+        <span data-hb-sidebar-toggle>
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-[18px] min-w-[18px] rounded-sm p-0.5 hover:bg-gray-800/5 dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="origin-center transition-transform rtl:-rotate-180"></path></svg>
+        </span>
+    </a><div class="ltr:pr-0 overflow-hidden">
+        <ul class="hb-sidebar-list"><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/adamuon/"
+    
+  >AdaMuon：能否进一步助力Muon替代Adam？
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/muon/"
+    
+  >Muon：有望成为下一代Adam的优化器
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%833/"
+    
+  >大模型训练3：从矩阵乘法看大模型如何切分
+    </a>
+              
+            </li><li class="flex flex-col open"><a
+    class="hb-sidebar-custom-link
+      sidebar-active-item bg-primary-100 font-semibold text-primary-800 dark:bg-primary-300 dark:text-primary-900"
+    href="/blog/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%832/"
+    
+  >大模型训练2：TPU是如何工作的？
+    </a>
+  
+    <ul class="hb-sidebar-mobile-toc"><li>
+              <a
+                href="#%e4%bb%80%e4%b9%88%e6%98%af-tpu"
+                class="hb-docs-link"
+              >什么是 TPU？</a>
+            </li>
+          <li>
+              <a
+                href="#tpu-%e7%bd%91%e7%bb%9c%e7%bb%93%e6%9e%84"
+                class="hb-docs-link"
+              >TPU 网络结构</a>
+            </li>
+          <li>
+              <a
+                href="#%e7%bb%8f%e5%85%b8%e6%80%bb%e7%bb%93"
+                class="hb-docs-link"
+              >经典总结</a>
+            </li>
+          </ul>
+  
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%831/"
+    
+  >大模型训练1：模型训练的时间都花在哪了？
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/liera%E8%A7%A3%E8%AF%BB/"
+    
+  >李群视角解决N维参数的高效微调
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E6%A8%A1%E5%9E%8B%E8%9E%8D%E5%90%88/"
+    
+  >模型融合的系数到底应该是多少？
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E5%99%AA%E5%A3%B0%E5%AD%A6%E4%B9%A0/"
+    
+  >为什么模型可以从含噪声数据中学习到正确的信息？
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/lora-dash/"
+    
+  >深入解析LoRA-Dash：释放特定任务方向性能的微调方法
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E4%BB%A3%E6%95%B0%E4%B8%8D%E7%AD%89%E5%BC%8F4/"
+    
+  >代数不等式4：三角变换
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E4%BB%A3%E6%95%B0%E4%B8%8D%E7%AD%89%E5%BC%8F3/"
+    
+  >代数不等式3：算术平均-几何平均不等式
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E4%BB%A3%E6%95%B0%E4%B8%8D%E7%AD%89%E5%BC%8F2/"
+    
+  >代数不等式2：一些简单不等式的证明
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E4%BB%A3%E6%95%B0%E4%B8%8D%E7%AD%89%E5%BC%8F1/"
+    
+  >代数不等式1：柯西不等式与拉格朗日恒等式
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E6%BB%A1%E7%A7%A9%E8%BF%90%E7%AE%97/"
+    
+  >矩阵的秩：MA=BM，B、M满秩，A一定满秩吗？
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E7%9F%A9%E9%98%B5%E7%9A%84%E7%A7%A9/"
+    
+  >矩阵的秩、矩阵的子空间、SVD分解
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/lora/"
+    
+  >漫谈LoRA
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E5%8F%B0%E7%90%83%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/"
+    
+  >台球那些事儿
+    </a>
+              
+            </li></ul>
+      </div></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/"
+    
+  >Photo Gallery
+        <span data-hb-sidebar-toggle>
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-[18px] min-w-[18px] rounded-sm p-0.5 hover:bg-gray-800/5 dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="origin-center transition-transform rtl:-rotate-180"></path></svg>
+        </span>
+    </a><div class="ltr:pr-0 overflow-hidden">
+        <ul class="hb-sidebar-list"><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/singapore/"
+    
+  >Singapore
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/vatican/"
+    
+  >Vatican
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/italy/"
+    
+  >Italy
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/switzerland/"
+    
+  >Switzerland
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/france/"
+    
+  >Paris, France
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/luxembourg/"
+    
+  >Luxembourg
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/germany/"
+    
+  >Frankfurt, Germany
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/vancouver/"
+    
+  >Vancouver, Canada
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/japan/"
+    
+  >Japan
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/qinghai/"
+    
+  >Qinghai
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/san-francisco/"
+    
+  >San Francisco, USA
+    </a>
+              
+            </li></ul>
+      </div></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/news/"
+    
+  >💥 Recent News
+        <span data-hb-sidebar-toggle>
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-[18px] min-w-[18px] rounded-sm p-0.5 hover:bg-gray-800/5 dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="origin-center transition-transform rtl:-rotate-180"></path></svg>
+        </span>
+    </a><div class="ltr:pr-0 overflow-hidden">
+        <ul class="hb-sidebar-list"><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/news/news/"
+    
+  >Recent News
+    </a>
+              
+            </li></ul>
+      </div></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/cv/"
+    
+  >Experience
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photos/"
+    
+  >Photos
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/publications/"
+    
+  >Publications
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/home/"
+    
+  >Home
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blogs/"
+    
+  >Blogs
+    </a></li>
+    </ul>
+
+    <ul class="flex flex-col gap-1 max-lg:hidden">
+        
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/adamuon/"
+    
+  >AdaMuon：能否进一步助力Muon替代Adam？
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/muon/"
+    
+  >Muon：有望成为下一代Adam的优化器
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%833/"
+    
+  >大模型训练3：从矩阵乘法看大模型如何切分
+    </a></li>
+        <li class="open"><a
+    class="hb-sidebar-custom-link
+      sidebar-active-item bg-primary-100 font-semibold text-primary-800 dark:bg-primary-300 dark:text-primary-900"
+    href="/blog/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%832/"
+    
+  >大模型训练2：TPU是如何工作的？
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%831/"
+    
+  >大模型训练1：模型训练的时间都花在哪了？
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/liera%E8%A7%A3%E8%AF%BB/"
+    
+  >李群视角解决N维参数的高效微调
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E6%A8%A1%E5%9E%8B%E8%9E%8D%E5%90%88/"
+    
+  >模型融合的系数到底应该是多少？
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E5%99%AA%E5%A3%B0%E5%AD%A6%E4%B9%A0/"
+    
+  >为什么模型可以从含噪声数据中学习到正确的信息？
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/lora-dash/"
+    
+  >深入解析LoRA-Dash：释放特定任务方向性能的微调方法
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E4%BB%A3%E6%95%B0%E4%B8%8D%E7%AD%89%E5%BC%8F4/"
+    
+  >代数不等式4：三角变换
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E4%BB%A3%E6%95%B0%E4%B8%8D%E7%AD%89%E5%BC%8F3/"
+    
+  >代数不等式3：算术平均-几何平均不等式
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E4%BB%A3%E6%95%B0%E4%B8%8D%E7%AD%89%E5%BC%8F2/"
+    
+  >代数不等式2：一些简单不等式的证明
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E4%BB%A3%E6%95%B0%E4%B8%8D%E7%AD%89%E5%BC%8F1/"
+    
+  >代数不等式1：柯西不等式与拉格朗日恒等式
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E6%BB%A1%E7%A7%A9%E8%BF%90%E7%AE%97/"
+    
+  >矩阵的秩：MA=BM，B、M满秩，A一定满秩吗？
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E7%9F%A9%E9%98%B5%E7%9A%84%E7%A7%A9/"
+    
+  >矩阵的秩、矩阵的子空间、SVD分解
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/lora/"
+    
+  >漫谈LoRA
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E5%8F%B0%E7%90%83%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/"
+    
+  >台球那些事儿
+    </a></li>
+        
+      </ul>
+    </div>
+
+</aside>
+  
+
+<nav class="hb-toc order-last hidden w-64 shrink-0 xl:block print:hidden px-4" aria-label="table of contents">
+  
+
+
+
+
+
+
+
+
+
+
+
+  <div class="hb-scrollbar text-sm [hyphens:auto] sticky top-16 overflow-y-auto pr-4 pt-6 max-h-[calc(100vh-var(--navbar-height)-env(safe-area-inset-bottom))] -mr-4 rtl:-ml-4"><p class="mb-4 font-semibold tracking-tight">On this page</p><ul>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#%e4%bb%80%e4%b9%88%e6%98%af-tpu">什么是 TPU？</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#%e9%87%8d%e7%82%b9%e6%80%bb%e7%bb%93%e4%b8%80%e4%b8%8b">重点总结一下</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#vmem-%e4%b8%8e-arithmetic-intensity-%e7%9a%84%e5%85%b3%e7%b3%bb">VMEM 与 Arithmetic Intensity 的关系</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#tpu-%e8%8a%af%e7%89%87%e5%92%8c%e7%bb%84%e7%bd%91%e7%bb%93%e6%9e%84">TPU 芯片和组网结构</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#tpu-%e7%bd%91%e7%bb%9c%e7%bb%93%e6%9e%84">TPU 网络结构</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#tpu-pod-%e5%92%8c-superpod">TPU Pod 和 SuperPod</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#%e7%bb%8f%e5%85%b8%e6%80%bb%e7%bb%93">经典总结</a>
+      </li></ul>
+
+  
+  
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+  </nav>
+
+
+  <article class="flex w-full min-w-0 min-h-[calc(100vh-var(--navbar-height))] justify-center break-words pb-8 pr-[calc(env(safe-area-inset-right)-1.5rem)]">
+    <main class="prose prose-slate lg:prose-xl dark:prose-invert w-full min-w-0 max-w-6xl px-6 pt-4 md:px-12">
+      <div class="mb-1">
+        <div class="mt-1.5 flex items-center gap-1 overflow-hidden text-sm text-gray-500 dark:text-gray-400">
+      <div class="whitespace-nowrap transition-colors min-w-[24px] overflow-hidden text-ellipsis hover:text-gray-900 dark:hover:text-gray-100">
+        <a href="http://localhost:1313/blog/">Blogs</a>
+      </div><svg class="w-3.5 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m8.25 4.5l7.5 7.5l-7.5 7.5"/></svg><div class="whitespace-nowrap font-medium text-gray-700 dark:text-gray-100">大模型训练2：TPU是如何工作的？</div>
+</div>
+
+      </div>
+
+      <div class="content text-base">
+        <h1>大模型训练2：TPU是如何工作的？</h1>
+        <!--  $$ 
+ -->
+<p>今天主要来讲一讲 TPU 是怎么工作的，它们之间是如何联网的，从而支持多芯片的训练和推理。这些结构和机制会直接影响你常用算法的性能表现。当然，即使你是用 GPU 的，也有很多有用的内容值得参考。</p>
+<h2 id="什么是-tpu">什么是 TPU？</h2>
+<p>TPU 本质上就是一个专为矩阵乘法设计的计算核心（叫做 TensorCore），旁边挂着一块超快的内存（叫 HBM，高带宽内存）。可以把它理解成一台超强的“矩阵乘法专用机”，不过它还有一些其他关键功能。</p>
+<img src="https://pic2.zhimg.com/v2-72f975f51c397c6e5075b7d33f3cbd55_1440w.jpg">
+<p>TensorCore 主要包含三个重要单元：</p>
+<ol>
+<li>MXU（矩阵乘法单元，Matrix Multiply Unit）：这是整个 TensorCore 的核心。以 TPU v5e 为例，它每 8 个周期就能完成一次 bfloat16 [8, 128] × bfloat16 [128, 128] → float32 [8, 128] 的矩阵乘法，靠的是所谓的 systolic array 结构。在 1.5GHz 下，单个 MXU 每秒能跑约 5e13 次 bfloat16 运算。大多数 TensorCore 会配备 2 或 4 个 MXU，比如 TPU v5e 的总 FLOPs（bfloat16）就是 2e14。此外 TPU 还支持更低精度的矩阵乘法，比如 int8，可以达到更高的吞吐量（v5e 是 4e14 ops/s）。</li>
+<li>VPU（向量处理单元，Vector Processing Unit）：负责执行常见的数学操作，比如 ReLU 激活、点乘、加法、向量间的逐元素操作等。比如你要对一个张量做求和归一化这种事，也是在这里完成的。</li>
+<li>VMEM（向量内存，Vector Memory）：这是一块片上小内存，就挨着计算单元。虽然容量比 HBM 小得多（比如 v5e 是 128MiB），但访问速度非常快。它有点像 CPU 里的 L1/L2 缓存，但更大、而且由程序员手动控制。注意：TensorCore 不能直接从 HBM 读取数据做计算，数据必须先搬进 VMEM 才行。</li>
+</ol>
+<p>一句话总结：TPU 是专为深度学习设计的“矩阵加速器”，核心思想就是用超强的矩阵乘法引擎 + 超快的数据通路（VMEM + HBM）来提升训练速度。</p>
+<p>TPU 的强项就是矩阵乘法，而且是真的非常非常快。比如目前最强的 TPU 之一 —— TPU v5p，每个核心每秒可以跑 2.5e14 次 bfloat16 运算，一个芯片就是 5e14 次。如果你拿一个拥有 8960 颗芯片的大型 TPU pod 来算，一秒能跑 4 exaFLOPs，已经是世界级的超级计算机级别了，而且 Google 手上有很多这样的 pod。</p>
+<p>上面那张图还标了 SMEM 和 scalar unit，主要用来处理控制流相关的逻辑（比如 if-else、for loop），你不用特别关注，但有个重要的组件你一定要搞清楚：HBM（高带宽内存），这就是 TPU 存数据的地方，用来存张量。它的容量通常是几十 GB，比如 TPU v5e 是 16 GiB。每次你做计算的时候，数据都会从 HBM 通过VMEM（片上缓存）先搬到计算核心 MXU，然后计算完成后再从 VMEM 把结果写回 HBM。HBM 和 TensorCore 之间的带宽（就是通过 VMEM 通道的速度）通常是 1～2 TB/s，这个带宽是限制内存密集型任务计算速度的关键瓶颈，所以常被称为 HBM 带宽。</p>
+<p>不过别担心，TPU 在设计上是很智能的 —— 所有操作都是 流水线式并行处理。举个例子，要做矩阵乘法 Y = X @ A，TPU 会：</p>
+<ol>
+<li>先把部分的 X 和 A 从 HBM 搬到 VMEM；</li>
+<li>然后把 VMEM 里的数据喂给 MXU 来做乘法（比如 X 是 8×128 块，A 是 128×128 块）；</li>
+<li>然后把乘好的结果块再写回 HBM。</li>
+</ol>
+<p>而这一整套过程是分阶段交叉进行的，比如：</p>
+<ol>
+<li>在计算当前一块的时候，就已经在搬下一块进 VMEM；</li>
+<li>计算完当前一块的时候，也在把之前算好的结果写回 HBM。</li>
+</ol>
+<img src="https://jax-ml.github.io/scaling-book/assets/img/pointwise-product.gif" loop="true">
+<p>通过这种“搬 + 算 + 写”三管齐下的流水线策略，TPU 能够最大程度保证 MXU 时刻有活干，避免它闲着等内存，从而维持计算瓶颈（compute-bound）状态，而不是被内存拖慢（memory-bound）。TPU 之所以能打，就是靠 MXU 算得快、HBM 送得快、VMEM 做缓存中转，再加上流水线式调度，几乎把硬件压榨到了极致。</p>
+<p>矩阵乘法（matmul）的数据流动路径其实和普通的点操作差不多，唯一的不同是它加载到的是 MXU，而不是 VPU。另外，由于同一块权重会被多个输入激活块反复使用，所以 matmul 的加载顺序也和点操作不同。你可以想象是：数据从 HBM 流入 VMEM，再进到 VREGs（向量寄存器），然后喂给向量单元或矩阵乘单元（VPU 或 MXU），最后结果再从 VMEM 写回到 HBM。但问题是：如果 HBM → VMEM 的速度跟不上计算单元（VPU/MXU） 的吞吐能力，那计算单元就“饿了”，得不到足够的数据，就浪费了计算力，这种情况叫“带宽瓶颈”（bandwidth-bound）。</p>
+<h3 id="重点总结一下">重点总结一下</h3>
+<p>TPU 架构很简单：先把数据从 HBM 拉到 VMEM；然后 VMEM 把数据喂给 systolic array（一个高效做乘加的阵列）；每秒能跑 200 万亿次乘加（200 TFLOPs）；HBM ↔ VMEM 和 VMEM ↔ MXU 的带宽，决定了你的程序到底能跑多快。</p>
+<h3 id="vmem-与-arithmetic-intensity-的关系">VMEM 与 Arithmetic Intensity 的关系</h3>
+<p>虽然 VMEM 容量比 HBM 小很多，但带宽高得多（大概是 HBM 的 22 倍），这意味着：如果你能把所有的输入和输出都装进 VMEM，就大大降低了通信瓶颈；特别是当一个算法的 arithmetic intensity 本来就不高时（就是 FLOPs 比 byte 少的那种），只要能放进 VMEM，就还有可能跑得快。举个例子：在 HBM 中你可能需要每 byte 至少算 200 次才能不浪费资源，而在 VMEM 中只要算 10～20 次就够了。所以，如果你能把参数提前放进 VMEM，你就能用很小的 batch size 就达成高效率。问题是 VMEM 太小了，很多模型根本塞不下，这才是挑战。</p>
+<img src="https://picx.zhimg.com/v2-9a374166dfdc03c394e602a0d0716d7b_1440w.jpg">
+<h3 id="tpu-芯片和组网结构">TPU 芯片和组网结构</h3>
+<p>一个 TPU 芯片通常有两个核心，共享内存，一起工作就叫做 megacore，从 TPU v4 开始都是这样。早期（v3 及以前）是两个独立核心，各自有自己的内存；面向推理的 TPU（如 v5e）只有一个核心，不搞共享。</p>
+<img src="https://pic2.zhimg.com/v2-f84ef1363581b450c3e1d0fc736c17e3_1440w.jpg">
+<p>4 个芯片组成一个 tray（托盘），通过 PCIe 网络连到一个 CPU 主机，很多熟悉 Google Colab 或 TPU VM 的用户看到的就是这种 4 芯片、8 核心配置。推理版的 TPU v5e 是 2 个托盘一个主机，但每芯片只有 1 个核心，所以是 8 芯片 8 核心。</p>
+<img src="https://pic3.zhimg.com/v2-40dbb423f6e0cc8f86372f7a3d1797ba_1440w.jpg">
+<p>不过PCIe 是个限制项：和 HBM ↔ VMEM 一样，CPU ↔ HBM 之间通过 PCIe 连接，它也有带宽限制。比如 TPU v4 的 PCIe 带宽只有 16GB/s（单向），比 HBM 慢了快 100 倍；所以虽然你可以从主机内存搬数据进 TPU，但速度慢得很，不适合频繁交换。</p>
+<h2 id="tpu-网络结构">TPU 网络结构</h2>
+<p>TPU 芯片之间通过叫做 ICI 网络（Inter-Chip Interconnect） 的通道连接起来。在一个 TPU Pod 中，不同芯片直接用 ICI 连着，不需要经过主机（host），效率非常高。对于老一代 TPU（v2 / v3） 、推理芯片（v5e）以及 v6e（Trillium），每个芯片跟4 个最近的邻居连接，构成一个 2D 环形网络（2D torus），两端用“边缘连接”封住，组成环。对于 TPU v4 / v5p，每个芯片和 6 个邻居连接，组成一个 3D 环形网络（3D torus）；</p>
+<img src="https://picx.zhimg.com/v2-cbb8dc282aeebd6de14af07ea81a6dcf_1440w.jpg">
+<p>这种“环形结构（Torus）”的好处是把任意两个芯片之间的最远距离从 N 缩短到了 N/2，数据传输更快、更稳定。有些网络还用了所谓的 “扭曲环 Mobius” 结构，类似莫比乌斯带，进一步减少了芯片间的平均通信距离（这太 geek 了，有兴趣可以自己搜图）。</p>
+<h3 id="tpu-pod-和-superpod">TPU Pod 和 SuperPod</h3>
+<p>TPU 是按 “Pod” 来组的，Pod 内部通过 ICI 连接。Pod 可以特别大，比如 TPU v4 的最大 Pod 是 16×16×16 个芯片，TPU v5p 最大可以达到 16×20×28。这么大的网络其实是通过 4×4×4 的芯片小方块连接而成，中间用光学交换器做 “wraparound” 连起来（有点像包裹起来的立方体）。这些方块可以重新配置，实现灵活的超大规模拓扑结构。</p>
+<img src="https://pica.zhimg.com/v2-58f7e70afd60e851450a28226950bffe_1440w.jpg">
+<p>你也可以请求一个小规模拓扑，比如 2×2×1、2×2×2，但这种小拓扑没 wraparound，通信效率就低了。没有 wraparound 的情况下，通信延迟通常会翻倍，所以建议尽量选 4×4×4 或它的倍数这种有 wrap 的结构。</p>
+<img src="https://pic2.zhimg.com/v2-dc9e0800334b394a529b8bcccb4c3e47_1440w.jpg">
+<p>对于TPU v5e 和 Trillium（v6e），它们是专门为推理优化的，构成一个 16×16 的 2D torus；只要某一维有 16，就会自动有 wraparound，不支持超出 16×16 的拓展。但可以通过 DCN（Data Center Network） 实现跨 Pod 通信，DCN 是 主机 ↔ 主机 的通道，速度比 ICI 慢多了。</p>
+<img src="https://pic4.zhimg.com/v2-35617fb9c9ed504d00c2fd31fba59e77_1440w.jpg">
+<p>TPU 和 GPU 在连接方式上有挺大的差别。TPU 是那种“邻居互联”的风格，每个芯片只连它周围的几个芯片，像搭积木一样拼成一个二维或三维的“环形网络”（torus）。这种连接方式很简单、便宜，而且扩展性特别好。相比之下，GPU 用的是一套更复杂的“全连接近似”结构，靠一堆 NVLink 交换机把所有 GPU 尽可能都连起来。这样做虽然让同一个节点里的 GPU（比如一台 8 卡的 H100 机器）之间通信特别快，但一旦规模上去，通信就得走好几级交换路径，延迟和成本都会飙升。</p>
+<p>TPU 的思路就不一样了：它把每个芯片之间的通信带宽和连接数都固定下来，这样整个系统搭建起来既便宜又统一，比如 TPU v5p 每个芯片的 HBM 带宽有 2.5TB/s，芯片之间的 ICI 链路大概每个方向 90GB/s，而真正跨主机通信的 DCN（数据中心网络）只有可怜的 25GB/s。更关键的是，一个主机通常带 8 个 TPU 芯片，所以平摊下来，每个芯片能用的 DCN 带宽其实只有 3GB/s 出头，远远不如 ICI，更别提 HBM 了。</p>
+<p>这就导致一个问题：如果你把模型切分到多个 TPU 芯片上运行，尤其是分布在不同主机上的时候，如果通信规划不好，很容易卡在带宽不够这件事上。特别是在“multi-slice”这种跨多个 TPU 分组训练的场景下，一组 ICI 相连的 TPU 叫做一个 slice，slice 之间的通信必须走 DCN。而 DCN 这条路非常绕：数据得先从 TPU 走 PCIe 到主机，再通过网络发出去，到了目标主机后再走 PCIe 写进目标 TPU 的 HBM，整个流程特别慢。所以训练时最理想的方式，是尽量把大部分通信压在 ICI 这一层，避免走 DCN 这条“慢车道”。这样才能让 TPU 的矩阵乘法单元（MXU）不被通信拖后腿，真正跑满算力。</p>
+<h2 id="经典总结">经典总结</h2>
+<p>好了，晦涩的文字到此结束，总结一下：</p>
+<p>TPU 本质上就是一个特别强的“矩阵乘法机器”，它连着三样东西：超快的内存（HBM）、周围几个“邻居芯片”（通过 ICI）、还有数据中心里其他机器（通过 DCN）。</p>
+<p>这三种通信通道的速度从快到慢分别是：</p>
+<ol>
+<li>HBM 带宽：就是 TensorCore 和它本地内存之间的传输，非常快；</li>
+<li>ICI 带宽：芯片之间的通信，比 HBM 慢一点，但还挺快的；</li>
+<li>PCIe 带宽：主机和芯片托盘之间的连接，速度一般；</li>
+<li>DCN 带宽：多个主机之间通过数据中心网络通信，最慢。</li>
+</ol>
+<p>在一个 slice 里（也就是一组 ICI 相连的 TPU），芯片之间只跟最邻近的芯片连接。如果你要让两个距离远的芯片通信，它们得一跳一跳地转发，挺费时间的。</p>
+<p>此外，做矩阵乘法的时候，权重矩阵的两个维度最小都得填充到 128（TPU v6 上是 256），这样才能把 MXU（矩阵乘单元）用满。</p>
+<p>还有一点是：精度越低，运算越快。TPU 支持 int8 和 int4，这比用 bfloat16 快两倍甚至四倍。当然啦，VPU（向量处理器）做的那些操作，比如激活函数啥的，还是用 fp32。</p>
+<p>最后一条也很关键：为了不让 TPU 的算力闲着，我们得让不同通信通道上的数据量跟它们各自的速度匹配上。也就是说：快的通道多跑点，慢的通道少跑点，不然就拖后腿了。</p>
+
+      </div>
+
+      
+  <time class="mt-12 mb-8 block text-xs text-gray-500 ltr:text-right rtl:text-left dark:text-gray-400" datetime="2025-08-04T00:00:00.000Z">
+    <span>Last updated on</span>
+    Aug 4, 2025</time>
+      
+      
+  
+    
+    
+    
+      
+      
+    
+<div class="pt-1 no-prose w-full">
+  <hr class="border-dotted border-neutral-300 dark:border-neutral-600" />
+  <div class="flex flex-col md:flex-row flex-nowrap justify-between gap-5 pt-2">
+    <div class="">
+      
+        <a class="group flex no-underline" href="/blog/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%833/">
+          <span
+            class="mt-[-0.3rem] me-2 text-neutral-700 transition-transform group-hover:-translate-x-[2px] group-hover:text-primary-600 dark:text-neutral dark:group-hover:text-primary-400"
+          ><span class="ltr:inline rtl:hidden">&larr;</span></span>
+          <span class="flex flex-col">
+            <span
+              class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
+            >大模型训练3：从矩阵乘法看大模型如何切分</span>
+            <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
+              
+                Aug 8, 2025
+              
+            </span>
+          </span>
+        </a>
+      
+    </div>
+    <div class="">
+      
+        <a class="group flex text-right no-underline" href="/blog/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%831/">
+          <span class="flex flex-col">
+            <span
+              class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
+            >大模型训练1：模型训练的时间都花在哪了？</span
+            >
+            <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
+              
+                Jul 30, 2025
+              
+            </span>
+          </span>
+          <span
+            class="mt-[-0.3rem] ms-2 text-neutral-700 transition-transform group-hover:-translate-x-[2px] group-hover:text-primary-600 dark:text-neutral dark:group-hover:text-primary-400"
+          ><span class="ltr:inline">&rarr;</span></span>
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+      
+
+
+  
+  
+  
+
+  
+
+  
+  <section id="comments">
+    
+  
+  <script src="https://giscus.app/client.js"
+          data-repo="ChongjieSi/ChongjieSi.github.io"
+          data-repo-id="R_kgDOLvx5HQ"
+          data-category="Announcements"
+          data-category-id="DIC_kwDOLvx5Hc4CiXjG"
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="top"
+          data-theme="preferred_color_scheme"
+          data-lang="en"
+          data-loading="lazy"
+          crossorigin="anonymous"
+          async>
+  </script>
+
+
+  </section>
+  
+
+
+    </main>
+  </article>
+</div>
+
+    </div>
+    <div class="page-footer">
+      <footer class="container mx-auto flex flex-col justify-items-center text-sm leading-6 mt-24 mb-4 text-slate-700 dark:text-slate-200">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+    
+  
+  
+    
+  
+
+  
+
+  
+  <p class="powered-by text-center">
+    © 2026 Chongjie
+  </p>
+  
+
+  <p class="powered-by footer-license-icons">
+    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank" aria-label="Creative Commons">
+      <i class="fab fa-creative-commons fa-2x" aria-hidden="true"></i>
+      <i class="fab fa-creative-commons-by fa-2x" aria-hidden="true"></i>
+      
+        <i class="fab fa-creative-commons-nc fa-2x" aria-hidden="true"></i>
+      
+      
+        <i class="fab fa-creative-commons-nd fa-2x" aria-hidden="true"></i>
+      
+    </a>
+  </p>
+
+
+
+
+
+  
+  
+<center>
+<div class="busuanzi-footer">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    
+    <i class="fa fa-user"></i>  <span id="busuanzi_value_site_pv"></span>
+</div>
+</center></footer>
+
+    </div>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

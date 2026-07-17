@@ -1,0 +1,2008 @@
+<!doctype html>
+<!-- This site was created with Hugo Blox. https://hugoblox.com -->
+<!-- Last Published: July 18, 2026 --><html lang="en-us" dir="ltr"
+      data-wc-theme-default="system">
+  
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="generator" content="Hugo Blox Builder 0.2.0" />
+  <link rel="stylesheet" href="/css/custom.css">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Chongjie Si" />
+
+  
+  
+  
+    
+  
+  <meta name="description" content="LieRA" />
+
+  
+  <link rel="alternate" hreflang="en-us" href="http://localhost:1313/blog/liera%E8%A7%A3%E8%AF%BB/" />
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="/css/themes/emerald.min.css" />
+  
+
+  
+  
+    
+    <link href="/dist/wc.min.css" rel="stylesheet" />
+  
+
+  
+  
+  
+
+  
+
+  <script>
+     
+    window.hbb = {
+       defaultTheme: document.documentElement.dataset.wcThemeDefault,
+       setDarkTheme: () => {
+        document.documentElement.classList.add("dark");
+        document.documentElement.style.colorScheme = "dark";
+      },
+       setLightTheme: () => {
+        document.documentElement.classList.remove("dark");
+        document.documentElement.style.colorScheme = "light";
+      }
+    }
+
+    console.debug(`Default Hugo Blox Builder theme is ${window.hbb.defaultTheme}`);
+
+    if ("wc-color-theme" in localStorage) {
+      localStorage.getItem("wc-color-theme") === "dark" ? window.hbb.setDarkTheme() : window.hbb.setLightTheme();
+    } else {
+      window.hbb.defaultTheme === "dark" ? window.hbb.setDarkTheme() : window.hbb.setLightTheme();
+      if (window.hbb.defaultTheme === "system") {
+        window.matchMedia("(prefers-color-scheme: dark)").matches ? window.hbb.setDarkTheme() : window.hbb.setLightTheme();
+      }
+    }
+  </script>
+
+  <script>
+    
+    document.addEventListener('DOMContentLoaded', function () {
+      
+      let checkboxes = document.querySelectorAll('li input[type=\'checkbox\'][disabled]');
+      checkboxes.forEach(e => {
+        e.parentElement.parentElement.classList.add('task-list');
+      });
+
+      
+      const liNodes = document.querySelectorAll('.task-list li');
+      liNodes.forEach(nodes => {
+        let textNodes = Array.from(nodes.childNodes).filter(node => node.nodeType === 3 && node.textContent.trim().length > 1);
+        if (textNodes.length > 0) {
+          const span = document.createElement('label');
+          textNodes[0].after(span);  
+          span.appendChild(nodes.querySelector('input[type=\'checkbox\']'));
+          span.appendChild(textNodes[0]);
+        }
+      });
+    });
+  </script>
+
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+  <link rel="icon" type="image/png" href="/media/icon_hue006528a12cd6926ef214d6e0d83c455_38865_32x32_fill_lanczos_center_3.png" />
+  <link rel="apple-touch-icon" type="image/png" href="/media/icon_hue006528a12cd6926ef214d6e0d83c455_38865_180x180_fill_lanczos_center_3.png" />
+
+  <link rel="canonical" href="http://localhost:1313/blog/liera%E8%A7%A3%E8%AF%BB/" />
+
+  
+  
+  
+  
+  
+  
+  
+  
+    
+  
+  
+
+  
+  
+    
+    
+  
+  <meta property="twitter:card" content="summary_large_image" />
+  
+  <meta property="og:site_name" content="Chongjie Si" />
+  <meta property="og:url" content="http://localhost:1313/blog/liera%E8%A7%A3%E8%AF%BB/" />
+  <meta property="og:title" content="李群视角解决N维参数的高效微调 | Chongjie Si" />
+  <meta property="og:description" content="LieRA" /><meta property="og:image" content="http://localhost:1313/blog/liera%E8%A7%A3%E8%AF%BB/featured.png" />
+    <meta property="twitter:image" content="http://localhost:1313/blog/liera%E8%A7%A3%E8%AF%BB/featured.png" /><meta property="og:locale" content="en-us" />
+  
+    
+      <meta
+        property="article:published_time"
+        content="2025-06-29T00:00:00&#43;00:00"
+      />
+    
+    <meta property="article:modified_time" content="2025-06-29T00:00:00&#43;00:00">
+  
+
+  
+
+
+
+  
+
+
+  <title>李群视角解决N维参数的高效微调 | Chongjie Si</title>
+
+  
+  
+  
+  
+  
+    
+    
+  
+  
+  <style>
+    @font-face {
+      font-family: 'Inter var';
+      font-style: normal;
+      font-weight: 100 900;
+      font-display: swap;
+      src: url(/dist/font/Inter.var.woff2) format(woff2);
+    }
+  </style>
+
+  
+
+  
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+  
+  
+  
+  
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+  
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    
+  
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+  
+  
+  
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+  
+
+
+
+
+
+
+
+<link type="text/css" rel="stylesheet" href="/dist/pagefind/pagefind-ui.be766eb419317a14ec769d216e9779bfe8f3737c80e780f4ba0dafb57a41a482.css" integrity="sha256-vnZutBkxehTsdp0hbpd5v&#43;jzc3yA54D0ug2vtXpBpII=" />
+
+
+<script src="/dist/pagefind/pagefind-ui.87693d7c6f2b3b347ce359d0ede762c033419f0a32b22ce508c335a81d841f1b.js" integrity="sha256-h2k9fG8rOzR841nQ7ediwDNBnwoysizlCMM1qB2EHxs="></script>
+
+
+<script>window.hbb.pagefind = {"baseUrl":"/"};</script>
+
+<style>
+  html.dark {
+    --pagefind-ui-primary: #eeeeee;
+    --pagefind-ui-text: #eeeeee;
+    --pagefind-ui-background: #152028;
+    --pagefind-ui-border: #152028;
+    --pagefind-ui-tag: #152028;
+  }
+</style>
+
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    new PagefindUI({
+      element: "#search",
+      showSubResults: true,
+      baseUrl: window.hbb.pagefind.baseUrl,
+      bundlePath: window.hbb.pagefind.baseUrl + "pagefind/",
+    });
+  });
+  document.addEventListener('DOMContentLoaded', () => {
+    let element = document.getElementById('search');
+    let trigger = document.getElementById('search_toggle');
+
+    if (trigger) {
+      trigger.addEventListener('click', () => {
+        element.classList.toggle('hidden');
+        element.querySelector("input").value = ""
+        element.querySelector("input").focus()
+
+        if (!element.classList.contains('hidden')) {
+          let clear_trigger = document.querySelector('.pagefind-ui__search-clear');
+
+          if (clear_trigger && !clear_trigger.hasAttribute('listenerOnClick')) {
+            clear_trigger.setAttribute('listenerOnClick', 'true');
+
+            clear_trigger.addEventListener('click', () => {
+              element.classList.toggle('hidden');
+            });
+          }
+        }
+
+      });
+    }
+  });
+</script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link type="text/css" rel="stylesheet" href="/dist/lib/katex/katex.min.505d5f829022bb7b4f24dfee0aa1141cd7bba67afe411d1240335f820960b5c3.css" integrity="sha256-UF1fgpAiu3tPJN/uCqEUHNe7pnr&#43;QR0SQDNfgglgtcM=" />
+  
+  
+  <script defer src="/dist/lib/katex/katex.min.dc84b296ec3e884de093158f760fd9d45b6c7abe58b5381557f4e138f46a58ae.js" integrity="sha256-3ISyluw&#43;iE3gkxWPdg/Z1Ftser5YtTgVV/ThOPRqWK4="></script>
+  
+  
+  
+  
+  <script defer src="/js/katex-renderer.6579ec9683211cfb952064aedf3a3baea5eeb17a061775b32b70917474637c80.js" integrity="sha256-ZXnsloMhHPuVIGSu3zo7rqXusXoGF3WzK3CRdHRjfIA="></script>
+  
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  <script
+    defer
+    src="/js/hugo-blox-en.min.js"
+    integrity=""
+  ></script>
+
+  
+  
+
+
+
+
+
+
+
+
+  
+    
+      
+      <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+      
+    
+  
+
+
+
+
+</head>
+
+  <body class="dark:bg-hb-dark dark:text-white page-wrapper" id="top">
+    <div id="page-bg"></div>
+    <div class="page-header ">
+      
+      
+      
+        
+        
+        
+          <header id="site-header" class="header">
+  <nav class="navbar px-3 flex justify-left">
+    <div class="order-0 h-100">
+      
+      <a class="navbar-brand" href="/" title="Chongjie Si">
+        Chongjie Si
+      </a>
+    </div>
+    
+    <input id="nav-toggle" type="checkbox" class="hidden" />
+    <label
+      for="nav-toggle"
+      class="order-3 cursor-pointer flex items-center lg:hidden text-dark dark:text-white lg:order-1">
+      <svg id="show-button" class="h-6 fill-current block" viewBox="0 0 20 20">
+        <title>Open Menu</title>
+        <path d="M0 3h20v2H0V3z m0 6h20v2H0V9z m0 6h20v2H0V0z"></path>
+      </svg>
+      <svg id="hide-button" class="h-6 fill-current hidden" viewBox="0 0 20 20">
+        <title>Close Menu</title>
+        <polygon
+          points="11 9 22 9 22 11 11 11 11 22 9 22 9 11 -2 11 -2 9 9 9 9 -2 11 -2"
+          transform="rotate(45 10 10)"></polygon>
+      </svg>
+    </label>
+    
+
+    
+    
+    <ul
+      id="nav-menu"
+      class="navbar-nav order-3 hidden lg:flex w-full pb-6 lg:order-1 lg:w-auto lg:space-x-2 lg:pb-0 xl:space-x-8 justify-left
+      ">
+      
+      
+      
+      
+      
+      
+      <li class="nav-item">
+        <a
+          class="nav-link "
+          
+          href="/home/"
+        >Home</a
+        >
+      </li>
+      
+      
+      
+      
+      
+      
+      <li class="nav-item">
+        <a
+          class="nav-link "
+          
+          href="/home/#news"
+        >News</a
+        >
+      </li>
+      
+      
+      
+      
+      
+      
+      <li class="nav-item">
+        <a
+          class="nav-link "
+          
+          href="/publications/"
+        >Publications</a
+        >
+      </li>
+      
+      
+      
+      
+      
+      
+      <li class="nav-item">
+        <a
+          class="nav-link "
+          
+          href="/blogs/"
+        >Blogs</a
+        >
+      </li>
+      
+      
+      
+      
+      
+      
+      <li class="nav-item">
+        <a
+          class="nav-link "
+          
+          href="/cv/"
+        >CV</a
+        >
+      </li>
+      
+      
+      
+      
+      
+      
+      <li class="nav-item">
+        <a
+          class="nav-link "
+          
+          href="/photos/"
+        >Photos</a
+        >
+      </li>
+      
+      
+      
+    </ul>
+
+    <div class="order-1 ml-auto flex items-center md:order-2 lg:ml-0">
+
+      
+      
+      
+      <button
+        aria-label="search"
+        class="text-black hover:text-primary  inline-block px-3 text-xl dark:text-white"
+        id="search_toggle">
+        <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512" fill="currentColor"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
+      </button>
+      
+
+      
+      
+      <div class="px-3 text-black hover:text-primary-700 dark:text-white dark:hover:text-primary-300
+            [&.active]:font-bold [&.active]:text-black/90 dark:[&.active]:text-white">
+        <button class="theme-toggle mt-1" accesskey="t" title="appearance">
+          <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+               stroke-linejoin="round" class="dark:hidden">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+               stroke-linejoin="round" class=" dark:block [&:not(dark)]:hidden">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+      </div>
+      
+
+      
+      
+
+      
+      
+    </div>
+  </nav>
+</header>
+
+
+<div id="search" class="hidden p-3"></div>
+
+
+        
+      
+    </div>
+    <div class="page-body  my-10">
+      <div class="mx-auto flex max-w-screen-xl">
+  
+
+  
+  <div class="hb-sidebar-mobile-menu fixed inset-0 z-10 bg-white dark:bg-black/80 hidden"></div>
+
+
+
+<aside class="hb-sidebar-container max-lg:[transform:translate3d(0,-100%,0)] lg:sticky">
+  
+  <div class="px-4 pt-4 lg:hidden">
+    
+    
+  </div>
+  <div class="hb-scrollbar lg:h-[calc(100vh-var(--navbar-height))]">
+    <ul class="flex flex-col gap-1 lg:hidden">
+      
+      
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/"
+    
+  >Publications
+        <span data-hb-sidebar-toggle>
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-[18px] min-w-[18px] rounded-sm p-0.5 hover:bg-gray-800/5 dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="origin-center transition-transform rtl:-rotate-180"></path></svg>
+        </span>
+    </a><div class="ltr:pr-0 overflow-hidden">
+        <ul class="hb-sidebar-list"><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2026-cvpr-schirn/"
+    
+  >Revisiting Sparsity Constraint Under High-Rank Property in Partial Multi-Label Learning
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2026-tpami-tsd/"
+    
+  >Task-Specific Directions: Definition, Exploration, and Utilization in Parameter Efficient Fine-Tuning
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2026-iclr-flexlora/"
+    
+  >FlexLoRA: Entropy-Guided Flexible Low-Rank Adaptation
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2025-nips-corl/"
+    
+  >Co-Reinforcement Learning for Unified Multimodal Understanding and Generation
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2025-nips-opmapper/"
+    
+  >OPMapper: Enhancing Open-Vocabulary Semantic Segmentation with Multi-Guidance Information
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2025-colm-dualedit/"
+    
+  >DualEdit: Dual Editing for Knowledge Updating in Vision-Language Models
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2025-arxiv-map/"
+    
+  >MAP: Revisiting Weight Decomposition for Low-Rank Adaptation
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2025-arxiv-speclora/"
+    
+  >Weight Spectra Induced Efficient Model Adaptation
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2025-arxiv-nan/"
+    
+  >NAN: A Training-Free Solution to Coefficient Estimation in Model Merging
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2025-arxiv-lip/"
+    
+  >Why Can Accurate Models Be Learned from Inaccurate Annotations?
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2025-iccv-liera/"
+    
+  >Generalized Tensor-based Parameter-Efficient Fine-Tuning via Lie Group Transformations
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2025-iclr-flora/"
+    
+  >Maintaining Structural Integrity in Parameter Spaces for Parameter Efficient Fine-Tuning
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2025-iclr-lora-dash/"
+    
+  >Unleashing the Power of Task-Specific Directions in Parameter Efficient Fine-tuning
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2025-arxiv-gaussian/"
+    
+  >Unveiling the Mystery of Weight in Large Foundation Models: Gaussian Distribution Never Fades
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2024-arxiv-subspace-tuning/"
+    
+  >See Further for Parameter Efficient Fine-tuning by Standing on the Shoulders of Decomposition
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2024-eccv-teddy/"
+    
+  >Tendency-driven Mutual Exclusivity for Weakly Supervised Incremental Semantic Segmentation
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2024-arxiv-appeal/"
+    
+  >Appeal: Allow Mislabeled Samples the Chance to be Rectified in Partial Label Learning
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2024-aaai-plcp/"
+    
+  >Partial Label Learning with a Partner
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2023-tkde-homi/"
+    
+  >Multi-label Classification with High-rank and High-order Label Correlations
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2023-kdd-plcl/"
+    
+  >Complementary Classifier Induced Partial Label Learning
+    </a>
+              
+            </li></ul>
+      </div></li>
+        <li class="open"><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/"
+    
+  >Blogs
+        <span data-hb-sidebar-toggle>
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-[18px] min-w-[18px] rounded-sm p-0.5 hover:bg-gray-800/5 dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="origin-center transition-transform rtl:-rotate-180"></path></svg>
+        </span>
+    </a><div class="ltr:pr-0 overflow-hidden">
+        <ul class="hb-sidebar-list"><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/adamuon/"
+    
+  >AdaMuon：能否进一步助力Muon替代Adam？
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/muon/"
+    
+  >Muon：有望成为下一代Adam的优化器
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%833/"
+    
+  >大模型训练3：从矩阵乘法看大模型如何切分
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%832/"
+    
+  >大模型训练2：TPU是如何工作的？
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%831/"
+    
+  >大模型训练1：模型训练的时间都花在哪了？
+    </a>
+              
+            </li><li class="flex flex-col open"><a
+    class="hb-sidebar-custom-link
+      sidebar-active-item bg-primary-100 font-semibold text-primary-800 dark:bg-primary-300 dark:text-primary-900"
+    href="/blog/liera%E8%A7%A3%E8%AF%BB/"
+    
+  >李群视角解决N维参数的高效微调
+    </a>
+  
+    <ul class="hb-sidebar-mobile-toc"><li>
+              <a
+                href="#%e5%b0%86%e6%9d%83%e9%87%8d%e8%a7%86%e4%bd%9c%e6%9d%8e%e7%be%a4%e5%85%83%e7%b4%a0"
+                class="hb-docs-link"
+              >将权重视作李群元素</a>
+            </li>
+          <li>
+              <a
+                href="#%e5%ae%9e%e9%aa%8c%e6%95%88%e6%9e%9c"
+                class="hb-docs-link"
+              >实验效果</a>
+            </li>
+          </ul>
+  
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E6%A8%A1%E5%9E%8B%E8%9E%8D%E5%90%88/"
+    
+  >模型融合的系数到底应该是多少？
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E5%99%AA%E5%A3%B0%E5%AD%A6%E4%B9%A0/"
+    
+  >为什么模型可以从含噪声数据中学习到正确的信息？
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/lora-dash/"
+    
+  >深入解析LoRA-Dash：释放特定任务方向性能的微调方法
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E4%BB%A3%E6%95%B0%E4%B8%8D%E7%AD%89%E5%BC%8F4/"
+    
+  >代数不等式4：三角变换
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E4%BB%A3%E6%95%B0%E4%B8%8D%E7%AD%89%E5%BC%8F3/"
+    
+  >代数不等式3：算术平均-几何平均不等式
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E4%BB%A3%E6%95%B0%E4%B8%8D%E7%AD%89%E5%BC%8F2/"
+    
+  >代数不等式2：一些简单不等式的证明
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E4%BB%A3%E6%95%B0%E4%B8%8D%E7%AD%89%E5%BC%8F1/"
+    
+  >代数不等式1：柯西不等式与拉格朗日恒等式
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E6%BB%A1%E7%A7%A9%E8%BF%90%E7%AE%97/"
+    
+  >矩阵的秩：MA=BM，B、M满秩，A一定满秩吗？
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E7%9F%A9%E9%98%B5%E7%9A%84%E7%A7%A9/"
+    
+  >矩阵的秩、矩阵的子空间、SVD分解
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/lora/"
+    
+  >漫谈LoRA
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E5%8F%B0%E7%90%83%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/"
+    
+  >台球那些事儿
+    </a>
+              
+            </li></ul>
+      </div></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/"
+    
+  >Photo Gallery
+        <span data-hb-sidebar-toggle>
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-[18px] min-w-[18px] rounded-sm p-0.5 hover:bg-gray-800/5 dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="origin-center transition-transform rtl:-rotate-180"></path></svg>
+        </span>
+    </a><div class="ltr:pr-0 overflow-hidden">
+        <ul class="hb-sidebar-list"><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/singapore/"
+    
+  >Singapore
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/vatican/"
+    
+  >Vatican
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/italy/"
+    
+  >Italy
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/switzerland/"
+    
+  >Switzerland
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/france/"
+    
+  >Paris, France
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/luxembourg/"
+    
+  >Luxembourg
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/germany/"
+    
+  >Frankfurt, Germany
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/vancouver/"
+    
+  >Vancouver, Canada
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/japan/"
+    
+  >Japan
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/qinghai/"
+    
+  >Qinghai
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/san-francisco/"
+    
+  >San Francisco, USA
+    </a>
+              
+            </li></ul>
+      </div></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/news/"
+    
+  >💥 Recent News
+        <span data-hb-sidebar-toggle>
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-[18px] min-w-[18px] rounded-sm p-0.5 hover:bg-gray-800/5 dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="origin-center transition-transform rtl:-rotate-180"></path></svg>
+        </span>
+    </a><div class="ltr:pr-0 overflow-hidden">
+        <ul class="hb-sidebar-list"><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/news/news/"
+    
+  >Recent News
+    </a>
+              
+            </li></ul>
+      </div></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/cv/"
+    
+  >Experience
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photos/"
+    
+  >Photos
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/publications/"
+    
+  >Publications
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/home/"
+    
+  >Home
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blogs/"
+    
+  >Blogs
+    </a></li>
+    </ul>
+
+    <ul class="flex flex-col gap-1 max-lg:hidden">
+        
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/adamuon/"
+    
+  >AdaMuon：能否进一步助力Muon替代Adam？
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/muon/"
+    
+  >Muon：有望成为下一代Adam的优化器
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%833/"
+    
+  >大模型训练3：从矩阵乘法看大模型如何切分
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%832/"
+    
+  >大模型训练2：TPU是如何工作的？
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%831/"
+    
+  >大模型训练1：模型训练的时间都花在哪了？
+    </a></li>
+        <li class="open"><a
+    class="hb-sidebar-custom-link
+      sidebar-active-item bg-primary-100 font-semibold text-primary-800 dark:bg-primary-300 dark:text-primary-900"
+    href="/blog/liera%E8%A7%A3%E8%AF%BB/"
+    
+  >李群视角解决N维参数的高效微调
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E6%A8%A1%E5%9E%8B%E8%9E%8D%E5%90%88/"
+    
+  >模型融合的系数到底应该是多少？
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E5%99%AA%E5%A3%B0%E5%AD%A6%E4%B9%A0/"
+    
+  >为什么模型可以从含噪声数据中学习到正确的信息？
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/lora-dash/"
+    
+  >深入解析LoRA-Dash：释放特定任务方向性能的微调方法
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E4%BB%A3%E6%95%B0%E4%B8%8D%E7%AD%89%E5%BC%8F4/"
+    
+  >代数不等式4：三角变换
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E4%BB%A3%E6%95%B0%E4%B8%8D%E7%AD%89%E5%BC%8F3/"
+    
+  >代数不等式3：算术平均-几何平均不等式
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E4%BB%A3%E6%95%B0%E4%B8%8D%E7%AD%89%E5%BC%8F2/"
+    
+  >代数不等式2：一些简单不等式的证明
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E4%BB%A3%E6%95%B0%E4%B8%8D%E7%AD%89%E5%BC%8F1/"
+    
+  >代数不等式1：柯西不等式与拉格朗日恒等式
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E6%BB%A1%E7%A7%A9%E8%BF%90%E7%AE%97/"
+    
+  >矩阵的秩：MA=BM，B、M满秩，A一定满秩吗？
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E7%9F%A9%E9%98%B5%E7%9A%84%E7%A7%A9/"
+    
+  >矩阵的秩、矩阵的子空间、SVD分解
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/lora/"
+    
+  >漫谈LoRA
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E5%8F%B0%E7%90%83%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/"
+    
+  >台球那些事儿
+    </a></li>
+        
+      </ul>
+    </div>
+
+</aside>
+  
+
+<nav class="hb-toc order-last hidden w-64 shrink-0 xl:block print:hidden px-4" aria-label="table of contents">
+  
+
+
+
+
+
+
+
+
+
+
+
+  <div class="hb-scrollbar text-sm [hyphens:auto] sticky top-16 overflow-y-auto pr-4 pt-6 max-h-[calc(100vh-var(--navbar-height)-env(safe-area-inset-bottom))] -mr-4 rtl:-ml-4"><p class="mb-4 font-semibold tracking-tight">On this page</p><ul>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#%e5%b0%86%e6%9d%83%e9%87%8d%e8%a7%86%e4%bd%9c%e6%9d%8e%e7%be%a4%e5%85%83%e7%b4%a0">将权重视作李群元素</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#%e6%9e%84%e5%bb%ba%e6%9d%8e%e7%be%a4">构建李群</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#%e6%9d%8e%e7%be%a4%e6%9d%8e%e4%bb%a3%e6%95%b0%e6%9d%8e%e6%8b%ac%e5%8f%b7">李群，李代数，李括号</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#%e5%a6%82%e4%bd%95%e5%9c%a8%e6%9d%8e%e4%bb%a3%e6%95%b0%e4%b8%8a%e6%9b%b4%e6%96%b0">如何在李代数上更新</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#%e5%ae%9e%e9%aa%8c%e6%95%88%e6%9e%9c">实验效果</a>
+      </li></ul>
+
+  
+  
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+  </nav>
+
+
+  <article class="flex w-full min-w-0 min-h-[calc(100vh-var(--navbar-height))] justify-center break-words pb-8 pr-[calc(env(safe-area-inset-right)-1.5rem)]">
+    <main class="prose prose-slate lg:prose-xl dark:prose-invert w-full min-w-0 max-w-6xl px-6 pt-4 md:px-12">
+      <div class="mb-1">
+        <div class="mt-1.5 flex items-center gap-1 overflow-hidden text-sm text-gray-500 dark:text-gray-400">
+      <div class="whitespace-nowrap transition-colors min-w-[24px] overflow-hidden text-ellipsis hover:text-gray-900 dark:hover:text-gray-100">
+        <a href="http://localhost:1313/blog/">Blogs</a>
+      </div><svg class="w-3.5 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m8.25 4.5l7.5 7.5l-7.5 7.5"/></svg><div class="whitespace-nowrap font-medium text-gray-700 dark:text-gray-100">李群视角解决N维参数的高效微调</div>
+</div>
+
+      </div>
+
+      <div class="content text-base">
+        <h1>李群视角解决N维参数的高效微调</h1>
+        <!--  $$ 
+ -->
+<p>在之前的工作中，我们提出了现有的参数高效微调的一个关键问题：</p>
+<p><a href="https://zhuanlan.zhihu.com/p/705909337" target="_blank" rel="noopener">以统一视角实现从一到N维参数的高效微调-FLoRA诞生记</a></p>
+<p>多数低秩微调策略（如 LoRA、DoRA、MoRA、AdaLoRA 等）主要针对线性层和嵌入层等二维张量设计，难以有效扩展至卷积等高维张量结构。尽管可以通过 reshape 操作将高维参数展开为二维形式以适配这些方法，但此举不仅破坏了卷积核的结构归纳偏置，还在维度升高时导致参数激增，违背了微调方法的高效性初衷。</p>
+<p>在上个工作里，我们提出了 FLoRA，一种面向高维张量的全局低秩微调框架。FLoRA 通过引入统一的低秩核心空间，实现对各维度参数的协同建模与微调，在保留张量原始拓扑结构与维度间交互性的同时，显著提升了高维神经算子的适应能力和参数利用效率。</p>
+<p>然而，上述设计仍面临几个核心问题：</p>
+<ol>
+<li>卷积结构在主流模型架构中的使用正逐渐减少，当前的主流仍是以 Transformer 为代表的全连接线性结构，因此专门为卷积等高维张量设计的微调机制，其适用范围相对有限。</li>
+<li>在二维场景中，FLoRA 仍采用低秩更新方式，未能在结构上实现满秩的自由度调控，其空间结构保持能力仍受限。</li>
+</ol>
+<p>最关键的是，当前已有的大量微调方法已高度成熟并被广泛应用于线性模块中，因此一个更具普适性的研究方向是：</p>
+<ul>
+<li>能否充分利用现有线性方法的繁荣发展，直接利用这些方法构建一种适用于任意维度张量的结构保持机制，使线性低秩策略在更复杂的张量空间中依然具备表达能力和结构对齐性？</li>
+</ul>
+<p>这不仅有望统一当前分裂的高低维微调方案，也为未来模型架构的兼容性提供更通用的解决方案。</p>
+<p>读到这里，想必读者已经知道我们这个工作是想做什么了。</p>
+<p><a href="https://arxiv.org/abs/2504.00851" target="_blank" rel="noopener">Generalized Tensor-based Parameter-Efficient Fine-Tuning via Lie Group Transformations</a></p>
+<p><a href="https://github.com/Chongjie-Si/Subspace-Tuning" target="_blank" rel="noopener">Code</a></p>
+<p>这一工作目前发表于 2025 ICCV。</p>
+<h2 id="将权重视作李群元素">将权重视作李群元素</h2>
+<p>在开始之间，我们先简单介绍一下大概的思路：</p>
+<p>我们首先基于这样一个观察：微调后权重的改变量通常都非常小而且不为零，因此可以把它们看成对预训练权重的微小扰动。在这种情况下，所有这些参数就像是一个光滑流形上的点。如果我们给这个空间定义一个合适的群乘法运算，就能把它们当作李群的元素来看待。在这个框架下，我们把微小的扰动视作对应的李代数中的向量——在那里，你可以像平常一样做加法和数乘。接着，利用指数映射的局部微分同胚性质，我们把李代数里的更新“平滑地”映射回李群，从而在保持原有结构相关性的同时完成参数更新。</p>
+<img src="https://pic2.zhimg.com/v2-6fe1a9ee585247f8053e50286989df15_1440w.jpg">
+<p>OK，看到这里读者可能觉得一头雾水，接下来我们一点点的进行分析。</p>
+<h3 id="构建李群">构建李群</h3>
+<p>首先，我们构建一个高阶张量的集合。为了方便，我们可以将阶数定义为4，这么一来，我们可以将集合内任意的元素看作是一个卷积核的参数。定义 $G = \Big\{\mathcal{W} \in \mathbb{R}^{C_{\mathrm{in}} \times C_{\mathrm{out}} \times k \times k} \,\Big|\, W_{c,i,j,l} \neq 0,\; \forall\, c,i,j,l \Big\}$ 
+ 。考虑到实际情况与计算机精度的问题，我们对集合还额外施加了元素非0的条件。如果能找到一个合适的算子，那么这个集合就可以构成一个群。还是为了简单，我们可以选择 Hadamard 积作为这一算子，即“群乘法”  $\circ$ 
+。这样：</p>
+<ol>
+<li>相乘后仍然不会出现零元素，闭包性 OK；</li>
+<li>乘法可交换，满足结合律；</li>
+<li>全 1 张量是单位元；</li>
+<li>每个张量都能做“倒数”变成它的逆元。</li>
+</ol>
+<p>所以，  $(G,\circ)$ 
+完全满足群的条件。更进一步，而且因为它本质上是很多个一维“去掉零点的实数”组装而成，还天生就是一个阿贝尔群，又是一个光滑流形，因此，他也是一个李群。</p>
+<h3 id="李群李代数李括号">李群，李代数，李括号</h3>
+<p>讲完了李群，自然而然少不了对应的几个名词：李代数和李括号。我这里先不介绍他们具体的定义，而是用一个形象的比喻让读者更加直观的感受到他们之间的关系。</p>
+<ol>
+<li>李群 ≈ 圆球（地球）：想象你站在地球（一个球面）上，每个点对应一个卷积核参数配置。地球表面就是我们的李群，每个位置都有自己的坐标，但你只能沿着地球表面移动——这就是群里定义的“合法操作”（乘法运算）保证你始终留在群里。</li>
+<li>李代数 ≈ 切线平面：在地球某一点上，你可以画一张“切线平面”——这是一块与地球表面只在一点相切的小平面。这个平面就是李代数，里面是线性的，你可以自由地在平面上画直线、做加法、数乘。</li>
+<li>李括号 ≈ 两次不同方向的小路差异：如果你先在切线平面上走一小段向量  $\mathbf{X}$ 
+，再走一小段向量  $\mathbf{Y}$ 
+，然后反过来先走  $\mathbf{Y}$ 
+ 再走  $\mathbf{X}$ 
+，这两条路最终会在球面上有微小的偏差。李括号 $[\mathbf{X},\mathbf{Y}]$ 
+ 就是用来衡量这种“走  $\mathbf{X}\rightarrow \mathbf{Y}$ 
+” 和 “走  $\mathbf{Y}\rightarrow\mathbf{X}$ 
+” 顺序差异的张量。在阿贝尔（交换）李群里，这个偏差正好是零——也就是说，不管先后顺序，结果都一样。</li>
+</ol>
+<p>通过这个“地球—切平面—走路—回表面”的比喻，我们就能直观地理解：</p>
+<ul>
+<li>李群是我们想要留在上面的曲面；</li>
+<li>李代数是让更新变得简单的平面；</li>
+<li>李括号则是衡量“换个顺序走路”有没有影响。</li>
+</ul>
+<p>好的，那么说完这些，再回头看我们构造的李群。对这个群来说，李代数就是把每个卷积核张量看作普通的实数张量，在线性空间里做加法和数乘就行，完全和我们平时在 PyTorch 里对张量做操作一样。因为群是阿贝尔的，李括号对任何两个元素都给 0，不用管。我们已经把卷积核参数看成了李群 $G$ 
+中的元素，而在这个群里直接做更新其实相对繁琐（需要不断地“乘法+求逆”等操作），不如把更新“放到”对应的李代数 $\mathfrak{g}$ 
+——一个熟悉的线性张量空间里，一切像在 PyTorch 里那样直接做加法和数乘。</p>
+<h3 id="如何在李代数上更新">如何在李代数上更新</h3>
+<p>对于任意一个卷积核 $\mathcal W\in G$ 
+，我们先不动它，而是构造一个小扰动 $ \Delta\mathcal W\in\mathfrak{g}$ 
+。在这里， $ \Delta\mathcal W$ 
+ 就是一个普通张量——你用 .grad、.add_()、.mul_() 以及 reshape（如此便可以纳入针对二维空间的方法）都能直接操作。完成了线性更新后，我们需要把扰动“平滑地”带回李群 $ G $ 
+——否则 $ \mathcal W \circ\Delta\mathcal W$ 
+ 并不一定留在群里。指数映射  $ \exp:\mathfrak{g}\to G $ 
+就是专门干这件事的“桥梁”：</p>
+<ul>
+<li>局部同胚：保证极小扰动在映射后还能保持连续、不跳出合法空间；</li>
+<li>结构保留：映射后 $ \exp(\Delta\mathcal{W}) $ 
+还是在群里，对应位置上是指数缩放，比例更新不破坏卷积核的“形状”；</li>
+<li>几何一致：更新结果能沿着群流形上的自然方向变化，不像任意加法那样随意。</li>
+</ul>
+<p>更新公式因此变成了</p>
+ $$ \mathcal W \;\mapsto\; \mathcal W \;\odot\; \exp\bigl(\Delta\mathcal W\bigr) $$ 
+
+<p>既保留了群运算的合法性，也享受了李代数线性优化的便捷。但这还不够：尽管指数映射这么强大，但直接计算逐元素 $\exp$ 
+也有点小开销。好在我们的 $\Delta\mathcal W$ 
+本来就设计得足够小，于是可以用一阶泰勒快速近似：</p>
+ $$ \exp(\Delta\mathcal W) = \mathcal I + \Delta\mathcal W + o\bigl(\|\Delta\mathcal W\|\bigr) \;\approx\; \mathcal I + \Delta\mathcal W$$ 
+
+<p>带入主更新公式就得到：</p>
+ $$ \mathcal W \odot (\mathcal I + \Delta\mathcal W) = \mathcal W + \mathcal W \odot \Delta\mathcal W $$ 
+
+<p>这样，我们只多做了一次 Hadamard 乘法，就能近似实现李群意义下的指数更新。</p>
+<p>对于二维空间来说，这种更新方式可以保持满秩。更多细节请看论文。</p>
+<h2 id="实验效果">实验效果</h2>
+<p>我们先展示在高维张量上的效果</p>
+<img src="https://pica.zhimg.com/v2-70e6586ffabe7cbd414ab9d579c4efc4_1440w.jpg">
+<p>可以发现，在更复杂的检测和分割上，我们的方法效果还是比较明显的。对于以二维矩阵参数为主的任务，我们也进行了测试：</p>
+<img src="https://pic3.zhimg.com/v2-811e7bd99f3a4182671b404a1b6488ae_1440w.jpg">
+<p>关于更多细节与内容，欢迎参考我们的原论文。</p>
+
+      </div>
+
+      
+  <time class="mt-12 mb-8 block text-xs text-gray-500 ltr:text-right rtl:text-left dark:text-gray-400" datetime="2025-06-29T00:00:00.000Z">
+    <span>Last updated on</span>
+    Jun 29, 2025</time>
+      
+      
+  
+    
+    
+    
+      
+      
+    
+<div class="pt-1 no-prose w-full">
+  <hr class="border-dotted border-neutral-300 dark:border-neutral-600" />
+  <div class="flex flex-col md:flex-row flex-nowrap justify-between gap-5 pt-2">
+    <div class="">
+      
+        <a class="group flex no-underline" href="/blog/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%831/">
+          <span
+            class="mt-[-0.3rem] me-2 text-neutral-700 transition-transform group-hover:-translate-x-[2px] group-hover:text-primary-600 dark:text-neutral dark:group-hover:text-primary-400"
+          ><span class="ltr:inline rtl:hidden">&larr;</span></span>
+          <span class="flex flex-col">
+            <span
+              class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
+            >大模型训练1：模型训练的时间都花在哪了？</span>
+            <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
+              
+                Jul 30, 2025
+              
+            </span>
+          </span>
+        </a>
+      
+    </div>
+    <div class="">
+      
+        <a class="group flex text-right no-underline" href="/blog/%E6%A8%A1%E5%9E%8B%E8%9E%8D%E5%90%88/">
+          <span class="flex flex-col">
+            <span
+              class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
+            >模型融合的系数到底应该是多少？</span
+            >
+            <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
+              
+                Jun 13, 2025
+              
+            </span>
+          </span>
+          <span
+            class="mt-[-0.3rem] ms-2 text-neutral-700 transition-transform group-hover:-translate-x-[2px] group-hover:text-primary-600 dark:text-neutral dark:group-hover:text-primary-400"
+          ><span class="ltr:inline">&rarr;</span></span>
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+      
+
+
+  
+  
+  
+
+  
+
+  
+  <section id="comments">
+    
+  
+  <script src="https://giscus.app/client.js"
+          data-repo="ChongjieSi/ChongjieSi.github.io"
+          data-repo-id="R_kgDOLvx5HQ"
+          data-category="Announcements"
+          data-category-id="DIC_kwDOLvx5Hc4CiXjG"
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="top"
+          data-theme="preferred_color_scheme"
+          data-lang="en"
+          data-loading="lazy"
+          crossorigin="anonymous"
+          async>
+  </script>
+
+
+  </section>
+  
+
+
+    </main>
+  </article>
+</div>
+
+    </div>
+    <div class="page-footer">
+      <footer class="container mx-auto flex flex-col justify-items-center text-sm leading-6 mt-24 mb-4 text-slate-700 dark:text-slate-200">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+    
+  
+  
+    
+  
+
+  
+
+  
+  <p class="powered-by text-center">
+    © 2026 Chongjie
+  </p>
+  
+
+  <p class="powered-by footer-license-icons">
+    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank" aria-label="Creative Commons">
+      <i class="fab fa-creative-commons fa-2x" aria-hidden="true"></i>
+      <i class="fab fa-creative-commons-by fa-2x" aria-hidden="true"></i>
+      
+        <i class="fab fa-creative-commons-nc fa-2x" aria-hidden="true"></i>
+      
+      
+        <i class="fab fa-creative-commons-nd fa-2x" aria-hidden="true"></i>
+      
+    </a>
+  </p>
+
+
+
+
+
+  
+  
+<center>
+<div class="busuanzi-footer">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    
+    <i class="fa fa-user"></i>  <span id="busuanzi_value_site_pv"></span>
+</div>
+</center></footer>
+
+    </div>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,346 @@
+/* Header */
+.large-header {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  position: relative;
+  overflow: hidden;
+}
+
+.demo-1 .large-header {
+  background-size: cover;
+  height: 100vh;      /* 视口高度 */
+  min-height: 600px;  /* 可选：在很高分辨率下也不至于过瘦 */
+}
+
+.demo-1 .large-header .content canvas {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.demo-2 .large-header {
+  background-image: url("../img/demo-2-bg.jpg");
+  background-position: center bottom;
+}
+
+.demo-3 .large-header {
+  background: #7f8c8d;
+}
+
+.demo-4 .large-header {
+  background: #f9f1e9;
+}
+
+.main-title {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  color: #f9f1e9;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate3d(-50%, -50%, 0);
+  transform: translate3d(-50%, -50%, 0);
+}
+
+.demo-1 .main-title,
+.demo-3 .main-title {
+  text-transform: uppercase;
+  font-size: 4.2em;
+  letter-spacing: 0.1em;
+}
+
+.demo-2 .main-title {
+  font-family: 'Clicker Script', cursive;
+  font-weight: normal;
+  font-size: 8em;
+  padding-left: 10px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.demo-2 .main-title::before {
+  content: '';
+  width: 20vw;
+  height: 20vw;
+  min-width: 3.5em;
+  min-height: 3.5em;
+  background: url("../img/deco.svg") no-repeat center center;
+  background-size: cover;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  z-index: -1;
+  -webkit-transform: translate3d(-50%, -50%, 0);
+  transform: translate3d(-50%, -50%, 0);
+}
+
+.demo-3 .main-title {
+  padding: 10px 40px;
+  border: 10px double #f9f1e9;
+  text-transform: uppercase;
+  font-family: Londrina Outline, sans-serif;
+}
+
+.demo-4 .main-title {
+  font-size: 6em;
+  font-weight: 300;
+  padding: 10px 30px;
+  text-transform: uppercase;
+  color: #222;
+}
+
+.main-title .thin {
+  font-weight: 200;
+}
+
+@media only screen and (max-width: 768px) {
+  /* 之前已有的 crush 缩放规则… */
+  .demo-1 .main-title {
+    font-size: 3em;
+  }
+
+  /* 新增：让 begin 链接也等比缩放 */
+  .demo-1 .main-title .begin-link {
+    /* 先回到原本居中位置，再缩小 */
+    transform: translate3d(-50%, -50%, 0) scale(0.7143);
+    transform-origin: center center;
+  }
+
+  .demo-3 .main-title,
+  .demo-4 .main-title {
+    font-size: 3em;
+  }
+  
+  .demo-2 .main-title {
+    font-size: 4em;
+  }
+}
+
+.crush-text{
+  font-family: "Italianno", cursive;
+  font-weight: 800;
+  font-style: normal;
+}
+
+/* 提高主标题与背景对比度 */
+.crush-text,
+.begin-link .animated-text {
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4), 0 4px 8px rgba(0, 0, 0, 0.4);
+  display: inline-block;
+  position: relative;
+}
+
+.begin-link {
+  display: inline-block;
+  padding: 0.5em 1.2em;
+  background: rgba(0,0,0,0.25);
+  border-radius: 2rem;
+  border: 2px solid rgba(255,255,255,0.8);
+  position: relative;
+  transition: all 0.4s ease;
+}
+
+.begin-link::before {
+  content: '';
+  position: absolute;
+  bottom: 0.2em;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: #00aaff;
+  /* transform: translateX(-50%); */
+  transition: width 0.5s ease, left 0.5s ease;
+}
+
+.begin-link:hover::before {
+  width: 100%;
+  left: 10%;
+}
+
+.begin-link::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -0.5em;
+  transform: translateX(-50%) scaleX(1.5);
+  width: 1em;
+  height: 0.25em;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 50%;
+  filter: blur(4px);
+  opacity: 0;
+  transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+}
+
+/* 与文字一起淡入 */
+.begin-link.active::after,
+.begin-link:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) scaleX(2);
+}
+
+/* 主标题整体淡入效果 */
+.main-title .crush-text,
+.main-title .begin-link {
+  opacity: 0;
+  animation: fadeInUp 1.2s forwards;
+}
+
+.main-title .crush-text {
+  animation-delay: 0.3s;
+}
+
+.main-title .begin-link {
+  animation-delay: 0.8s;
+}
+
+/* keyframes */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes loading {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+/* 加载动画优化 */
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1s cubic-bezier(0.25, 0.1, 0.45, 1);
+  z-index: 0;
+  background-color: #f0f0f0;
+  background-image: linear-gradient(100deg, #f0f0f0 40%, #e0e0e0 50%, #f0f0f0 60%);
+  animation: loading 20s linear infinite;
+  
+  /* GPU加速优化 */
+  will-change: opacity, background-image;
+  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  
+  /* 添加动画重置能力 */
+  animation-play-state: running;
+}
+
+.slide.active {
+  opacity: 1;
+}
+
+/* 添加动画重置类 */
+.slide.reset-animation {
+  animation: none;
+}
+
+/* 新添加：平滑的图片切换效果 */
+.slide.transitioning {
+  transition: opacity 1.2s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* —— 诗句固定盒子 —— */
+/* —— 修改诗句固定盒子 —— */
+.poem-box {
+  position: absolute;
+  left: 5vw;              /* 用视口单位，保持边距 */
+  bottom: 10vh;
+  width: auto;            /* 宽度自适应内容 */
+  max-width: 90vw;        /* 不超过视口宽度的 90% */
+  height: 120px;
+  overflow: hidden;
+  /* background: rgba(0,0,0,0.3); */
+  border-radius: 0.5rem;
+  padding: 0.8em;
+  /* box-shadow: 0 4px 8px rgba(0,0,0,0.4); */
+  opacity: 0;
+  transform: translateY(20px);
+  animation: floatUp 1s ease forwards;
+  animation-delay: 1s;
+  /* 保证在小屏时不会被遮挡 */
+  z-index: 0;
+}
+
+/* 包含两份诗句 */
+.poem-content {
+  display: flex;
+  flex-direction: column;
+  /* 总长度是两份；下面动画往上移动一份的高度 */
+  animation: scrollLoop 50s linear infinite;
+  animation-delay: 2s; /* 浮入之后再开始滚动 */
+}
+
+/* 诗句行样式 */
+.poem-lines p {
+  font-family: 'Italianno', cursive;
+  font-size: 1.3em;
+  line-height: 1.4em;
+  color: rgba(255,255,255,0.85);
+  margin: 0;
+}
+
+/* 浮入动画 */
+@keyframes floatUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 无限滚动：从 translateY(0) 到 -50%，循环 */
+@keyframes scrollLoop {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+
+/* —— 响应式：手机端微调 —— */
+@media (max-width: 768px) {
+  .poem-box {
+    left: 3vw;
+    bottom: 14vh;
+    height: 80px;         /* 适当减小高度 */
+    padding: 0.5em;
+  }
+  .poem-box .poem-lines p {
+    font-size: 0.9em;      /* 字体稍微小一点 */
+    line-height: 1.3em;
+  }
+}
+
+/* 4. 小屏时再微调 */
+@media (max-width: 480px) {
+  .poem-box {
+    left: 3vw;
+    bottom: 14vh;
+    height: 80px;         /* 适当减小高度 */
+    padding: 0.5em;
+  }
+  .poem-box .poem-lines p {
+    font-size: 0.9em;      /* 字体稍微小一点 */
+    line-height: 1.3em;
+  }
+  .begin-link {
+    padding: 0.3em 0.8em;
+  }
+  .begin-link .animated-text {
+    font-size: 0.9rem;
+  }
+}

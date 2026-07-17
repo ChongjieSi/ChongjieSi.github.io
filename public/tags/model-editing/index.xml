@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Model Editing | Chongjie Si</title>
+    <link>http://localhost:1313/tags/model-editing/</link>
+      <atom:link href="http://localhost:1313/tags/model-editing/index.xml" rel="self" type="application/rss+xml" />
+    <description>Model Editing</description>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Mon, 16 Jun 2025 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>http://localhost:1313/media/icon_hue006528a12cd6926ef214d6e0d83c455_38865_512x512_fill_lanczos_center_3.png</url>
+      <title>Model Editing</title>
+      <link>http://localhost:1313/tags/model-editing/</link>
+    </image>
+    
+    <item>
+      <title>DualEdit: Dual Editing for Knowledge Updating in Vision-Language Models</title>
+      <link>http://localhost:1313/full-publications/2025-colm-dualedit/</link>
+      <pubDate>Mon, 16 Jun 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2025-colm-dualedit/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>NAN: A Training-Free Solution to Coefficient Estimation in Model Merging</title>
+      <link>http://localhost:1313/full-publications/2025-arxiv-nan/</link>
+      <pubDate>Thu, 22 May 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/full-publications/2025-arxiv-nan/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

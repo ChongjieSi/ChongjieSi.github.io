@@ -1,194 +1,198 @@
-<!DOCTYPE html>
-<html xmlns="http://chongjiesi.site" lang="-zh-CN -en">
+<!doctype html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Chongjie Si</title>
-
-  <link rel="stylesheet" type="text/css" href="/js/scr_home/normalize.css">
-  <link rel="stylesheet" type="text/css" href="/js/scr_home/demo.css">
-  <!--必要样式-->
-  <link rel="stylesheet" type="text/css" href="/js/scr_home/component.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Italianno&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-
-  <style type="text/css">
-    #Layer1 {position:absolute; width:100%; z-index:2; top: 60%;}
-    .STYLE3 {font-size: medium}
-    .large-header {position: relative; overflow: hidden;}
-    .large-header .content { position: relative; z-index: 1;}
-  </style>
-
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#17212b">
+  <meta name="description" content="Chongjie Si — AI researcher, builder, and photographer.">
+  <title>Chongjie OS</title>
+  <link rel="icon" href="/author/chongjie-si/avatar.png">
+  <link rel="preload" as="image" href="/images/background/bg8.webp">
+  <link rel="stylesheet" href="/css/macos.css">
 </head>
-
 <body>
+  {{ $author := site.GetPage "/authors/admin" }}
+  {{ $avatar := $author.Resources.GetMatch "avatar.png" }}
+  {{ $publications := where site.RegularPages "Section" "full-publications" }}
+  {{ $publications = $publications.ByDate.Reverse }}
+  {{ $blogs := where site.RegularPages "Section" "blog" }}
+  {{ $blogs = $blogs.ByDate.Reverse }}
+  {{ $photos := where site.RegularPages "Section" "photo" }}
+  {{ $photos = $photos.ByDate.Reverse }}
+  {{ $newsPage := site.GetPage "/news/news" }}
 
-  <div class="container demo-1">
-    <div class="content">
-        <div id="large-header" class="large-header">
-        <!-- 背景滑动层（保持不变） -->
-        <div class="slide" id="slide1" loading="lazy"></div>
-        <div class="slide" id="slide2" loading="lazy"></div>
+  <svg class="svg-sprite" aria-hidden="true">
+    <symbol id="i-apple" viewBox="0 0 24 24"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.79 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.53 4.09ZM12.03 7.25C11.88 5.02 13.69 3.18 15.77 3c.29 2.58-2.34 4.5-3.74 4.25Z"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4.5 21a7.5 7.5 0 0 1 15 0"/></symbol>
+    <symbol id="i-flask" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5.4 9.2A1.9 1.9 0 0 0 6.25 21h11.5a1.9 1.9 0 0 0 1.65-2.8L14 9V3M7.5 16h9"/></symbol>
+    <symbol id="i-paper" viewBox="0 0 24 24"><path d="M6 2h9l4 4v16H6zM14 2v5h5M9 12h7M9 16h7"/></symbol>
+    <symbol id="i-news" viewBox="0 0 24 24"><path d="M4 5h14v14H6a2 2 0 0 1-2-2zM18 9h2v8a2 2 0 0 1-2 2M7.5 9h7M7.5 13h7M7.5 16h4"/></symbol>
+    <symbol id="i-pen" viewBox="0 0 24 24"><path d="m4 20 4.5-1 10-10a2.1 2.1 0 0 0-3-3l-10 10zM14 7l3 3M4 20l1-4"/></symbol>
+    <symbol id="i-photo" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="15" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m4 17 4-4 3 3 3-2 6 5"/></symbol>
+    <symbol id="i-cv" viewBox="0 0 24 24"><path d="M6 2h9l4 4v16H6zM14 2v5h5M9 12h6M9 16h6"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+    <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M3 9a14 14 0 0 1 18 0M6.5 12.5a9 9 0 0 1 11 0M10 16a4 4 0 0 1 4 0"/><circle cx="12" cy="19" r="1"/></symbol>
+    <symbol id="i-battery" viewBox="0 0 28 14"><rect x="1" y="2" width="23" height="10" rx="2"/><path d="M26 5v4"/><path class="battery-fill" d="M3.5 4.5h17v5h-17z"/></symbol>
+    <symbol id="i-bluetooth" viewBox="0 0 24 24"><path d="m7 7 10 10-5 4V3l5 4L7 17"/></symbol>
+    <symbol id="i-volume" viewBox="0 0 24 24"><path d="M4 10v4h4l5 4V6L8 10zM16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+    <symbol id="i-control" viewBox="0 0 24 24"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></symbol>
+    <symbol id="i-external" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4 11 13M18 13v7H4V6h7"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></symbol>
+  </svg>
 
-        <!-- 文字内容层 -->
-        <div class="content">
-          <canvas id="demo-canvas" width="1920" height="917"></canvas>
+  <div class="boot-screen" id="bootScreen" aria-hidden="true">
+    <svg><use href="#i-apple"/></svg>
+    <div class="boot-track"><span></span></div>
+  </div>
 
-          <h1 class="main-title">
-            <span class="animated-text crush-text">CRUSH</span><br>
-            
-            <div class="styled-text-container">
-              <a href="/home/" class="styled-text begin-link">
-                <span class="animated-text">begin</span>
-                <!-- 精致阴影，作为伪元素生成 -->
-              </a>
-            </div>
-          </h1>
+  <main class="desktop" id="desktop" data-wallpaper="8">
+    <nav class="menu-bar glass" aria-label="System menu">
+      <div class="menu-left">
+        <button class="menu-button apple-button" data-menu="systemMenu" aria-label="System menu"><svg><use href="#i-apple"/></svg></button>
+        <strong class="active-app" id="activeAppName">About</strong>
+        <button class="menu-word" data-menu="fileMenu">File</button>
+        <button class="menu-word desktop-only" data-menu="viewMenu">View</button>
+        <button class="menu-word desktop-only" data-menu="goMenu">Go</button>
+        <button class="menu-word desktop-only" data-menu="windowMenu">Window</button>
+        <button class="menu-word desktop-only" data-menu="helpMenu">Help</button>
+      </div>
+      <div class="menu-right">
+        <button class="status-button desktop-only" data-panel="controlCenter" data-status="wifi" aria-label="Wi-Fi connected"><svg><use href="#i-wifi"/></svg></button>
+        <button class="battery-status desktop-only" data-panel="controlCenter" aria-label="Battery 82 percent"><span>82%</span><svg><use href="#i-battery"/></svg></button>
+        <button class="status-button" data-panel="controlCenter" aria-label="Control center"><svg><use href="#i-control"/></svg></button>
+        <button class="status-button" data-panel="spotlight" aria-label="Search"><svg><use href="#i-search"/></svg></button>
+        <time class="clock" id="clock" aria-label="Current date and time"></time>
+      </div>
+    </nav>
 
-          <!-- 新增：设计师风格小字 -->
-          <div class="poem-box">
-            <div class="poem-content">
-              <!-- 第一份完整诗句 -->
-              <div class="poem-lines">
-                <p>I will arise and go now, and go to Innisfree;</p>
-                <p>And a small cabin build there, of clay and wattles made;</p>
-                <p>Nine bean-rows will I have there, a hive for the honeybee;</p>
-                <p>And live alone in the bee-loud glade.</p>
+    <div class="menu-popover glass" id="systemMenu" role="menu">
+      <div class="system-card"><img src="{{ $avatar.RelPermalink }}" alt=""><div><b>Chongjie OS</b><span>Portfolio Edition</span></div></div>
+      <hr><button data-open="about">About Chongjie</button><button data-panel="controlCenter">Desktop Settings…</button><hr><button id="replayBoot">Restart Chongjie OS…</button>
+    </div>
+    <div class="menu-popover glass" id="fileMenu" role="menu"><button data-open="about">Open Profile</button><button data-open="contact">New Message</button><button data-open="cv">Open Résumé</button></div>
+    <div class="menu-popover glass" id="viewMenu" role="menu"><button data-action="show-desktop">Show Desktop</button><button data-panel="spotlight">Open Spotlight</button><hr><button data-panel="controlCenter">Change Wallpaper…</button></div>
+    <div class="menu-popover glass" id="goMenu" role="menu"><button data-open="about">About</button><button data-open="papers">Publications</button><button data-open="news">News</button><button data-open="blog">Notes</button><button data-open="photos">Photos</button><button data-open="cv">Résumé</button></div>
+    <div class="menu-popover glass" id="windowMenu" role="menu"><button data-action="minimize-active">Minimize</button><button data-action="maximize-active">Zoom</button><hr><button data-action="bring-front">Bring All to Front</button></div>
+    <div class="menu-popover glass" id="helpMenu" role="menu"><button data-open="welcome">Chongjie OS Help</button><button data-open="contact">Contact Chongjie</button></div>
 
-                <p>And I shall have some peace there, for peace comes dropping slow,</p>
-                <p>Dropping from the veils of the morning to where the cricket sings;</p>
-                <p>There midnight’s all a-glimmer, and noon a purple glow,</p>
-                <p>And evening full of the linnet’s wings.</p>
+    <section class="desktop-icons" aria-label="Desktop shortcuts">
+      <button class="desktop-icon" data-open="papers"><span class="app-icon icon-papers"><svg><use href="#i-paper"/></svg></span><span>Publications</span></button>
+      <button class="desktop-icon" data-open="photos"><span class="app-icon icon-photos"><svg><use href="#i-photo"/></svg></span><span>Photos</span></button>
+      <button class="desktop-icon" data-open="cv"><span class="app-icon icon-cv"><svg><use href="#i-cv"/></svg></span><span>Chongjie CV</span></button>
+    </section>
 
-                <p>I will arise and go now, for always night and day</p>
-                <p>I hear lake water lapping with low sounds by the shore;</p>
-                <p>While I stand on the roadway, or on the pavements grey,</p>
-                <p>I hear it in the deep heart’s core.</p>
-              </div>
-              <!-- 第二份，完全相同 -->
-              <div class="poem-lines">
-                <p>I will arise and go now, and go to Innisfree;</p>
-                <p>And a small cabin build there, of clay and wattles made;</p>
-                <p>Nine bean-rows will I have there, a hive for the honeybee;</p>
-                <p>And live alone in the bee-loud glade.</p>
-
-                <p>And I shall have some peace there, for peace comes dropping slow,</p>
-                <p>Dropping from the veils of the morning to where the cricket sings;</p>
-                <p>There midnight’s all a-glimmer, and noon a purple glow,</p>
-                <p>And evening full of the linnet’s wings.</p>
-
-                <p>I will arise and go now, for always night and day</p>
-                <p>I hear lake water lapping with low sounds by the shore;</p>
-                <p>While I stand on the roadway, or on the pavements grey,</p>
-                <p>I hear it in the deep heart’s core.</p>
-              </div>
+    <section class="window is-open active" id="window-about" data-app="about" data-title="About" style="--x: 7vw; --y: 10vh; --w: min(890px, 80vw); --h: min(620px, 72vh);">
+      <header class="window-bar drag-handle">
+        <div class="traffic-lights"><button class="close" data-window-action="close" aria-label="Close"></button><button class="minimize" data-window-action="minimize" aria-label="Minimize"></button><button class="maximize" data-window-action="maximize" aria-label="Maximize"></button></div>
+        <div class="window-title">About Chongjie</div><div class="window-tools"><button data-open="contact" aria-label="Contact"><svg><use href="#i-mail"/></svg></button></div>
+      </header>
+      <div class="window-layout">
+        <aside class="sidebar">
+          <div class="sidebar-label">Favorites</div>
+          <button class="selected" data-tab="profile"><svg><use href="#i-user"/></svg> Profile</button>
+          <button data-tab="research"><svg><use href="#i-flask"/></svg> Research</button>
+          <button data-tab="experience"><svg><use href="#i-cv"/></svg> Experience</button>
+          <div class="sidebar-label">Connect</div>
+          <button data-open="contact"><svg><use href="#i-mail"/></svg> Contact</button>
+        </aside>
+        <div class="window-content about-content">
+          <div class="profile-hero">
+            <div class="avatar-wrap"><img src="{{ $avatar.RelPermalink }}" alt="Portrait of Chongjie Si"><span>☕</span></div>
+            <div><p class="eyebrow">HELLO, I'M</p><h1>Chongjie Si</h1><p class="role">Ph.D. Candidate · AI Researcher</p><p class="affiliation">Shanghai Jiao Tong University</p></div>
+          </div>
+          <div class="tab-panel is-visible" data-tab-panel="profile">
+            <p class="lead">I build efficient and understandable learning systems, with a focus on LLM training, parameter-efficient fine-tuning, and the structure behind model optimization.</p>
+            <div class="info-grid">
+              <button class="info-card blue" data-open="papers"><span><svg><use href="#i-paper"/></svg></span><div><b>{{ len $publications }} publications</b><small>Read my latest research</small></div><svg class="chevron"><use href="#i-chevron"/></svg></button>
+              <button class="info-card violet" data-open="blog"><span><svg><use href="#i-pen"/></svg></span><div><b>{{ len $blogs }} notes & essays</b><small>Technical writing and ideas</small></div><svg class="chevron"><use href="#i-chevron"/></svg></button>
+              <button class="info-card coral" data-open="photos"><span><svg><use href="#i-photo"/></svg></span><div><b>{{ len $photos }} photo stories</b><small>Places through my lens</small></div><svg class="chevron"><use href="#i-chevron"/></svg></button>
+              <button class="info-card green" data-open="contact"><span><svg><use href="#i-mail"/></svg></span><div><b>Let's collaborate</b><small>Get in touch by email</small></div><svg class="chevron"><use href="#i-chevron"/></svg></button>
             </div>
           </div>
+          <div class="tab-panel" data-tab-panel="research"><h2>Research focus</h2><div class="tag-cloud">{{ range $author.Params.interests }}<span>{{ . }}</span>{{ end }}</div><p>My current work explores efficient LLM pre-training and supervised fine-tuning, with a broader interest in how parameter spaces encode and adapt knowledge.</p><button class="primary-button" data-open="papers">Explore publications</button></div>
+          <div class="tab-panel" data-tab-panel="experience"><h2>Recent experience</h2><div class="timeline">{{ range first 4 $author.Params.work }}<div><span></span><p><b>{{ .position }}</b><small>{{ .company_name }} · {{ time.Format "Jan 2006" .date_start }}</small>{{ with .summary }}<em>{{ . | markdownify }}</em>{{ end }}</p></div>{{ end }}</div><button class="primary-button" data-open="cv">View complete résumé</button></div>
         </div>
       </div>
-    </div>
-  </div>
+    </section>
 
-
-
-  <!-- <div id="Layer1">
-  <div class="navbar-container">
-   <nav class="codrops-demos">
-    <a href="home/">Home</a>
-    <a href="home/#news">News</a>
-    <a href="publications/">Publications</a>
-    <a href="blogs/">Blogs</a>
-    <a href="cv/">CV</a>
-    <a href="photos/">Photos</a>
-   </nav>
-   </div>
-  </div>
-  
- </div> -->
-
-  <footer class="footer">
-    <div class="footer-inner">
-      {{ $copyright_license := .Params.copyright.license | default site.Params.footer.copyright.license }}
-      {{ $notice := .Params.copyright.notice | default site.Params.footer.copyright.notice }}
-
-      {{ if ($copyright_license.enable | default false) }}
-
-        {{ $allow_commercial := $copyright_license.allow_commercial | default false }}
-        {{ $allow_derivatives := $copyright_license.allow_derivatives | default false }}
-        {{ $share_alike := $copyright_license.share_alike | default true }}
-
-        {{ $cc_code := "by" }}
-        {{ if not $allow_commercial }}
-          {{ $cc_code = printf "%s-nc" $cc_code }}
-        {{end}}
-        {{ if and $allow_derivatives $share_alike }}
-          {{ $cc_code = printf "%s-sa" $cc_code }}
-        {{ else if not $allow_derivatives }}
-          {{ $cc_code = printf "%s-nd" $cc_code }}
-        {{end}}
-
-        {{ $license_url := printf "https://creativecommons.org/licenses/%s/4.0" ($cc_code | urlize) }}
-
-        {{ with $notice }}
-        <p class="powered-by text-center">
-          {{ replace (replace . "{year}" now.Year) "{license}" (printf "<a href=\"%s\" rel=\"noopener noreferrer\" target=\"_blank\">CC %s 4.0</a>" $license_url (replace $cc_code "-" " " | upper)) | markdownify }}
-        </p>
+    <section class="window" id="window-papers" data-app="papers" data-title="Publications" style="--x: 15vw; --y: 8vh; --w: min(1000px, 78vw); --h: min(680px, 78vh);">
+      <header class="window-bar drag-handle"><div class="traffic-lights"><button class="close" data-window-action="close"></button><button class="minimize" data-window-action="minimize"></button><button class="maximize" data-window-action="maximize"></button></div><div class="window-title">Publications</div><div class="window-tools"><span class="item-count">{{ len $publications }} items</span></div></header>
+      <div class="library-shell" data-library="papers">
+        <div class="library-master"><div class="app-toolbar"><div><p class="eyebrow">RESEARCH LIBRARY</p><h2>Publications</h2></div><label class="inline-search"><svg><use href="#i-search"/></svg><input type="search" placeholder="Filter" data-filter-input="paper"></label></div><div class="scroll-content paper-list">
+        {{ range $index, $page := $publications }}
+        <button class="paper-card{{ if eq $index 0 }} is-selected{{ end }}" data-detail="paper-{{ $index }}" data-filter-item="paper" data-filter-text="{{ lower (printf "%s %s %s" .Title .Params.publication_short (delimit .Params.tags " ")) }}"><span class="paper-year">{{ .Date.Format "2006" }}</span><span><span class="paper-meta">{{ .Params.publication_short | default "Research" }}</span><strong>{{ .Title }}</strong><small>{{ .Params.summary | default (.Summary | plainify) | truncate 110 }}</small></span><svg><use href="#i-chevron"/></svg></button>
+        <template id="paper-{{ $index }}"><article class="reader paper-reader"><button class="reader-back" data-reader-back><svg><use href="#i-back"/></svg> Publications</button><p class="eyebrow">{{ .Params.publication_short | default "RESEARCH" }} · {{ .Date.Format "2006" }}</p><h1>{{ .Title }}</h1><p class="reader-authors">{{ delimit .Params.authors ", " }}</p><div class="reader-tags">{{ range .Params.tags }}<span>{{ . }}</span>{{ end }}</div><h3>Abstract</h3><p class="abstract">{{ .Params.abstract | default .Params.summary }}</p><div class="paper-actions">{{ with .Params.url_pdf }}<a href="{{ . }}" target="_blank" rel="noopener">Read PDF ↗</a>{{ end }}{{ with .Params.url_code }}<a href="{{ . }}" target="_blank" rel="noopener">View code ↗</a>{{ end }}{{ with .Params.url_poster }}<a href="/{{ . }}" target="_blank">Poster ↗</a>{{ end }}</div></article></template>
         {{ end }}
+        </div></div><div class="library-detail scroll-content" data-detail-host="papers"><div class="detail-placeholder"><span class="app-icon icon-papers"><svg><use href="#i-paper"/></svg></span><h3>Select a publication</h3><p>Abstract, authors and research links will appear here.</p></div></div>
+      </div>
+    </section>
 
-      {{ else }}
+    <section class="window" id="window-news" data-app="news" data-title="News" style="--x: 25vw; --y: 13vh; --w: min(700px, 70vw); --h: min(570px, 68vh);">
+      <header class="window-bar drag-handle"><div class="traffic-lights"><button class="close" data-window-action="close"></button><button class="minimize" data-window-action="minimize"></button><button class="maximize" data-window-action="maximize"></button></div><div class="window-title">News</div><div class="window-tools"><span class="live-dot"></span></div></header>
+      <div class="window-content scroll-content news-app"><div class="news-head"><span class="app-icon icon-news"><svg><use href="#i-news"/></svg></span><div><p class="eyebrow">ACTIVITY FEED</p><h2>What's new</h2><p>Research, travel and milestones.</p></div></div><div class="news-timeline">{{ range $index, $item := $newsPage.Params.news }}<article class="news-entry{{ if lt $index 3 }} is-latest{{ end }}"><time>{{ time.Format "Jan 02, 2006" $item.date }}</time><div><span></span><h3>{{ $item.title | safeHTML }}</h3>{{ with $item.summary }}<p>{{ . | safeHTML }}</p>{{ end }}</div></article>{{ end }}</div></div>
+    </section>
 
-      {{ with $notice }}
-        <p class="powered-by text-center">
-          {{ replace . "{year}" now.Year | markdownify }}
-        </p>
-        {{ end }}
-      {{ end }}
+    <section class="window" id="window-blog" data-app="blog" data-title="Notes" style="--x: 18vw; --y: 9vh; --w: min(940px, 78vw); --h: min(650px, 76vh);">
+      <header class="window-bar drag-handle"><div class="traffic-lights"><button class="close" data-window-action="close"></button><button class="minimize" data-window-action="minimize"></button><button class="maximize" data-window-action="maximize"></button></div><div class="window-title">Notes</div><div class="window-tools"><label class="title-search"><svg><use href="#i-search"/></svg><input type="search" placeholder="Search notes" data-filter-input="note"></label></div></header>
+      <div class="notes-shell"><aside class="sidebar notes-sidebar"><div class="sidebar-label">Library</div><button class="selected" data-note-filter="all"><svg><use href="#i-pen"/></svg> All Notes <small>{{ len $blogs }}</small></button><button data-note-filter="research"><svg><use href="#i-flask"/></svg> Research</button><button data-note-filter="life"><svg><use href="#i-grid"/></svg> Math & Life</button></aside><div class="notes-browser scroll-content" data-note-browser><div class="notes-heading"><p class="eyebrow">MY NOTEBOOK</p><h2>Ideas in progress</h2></div><div class="notes-grid">{{ range $index, $page := $blogs }}{{ $filterText := lower (printf "%s %s" .Title (delimit .Params.tags " ")) }}{{ $kind := "research" }}{{ if or (in $filterText "台球") (in $filterText "代数") (in $filterText "矩阵") }}{{ $kind = "life" }}{{ end }}<button class="note-card" data-note="note-{{ $index }}" data-note-kind="{{ $kind }}" data-filter-item="note" data-filter-text="{{ $filterText }}"><span>{{ .Date.Format "Jan 02, 2006" }}</span><h3>{{ .Title }}</h3><p>{{ .Summary | plainify | truncate 135 }}</p><div>{{ range first 2 .Params.tags }}<em>{{ . }}</em>{{ end }}</div></button><template id="note-{{ $index }}"><article class="reader note-reader"><button class="reader-back" data-reader-back><svg><use href="#i-back"/></svg> All Notes</button><p class="eyebrow">{{ .Date.Format "JANUARY 02, 2006" }}</p><h1>{{ .Title }}</h1>{{ with .Params.summary }}<p class="reader-deck">{{ . }}</p>{{ end }}<div class="reader-tags">{{ range .Params.tags }}<span>{{ . }}</span>{{ end }}</div><div class="article-body">{{ .Content }}</div></article></template>{{ end }}</div></div><div class="note-reader-host scroll-content" data-detail-host="notes"></div></div>
+    </section>
 
-    <!-- <center>
-    <div class="busuanzi-footer">
-      <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-        <i class="fa fa-user"></i>  <span id="busuanzi_value_site_pv"></span>
-    </div>
-    </center> -->
-  </footer>
+    <section class="window" id="window-photos" data-app="photos" data-title="Photos" style="--x: 12vw; --y: 7vh; --w: min(1040px, 82vw); --h: min(700px, 79vh);">
+      <header class="window-bar drag-handle"><div class="traffic-lights"><button class="close" data-window-action="close"></button><button class="minimize" data-window-action="minimize"></button><button class="maximize" data-window-action="maximize"></button></div><div class="window-title">Photos</div><div class="window-tools"><div class="view-switch" aria-label="Photo layout"><button class="is-selected" data-photo-view="mosaic"><svg><use href="#i-grid"/></svg></button><button data-photo-view="grid"><svg><use href="#i-photo"/></svg></button></div></div></header>
+      <div class="photos-browser scroll-content" data-photo-browser><div class="photos-header"><div><p class="eyebrow">MY JOURNEYS</p><h2>Photo library</h2><p>{{ len $photos }} albums · moments from around the world</p></div></div><div class="photo-grid is-mosaic" data-photo-grid>{{ range $index, $page := $photos }}{{ $featured := .Resources.GetMatch "featured.*" }}<button class="photo-card" data-album="album-{{ $index }}">{{ with $featured }}<img src="{{ .RelPermalink }}" alt="{{ $page.Title }}" loading="lazy">{{ end }}<span><b>{{ .Title }}</b><small>{{ .Date.Format "2006" }} · View album</small></span></button>{{ $urls := findRE `https://[^ >\"']+\.(jpg|jpeg|png|webp)` .RawContent }}<template id="album-{{ $index }}"><article class="album-view"><header class="album-hero">{{ with $featured }}<img src="{{ .RelPermalink }}" alt="{{ $page.Title }}">{{ end }}<button class="album-back" data-reader-back><svg><use href="#i-back"/></svg> Library</button><div><p>{{ .Date.Format "2006" }}</p><h1>{{ .Title }}</h1><span>{{ .Params.summary }}</span></div></header><div class="album-images">{{ range first 18 (uniq $urls) }}<button data-lightbox="{{ . }}"><img src="{{ . }}" alt="{{ $page.Title }} photograph" loading="lazy"></button>{{ end }}</div></article></template>{{ end }}</div></div><div class="album-host scroll-content" data-detail-host="photos"></div><div class="photo-lightbox" data-lightbox-host><button class="lightbox-close" aria-label="Close photo">×</button><button class="lightbox-prev" aria-label="Previous photo">‹</button><img alt="Selected photograph"><button class="lightbox-next" aria-label="Next photo">›</button><div class="lightbox-count"></div></div>
+    </section>
 
+    <section class="window" id="window-cv" data-app="cv" data-title="Résumé" style="--x: 23vw; --y: 11vh; --w: min(760px, 72vw); --h: min(590px, 70vh);">
+      <header class="window-bar drag-handle"><div class="traffic-lights"><button class="close" data-window-action="close"></button><button class="minimize" data-window-action="minimize"></button><button class="maximize" data-window-action="maximize"></button></div><div class="window-title">Résumé</div><div class="window-tools"><button data-resume-view="pdf" aria-label="Preview PDF"><svg><use href="#i-paper"/></svg></button></div></header>
+      <div class="resume-shell"><div class="window-content scroll-content resume-app" data-resume-view-panel="profile"><div class="resume-heading"><img src="{{ $avatar.RelPermalink }}" alt=""><div><h2>Chongjie Si</h2><p>Artificial Intelligence Researcher</p></div><button class="primary-button" data-resume-view="pdf">Preview PDF</button></div><h3>Experience</h3><div class="resume-list">{{ range $author.Params.work }}<div><b>{{ .position }}</b><span>{{ .company_name }}</span><small>{{ time.Format "Jan 2006" .date_start }}{{ with .date_end }} — {{ time.Format "Jan 2006" . }}{{ else }} — Present{{ end }}</small></div>{{ end }}</div><h3>Education</h3><div class="resume-list">{{ range $author.Params.education }}<div><b>{{ .area }}</b><span>{{ .institution }}</span><small>{{ time.Format "2006" .date_start }} — {{ with .date_end }}{{ time.Format "2006" . }}{{ else }}Present{{ end }}</small></div>{{ end }}</div><h3>Skills</h3><div class="skill-list">{{ range $author.Params.skills }}{{ range .items }}<div><span>{{ .name }}</span>{{ with .percent }}<i><b style="width:{{ . }}%"></b></i>{{ end }}</div>{{ end }}{{ end }}</div><h3>Awards</h3><div class="award-grid">{{ range $author.Params.awards }}<div><span>{{ time.Format "2006" .date }}</span><b>{{ .title }}</b><small>{{ .awarder }}</small></div>{{ end }}</div></div><div class="resume-pdf" data-resume-view-panel="pdf"><div class="pdf-toolbar"><button data-resume-view="profile"><svg><use href="#i-back"/></svg> Résumé</button><span>chongjie-cv.pdf</span><a href="/uploads/chongjie-cv.pdf" download>Download</a></div><iframe src="/uploads/chongjie-cv.pdf#view=FitH" title="Chongjie Si CV"></iframe></div></div>
+    </section>
 
-  <script src="/js/scr_home/TweenLite.min.js"></script>
-  <script src="/js/scr_home/EasePack.min.js"></script>
-  <script src="/js/scr_home/rAF.js"></script>
-  <script src="/js/scr_home/demo-1.js"></script>
-  <script src="/js/scr_home/music_player.js"></script>
-  <script src="/js/scr_home/fetch_count.js"></script>
-  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-  <script src="/js/scr_home/bg_slide.js"></script>
+    <section class="window compact-window" id="window-contact" data-app="contact" data-title="Mail" style="--x: 31vw; --y: 18vh; --w: min(560px, 72vw); --h: auto;">
+      <header class="window-bar drag-handle"><div class="traffic-lights"><button class="close" data-window-action="close"></button><button class="minimize" data-window-action="minimize"></button><button class="maximize" data-window-action="maximize"></button></div><div class="window-title">New Message</div><div></div></header>
+      <div class="window-content contact-app"><span class="app-icon icon-mail"><svg><use href="#i-mail"/></svg></span><p class="eyebrow">LET'S BUILD SOMETHING</p><h2>Open to research conversations and collaborations.</h2><a class="email-address" href="mailto:chongjiesi@sjtu.edu.cn">chongjiesi@sjtu.edu.cn</a><div class="contact-links"><a href="https://scholar.google.com/citations?user=wXc2EtsAAAAJ&hl=zh-CN" target="_blank">Scholar ↗</a><a href="https://github.com/Chongjie-Si" target="_blank">GitHub ↗</a><a href="https://www.linkedin.com/in/%E7%BF%80%E6%9D%B0-%E5%8F%B8-b55a5a326/" target="_blank">LinkedIn ↗</a><a href="https://www.zhihu.com/people/89-47-66-58-20" target="_blank">Zhihu ↗</a></div></div>
+    </section>
 
-  <script>
-  // 检测WebP支持
-  function checkWebPSupport(callback) {
-    var img = new Image();
-    img.onload = function() {
-      callback(true);
-    };
-    img.onerror = function() {
-      callback(false);
-    };
-    img.src = 'data:image/webp;base64,UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA==';
-  }
+    <section class="window compact-window" id="window-welcome" data-app="welcome" data-title="Help" style="--x: 34vw; --y: 20vh; --w: min(520px, 72vw); --h: auto;">
+      <header class="window-bar drag-handle"><div class="traffic-lights"><button class="close" data-window-action="close"></button><button class="minimize" data-window-action="minimize"></button><button class="maximize" data-window-action="maximize"></button></div><div class="window-title">Welcome to Chongjie OS</div><div></div></header><div class="window-content welcome-app"><div class="welcome-orb">CS</div><h2>Your guide to this desktop</h2><p>Open an app from the Dock or double-click a desktop icon. Windows can be dragged, minimized, maximized and layered just like a desktop OS.</p><div class="shortcut-list"><span>Open Spotlight</span><kbd>⌘ K</kbd><span>Close active window</span><kbd>⌘ W</kbd><span>Show desktop</span><kbd>⌥ D</kbd></div></div>
+    </section>
 
-  checkWebPSupport(function(isSupported) {
-    if (!isSupported) {
-      // 如果不支持WebP，替换图片路径为JPEG
-      const bgImages = document.querySelectorAll('.slide');
-      bgImages.forEach(slide => {
-        if (slide.style.backgroundImage) {
-          slide.style.backgroundImage = slide.style.backgroundImage.replace('.webp', '.jpg');
-        }
-      });
-    }
-  });
-  </script>
+    <aside class="control-center glass floating-panel" id="controlCenter" aria-label="Control center">
+      <header><b>Control Center</b><button class="panel-close" aria-label="Close">×</button></header>
+      <div class="control-grid"><button class="control-tile is-on" data-system-toggle="wifi"><span><svg><use href="#i-wifi"/></svg></span><div><b>Wi-Fi</b><small data-system-label="wifi">Portfolio Network</small></div></button><button class="control-tile is-on" data-system-toggle="bluetooth"><span><svg><use href="#i-bluetooth"/></svg></span><div><b>Bluetooth</b><small data-system-label="bluetooth">On</small></div></button><button class="control-tile focus-tile" data-system-toggle="focus"><span><svg><use href="#i-control"/></svg></span><div><b>Focus</b><small data-system-label="focus">Off</small></div></button><div class="battery-tile"><svg><use href="#i-battery"/></svg><div><b>82%</b><small>Battery · 6h 24m</small></div></div></div>
+      <div class="system-slider"><svg><use href="#i-sun"/></svg><input type="range" min="55" max="115" value="100" data-system-range="brightness" aria-label="Display brightness"><span>Display</span></div><div class="system-slider"><svg><use href="#i-volume"/></svg><input type="range" min="0" max="100" value="65" data-system-range="volume" aria-label="Volume"><span data-volume-label>65%</span></div>
+      <div class="wallpaper-control"><div><b>Wallpaper</b><small>From my photo library</small></div><div class="wallpaper-options"><button class="wallpaper is-selected" data-wallpaper="8" style="background-image:url('/images/background/bg8.webp')"></button><button class="wallpaper" data-wallpaper="10" style="background-image:url('/images/background/bg10.webp')"></button><button class="wallpaper" data-wallpaper="13" style="background-image:url('/images/background/bg13.webp')"></button><button class="wallpaper" data-wallpaper="4" style="background-image:url('/images/background/bg4.webp')"></button></div></div>
+    </aside>
+
+    <aside class="spotlight glass floating-panel" id="spotlight" aria-label="Spotlight search">
+      <div class="spotlight-input"><svg><use href="#i-search"/></svg><input id="spotlightInput" type="search" placeholder="Search Chongjie OS" autocomplete="off"><kbd>esc</kbd></div>
+      <div class="spotlight-results" id="spotlightResults">
+        <button data-open="about" data-search="about profile biography chongjie"><span class="app-icon icon-about"><svg><use href="#i-user"/></svg></span><div><b>About Chongjie</b><small>Profile</small></div></button>
+        <button data-open="papers" data-search="research papers publications ai llm"><span class="app-icon icon-papers"><svg><use href="#i-paper"/></svg></span><div><b>Publications</b><small>Research</small></div></button>
+        <button data-open="blog" data-search="blog notes writing essays"><span class="app-icon icon-blog"><svg><use href="#i-pen"/></svg></span><div><b>Notes</b><small>Writing</small></div></button>
+        <button data-open="photos" data-search="photos travel albums photography"><span class="app-icon icon-photos"><svg><use href="#i-photo"/></svg></span><div><b>Photos</b><small>Library</small></div></button>
+        <button data-open="cv" data-search="cv resume experience education"><span class="app-icon icon-cv"><svg><use href="#i-cv"/></svg></span><div><b>Résumé</b><small>Document</small></div></button>
+        <button data-open="contact" data-search="contact email mail collaboration"><span class="app-icon icon-mail"><svg><use href="#i-mail"/></svg></span><div><b>Contact</b><small>Mail</small></div></button>
+      </div>
+    </aside>
+
+    <nav class="dock-wrap" aria-label="Applications">
+      <div class="dock glass">
+        <button data-open="about" class="dock-item is-running" data-label="About"><span class="app-icon icon-about"><svg><use href="#i-user"/></svg></span></button>
+        <button data-open="papers" class="dock-item" data-label="Publications"><span class="app-icon icon-papers"><svg><use href="#i-paper"/></svg></span></button>
+        <button data-open="news" class="dock-item" data-label="News"><span class="app-icon icon-news"><svg><use href="#i-news"/></svg></span></button>
+        <button data-open="blog" class="dock-item" data-label="Notes"><span class="app-icon icon-blog"><svg><use href="#i-pen"/></svg></span></button>
+        <button data-open="photos" class="dock-item" data-label="Photos"><span class="app-icon icon-photos"><svg><use href="#i-photo"/></svg></span></button>
+        <button data-open="cv" class="dock-item" data-label="Résumé"><span class="app-icon icon-cv"><svg><use href="#i-cv"/></svg></span></button>
+        <span class="dock-divider"></span>
+        <button data-open="contact" class="dock-item" data-label="Contact"><span class="app-icon icon-mail"><svg><use href="#i-mail"/></svg></span></button>
+      </div>
+    </nav>
+    <div class="desktop-hint" id="desktopHint">Double-click an icon or choose an app from the Dock</div>
+  </main>
+  <script src="/js/macos.js"></script>
 </body>
 </html>

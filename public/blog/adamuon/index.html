@@ -1,0 +1,2031 @@
+<!doctype html>
+<!-- This site was created with Hugo Blox. https://hugoblox.com -->
+<!-- Last Published: July 18, 2026 --><html lang="en-us" dir="ltr"
+      data-wc-theme-default="system">
+  
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="generator" content="Hugo Blox Builder 0.2.0" />
+  <link rel="stylesheet" href="/css/custom.css">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Chongjie Si" />
+
+  
+  
+  
+    
+  
+  <meta name="description" content="优化器" />
+
+  
+  <link rel="alternate" hreflang="en-us" href="http://localhost:1313/blog/adamuon/" />
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="/css/themes/emerald.min.css" />
+  
+
+  
+  
+    
+    <link href="/dist/wc.min.css" rel="stylesheet" />
+  
+
+  
+  
+  
+
+  
+
+  <script>
+     
+    window.hbb = {
+       defaultTheme: document.documentElement.dataset.wcThemeDefault,
+       setDarkTheme: () => {
+        document.documentElement.classList.add("dark");
+        document.documentElement.style.colorScheme = "dark";
+      },
+       setLightTheme: () => {
+        document.documentElement.classList.remove("dark");
+        document.documentElement.style.colorScheme = "light";
+      }
+    }
+
+    console.debug(`Default Hugo Blox Builder theme is ${window.hbb.defaultTheme}`);
+
+    if ("wc-color-theme" in localStorage) {
+      localStorage.getItem("wc-color-theme") === "dark" ? window.hbb.setDarkTheme() : window.hbb.setLightTheme();
+    } else {
+      window.hbb.defaultTheme === "dark" ? window.hbb.setDarkTheme() : window.hbb.setLightTheme();
+      if (window.hbb.defaultTheme === "system") {
+        window.matchMedia("(prefers-color-scheme: dark)").matches ? window.hbb.setDarkTheme() : window.hbb.setLightTheme();
+      }
+    }
+  </script>
+
+  <script>
+    
+    document.addEventListener('DOMContentLoaded', function () {
+      
+      let checkboxes = document.querySelectorAll('li input[type=\'checkbox\'][disabled]');
+      checkboxes.forEach(e => {
+        e.parentElement.parentElement.classList.add('task-list');
+      });
+
+      
+      const liNodes = document.querySelectorAll('.task-list li');
+      liNodes.forEach(nodes => {
+        let textNodes = Array.from(nodes.childNodes).filter(node => node.nodeType === 3 && node.textContent.trim().length > 1);
+        if (textNodes.length > 0) {
+          const span = document.createElement('label');
+          textNodes[0].after(span);  
+          span.appendChild(nodes.querySelector('input[type=\'checkbox\']'));
+          span.appendChild(textNodes[0]);
+        }
+      });
+    });
+  </script>
+
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+  <link rel="icon" type="image/png" href="/media/icon_hue006528a12cd6926ef214d6e0d83c455_38865_32x32_fill_lanczos_center_3.png" />
+  <link rel="apple-touch-icon" type="image/png" href="/media/icon_hue006528a12cd6926ef214d6e0d83c455_38865_180x180_fill_lanczos_center_3.png" />
+
+  <link rel="canonical" href="http://localhost:1313/blog/adamuon/" />
+
+  
+  
+  
+  
+  
+  
+  
+  
+    
+  
+  
+
+  
+  
+    
+    
+  
+  <meta property="twitter:card" content="summary_large_image" />
+  
+  <meta property="og:site_name" content="Chongjie Si" />
+  <meta property="og:url" content="http://localhost:1313/blog/adamuon/" />
+  <meta property="og:title" content="AdaMuon：能否进一步助力Muon替代Adam？ | Chongjie Si" />
+  <meta property="og:description" content="优化器" /><meta property="og:image" content="http://localhost:1313/blog/adamuon/featured.png" />
+    <meta property="twitter:image" content="http://localhost:1313/blog/adamuon/featured.png" /><meta property="og:locale" content="en-us" />
+  
+    
+      <meta
+        property="article:published_time"
+        content="2025-08-27T00:00:00&#43;00:00"
+      />
+    
+    <meta property="article:modified_time" content="2025-08-27T00:00:00&#43;00:00">
+  
+
+  
+
+
+
+  
+
+
+  <title>AdaMuon：能否进一步助力Muon替代Adam？ | Chongjie Si</title>
+
+  
+  
+  
+  
+  
+    
+    
+  
+  
+  <style>
+    @font-face {
+      font-family: 'Inter var';
+      font-style: normal;
+      font-weight: 100 900;
+      font-display: swap;
+      src: url(/dist/font/Inter.var.woff2) format(woff2);
+    }
+  </style>
+
+  
+
+  
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+  
+  
+  
+  
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+  
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    
+  
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+  
+  
+  
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+  
+
+
+
+
+
+
+
+<link type="text/css" rel="stylesheet" href="/dist/pagefind/pagefind-ui.be766eb419317a14ec769d216e9779bfe8f3737c80e780f4ba0dafb57a41a482.css" integrity="sha256-vnZutBkxehTsdp0hbpd5v&#43;jzc3yA54D0ug2vtXpBpII=" />
+
+
+<script src="/dist/pagefind/pagefind-ui.87693d7c6f2b3b347ce359d0ede762c033419f0a32b22ce508c335a81d841f1b.js" integrity="sha256-h2k9fG8rOzR841nQ7ediwDNBnwoysizlCMM1qB2EHxs="></script>
+
+
+<script>window.hbb.pagefind = {"baseUrl":"/"};</script>
+
+<style>
+  html.dark {
+    --pagefind-ui-primary: #eeeeee;
+    --pagefind-ui-text: #eeeeee;
+    --pagefind-ui-background: #152028;
+    --pagefind-ui-border: #152028;
+    --pagefind-ui-tag: #152028;
+  }
+</style>
+
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    new PagefindUI({
+      element: "#search",
+      showSubResults: true,
+      baseUrl: window.hbb.pagefind.baseUrl,
+      bundlePath: window.hbb.pagefind.baseUrl + "pagefind/",
+    });
+  });
+  document.addEventListener('DOMContentLoaded', () => {
+    let element = document.getElementById('search');
+    let trigger = document.getElementById('search_toggle');
+
+    if (trigger) {
+      trigger.addEventListener('click', () => {
+        element.classList.toggle('hidden');
+        element.querySelector("input").value = ""
+        element.querySelector("input").focus()
+
+        if (!element.classList.contains('hidden')) {
+          let clear_trigger = document.querySelector('.pagefind-ui__search-clear');
+
+          if (clear_trigger && !clear_trigger.hasAttribute('listenerOnClick')) {
+            clear_trigger.setAttribute('listenerOnClick', 'true');
+
+            clear_trigger.addEventListener('click', () => {
+              element.classList.toggle('hidden');
+            });
+          }
+        }
+
+      });
+    }
+  });
+</script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link type="text/css" rel="stylesheet" href="/dist/lib/katex/katex.min.505d5f829022bb7b4f24dfee0aa1141cd7bba67afe411d1240335f820960b5c3.css" integrity="sha256-UF1fgpAiu3tPJN/uCqEUHNe7pnr&#43;QR0SQDNfgglgtcM=" />
+  
+  
+  <script defer src="/dist/lib/katex/katex.min.dc84b296ec3e884de093158f760fd9d45b6c7abe58b5381557f4e138f46a58ae.js" integrity="sha256-3ISyluw&#43;iE3gkxWPdg/Z1Ftser5YtTgVV/ThOPRqWK4="></script>
+  
+  
+  
+  
+  <script defer src="/js/katex-renderer.6579ec9683211cfb952064aedf3a3baea5eeb17a061775b32b70917474637c80.js" integrity="sha256-ZXnsloMhHPuVIGSu3zo7rqXusXoGF3WzK3CRdHRjfIA="></script>
+  
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  <script
+    defer
+    src="/js/hugo-blox-en.min.js"
+    integrity=""
+  ></script>
+
+  
+  
+
+
+
+
+
+
+
+
+  
+    
+      
+      <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+      
+    
+  
+
+
+
+
+</head>
+
+  <body class="dark:bg-hb-dark dark:text-white page-wrapper" id="top">
+    <div id="page-bg"></div>
+    <div class="page-header ">
+      
+      
+      
+        
+        
+        
+          <header id="site-header" class="header">
+  <nav class="navbar px-3 flex justify-left">
+    <div class="order-0 h-100">
+      
+      <a class="navbar-brand" href="/" title="Chongjie Si">
+        Chongjie Si
+      </a>
+    </div>
+    
+    <input id="nav-toggle" type="checkbox" class="hidden" />
+    <label
+      for="nav-toggle"
+      class="order-3 cursor-pointer flex items-center lg:hidden text-dark dark:text-white lg:order-1">
+      <svg id="show-button" class="h-6 fill-current block" viewBox="0 0 20 20">
+        <title>Open Menu</title>
+        <path d="M0 3h20v2H0V3z m0 6h20v2H0V9z m0 6h20v2H0V0z"></path>
+      </svg>
+      <svg id="hide-button" class="h-6 fill-current hidden" viewBox="0 0 20 20">
+        <title>Close Menu</title>
+        <polygon
+          points="11 9 22 9 22 11 11 11 11 22 9 22 9 11 -2 11 -2 9 9 9 9 -2 11 -2"
+          transform="rotate(45 10 10)"></polygon>
+      </svg>
+    </label>
+    
+
+    
+    
+    <ul
+      id="nav-menu"
+      class="navbar-nav order-3 hidden lg:flex w-full pb-6 lg:order-1 lg:w-auto lg:space-x-2 lg:pb-0 xl:space-x-8 justify-left
+      ">
+      
+      
+      
+      
+      
+      
+      <li class="nav-item">
+        <a
+          class="nav-link "
+          
+          href="/home/"
+        >Home</a
+        >
+      </li>
+      
+      
+      
+      
+      
+      
+      <li class="nav-item">
+        <a
+          class="nav-link "
+          
+          href="/home/#news"
+        >News</a
+        >
+      </li>
+      
+      
+      
+      
+      
+      
+      <li class="nav-item">
+        <a
+          class="nav-link "
+          
+          href="/publications/"
+        >Publications</a
+        >
+      </li>
+      
+      
+      
+      
+      
+      
+      <li class="nav-item">
+        <a
+          class="nav-link "
+          
+          href="/blogs/"
+        >Blogs</a
+        >
+      </li>
+      
+      
+      
+      
+      
+      
+      <li class="nav-item">
+        <a
+          class="nav-link "
+          
+          href="/cv/"
+        >CV</a
+        >
+      </li>
+      
+      
+      
+      
+      
+      
+      <li class="nav-item">
+        <a
+          class="nav-link "
+          
+          href="/photos/"
+        >Photos</a
+        >
+      </li>
+      
+      
+      
+    </ul>
+
+    <div class="order-1 ml-auto flex items-center md:order-2 lg:ml-0">
+
+      
+      
+      
+      <button
+        aria-label="search"
+        class="text-black hover:text-primary  inline-block px-3 text-xl dark:text-white"
+        id="search_toggle">
+        <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512" fill="currentColor"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
+      </button>
+      
+
+      
+      
+      <div class="px-3 text-black hover:text-primary-700 dark:text-white dark:hover:text-primary-300
+            [&.active]:font-bold [&.active]:text-black/90 dark:[&.active]:text-white">
+        <button class="theme-toggle mt-1" accesskey="t" title="appearance">
+          <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+               stroke-linejoin="round" class="dark:hidden">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+               stroke-linejoin="round" class=" dark:block [&:not(dark)]:hidden">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+      </div>
+      
+
+      
+      
+
+      
+      
+    </div>
+  </nav>
+</header>
+
+
+<div id="search" class="hidden p-3"></div>
+
+
+        
+      
+    </div>
+    <div class="page-body  my-10">
+      <div class="mx-auto flex max-w-screen-xl">
+  
+
+  
+  <div class="hb-sidebar-mobile-menu fixed inset-0 z-10 bg-white dark:bg-black/80 hidden"></div>
+
+
+
+<aside class="hb-sidebar-container max-lg:[transform:translate3d(0,-100%,0)] lg:sticky">
+  
+  <div class="px-4 pt-4 lg:hidden">
+    
+    
+  </div>
+  <div class="hb-scrollbar lg:h-[calc(100vh-var(--navbar-height))]">
+    <ul class="flex flex-col gap-1 lg:hidden">
+      
+      
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/"
+    
+  >Publications
+        <span data-hb-sidebar-toggle>
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-[18px] min-w-[18px] rounded-sm p-0.5 hover:bg-gray-800/5 dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="origin-center transition-transform rtl:-rotate-180"></path></svg>
+        </span>
+    </a><div class="ltr:pr-0 overflow-hidden">
+        <ul class="hb-sidebar-list"><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2026-cvpr-schirn/"
+    
+  >Revisiting Sparsity Constraint Under High-Rank Property in Partial Multi-Label Learning
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2026-tpami-tsd/"
+    
+  >Task-Specific Directions: Definition, Exploration, and Utilization in Parameter Efficient Fine-Tuning
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2026-iclr-flexlora/"
+    
+  >FlexLoRA: Entropy-Guided Flexible Low-Rank Adaptation
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2025-nips-corl/"
+    
+  >Co-Reinforcement Learning for Unified Multimodal Understanding and Generation
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2025-nips-opmapper/"
+    
+  >OPMapper: Enhancing Open-Vocabulary Semantic Segmentation with Multi-Guidance Information
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2025-colm-dualedit/"
+    
+  >DualEdit: Dual Editing for Knowledge Updating in Vision-Language Models
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2025-arxiv-map/"
+    
+  >MAP: Revisiting Weight Decomposition for Low-Rank Adaptation
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2025-arxiv-speclora/"
+    
+  >Weight Spectra Induced Efficient Model Adaptation
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2025-arxiv-nan/"
+    
+  >NAN: A Training-Free Solution to Coefficient Estimation in Model Merging
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2025-arxiv-lip/"
+    
+  >Why Can Accurate Models Be Learned from Inaccurate Annotations?
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2025-iccv-liera/"
+    
+  >Generalized Tensor-based Parameter-Efficient Fine-Tuning via Lie Group Transformations
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2025-iclr-flora/"
+    
+  >Maintaining Structural Integrity in Parameter Spaces for Parameter Efficient Fine-Tuning
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2025-iclr-lora-dash/"
+    
+  >Unleashing the Power of Task-Specific Directions in Parameter Efficient Fine-tuning
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2025-arxiv-gaussian/"
+    
+  >Unveiling the Mystery of Weight in Large Foundation Models: Gaussian Distribution Never Fades
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2024-arxiv-subspace-tuning/"
+    
+  >See Further for Parameter Efficient Fine-tuning by Standing on the Shoulders of Decomposition
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2024-eccv-teddy/"
+    
+  >Tendency-driven Mutual Exclusivity for Weakly Supervised Incremental Semantic Segmentation
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2024-arxiv-appeal/"
+    
+  >Appeal: Allow Mislabeled Samples the Chance to be Rectified in Partial Label Learning
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2024-aaai-plcp/"
+    
+  >Partial Label Learning with a Partner
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2023-tkde-homi/"
+    
+  >Multi-label Classification with High-rank and High-order Label Correlations
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2023-kdd-plcl/"
+    
+  >Complementary Classifier Induced Partial Label Learning
+    </a>
+              
+            </li></ul>
+      </div></li>
+        <li class="open"><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/"
+    
+  >Blogs
+        <span data-hb-sidebar-toggle>
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-[18px] min-w-[18px] rounded-sm p-0.5 hover:bg-gray-800/5 dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="origin-center transition-transform rtl:-rotate-180"></path></svg>
+        </span>
+    </a><div class="ltr:pr-0 overflow-hidden">
+        <ul class="hb-sidebar-list"><li class="flex flex-col open"><a
+    class="hb-sidebar-custom-link
+      sidebar-active-item bg-primary-100 font-semibold text-primary-800 dark:bg-primary-300 dark:text-primary-900"
+    href="/blog/adamuon/"
+    
+  >AdaMuon：能否进一步助力Muon替代Adam？
+    </a>
+  
+    <ul class="hb-sidebar-mobile-toc"><li>
+              <a
+                href="#%e9%97%b2%e8%81%8a%e4%b8%80%e4%b8%8b"
+                class="hb-docs-link"
+              >闲聊一下</a>
+            </li>
+          <li>
+              <a
+                href="#%e5%af%b9-muon-%e7%9a%84%e5%88%86%e6%9e%90"
+                class="hb-docs-link"
+              >对 Muon 的分析</a>
+            </li>
+          <li>
+              <a
+                href="#adamuon"
+                class="hb-docs-link"
+              >AdaMuon</a>
+            </li>
+          <li>
+              <a
+                href="#%e5%ae%9e%e9%aa%8c"
+                class="hb-docs-link"
+              >实验</a>
+            </li>
+          <li>
+              <a
+                href="#%e4%b8%80%e4%ba%9b%e8%ae%a8%e8%ae%ba"
+                class="hb-docs-link"
+              >一些讨论</a>
+            </li>
+          </ul>
+  
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/muon/"
+    
+  >Muon：有望成为下一代Adam的优化器
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%833/"
+    
+  >大模型训练3：从矩阵乘法看大模型如何切分
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%832/"
+    
+  >大模型训练2：TPU是如何工作的？
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%831/"
+    
+  >大模型训练1：模型训练的时间都花在哪了？
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/liera%E8%A7%A3%E8%AF%BB/"
+    
+  >李群视角解决N维参数的高效微调
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E6%A8%A1%E5%9E%8B%E8%9E%8D%E5%90%88/"
+    
+  >模型融合的系数到底应该是多少？
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E5%99%AA%E5%A3%B0%E5%AD%A6%E4%B9%A0/"
+    
+  >为什么模型可以从含噪声数据中学习到正确的信息？
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/lora-dash/"
+    
+  >深入解析LoRA-Dash：释放特定任务方向性能的微调方法
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E4%BB%A3%E6%95%B0%E4%B8%8D%E7%AD%89%E5%BC%8F4/"
+    
+  >代数不等式4：三角变换
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E4%BB%A3%E6%95%B0%E4%B8%8D%E7%AD%89%E5%BC%8F3/"
+    
+  >代数不等式3：算术平均-几何平均不等式
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E4%BB%A3%E6%95%B0%E4%B8%8D%E7%AD%89%E5%BC%8F2/"
+    
+  >代数不等式2：一些简单不等式的证明
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E4%BB%A3%E6%95%B0%E4%B8%8D%E7%AD%89%E5%BC%8F1/"
+    
+  >代数不等式1：柯西不等式与拉格朗日恒等式
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E6%BB%A1%E7%A7%A9%E8%BF%90%E7%AE%97/"
+    
+  >矩阵的秩：MA=BM，B、M满秩，A一定满秩吗？
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E7%9F%A9%E9%98%B5%E7%9A%84%E7%A7%A9/"
+    
+  >矩阵的秩、矩阵的子空间、SVD分解
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/lora/"
+    
+  >漫谈LoRA
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E5%8F%B0%E7%90%83%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/"
+    
+  >台球那些事儿
+    </a>
+              
+            </li></ul>
+      </div></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/"
+    
+  >Photo Gallery
+        <span data-hb-sidebar-toggle>
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-[18px] min-w-[18px] rounded-sm p-0.5 hover:bg-gray-800/5 dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="origin-center transition-transform rtl:-rotate-180"></path></svg>
+        </span>
+    </a><div class="ltr:pr-0 overflow-hidden">
+        <ul class="hb-sidebar-list"><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/singapore/"
+    
+  >Singapore
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/vatican/"
+    
+  >Vatican
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/italy/"
+    
+  >Italy
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/switzerland/"
+    
+  >Switzerland
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/france/"
+    
+  >Paris, France
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/luxembourg/"
+    
+  >Luxembourg
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/germany/"
+    
+  >Frankfurt, Germany
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/vancouver/"
+    
+  >Vancouver, Canada
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/japan/"
+    
+  >Japan
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/qinghai/"
+    
+  >Qinghai
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/san-francisco/"
+    
+  >San Francisco, USA
+    </a>
+              
+            </li></ul>
+      </div></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/news/"
+    
+  >💥 Recent News
+        <span data-hb-sidebar-toggle>
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-[18px] min-w-[18px] rounded-sm p-0.5 hover:bg-gray-800/5 dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="origin-center transition-transform rtl:-rotate-180"></path></svg>
+        </span>
+    </a><div class="ltr:pr-0 overflow-hidden">
+        <ul class="hb-sidebar-list"><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/news/news/"
+    
+  >Recent News
+    </a>
+              
+            </li></ul>
+      </div></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/cv/"
+    
+  >Experience
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photos/"
+    
+  >Photos
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/publications/"
+    
+  >Publications
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/home/"
+    
+  >Home
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blogs/"
+    
+  >Blogs
+    </a></li>
+    </ul>
+
+    <ul class="flex flex-col gap-1 max-lg:hidden">
+        
+        <li class="open"><a
+    class="hb-sidebar-custom-link
+      sidebar-active-item bg-primary-100 font-semibold text-primary-800 dark:bg-primary-300 dark:text-primary-900"
+    href="/blog/adamuon/"
+    
+  >AdaMuon：能否进一步助力Muon替代Adam？
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/muon/"
+    
+  >Muon：有望成为下一代Adam的优化器
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%833/"
+    
+  >大模型训练3：从矩阵乘法看大模型如何切分
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%832/"
+    
+  >大模型训练2：TPU是如何工作的？
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%831/"
+    
+  >大模型训练1：模型训练的时间都花在哪了？
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/liera%E8%A7%A3%E8%AF%BB/"
+    
+  >李群视角解决N维参数的高效微调
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E6%A8%A1%E5%9E%8B%E8%9E%8D%E5%90%88/"
+    
+  >模型融合的系数到底应该是多少？
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E5%99%AA%E5%A3%B0%E5%AD%A6%E4%B9%A0/"
+    
+  >为什么模型可以从含噪声数据中学习到正确的信息？
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/lora-dash/"
+    
+  >深入解析LoRA-Dash：释放特定任务方向性能的微调方法
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E4%BB%A3%E6%95%B0%E4%B8%8D%E7%AD%89%E5%BC%8F4/"
+    
+  >代数不等式4：三角变换
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E4%BB%A3%E6%95%B0%E4%B8%8D%E7%AD%89%E5%BC%8F3/"
+    
+  >代数不等式3：算术平均-几何平均不等式
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E4%BB%A3%E6%95%B0%E4%B8%8D%E7%AD%89%E5%BC%8F2/"
+    
+  >代数不等式2：一些简单不等式的证明
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E4%BB%A3%E6%95%B0%E4%B8%8D%E7%AD%89%E5%BC%8F1/"
+    
+  >代数不等式1：柯西不等式与拉格朗日恒等式
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E6%BB%A1%E7%A7%A9%E8%BF%90%E7%AE%97/"
+    
+  >矩阵的秩：MA=BM，B、M满秩，A一定满秩吗？
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E7%9F%A9%E9%98%B5%E7%9A%84%E7%A7%A9/"
+    
+  >矩阵的秩、矩阵的子空间、SVD分解
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/lora/"
+    
+  >漫谈LoRA
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E5%8F%B0%E7%90%83%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/"
+    
+  >台球那些事儿
+    </a></li>
+        
+      </ul>
+    </div>
+
+</aside>
+  
+
+<nav class="hb-toc order-last hidden w-64 shrink-0 xl:block print:hidden px-4" aria-label="table of contents">
+  
+
+
+
+
+
+
+
+
+
+
+
+  <div class="hb-scrollbar text-sm [hyphens:auto] sticky top-16 overflow-y-auto pr-4 pt-6 max-h-[calc(100vh-var(--navbar-height)-env(safe-area-inset-bottom))] -mr-4 rtl:-ml-4"><p class="mb-4 font-semibold tracking-tight">On this page</p><ul>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#%e9%97%b2%e8%81%8a%e4%b8%80%e4%b8%8b">闲聊一下</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#%e5%af%b9-muon-%e7%9a%84%e5%88%86%e6%9e%90">对 Muon 的分析</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#adamuon">AdaMuon</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#%e9%9a%be%e7%82%b9">难点</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#%e6%96%b9%e6%b3%95">方法</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#%e5%ae%9e%e9%aa%8c">实验</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#%e4%b8%80%e4%ba%9b%e8%ae%a8%e8%ae%ba">一些讨论</a>
+      </li></ul>
+
+  
+  
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+  </nav>
+
+
+  <article class="flex w-full min-w-0 min-h-[calc(100vh-var(--navbar-height))] justify-center break-words pb-8 pr-[calc(env(safe-area-inset-right)-1.5rem)]">
+    <main class="prose prose-slate lg:prose-xl dark:prose-invert w-full min-w-0 max-w-6xl px-6 pt-4 md:px-12">
+      <div class="mb-1">
+        <div class="mt-1.5 flex items-center gap-1 overflow-hidden text-sm text-gray-500 dark:text-gray-400">
+      <div class="whitespace-nowrap transition-colors min-w-[24px] overflow-hidden text-ellipsis hover:text-gray-900 dark:hover:text-gray-100">
+        <a href="http://localhost:1313/blog/">Blogs</a>
+      </div><svg class="w-3.5 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m8.25 4.5l7.5 7.5l-7.5 7.5"/></svg><div class="whitespace-nowrap font-medium text-gray-700 dark:text-gray-100">AdaMuon：能否进一步助力Muon替代Adam？</div>
+</div>
+
+      </div>
+
+      <div class="content text-base">
+        <h1>AdaMuon：能否进一步助力Muon替代Adam？</h1>
+        <!--  $$ 
+ -->
+<p>在上一篇文章中，我们介绍了Muon以及其相关工作，并验证了Muon对比Adam的优势。</p>
+<p>在这一篇文章中，我打算进一步介绍我们在Muon上的探索，以及我们的新方法AdaMuon。所有的代码已经开源。</p>
+<p>多啰嗦一句，我觉得nanoGPT这个代码框是真的好用，改一改模型或者优化器，很快就能出结果了，很适合作为学术界发论文或者工业界的一个小规模验证实验。另外Megatron-LM 的代码也一并附上了。</p>
+<p>如果对Muon或者Adam还不太了解的读者，可以参考上一篇文章，这篇将在上一篇的基础上进行。 (想起来一个经典笑话：Who is Adam?)</p>
+<h2 id="闲聊一下">闲聊一下</h2>
+<p>今年3月份，我在X上闲逛，偶然间看到一个叫做 Muon 的优化器。当时看到评论区的人有的是一顿狠吹，说是训练效率大幅提升，并会取代Adam；也有的人唱衰，说不好用，没有任何效果。其实直到今天关于Muon也大致分为这两派人，当然这是后话。</p>
+<p>我本着吃瓜的态度，搜索了一下Muon的论文，结果 google scholar 上没有，arxiv 上也没有，最后才发现是一篇博客。当看完了博客，我的第一反应是质疑，因为 Muon 和 Shampoo 实在是太像了，甚至可以说是 Shampoo 的简化版：</p>
+<img src="https://pic1.zhimg.com/v2-cd56762ee0afcfc9c2a229044fc1dd30_1440w.jpg">
+<p>Muon 与 Shampoo 的核心区别在于是否对预条件矩阵（preconditioner）进行历史累计——Shampoo 通过不断累加历史信息（虽不同于典型的 EMA，但本质仍是累积），而 Muon 则没有这一机制。从动量优化的角度来看，我认为 Shampoo 应当具备更好的效果。之前也听说 Gemini 在用 Shampoo 训练，这也在一定程度上支持了我的判断。</p>
+<p>不过，Shampoo 需要计算矩阵逆，计算开销较大；而 Muon 借助牛顿迭代法避免了显式求逆，在一定程度上可能比 Shampoo 更高效。但真正引起我注意的是苏剑林老师团队近期的工作。虽然我没有找到 Muon 的原论文，但发现了一篇刚刚发布的研究：</p>
+<p><a href="https://arxiv.org/abs/2502.16982" target="_blank" rel="noopener">Muon is scalable for LLM training</a></p>
+<p>这一发现让我颇感意外，也隐约看到了新的可能性。既然工业界已经开始关注 Muon，并对其扩展性进行了实证分析，也许Muon真的有望成为Adam的替代方案。不过，当时除了 Kimi 之外，我并未看到更多论文对 Muon 展开深入探索，一切尚处于未知阶段。这也让我有些犹豫：转向一个新方向必然带来一定的成本，而当时我正专注于 model merging 方面的研究，同时 hold 两个方向虽然可行，但前者已是一片红海，后者却仍迷雾重重——鸡蛋固然不应放在一个篮子里，但资源的分配也需谨慎权衡。</p>
+<p>但是，在经过短暂的考虑之后，我当下决定切换方向——之前的不做了。学界需要追求新的东西，业界需要的是真正有用的东西。既然现在还没有多少人关注，或许只是因为大家尚在观望。如果日后它真的展现出巨大价值，即便我吃不上肉，说不定也能跟着喝上一口汤。</p>
+<p>我到现在还记得，当我告诉导师我打算做优化器时，他脸上那种震惊和不解的神情。也许他也没想明白，为什么在 LLM 如此火热的当下，我会突然对一个小众的领域产生兴趣。</p>
+<p>不过谁又能想到，今天 Kimi v2 1T 的模型用Muon训练成功了，GLM4.5 也用Muon训练成功了呢？</p>
+<h2 id="对-muon-的分析">对 Muon 的分析</h2>
+<p>好了，闲话不多说。开启一个新方向，第一要务就是打通一套可靠的 baseline。我选择了一个基于 nanoGPT 修改而来的代码仓库作为起点。在实现了 Muon 优化器之后，初步的实验结果却并不理想。Muon 在训练早期往往比 Adam 收敛得更快，但在中后期却容易被反超。对于一个新兴方法来说，到这个阶段很容易让人怀疑其有效性。但出于一种直觉和信念，我总觉得应该是代码的某个地方出了问题。</p>
+<p>经过逐行排查（幸亏代码量不大），我意外地发现了 Hugging Face 在 GPT-2 的注意力机制中的一个设置：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale_attn_by_inverse_layer_idx</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">att</span> <span class="o">=</span> <span class="p">(</span><span class="n">q</span> <span class="o">@</span> <span class="n">k</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">k</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">idx_layer</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">att</span> <span class="o">=</span> <span class="p">(</span><span class="n">q</span> <span class="o">@</span> <span class="n">k</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">k</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)))</span>
+</span></span></code></pre></div><p>简单来说，原实现中对注意力输出额外除以了层数（layer），使得注意力值被人为缩小。这一做法相当奇怪——我从未在论文中见过类似描述，也没有看到任何理论依据，但它却实实在在地出现在了代码中。</p>
+<p>在我将这个hack掉之后，训练结果立刻回归正常。Muon 的表现显著提升，相比 Adam 取得了 20% 到甚至 50% 的训练效率增益。通俗来讲，在最优设置下，Muon 仅需训练 10B token 所达到的验证损失，就相当于 Adam 训练 20B token 的结果（所有的实验结果图我会放到最后）。紧接着Megatron-LM上的Muon也复现成功，在大规模实验上Muon也展示出了惊人的效率。</p>
+<p>这个过程看似轻松，实际上耗费了我近两个月的时间。此外，它也给了我一个重要的启示：某些模型架构可能对 Muon 并不友好。由于现有的模型大多基于 Adam 优化器进行训练和调优，许多被广泛采用的设计实际上是在 Adam 的语境下被验证有效的——我们可以认为这些架构是“为 Adam 优化”的。这一发现也为未来的模型设计提供了新的思路：在探索新的优化方法时，我们或许也需要重新审视和调整模型结构本身，以更好地适配优化器的特性，而不仅仅默认沿用为 Adam 所设计的架构。</p>
+<p>既然 Muon 已经验证有效，接下来的目标自然是探索能否构建一个更高效的改进版本。从整体框架来看，Muon 可被视为一种二阶优化器，因为它利用了参数矩阵的行和列信息来构造预条件矩阵。不过，我更倾向于从矩阵操作的角度来理解：如果说 SGD 是元素级别的一阶优化器，那么 Muon 实际上是一种矩阵级别的一阶优化器——它的核心在于对一阶动量进行矩阵层级的更新。</p>
+<p>于是，一个自然的思路是：能否为 Muon 引入矩阵层级的二阶动量，从而将这类 SGD 风格的优化器提升到 Adam 的级别？这一步目前看来仍有困难。既然如此，我们不妨先退一步思考：能否先为其引入元素级别的二阶动量，以增强其自适应能力？元素级二阶动量的重要性已无需赘言，其有效性早已在大量实验和实践中得到广泛验证。</p>
+<p>这就是AdaMuon的motivation。</p>
+<h2 id="adamuon">AdaMuon</h2>
+<h3 id="难点">难点</h3>
+<p>要想实现一个二阶动量加持的Muon，最直接的想法是像Adam那样对Muon进行扩展，直接引入一个二阶动量累积项，并利用该方差估计对正交更新矩阵  进行缩放。然而，这种做法引入了两个关键的设计挑战：</p>
+<ol>
+<li>首先，应确定对哪个分量进行累积。在 Adam 中，二阶动量自然是在原始梯度  $\mathbf{G}$ 
+ 上累积的；但在 Muon 中，更新方向  $\mathbf{O}$ 
+ 是通过动量  $\mathbf{M}$ 
+ 的极分解得到的。目前尚不清楚方差跟踪应当应用于  $\mathbf{G}$ 
+、  $\mathbf{O}$ 
+ 还是  $\mathbf{M}$ 
+ ，因为每一种选择都会导致不同的稳定性和归一化行为。</li>
+<li>其次，如何实现与 Adam 相当的归一化效果。在 Adam 中，一阶矩和二阶矩均基于同一梯度信号计算，因此它们的比值可有效实现逐元素的步长归一化。然而在 Muon 中，  $\mathbf{M}$ 
+ 在训练早期和中期可能波动剧烈，导致生成的  $\mathbf{O}$ 
+ 在不同坐标间差异显著。因此，无论二阶动量是在 $\mathbf{G}$ 
+、 $\mathbf{O}$ 
+  还是   $\mathbf{M}$ 
+ 上积，所得的统计量仍不稳定，无法提供可靠的归一化效果，甚至可能放大噪声。</li>
+</ol>
+<p>要顺利将方差自适应能力融入 Muon，同时不破坏其正交化优势和固有的尺度不变性，就必须审慎解决上述挑战。</p>
+<h3 id="方法">方法</h3>
+<p>针对第一个挑战，我们选择在正交矩阵  $\mathbf{O}$ 
+ 上累积二阶动量，而非原始梯度  $\mathbf{G}$ 
+ 或动量缓冲  $\mathbf{M}$ 
+ 。该设计基于两点考虑：首先，原始梯度  $\mathbf{G}$ 
+ 带有病态缩放和方向噪声，而 Muon 的极分解正是为消除此类噪声而设计，因此不适合用于稳定的方差估计；其次，虽然  $\mathbf{M}$ 
+ 提供了时间平滑的梯度，但其元素值在训练早中期仍不稳定。此外，由于实际更新方向来自  $\mathbf{O}$ 
+ ，在  $\mathbf{M}$ 
+ 上累积方差会导致与更新所用的缩放基准不匹配。相比之下，  $\mathbf{O}$ 
+ 提供了几何归一化且稳定的下降方向，为方差估计提供了更干净的基准。</p>
+<p>具体来说，我们像Adam一样，对  $\mathbf{O}$ 
+ 逐元素平方进行指数移动平均：</p>
+ $$\mathbf{V}_t = \beta \cdot \mathbf{V}_{t-1} + (1 - \beta) \cdot (\mathbf{O}_t \odot \mathbf{O}_t), $$ 
+
+<p>其中  $\odot$ 
+ 表示哈达玛积。 $\mathbf{V}$ 
+ 作为正交更新的二阶动量缓冲区，功能类似于 Adam 中的方差累积器。系数  $\beta$ 
+  直接沿用 Muon 的动量参数，这样也可以不引入额外超参数。方差归一化后的更新方向为：</p>
+ $$\widehat{\mathbf{O}}_t = {\mathbf{O}_t} \oslash ({\sqrt{\mathbf{V}_t} + \varepsilon}), $$ 
+
+<p>其中  $\oslash$ 
+ 表示逐元素除法。之后我们也可以像Muon那样，对齐 Adam 更新量的 RMSnorm ：</p>
+ $$\gamma_t = \frac{0.2}{{\rm RMS}(\widehat{\mathbf{O}}_t)} = \frac{0.2\sqrt{mn}}{\|\widehat{\mathbf{O}}_t\|_F}, \ \ \mathbf{W}_{t+1} = \mathbf{W}_t - \eta \big(\gamma_t \widehat{\mathbf{O}}_t + \lambda \mathbf{W}_t\big). $$ 
+
+<p>看上去开始像模像样了，但这么做的效果并不算是多好。主要原因是，动量缓冲  $\mathbf{M}$ 
+ 在元素层面仍会剧烈变化，导致极分解产生的  $\mathbf{O}$ 
+ 在不同坐标间波动显著。直接累积不稳定的  $\mathbf{O}$ 
+ 难以实现有意义的归一化，甚至可能放大噪声。</p>
+<p>为使  $\mathbf{O}$ 
+ 既可用于二阶动量缩放又足够稳定，我们提出先对  $\mathbf{O}$ 
+ 施加变换  $f$ 
+ ，再执行极分解   $g$ 
+</p>
+ $$\mathbf{O}=g(f(\mathbf{M}))$$ 
+
+<p>注意到  $g$ 
+ 具有全局尺度不变性，即  $g(c\mathbf{M}) = g(\mathbf{M}), \ c>0 $ 
+ ，但其本身无法稳定元素级波动。因此， $f$ 
+  需在保持坐标方向性的同时降低波动。最终我们选择  $f={\rm sign}(\cdot)$ 
+ ，理由如下：</p>
+<img src="https://pic1.zhimg.com/v2-b85630809d7b788d334e95c38022d96c_1440w.jpg">
+<p>设计这些条件的原因在于</p>
+<img src="https://pic3.zhimg.com/v2-aaeecd605326ba56414edfba4d715794_1440w.jpg">
+<p>到这里，AdaMuon已经具备雏形了。我们将算法整理成表：</p>
+<img src="https://pica.zhimg.com/v2-68d717b931b02e9d6d68978eff58be94_1440w.jpg">
+<h2 id="实验">实验</h2>
+<p>来看看效果。</p>
+<img src="https://pic1.zhimg.com/v2-d997ba187ae903a7415a29c35dacc738_1440w.jpg">
+<img src="https://pic4.zhimg.com/v2-e2d5e91f454a4dd0655537bdc09e6a63_1440w.jpg">
+<img src="https://pic4.zhimg.com/v2-c8fcff8e34f3e9868b0484fc41a92f9d_1440w.jpg">
+<p>如果是做预训练的话，我觉得上面三张图已经很能说明问题了。无论是训练效率，还是评测集的跑分，AdaMuon都能取得很好的结果。我现在还在进行AdaMuon scaling law的实验，还有一些其他架构的实验。从目前的初步结果来看，还挺有希望的。</p>
+<h2 id="一些讨论">一些讨论</h2>
+<p>我们讨论一些补充性发现。虽然 AdaMuon 在效果上优于 Muon，但不可否认的是，由于需要额外缓存一组二阶动量矩阵，AdaMuon 对memory的需求也相应提高。然而，在消融实验中我们观察到了一个非常有趣的现象：</p>
+<img src="https://pic1.zhimg.com/v2-f6820bc2a9df0b0a46eaa8bd4a02c5bc_1440w.jpg">
+<p>Muon+Sign（我们暂称其为 SiMuon）的表现显著优于原始 Muon，甚至接近 AdaMuon 的效果。而 SiMuon 相比 Muon 仅增加了一个符号操作，计算开销极小，因此我们认为这是一种极具潜力的 Muon variant。遗憾的是，受限于计算资源与时间，我未能进行大规模实验验证。然而，从现有实验结果已可清晰看出 SiMuon 所具备的潜力。</p>
+<p>最后，我们从学术角度探讨几个可能的改进方向。首先，针对如 ResNet 等广泛使用卷积结构的模型，Muon 目前仅适用于二维矩阵参数，而卷积核通常以高维张量形式存在。因此，能否为高维张量设计相应的正交优化器，是一个值得探索的重要问题。</p>
+<p>其次，Muon 在分布式训练中的通信开销仍有优化空间。当前实现需要跨数据并行组 gather 各节点的动量分量，这一操作引入了额外的通信负担。能否设计一种通信效率更高的 Muon 变体，或寻求一种既保持其正交更新特性、又具备类似 Adam 那样低通信开销的替代方案，也具有重要的研究价值。</p>
+<p>最终，一个更为根本的研究目标是：能否设计出一种真正意义上的矩阵级二阶优化器？此类方法有望在矩阵空间中对曲率进行建模，从而实现对优化方向的更精确调整，从根本上突破现有基于标量或元素级自适应方法的局限。实现这一目标将不仅能够显著提升优化效率，更可能为深度学习的优化理论带来新的突破。</p>
+<p>上述三个方向中，解决第一个问题可形成一篇具有扎实学术价值的论文，解决第二个问题将直接推动工业界的大规模应用；而第三个方向——实现真正的矩阵级二阶优化器，我认为堪称优化器领域的一颗明珠。</p>
+
+      </div>
+
+      
+  <time class="mt-12 mb-8 block text-xs text-gray-500 ltr:text-right rtl:text-left dark:text-gray-400" datetime="2025-08-27T00:00:00.000Z">
+    <span>Last updated on</span>
+    Aug 27, 2025</time>
+      
+      
+  
+    
+    
+    
+      
+      
+    
+<div class="pt-1 no-prose w-full">
+  <hr class="border-dotted border-neutral-300 dark:border-neutral-600" />
+  <div class="flex flex-col md:flex-row flex-nowrap justify-between gap-5 pt-2">
+    <div class="">
+      
+    </div>
+    <div class="">
+      
+        <a class="group flex text-right no-underline" href="/blog/muon/">
+          <span class="flex flex-col">
+            <span
+              class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
+            >Muon：有望成为下一代Adam的优化器</span
+            >
+            <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
+              
+                Aug 21, 2025
+              
+            </span>
+          </span>
+          <span
+            class="mt-[-0.3rem] ms-2 text-neutral-700 transition-transform group-hover:-translate-x-[2px] group-hover:text-primary-600 dark:text-neutral dark:group-hover:text-primary-400"
+          ><span class="ltr:inline">&rarr;</span></span>
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+      
+
+
+  
+  
+  
+
+  
+
+  
+  <section id="comments">
+    
+  
+  <script src="https://giscus.app/client.js"
+          data-repo="ChongjieSi/ChongjieSi.github.io"
+          data-repo-id="R_kgDOLvx5HQ"
+          data-category="Announcements"
+          data-category-id="DIC_kwDOLvx5Hc4CiXjG"
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="top"
+          data-theme="preferred_color_scheme"
+          data-lang="en"
+          data-loading="lazy"
+          crossorigin="anonymous"
+          async>
+  </script>
+
+
+  </section>
+  
+
+
+    </main>
+  </article>
+</div>
+
+    </div>
+    <div class="page-footer">
+      <footer class="container mx-auto flex flex-col justify-items-center text-sm leading-6 mt-24 mb-4 text-slate-700 dark:text-slate-200">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+    
+  
+  
+    
+  
+
+  
+
+  
+  <p class="powered-by text-center">
+    © 2026 Chongjie
+  </p>
+  
+
+  <p class="powered-by footer-license-icons">
+    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank" aria-label="Creative Commons">
+      <i class="fab fa-creative-commons fa-2x" aria-hidden="true"></i>
+      <i class="fab fa-creative-commons-by fa-2x" aria-hidden="true"></i>
+      
+        <i class="fab fa-creative-commons-nc fa-2x" aria-hidden="true"></i>
+      
+      
+        <i class="fab fa-creative-commons-nd fa-2x" aria-hidden="true"></i>
+      
+    </a>
+  </p>
+
+
+
+
+
+  
+  
+<center>
+<div class="busuanzi-footer">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    
+    <i class="fa fa-user"></i>  <span id="busuanzi_value_site_pv"></span>
+</div>
+</center></footer>
+
+    </div>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

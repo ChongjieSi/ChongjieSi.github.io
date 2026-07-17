@@ -1,0 +1,2062 @@
+<!doctype html>
+<!-- This site was created with Hugo Blox. https://hugoblox.com -->
+<!-- Last Published: July 18, 2026 --><html lang="en-us" dir="ltr"
+      data-wc-theme-default="system">
+  
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="generator" content="Hugo Blox Builder 0.2.0" />
+  <link rel="stylesheet" href="/css/custom.css">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Chongjie Si" />
+
+  
+  
+  
+    
+  
+  <meta name="description" content="一些我对矩阵的秩、子空间以及SVD分解的理解" />
+
+  
+  <link rel="alternate" hreflang="en-us" href="http://localhost:1313/blog/%E7%9F%A9%E9%98%B5%E7%9A%84%E7%A7%A9/" />
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="/css/themes/emerald.min.css" />
+  
+
+  
+  
+    
+    <link href="/dist/wc.min.css" rel="stylesheet" />
+  
+
+  
+  
+  
+
+  
+
+  <script>
+     
+    window.hbb = {
+       defaultTheme: document.documentElement.dataset.wcThemeDefault,
+       setDarkTheme: () => {
+        document.documentElement.classList.add("dark");
+        document.documentElement.style.colorScheme = "dark";
+      },
+       setLightTheme: () => {
+        document.documentElement.classList.remove("dark");
+        document.documentElement.style.colorScheme = "light";
+      }
+    }
+
+    console.debug(`Default Hugo Blox Builder theme is ${window.hbb.defaultTheme}`);
+
+    if ("wc-color-theme" in localStorage) {
+      localStorage.getItem("wc-color-theme") === "dark" ? window.hbb.setDarkTheme() : window.hbb.setLightTheme();
+    } else {
+      window.hbb.defaultTheme === "dark" ? window.hbb.setDarkTheme() : window.hbb.setLightTheme();
+      if (window.hbb.defaultTheme === "system") {
+        window.matchMedia("(prefers-color-scheme: dark)").matches ? window.hbb.setDarkTheme() : window.hbb.setLightTheme();
+      }
+    }
+  </script>
+
+  <script>
+    
+    document.addEventListener('DOMContentLoaded', function () {
+      
+      let checkboxes = document.querySelectorAll('li input[type=\'checkbox\'][disabled]');
+      checkboxes.forEach(e => {
+        e.parentElement.parentElement.classList.add('task-list');
+      });
+
+      
+      const liNodes = document.querySelectorAll('.task-list li');
+      liNodes.forEach(nodes => {
+        let textNodes = Array.from(nodes.childNodes).filter(node => node.nodeType === 3 && node.textContent.trim().length > 1);
+        if (textNodes.length > 0) {
+          const span = document.createElement('label');
+          textNodes[0].after(span);  
+          span.appendChild(nodes.querySelector('input[type=\'checkbox\']'));
+          span.appendChild(textNodes[0]);
+        }
+      });
+    });
+  </script>
+
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+  <link rel="icon" type="image/png" href="/media/icon_hue006528a12cd6926ef214d6e0d83c455_38865_32x32_fill_lanczos_center_3.png" />
+  <link rel="apple-touch-icon" type="image/png" href="/media/icon_hue006528a12cd6926ef214d6e0d83c455_38865_180x180_fill_lanczos_center_3.png" />
+
+  <link rel="canonical" href="http://localhost:1313/blog/%E7%9F%A9%E9%98%B5%E7%9A%84%E7%A7%A9/" />
+
+  
+  
+  
+  
+  
+  
+  
+  
+    
+  
+  
+
+  
+  
+    
+    
+  
+  <meta property="twitter:card" content="summary_large_image" />
+  
+  <meta property="og:site_name" content="Chongjie Si" />
+  <meta property="og:url" content="http://localhost:1313/blog/%E7%9F%A9%E9%98%B5%E7%9A%84%E7%A7%A9/" />
+  <meta property="og:title" content="矩阵的秩、矩阵的子空间、SVD分解 | Chongjie Si" />
+  <meta property="og:description" content="一些我对矩阵的秩、子空间以及SVD分解的理解" /><meta property="og:image" content="http://localhost:1313/blog/%E7%9F%A9%E9%98%B5%E7%9A%84%E7%A7%A9/featured.jpeg" />
+    <meta property="twitter:image" content="http://localhost:1313/blog/%E7%9F%A9%E9%98%B5%E7%9A%84%E7%A7%A9/featured.jpeg" /><meta property="og:locale" content="en-us" />
+  
+    
+      <meta
+        property="article:published_time"
+        content="2024-10-11T00:00:00&#43;00:00"
+      />
+    
+    <meta property="article:modified_time" content="2024-10-11T00:00:00&#43;00:00">
+  
+
+  
+
+
+
+  
+
+
+  <title>矩阵的秩、矩阵的子空间、SVD分解 | Chongjie Si</title>
+
+  
+  
+  
+  
+  
+    
+    
+  
+  
+  <style>
+    @font-face {
+      font-family: 'Inter var';
+      font-style: normal;
+      font-weight: 100 900;
+      font-display: swap;
+      src: url(/dist/font/Inter.var.woff2) format(woff2);
+    }
+  </style>
+
+  
+
+  
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+  
+  
+  
+  
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+  
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    
+  
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+  
+  
+  
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+  
+
+
+
+
+
+
+
+<link type="text/css" rel="stylesheet" href="/dist/pagefind/pagefind-ui.be766eb419317a14ec769d216e9779bfe8f3737c80e780f4ba0dafb57a41a482.css" integrity="sha256-vnZutBkxehTsdp0hbpd5v&#43;jzc3yA54D0ug2vtXpBpII=" />
+
+
+<script src="/dist/pagefind/pagefind-ui.87693d7c6f2b3b347ce359d0ede762c033419f0a32b22ce508c335a81d841f1b.js" integrity="sha256-h2k9fG8rOzR841nQ7ediwDNBnwoysizlCMM1qB2EHxs="></script>
+
+
+<script>window.hbb.pagefind = {"baseUrl":"/"};</script>
+
+<style>
+  html.dark {
+    --pagefind-ui-primary: #eeeeee;
+    --pagefind-ui-text: #eeeeee;
+    --pagefind-ui-background: #152028;
+    --pagefind-ui-border: #152028;
+    --pagefind-ui-tag: #152028;
+  }
+</style>
+
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    new PagefindUI({
+      element: "#search",
+      showSubResults: true,
+      baseUrl: window.hbb.pagefind.baseUrl,
+      bundlePath: window.hbb.pagefind.baseUrl + "pagefind/",
+    });
+  });
+  document.addEventListener('DOMContentLoaded', () => {
+    let element = document.getElementById('search');
+    let trigger = document.getElementById('search_toggle');
+
+    if (trigger) {
+      trigger.addEventListener('click', () => {
+        element.classList.toggle('hidden');
+        element.querySelector("input").value = ""
+        element.querySelector("input").focus()
+
+        if (!element.classList.contains('hidden')) {
+          let clear_trigger = document.querySelector('.pagefind-ui__search-clear');
+
+          if (clear_trigger && !clear_trigger.hasAttribute('listenerOnClick')) {
+            clear_trigger.setAttribute('listenerOnClick', 'true');
+
+            clear_trigger.addEventListener('click', () => {
+              element.classList.toggle('hidden');
+            });
+          }
+        }
+
+      });
+    }
+  });
+</script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link type="text/css" rel="stylesheet" href="/dist/lib/katex/katex.min.505d5f829022bb7b4f24dfee0aa1141cd7bba67afe411d1240335f820960b5c3.css" integrity="sha256-UF1fgpAiu3tPJN/uCqEUHNe7pnr&#43;QR0SQDNfgglgtcM=" />
+  
+  
+  <script defer src="/dist/lib/katex/katex.min.dc84b296ec3e884de093158f760fd9d45b6c7abe58b5381557f4e138f46a58ae.js" integrity="sha256-3ISyluw&#43;iE3gkxWPdg/Z1Ftser5YtTgVV/ThOPRqWK4="></script>
+  
+  
+  
+  
+  <script defer src="/js/katex-renderer.6579ec9683211cfb952064aedf3a3baea5eeb17a061775b32b70917474637c80.js" integrity="sha256-ZXnsloMhHPuVIGSu3zo7rqXusXoGF3WzK3CRdHRjfIA="></script>
+  
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  <script
+    defer
+    src="/js/hugo-blox-en.min.js"
+    integrity=""
+  ></script>
+
+  
+  
+
+
+
+
+
+
+
+
+  
+    
+      
+      <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+      
+    
+  
+
+
+
+
+</head>
+
+  <body class="dark:bg-hb-dark dark:text-white page-wrapper" id="top">
+    <div id="page-bg"></div>
+    <div class="page-header ">
+      
+      
+      
+        
+        
+        
+          <header id="site-header" class="header">
+  <nav class="navbar px-3 flex justify-left">
+    <div class="order-0 h-100">
+      
+      <a class="navbar-brand" href="/" title="Chongjie Si">
+        Chongjie Si
+      </a>
+    </div>
+    
+    <input id="nav-toggle" type="checkbox" class="hidden" />
+    <label
+      for="nav-toggle"
+      class="order-3 cursor-pointer flex items-center lg:hidden text-dark dark:text-white lg:order-1">
+      <svg id="show-button" class="h-6 fill-current block" viewBox="0 0 20 20">
+        <title>Open Menu</title>
+        <path d="M0 3h20v2H0V3z m0 6h20v2H0V9z m0 6h20v2H0V0z"></path>
+      </svg>
+      <svg id="hide-button" class="h-6 fill-current hidden" viewBox="0 0 20 20">
+        <title>Close Menu</title>
+        <polygon
+          points="11 9 22 9 22 11 11 11 11 22 9 22 9 11 -2 11 -2 9 9 9 9 -2 11 -2"
+          transform="rotate(45 10 10)"></polygon>
+      </svg>
+    </label>
+    
+
+    
+    
+    <ul
+      id="nav-menu"
+      class="navbar-nav order-3 hidden lg:flex w-full pb-6 lg:order-1 lg:w-auto lg:space-x-2 lg:pb-0 xl:space-x-8 justify-left
+      ">
+      
+      
+      
+      
+      
+      
+      <li class="nav-item">
+        <a
+          class="nav-link "
+          
+          href="/home/"
+        >Home</a
+        >
+      </li>
+      
+      
+      
+      
+      
+      
+      <li class="nav-item">
+        <a
+          class="nav-link "
+          
+          href="/home/#news"
+        >News</a
+        >
+      </li>
+      
+      
+      
+      
+      
+      
+      <li class="nav-item">
+        <a
+          class="nav-link "
+          
+          href="/publications/"
+        >Publications</a
+        >
+      </li>
+      
+      
+      
+      
+      
+      
+      <li class="nav-item">
+        <a
+          class="nav-link "
+          
+          href="/blogs/"
+        >Blogs</a
+        >
+      </li>
+      
+      
+      
+      
+      
+      
+      <li class="nav-item">
+        <a
+          class="nav-link "
+          
+          href="/cv/"
+        >CV</a
+        >
+      </li>
+      
+      
+      
+      
+      
+      
+      <li class="nav-item">
+        <a
+          class="nav-link "
+          
+          href="/photos/"
+        >Photos</a
+        >
+      </li>
+      
+      
+      
+    </ul>
+
+    <div class="order-1 ml-auto flex items-center md:order-2 lg:ml-0">
+
+      
+      
+      
+      <button
+        aria-label="search"
+        class="text-black hover:text-primary  inline-block px-3 text-xl dark:text-white"
+        id="search_toggle">
+        <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512" fill="currentColor"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
+      </button>
+      
+
+      
+      
+      <div class="px-3 text-black hover:text-primary-700 dark:text-white dark:hover:text-primary-300
+            [&.active]:font-bold [&.active]:text-black/90 dark:[&.active]:text-white">
+        <button class="theme-toggle mt-1" accesskey="t" title="appearance">
+          <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+               stroke-linejoin="round" class="dark:hidden">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+               stroke-linejoin="round" class=" dark:block [&:not(dark)]:hidden">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+      </div>
+      
+
+      
+      
+
+      
+      
+    </div>
+  </nav>
+</header>
+
+
+<div id="search" class="hidden p-3"></div>
+
+
+        
+      
+    </div>
+    <div class="page-body  my-10">
+      <div class="mx-auto flex max-w-screen-xl">
+  
+
+  
+  <div class="hb-sidebar-mobile-menu fixed inset-0 z-10 bg-white dark:bg-black/80 hidden"></div>
+
+
+
+<aside class="hb-sidebar-container max-lg:[transform:translate3d(0,-100%,0)] lg:sticky">
+  
+  <div class="px-4 pt-4 lg:hidden">
+    
+    
+  </div>
+  <div class="hb-scrollbar lg:h-[calc(100vh-var(--navbar-height))]">
+    <ul class="flex flex-col gap-1 lg:hidden">
+      
+      
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/"
+    
+  >Publications
+        <span data-hb-sidebar-toggle>
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-[18px] min-w-[18px] rounded-sm p-0.5 hover:bg-gray-800/5 dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="origin-center transition-transform rtl:-rotate-180"></path></svg>
+        </span>
+    </a><div class="ltr:pr-0 overflow-hidden">
+        <ul class="hb-sidebar-list"><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2026-cvpr-schirn/"
+    
+  >Revisiting Sparsity Constraint Under High-Rank Property in Partial Multi-Label Learning
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2026-tpami-tsd/"
+    
+  >Task-Specific Directions: Definition, Exploration, and Utilization in Parameter Efficient Fine-Tuning
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2026-iclr-flexlora/"
+    
+  >FlexLoRA: Entropy-Guided Flexible Low-Rank Adaptation
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2025-nips-corl/"
+    
+  >Co-Reinforcement Learning for Unified Multimodal Understanding and Generation
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2025-nips-opmapper/"
+    
+  >OPMapper: Enhancing Open-Vocabulary Semantic Segmentation with Multi-Guidance Information
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2025-colm-dualedit/"
+    
+  >DualEdit: Dual Editing for Knowledge Updating in Vision-Language Models
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2025-arxiv-map/"
+    
+  >MAP: Revisiting Weight Decomposition for Low-Rank Adaptation
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2025-arxiv-speclora/"
+    
+  >Weight Spectra Induced Efficient Model Adaptation
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2025-arxiv-nan/"
+    
+  >NAN: A Training-Free Solution to Coefficient Estimation in Model Merging
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2025-arxiv-lip/"
+    
+  >Why Can Accurate Models Be Learned from Inaccurate Annotations?
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2025-iccv-liera/"
+    
+  >Generalized Tensor-based Parameter-Efficient Fine-Tuning via Lie Group Transformations
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2025-iclr-flora/"
+    
+  >Maintaining Structural Integrity in Parameter Spaces for Parameter Efficient Fine-Tuning
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2025-iclr-lora-dash/"
+    
+  >Unleashing the Power of Task-Specific Directions in Parameter Efficient Fine-tuning
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2025-arxiv-gaussian/"
+    
+  >Unveiling the Mystery of Weight in Large Foundation Models: Gaussian Distribution Never Fades
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2024-arxiv-subspace-tuning/"
+    
+  >See Further for Parameter Efficient Fine-tuning by Standing on the Shoulders of Decomposition
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2024-eccv-teddy/"
+    
+  >Tendency-driven Mutual Exclusivity for Weakly Supervised Incremental Semantic Segmentation
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2024-arxiv-appeal/"
+    
+  >Appeal: Allow Mislabeled Samples the Chance to be Rectified in Partial Label Learning
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2024-aaai-plcp/"
+    
+  >Partial Label Learning with a Partner
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2023-tkde-homi/"
+    
+  >Multi-label Classification with High-rank and High-order Label Correlations
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/full-publications/2023-kdd-plcl/"
+    
+  >Complementary Classifier Induced Partial Label Learning
+    </a>
+              
+            </li></ul>
+      </div></li>
+        <li class="open"><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/"
+    
+  >Blogs
+        <span data-hb-sidebar-toggle>
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-[18px] min-w-[18px] rounded-sm p-0.5 hover:bg-gray-800/5 dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="origin-center transition-transform rtl:-rotate-180"></path></svg>
+        </span>
+    </a><div class="ltr:pr-0 overflow-hidden">
+        <ul class="hb-sidebar-list"><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/adamuon/"
+    
+  >AdaMuon：能否进一步助力Muon替代Adam？
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/muon/"
+    
+  >Muon：有望成为下一代Adam的优化器
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%833/"
+    
+  >大模型训练3：从矩阵乘法看大模型如何切分
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%832/"
+    
+  >大模型训练2：TPU是如何工作的？
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%831/"
+    
+  >大模型训练1：模型训练的时间都花在哪了？
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/liera%E8%A7%A3%E8%AF%BB/"
+    
+  >李群视角解决N维参数的高效微调
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E6%A8%A1%E5%9E%8B%E8%9E%8D%E5%90%88/"
+    
+  >模型融合的系数到底应该是多少？
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E5%99%AA%E5%A3%B0%E5%AD%A6%E4%B9%A0/"
+    
+  >为什么模型可以从含噪声数据中学习到正确的信息？
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/lora-dash/"
+    
+  >深入解析LoRA-Dash：释放特定任务方向性能的微调方法
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E4%BB%A3%E6%95%B0%E4%B8%8D%E7%AD%89%E5%BC%8F4/"
+    
+  >代数不等式4：三角变换
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E4%BB%A3%E6%95%B0%E4%B8%8D%E7%AD%89%E5%BC%8F3/"
+    
+  >代数不等式3：算术平均-几何平均不等式
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E4%BB%A3%E6%95%B0%E4%B8%8D%E7%AD%89%E5%BC%8F2/"
+    
+  >代数不等式2：一些简单不等式的证明
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E4%BB%A3%E6%95%B0%E4%B8%8D%E7%AD%89%E5%BC%8F1/"
+    
+  >代数不等式1：柯西不等式与拉格朗日恒等式
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E6%BB%A1%E7%A7%A9%E8%BF%90%E7%AE%97/"
+    
+  >矩阵的秩：MA=BM，B、M满秩，A一定满秩吗？
+    </a>
+              
+            </li><li class="flex flex-col open"><a
+    class="hb-sidebar-custom-link
+      sidebar-active-item bg-primary-100 font-semibold text-primary-800 dark:bg-primary-300 dark:text-primary-900"
+    href="/blog/%E7%9F%A9%E9%98%B5%E7%9A%84%E7%A7%A9/"
+    
+  >矩阵的秩、矩阵的子空间、SVD分解
+    </a>
+  
+    <ul class="hb-sidebar-mobile-toc"><li>
+              <a
+                href="#%e7%9f%a9%e9%98%b5%e7%9a%84%e7%a7%a9"
+                class="hb-docs-link"
+              >矩阵的秩</a>
+            </li>
+          <li>
+              <a
+                href="#%e7%9f%a9%e9%98%b5%e7%9a%84%e5%ad%90%e7%a9%ba%e9%97%b4"
+                class="hb-docs-link"
+              >矩阵的子空间</a>
+            </li>
+          <li>
+              <a
+                href="#%e5%a5%87%e5%bc%82%e5%80%bc%e5%88%86%e8%a7%a3"
+                class="hb-docs-link"
+              >奇异值分解</a>
+            </li>
+          </ul>
+  
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/lora/"
+    
+  >漫谈LoRA
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E5%8F%B0%E7%90%83%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/"
+    
+  >台球那些事儿
+    </a>
+              
+            </li></ul>
+      </div></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/"
+    
+  >Photo Gallery
+        <span data-hb-sidebar-toggle>
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-[18px] min-w-[18px] rounded-sm p-0.5 hover:bg-gray-800/5 dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="origin-center transition-transform rtl:-rotate-180"></path></svg>
+        </span>
+    </a><div class="ltr:pr-0 overflow-hidden">
+        <ul class="hb-sidebar-list"><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/singapore/"
+    
+  >Singapore
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/vatican/"
+    
+  >Vatican
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/italy/"
+    
+  >Italy
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/switzerland/"
+    
+  >Switzerland
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/france/"
+    
+  >Paris, France
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/luxembourg/"
+    
+  >Luxembourg
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/germany/"
+    
+  >Frankfurt, Germany
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/vancouver/"
+    
+  >Vancouver, Canada
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/japan/"
+    
+  >Japan
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/qinghai/"
+    
+  >Qinghai
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photo/san-francisco/"
+    
+  >San Francisco, USA
+    </a>
+              
+            </li></ul>
+      </div></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/news/"
+    
+  >💥 Recent News
+        <span data-hb-sidebar-toggle>
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-[18px] min-w-[18px] rounded-sm p-0.5 hover:bg-gray-800/5 dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="origin-center transition-transform rtl:-rotate-180"></path></svg>
+        </span>
+    </a><div class="ltr:pr-0 overflow-hidden">
+        <ul class="hb-sidebar-list"><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/news/news/"
+    
+  >Recent News
+    </a>
+              
+            </li></ul>
+      </div></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/cv/"
+    
+  >Experience
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/photos/"
+    
+  >Photos
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/publications/"
+    
+  >Publications
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/home/"
+    
+  >Home
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blogs/"
+    
+  >Blogs
+    </a></li>
+    </ul>
+
+    <ul class="flex flex-col gap-1 max-lg:hidden">
+        
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/adamuon/"
+    
+  >AdaMuon：能否进一步助力Muon替代Adam？
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/muon/"
+    
+  >Muon：有望成为下一代Adam的优化器
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%833/"
+    
+  >大模型训练3：从矩阵乘法看大模型如何切分
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%832/"
+    
+  >大模型训练2：TPU是如何工作的？
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%831/"
+    
+  >大模型训练1：模型训练的时间都花在哪了？
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/liera%E8%A7%A3%E8%AF%BB/"
+    
+  >李群视角解决N维参数的高效微调
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E6%A8%A1%E5%9E%8B%E8%9E%8D%E5%90%88/"
+    
+  >模型融合的系数到底应该是多少？
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E5%99%AA%E5%A3%B0%E5%AD%A6%E4%B9%A0/"
+    
+  >为什么模型可以从含噪声数据中学习到正确的信息？
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/lora-dash/"
+    
+  >深入解析LoRA-Dash：释放特定任务方向性能的微调方法
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E4%BB%A3%E6%95%B0%E4%B8%8D%E7%AD%89%E5%BC%8F4/"
+    
+  >代数不等式4：三角变换
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E4%BB%A3%E6%95%B0%E4%B8%8D%E7%AD%89%E5%BC%8F3/"
+    
+  >代数不等式3：算术平均-几何平均不等式
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E4%BB%A3%E6%95%B0%E4%B8%8D%E7%AD%89%E5%BC%8F2/"
+    
+  >代数不等式2：一些简单不等式的证明
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E4%BB%A3%E6%95%B0%E4%B8%8D%E7%AD%89%E5%BC%8F1/"
+    
+  >代数不等式1：柯西不等式与拉格朗日恒等式
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E6%BB%A1%E7%A7%A9%E8%BF%90%E7%AE%97/"
+    
+  >矩阵的秩：MA=BM，B、M满秩，A一定满秩吗？
+    </a></li>
+        <li class="open"><a
+    class="hb-sidebar-custom-link
+      sidebar-active-item bg-primary-100 font-semibold text-primary-800 dark:bg-primary-300 dark:text-primary-900"
+    href="/blog/%E7%9F%A9%E9%98%B5%E7%9A%84%E7%A7%A9/"
+    
+  >矩阵的秩、矩阵的子空间、SVD分解
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/lora/"
+    
+  >漫谈LoRA
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/blog/%E5%8F%B0%E7%90%83%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/"
+    
+  >台球那些事儿
+    </a></li>
+        
+      </ul>
+    </div>
+
+</aside>
+  
+
+<nav class="hb-toc order-last hidden w-64 shrink-0 xl:block print:hidden px-4" aria-label="table of contents">
+  
+
+
+
+
+
+
+
+
+
+
+
+  <div class="hb-scrollbar text-sm [hyphens:auto] sticky top-16 overflow-y-auto pr-4 pt-6 max-h-[calc(100vh-var(--navbar-height)-env(safe-area-inset-bottom))] -mr-4 rtl:-ml-4"><p class="mb-4 font-semibold tracking-tight">On this page</p><ul>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#%e7%9f%a9%e9%98%b5%e7%9a%84%e7%a7%a9">矩阵的秩</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#%e4%b8%80%e4%b8%aa%e7%ae%80%e5%8d%95%e7%9a%84%e4%be%8b%e5%ad%90">一个简单的例子</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#%e7%a7%a9%e7%9a%84%e5%90%ab%e4%b9%89%e4%b8%8e%e4%bd%9c%e7%94%a8">秩的含义与作用</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#%e7%9f%a9%e9%98%b5%e7%9a%84%e5%ad%90%e7%a9%ba%e9%97%b4">矩阵的子空间</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#%e5%ae%9a%e4%b9%89">定义</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#%e5%88%97%e7%a9%ba%e9%97%b4column-space">列空间（Column Space）</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#%e8%a1%8c%e7%a9%ba%e9%97%b4row-space">行空间（Row Space）</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#%e9%9b%b6%e7%a9%ba%e9%97%b4null-space">零空间（Null Space）</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#%e5%b7%a6%e9%9b%b6%e7%a9%ba%e9%97%b4left-null-space">左零空间（Left Null Space）</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#%e5%ad%90%e7%a9%ba%e9%97%b4%e4%b8%8e%e7%a7%a9%e7%9a%84%e5%85%b3%e7%b3%bb">子空间与秩的关系</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#%e5%a5%87%e5%bc%82%e5%80%bc%e5%88%86%e8%a7%a3">奇异值分解</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#%e5%a5%87%e5%bc%82%e5%80%bc%e5%88%86%e8%a7%a3%e7%9a%84%e5%a4%8d%e6%9d%82%e6%95%b0%e5%ad%a6%e8%83%8c%e6%99%af">奇异值分解的复杂数学背景</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#%e5%a5%87%e5%bc%82%e5%80%bc%e7%9f%a9%e9%98%b5%e5%87%a0%e4%bd%95%e8%a1%8c%e4%b8%ba%e7%9a%84%e6%a0%b8%e5%bf%83">奇异值：矩阵几何行为的核心</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#%e5%b7%a6%e5%a5%87%e5%bc%82%e5%90%91%e9%87%8f%e4%b8%8e%e5%8f%b3%e5%a5%87%e5%bc%82%e5%90%91%e9%87%8f%e7%9f%a9%e9%98%b5%e6%98%a0%e5%b0%84%e7%9a%84%e5%87%a0%e4%bd%95%e6%97%8b%e8%bd%ac">左奇异向量与右奇异向量：矩阵映射的几何旋转</a>
+      </li></ul>
+
+  
+  
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+  </nav>
+
+
+  <article class="flex w-full min-w-0 min-h-[calc(100vh-var(--navbar-height))] justify-center break-words pb-8 pr-[calc(env(safe-area-inset-right)-1.5rem)]">
+    <main class="prose prose-slate lg:prose-xl dark:prose-invert w-full min-w-0 max-w-6xl px-6 pt-4 md:px-12">
+      <div class="mb-1">
+        <div class="mt-1.5 flex items-center gap-1 overflow-hidden text-sm text-gray-500 dark:text-gray-400">
+      <div class="whitespace-nowrap transition-colors min-w-[24px] overflow-hidden text-ellipsis hover:text-gray-900 dark:hover:text-gray-100">
+        <a href="http://localhost:1313/blog/">Blogs</a>
+      </div><svg class="w-3.5 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m8.25 4.5l7.5 7.5l-7.5 7.5"/></svg><div class="whitespace-nowrap font-medium text-gray-700 dark:text-gray-100">矩阵的秩、矩阵的子空间、SVD分解</div>
+</div>
+
+      </div>
+
+      <div class="content text-base">
+        <h1>矩阵的秩、矩阵的子空间、SVD分解</h1>
+        <!--  $$ 
+ -->
+<p>写一点我对矩阵的秩、矩阵的子空间以及SVD分解的理解。</p>
+<h2 id="矩阵的秩">矩阵的秩</h2>
+<h3 id="一个简单的例子">一个简单的例子</h3>
+<p>我对矩阵秩的最初直观认识源于在多标签学习中的实践。在多标签学习中，一个关键的挑战在于标签之间并非独立，而是存在一定的关联性。以一个简单的例子说明：若某个样本同时具有“雨林”和“足球”两个标签，我们自然会推测它是否也会有“巴西”标签。这表明标签之间存在某种关联结构，而非完全独立。为了进一步说明，我们假设有三个样本，并将它们的标签用一个矩阵来表示，其中矩阵的列依次代表“雨林”、“足球”和“巴西”，每一行则对应一个样本的标签： $\left[\begin{matrix} 1 & 0 & 1 \\ 0 & 1 & 0 \\ 1 & 1 & 1 \end{matrix}\right]$ 
+。不难发现，矩阵的秩为 2。这反映了样本的标签之间存在一定的关联性或冗余性，换句话说，并不是每个标签都独立于其他标签。具体到多标签学习中，矩阵的低秩说明标签之间的相关性较强，部分标签可以通过其他标签的组合来近似表示。对于这个矩阵而言，尽管它包含三个标签，但实际上只有两个潜在的“信息源”或“特征维度”，这解释了为什么秩为 2。</p>
+<h3 id="秩的含义与作用">秩的含义与作用</h3>
+<p>从数学的角度来看，矩阵的秩（rank）是指矩阵中独立行或独立列的最大数目。换句话说，秩衡量的是矩阵中能产生线性独立向量的数量。对于一个 $ m \times n$ 
+的矩阵 $\mathbf{A}$ 
+，秩 $r$ 
+ 表示矩阵 $\mathbf{A}$ 
+中有 $r$ 
+个线性独立的列或行，其余的列或行可以通过这些线性独立向量的线性组合表示。</p>
+<p>矩阵秩在多个领域中扮演重要角色，尤其在数据分析和机器学习中，它具有以下几个关键作用：</p>
+<ol>
+<li>线性独立性：秩还反映了矩阵中数据的线性独立性。高秩矩阵表示大部分行或列之间是线性独立的，信息量较高。低秩矩阵表示数据中存在线性相关性，部分信息可以由其他信息推导出。在线性代数中，这一性质可以用于解线性方程组、评估系统的自由度等。</li>
+<li>冗余信息的识别：当矩阵的秩小于其行或列的数量时，这表明矩阵中存在冗余信息。例如，在多标签学习中，如果标签之间高度相关，标签矩阵的秩会比标签的总数小。通过分析矩阵的秩，可以发现并去除这些冗余信息，从而提高学习算法的效率。</li>
+<li>信号与噪声的分离：在信号处理和机器学习中，秩常用于将信号与噪声分离出来。例如，通过低秩近似，可以滤除噪声并保留数据的核心信息。</li>
+</ol>
+<p>用一句话概括，秩衡量了矩阵行或者列之间的线性无关性。</p>
+<p>在理解了矩阵的秩之后，我们可以进一步探讨与秩密切相关的概念：矩阵的子空间。矩阵的秩不仅揭示了其行或列之间的线性独立性，还引导我们理解矩阵所作用的空间结构。为了更好地理解这一点，我们引入矩阵的子空间这一概念。</p>
+<h2 id="矩阵的子空间">矩阵的子空间</h2>
+<h3 id="定义">定义</h3>
+<p>在线性代数中，子空间是一个由向量构成的线性空间，它封闭于向量加法和数乘运算。对矩阵而言，主要关注的是列空间（column space）、行空间（row space）和零空间（null space）。这些子空间是理解矩阵映射几何特性的核心要素，能够帮助我们揭示矩阵如何将向量从一个空间映射到另一个空间。</p>
+<h3 id="列空间column-space">列空间（Column Space）</h3>
+<p>列空间是矩阵的所有列向量的线性组合所张成的向量空间。给定一个 $ m \times n$ 
+的矩阵 $\mathbf{A}$ 
+，其列空间是 $  \mathbb{R}^m  $ 
+ 中的一个子空间。列空间中的任何向量都可以由矩阵 $\mathbf{A}$ 
+的列向量通过线性组合得到。列空间的维度称为秩，表示该矩阵能够张成的线性独立方向的数量。</p>
+<p>例如，如果矩阵 $\mathbf{A}$ 
+的列向量中有线性相关的列，则这些相关的列不贡献新的独立方向，从而列空间的维度会小于矩阵的列数。因此，矩阵的秩实际上等于列空间的维度。</p>
+<p>几何上，列空间描述了矩阵 $\mathbf{A}$ 
+如何将输入向量（通常来自 $  \mathbb{R}^m  $ 
+ ）映射到其输出空间（通常是 $  \mathbb{R}^m  $ 
+ 中的一个子空间）。列空间张成的维度越小，说明矩阵能够覆盖的方向越少，矩阵的映射效果越“压缩”。</p>
+<h3 id="行空间row-space">行空间（Row Space）</h3>
+<p>行空间是由矩阵的所有行向量的线性组合所构成的向量空间。行空间与列空间密切相关，但存在于不同的维度中：行空间位于 $  \mathbb{R}^n $ 
+，而列空间位于 $  \mathbb{R}^m  $ 
+。行空间的维度同样为矩阵的秩，即矩阵的行中有多少是线性独立的。</p>
+<p>行空间可以看作是矩阵 $\mathbf{A}$ 
+的“左零空间”的正交补。几何上，行空间描述了矩阵的输入空间中所有可以由行向量表示的方向。换句话说，矩阵的行空间反映了哪些方向的输入向量会对输出产生影响，其他方向则被“映射到零”。</p>
+<h3 id="零空间null-space">零空间（Null Space）</h3>
+<p>零空间，也称为核（kernel），是矩阵 $\mathbf{A}$ 
+映射到零向量的所有输入向量的集合。零空间的维度称为零空间维度（nullity），它反映了矩阵映射中失去的信息量。换句话说，零空间的维度告诉我们有多少个输入方向被矩阵映射到零。</p>
+<p>零空间不仅仅是一个抽象的概念，它在解线性方程组时扮演着重要角色。假设我们解方程 $\mathbf{A} \mathbf{x} = \mathbf{0}$ 
+，零空间正是所有满足此方程的向量  $x$ 
+的集合。零空间的维度与秩相关，由秩-零空间定理（Rank-Nullity Theorem）给出：</p>
+ $$\text{rank}(\mathbf{A}) + \text{nullity}(\mathbf{A}) = n$$ 
+
+<p>其中 $n$ 
+是矩阵 $\mathbf{A}$ 
+的列数。这个定理表明，矩阵的零空间维度与矩阵的秩共同决定了输入空间的整体结构。
+几何上，零空间对应于矩阵无法区分的输入方向。这意味着，输入空间中的一些方向对输出空间没有贡献，它们被映射到零。因此，零空间的维度越大，矩阵的信息损失就越严重。</p>
+<h3 id="左零空间left-null-space">左零空间（Left Null Space）</h3>
+<p>与零空间相对的，还有左零空间。左零空间是矩阵 $\mathbf{A}^\mathsf{T}$ 
+的零空间，即所有满足 $\mathbf{A}^T \mathbf{x} = \mathbf{0} $ 
+的向量构成的子空间。几何上，左零空间表示的是输入向量对行空间的正交部分。在矩阵分解中，左零空间与行空间的正交性起着重要作用。它帮助我们理解哪些输入方向与矩阵的行没有重叠，从而被完全“忽略”。</p>
+<h3 id="子空间与秩的关系">子空间与秩的关系</h3>
+<p>一个非常重要的事实是：矩阵的行空间和零空间是正交的，矩阵的列空间和左零空间也是正交的。这种正交性提供了一种简化分析矩阵映射的方式。如果一个向量位于矩阵的零空间，它与行空间中的所有向量正交，这意味着它不会对矩阵的输出产生贡献。同理，左零空间中的向量不会影响矩阵的输入行为。</p>
+<p>秩实际上是列空间和行空间维度的共同度量。换句话说，秩代表了矩阵可以在其列空间和行空间中张成的最大独立方向数。因此，理解子空间之间的正交性和秩之间的关系，是理解矩阵如何作用于向量空间的关键。</p>
+<h2 id="奇异值分解">奇异值分解</h2>
+<p>在之前的讨论中，我们介绍了矩阵的子空间，如列空间、行空间和零空间，及其在理解矩阵结构和行为中的作用。然而，子空间分析并不足以揭示矩阵的全部复杂性。为此，我们引入奇异值分解（Singular Value Decomposition, SVD）这一工具。SVD 不仅揭示矩阵的秩和子空间，还通过一系列几何操作（旋转和缩放）解析矩阵的深层结构。SVD 分解能够紧凑地表示矩阵的主要特性，使其作用过程更加直观。接下来，我们将深入探讨 SVD 的具体细节及其几何意义。</p>
+<h3 id="奇异值分解的复杂数学背景">奇异值分解的复杂数学背景</h3>
+<p>给定一个任意的 $ m \times n$ 
+的矩阵 $\mathbf{A}$ 
+，我们可以通过 SVD 分解将其表示为：</p>
+ $$ \mathbf{A} = \mathbf{U} \mathbf{\Sigma} \mathbf{V}^\mathsf{T} $$ 
+
+<p>其中：</p>
+<ul>
+<li> $\mathbf{U}$ 
+是一个 $ m \times m$ 
+的正交矩阵，表示矩阵 $\mathbf{A}$ 
+的左奇异向量，这些向量构成了 $\mathbf{A}$ 
+的列空间的正交基；</li>
+<li> $ \mathbf{\Sigma} $ 
+是一个 $ m \times n$ 
+的对角矩阵，其中的对角元素是矩阵 $\mathbf{A}$ 
+的奇异值，表示矩阵在不同方向上的伸缩比例；</li>
+<li> $\mathbf{V}$ 
+是一个 $ n \times n$ 
+的正交矩阵，表示矩阵 $\mathbf{A}$ 
+的右奇异向量，它们构成了 $\mathbf{A}$ 
+的行空间的正交基。</li>
+</ul>
+<p>SVD 分解展示了矩阵如何在三个步骤中作用于输入向量：</p>
+<ol>
+<li>旋转输入向量到右奇异向量基下的空间（通过 $\mathbf{V}^\mathsf{T}$ 
+）；</li>
+<li>沿着每个奇异值的方向进行缩放（通过 $\mathbf{\Sigma}$ 
+）；</li>
+<li>将缩放后的向量再次旋转到左奇异向量基下的空间（通过 $\mathbf{U}$ 
+）。</li>
+</ol>
+<h3 id="奇异值矩阵几何行为的核心">奇异值：矩阵几何行为的核心</h3>
+<p>奇异值是 SVD 分解中的核心元素，它们揭示了矩阵在不同方向上的缩放强度。对于一个矩阵 $\mathbf{A}$ 
+，奇异值 $\sigma_i$ 
+是矩阵 $\mathbf{A}$ 
+的拉伸或压缩比例，且总是非负的。通过奇异值的排列，矩阵可以分解为一系列基于强度递减的作用方向。</p>
+<p>奇异值的数量等于矩阵的秩，因此，非零奇异值的个数决定了矩阵能够张成的线性独立方向的数量。奇异值为零意味着矩阵在某些方向上完全压缩，这些方向正是矩阵的零空间。换句话说，零奇异值描述了哪些方向在映射过程中被“丢失”或映射到零。</p>
+<p>几何上，奇异值控制了矩阵将单位球体拉伸为一个椭球体的形状。每个奇异值对应椭球体的一个半轴的长度，非零奇异值的数量决定了椭球体的维数。此时，我们可以将矩阵看作是一个在高维空间中的变换，它通过奇异值来描述不同维度的拉伸和压缩。</p>
+<h3 id="左奇异向量与右奇异向量矩阵映射的几何旋转">左奇异向量与右奇异向量：矩阵映射的几何旋转</h3>
+<p>SVD 中的 $\mathbf{U}$ 
+和 $\mathbf{V}$ 
+分别是矩阵 $\mathbf{A}$ 
+的左奇异向量和右奇异向量，它们构成了矩阵作用空间的正交基。在几何上，右奇异向量 $\mathbf{V}$ 
+是矩阵的输入空间的特征方向，它们描述了矩阵在这些方向上对输入向量的作用。左奇异向量 $\mathbf{U}$ 
+是输出空间的特征方向，表示矩阵在输出空间中将输入向量映射到的结果方向。</p>
+<p>右奇异向量可以理解为矩阵在输入空间中的“首选”方向，矩阵在这些方向上表现得最为明显。通过 $\mathbf{V}^\mathsf{T}$ 
+，矩阵将任意输入向量旋转到这些特定的方向上。左奇异向量则是输出空间的“首选”方向，通过 $\mathbf{U}$ 
+，矩阵将缩放后的向量旋转到输出空间的这些特定方向上。</p>
+<p>这两个正交基的存在确保了 SVD 分解在高维空间中依然能够精确地描述矩阵的行为。尤其是在维度压缩、特征提取等问题中，右奇异向量对应于数据的主方向，而左奇异向量则对应于数据在新空间中的主成分。</p>
+
+      </div>
+
+      
+  <time class="mt-12 mb-8 block text-xs text-gray-500 ltr:text-right rtl:text-left dark:text-gray-400" datetime="2024-10-11T00:00:00.000Z">
+    <span>Last updated on</span>
+    Oct 11, 2024</time>
+      
+      
+  
+    
+    
+    
+      
+      
+    
+<div class="pt-1 no-prose w-full">
+  <hr class="border-dotted border-neutral-300 dark:border-neutral-600" />
+  <div class="flex flex-col md:flex-row flex-nowrap justify-between gap-5 pt-2">
+    <div class="">
+      
+        <a class="group flex no-underline" href="/blog/%E6%BB%A1%E7%A7%A9%E8%BF%90%E7%AE%97/">
+          <span
+            class="mt-[-0.3rem] me-2 text-neutral-700 transition-transform group-hover:-translate-x-[2px] group-hover:text-primary-600 dark:text-neutral dark:group-hover:text-primary-400"
+          ><span class="ltr:inline rtl:hidden">&larr;</span></span>
+          <span class="flex flex-col">
+            <span
+              class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
+            >矩阵的秩：MA=BM，B、M满秩，A一定满秩吗？</span>
+            <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
+              
+                Oct 12, 2024
+              
+            </span>
+          </span>
+        </a>
+      
+    </div>
+    <div class="">
+      
+        <a class="group flex text-right no-underline" href="/blog/lora/">
+          <span class="flex flex-col">
+            <span
+              class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
+            >漫谈LoRA</span
+            >
+            <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
+              
+                Sep 18, 2024
+              
+            </span>
+          </span>
+          <span
+            class="mt-[-0.3rem] ms-2 text-neutral-700 transition-transform group-hover:-translate-x-[2px] group-hover:text-primary-600 dark:text-neutral dark:group-hover:text-primary-400"
+          ><span class="ltr:inline">&rarr;</span></span>
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+      
+
+
+  
+  
+  
+
+  
+
+  
+  <section id="comments">
+    
+  
+  <script src="https://giscus.app/client.js"
+          data-repo="ChongjieSi/ChongjieSi.github.io"
+          data-repo-id="R_kgDOLvx5HQ"
+          data-category="Announcements"
+          data-category-id="DIC_kwDOLvx5Hc4CiXjG"
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="top"
+          data-theme="preferred_color_scheme"
+          data-lang="en"
+          data-loading="lazy"
+          crossorigin="anonymous"
+          async>
+  </script>
+
+
+  </section>
+  
+
+
+    </main>
+  </article>
+</div>
+
+    </div>
+    <div class="page-footer">
+      <footer class="container mx-auto flex flex-col justify-items-center text-sm leading-6 mt-24 mb-4 text-slate-700 dark:text-slate-200">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+    
+  
+  
+    
+  
+
+  
+
+  
+  <p class="powered-by text-center">
+    © 2026 Chongjie
+  </p>
+  
+
+  <p class="powered-by footer-license-icons">
+    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank" aria-label="Creative Commons">
+      <i class="fab fa-creative-commons fa-2x" aria-hidden="true"></i>
+      <i class="fab fa-creative-commons-by fa-2x" aria-hidden="true"></i>
+      
+        <i class="fab fa-creative-commons-nc fa-2x" aria-hidden="true"></i>
+      
+      
+        <i class="fab fa-creative-commons-nd fa-2x" aria-hidden="true"></i>
+      
+    </a>
+  </p>
+
+
+
+
+
+  
+  
+<center>
+<div class="busuanzi-footer">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    
+    <i class="fa fa-user"></i>  <span id="busuanzi_value_site_pv"></span>
+</div>
+</center></footer>
+
+    </div>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>
