@@ -2,6 +2,8 @@
 title: "Recent News"
 date: 2023-09-05
 news:
+  - title: "📘 One paper has been accepted to ECCV 2026."
+    date: "2026-06-18"
   - title: "🎯 See you in Wuhan, Valse 2026!"
     date: "2026-04-20"
   - title: "🎁 I have been awarded the Optiver AI PhD Scholarship!"
