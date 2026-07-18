@@ -8,7 +8,7 @@
   <title>Chongjie OS</title>
   <link rel="icon" href="/author/chongjie-si/avatar.png">
   <link rel="preload" as="image" href="/images/background/bg8.webp">
-  <link rel="stylesheet" href="/css/macos.css?v=20260718-10">
+  <link rel="stylesheet" href="/css/macos.css?v=20260718-19">
   {{ $katexCSS := resources.Get "dist/lib/katex/katex.min.css" | resources.Fingerprint "sha256" }}
   <link rel="stylesheet" href="{{ $katexCSS.RelPermalink }}" integrity="{{ $katexCSS.Data.Integrity }}">
   {{ $katexJS := resources.Get "dist/lib/katex/katex.min.js" | resources.Fingerprint "sha256" }}
@@ -30,6 +30,7 @@
   {{ $cvPage := site.GetPage "/cv" }}
   {{ $audioFiles := slice }}
   {{ range os.ReadDir "static/audio" }}{{ if and (not .IsDir) (findRE `(?i)\.(mp3|m4a|aac|ogg|wav|flac)$` .Name) }}{{ $audioFiles = $audioFiles | append . }}{{ end }}{{ end }}
+  {{ $albumCover := "" }}{{ range slice "cover.webp" "cover.png" "cover.jpg" "cover.jpeg" }}{{ if and (eq $albumCover "") (fileExists (printf "static/audio/%s" .)) }}{{ $albumCover = printf "/audio/%s" . }}{{ end }}{{ end }}
 
   <svg class="svg-sprite" aria-hidden="true">
     <symbol id="i-apple" viewBox="0 0 24 24"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.79 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.53 4.09ZM12.03 7.25C11.88 5.02 13.69 3.18 15.77 3c.29 2.58-2.34 4.5-3.74 4.25Z"/></symbol>
@@ -84,6 +85,7 @@
         <button class="menu-word desktop-only" data-menu="helpMenu">Help</button>
       </div>
       <div class="menu-right">
+        <button class="menu-now-playing desktop-only" data-open="music" aria-label="Open Music"><span class="menu-record"><i></i></span><span><b data-menu-track>Music</b><small data-menu-artist>Ready to play</small></span></button>
         <button class="status-button desktop-only" data-panel="controlCenter" data-status="wifi" aria-label="Wi-Fi connected"><svg><use href="#i-wifi"/></svg></button>
         <button class="battery-status desktop-only" data-panel="controlCenter" aria-label="Battery 82 percent"><span>82%</span><svg><use href="#i-battery"/></svg></button>
         <button class="status-button" data-panel="controlCenter" aria-label="Control center"><svg><use href="#i-control"/></svg></button>
@@ -98,16 +100,39 @@
     </div>
     <div class="menu-popover glass" id="fileMenu" role="menu"><button data-open="about">Open Profile</button><button data-open="contact">New Message</button><button data-open="cv">Open Résumé</button></div>
     <div class="menu-popover glass" id="viewMenu" role="menu"><button data-action="mission-control">Mission Control</button><button data-action="show-desktop">Show Desktop</button><button data-panel="spotlight">Open Spotlight</button><hr><button data-panel="controlCenter">Change Wallpaper…</button></div>
-    <div class="menu-popover glass" id="goMenu" role="menu"><button data-open="about">About</button><button data-open="papers">Publications</button><button data-open="news">News</button><button data-open="blog">Notes</button><button data-open="photos">Photos</button><button data-open="cv">Résumé</button><hr><button data-open="music">Music</button><button data-open="game">2048</button></div>
+    <div class="menu-popover glass" id="goMenu" role="menu"><button data-open="about">About</button><button data-open="papers">Publications</button><button data-open="news">News</button><button data-open="blog">Notes</button><button data-open="photos">Photos</button><button data-open="cv">Résumé</button><hr><button data-open="music">Music</button><button data-open="games">Game</button></div>
     <div class="menu-popover glass" id="windowMenu" role="menu"><button data-action="minimize-active">Minimize</button><button data-action="maximize-active">Zoom</button><hr><button data-action="bring-front">Bring All to Front</button></div>
     <div class="menu-popover glass" id="helpMenu" role="menu"><button data-open="welcome">Chongjie OS Help</button><button data-open="contact">Contact Chongjie</button></div>
-    <div class="menu-popover glass desktop-menu" id="desktopMenu" role="menu"><button data-action="mission-control">Mission Control</button><button data-panel="spotlight">Search…</button><button data-panel="controlCenter">Change Wallpaper…</button><hr><button data-action="show-desktop">Show Desktop</button></div>
+    <div class="menu-popover glass desktop-menu" id="desktopMenu" role="menu"><button data-action="mission-control">Mission Control</button><button data-panel="spotlight">Search…</button><button data-panel="controlCenter">Change Wallpaper…</button><hr><button data-action="reset-widgets">Reset Widget Position</button><button data-action="toggle-widgets" data-widget-menu-label>Hide Widgets</button><button data-action="show-desktop">Show Desktop</button></div>
 
     <section class="desktop-icons" aria-label="Desktop shortcuts">
       <button class="desktop-icon" data-open="papers"><span class="app-icon icon-papers"><svg><use href="#i-paper"/></svg></span><span>Publications</span></button>
       <button class="desktop-icon" data-open="photos"><span class="app-icon icon-photos"><svg><use href="#i-photo"/></svg></span><span>Photos</span></button>
       <button class="desktop-icon" data-open="cv"><span class="app-icon icon-cv"><svg><use href="#i-cv"/></svg></span><span>Chongjie CV</span></button>
     </section>
+
+    <aside class="desktop-widgets" aria-label="Desktop widgets" data-desktop-widgets>
+      <div class="widget-grab" data-widget-grab aria-label="Drag widgets"></div>
+      <section class="desktop-widget widget-calendar glass">
+        <header><span data-widget-month>Calendar</span><small data-widget-date></small></header>
+        <div class="widget-weekdays" aria-hidden="true"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div>
+        <div class="widget-calendar-grid" data-widget-calendar aria-label="Current month"></div>
+        <footer><i></i><span data-widget-agenda>Today</span></footer>
+      </section>
+      <section class="desktop-widget widget-today glass">
+        <header><span>Today</span><small data-today-count>3 remaining</small></header>
+        <div class="today-items">
+          <button data-today-task="read"><i></i><span>Read a paper</span></button>
+          <button data-today-task="music"><i></i><span>Practice music</span></button>
+          <button data-today-task="plan"><i></i><span>Plan tomorrow</span></button>
+        </div>
+      </section>
+      <section class="desktop-widget widget-weather glass" aria-label="Simulated weather">
+        <header><span>Shanghai</span><small>Simulated</small></header>
+        <div class="weather-reading"><span>☀︎</span><b>24°</b></div><footer>Clear desk · Quiet focus</footer>
+      </section>
+      <button class="desktop-widget widget-wechat glass" data-panel="wechatContact" aria-label="Open WeChat contact card"><span class="wechat-mark">⌁</span><span><b>WeChat</b><small>Scan to connect</small></span><span>›</span></button>
+    </aside>
 
     <section class="window is-open active" id="window-about" data-app="about" data-title="About" style="--x: 7vw; --y: 10vh; --w: min(890px, 80vw); --h: min(620px, 72vh);">
       <header class="window-bar drag-handle">
@@ -181,19 +206,23 @@
     </section>
 
     <section class="window compact-window" id="window-music" data-app="music" data-title="Music" style="--x: 28vw; --y: 13vh; --w: min(570px, 74vw); --h: min(560px, 70vh);">
-      <header class="window-bar drag-handle"><div class="traffic-lights"><button class="close" data-window-action="close"></button><button class="minimize" data-window-action="minimize"></button><button class="maximize" data-window-action="maximize"></button></div><div class="window-title">Music</div><div class="window-tools"><span class="music-status">{{ len $audioFiles }} local tracks</span></div></header>
+      <header class="window-bar drag-handle"><div class="traffic-lights"><button class="close" data-window-action="close"></button><button class="minimize" data-window-action="minimize"></button><button class="maximize" data-window-action="maximize"></button></div><div class="window-title">Music</div><div class="window-tools"><span class="music-status">Ready</span></div></header>
       <div class="music-app scroll-content">
-        <div class="music-cover"><div class="cover-orb"></div><div class="sound-bars" aria-hidden="true">{{ range seq 1 24 }}<i></i>{{ end }}</div><span>CHONGJIE<br>RADIO</span></div>
-        <div class="now-playing"><p class="eyebrow">NOW PLAYING</p>{{ if gt (len $audioFiles) 0 }}{{ $firstName := replaceRE `\.[^.]+$` "" (index $audioFiles 0).Name }}{{ $firstArtist := "Unknown Artist" }}{{ $firstTitle := $firstName }}{{ if in $firstName "-" }}{{ $firstArtist = replaceRE `\s*-.*$` "" $firstName }}{{ $firstTitle = replaceRE `^[^-]+-\s*` "" $firstName }}{{ end }}<h2 data-track-title>{{ $firstTitle }}</h2><p data-track-subtitle>{{ $firstArtist }}</p>{{ else }}<h2 data-track-title>Local Library</h2><p data-track-subtitle>Add music to static/audio</p>{{ end }}</div>
+        <div class="album-player"><div class="album-art" data-album-art><img data-album-cover alt="Album artwork" hidden><div class="cd-tray" data-cd-fallback><div class="cd-disc" aria-hidden="true"><div class="cd-grooves"></div><div class="cd-label"><small>CHONGJIE OS</small><b>MUSIC</b><i></i></div></div></div></div>
+        <div class="album-now-playing"><p class="eyebrow">NOW PLAYING</p>{{ if gt (len $audioFiles) 0 }}{{ $firstName := replaceRE `\.[^.]+$` "" (index $audioFiles 0).Name }}{{ $firstArtist := "Unknown Artist" }}{{ $firstTitle := $firstName }}{{ if in $firstName "-" }}{{ $firstArtist = replaceRE `\s*-.*$` "" $firstName }}{{ $firstTitle = replaceRE `^[^-]+-\s*` "" $firstName }}{{ end }}<h2 data-track-title>{{ $firstTitle }}</h2><p data-track-subtitle>{{ $firstArtist }}</p>{{ else }}<h2 data-track-title>Music Library</h2><p data-track-subtitle>No songs available</p>{{ end }}
         <div class="music-progress"><span data-music-elapsed>0:00</span><i data-music-seek><b data-music-progress></b></i><span data-music-duration>0:00</span></div>
-        <div class="music-controls"><button data-track-step="-1" aria-label="Previous track">‹</button><button class="play-button" data-music-play aria-label="Play"><svg><use href="#i-play"/></svg></button><button data-track-step="1" aria-label="Next track">›</button></div>
-        <div class="lyrics-panel" data-lyrics-panel><p>No synced lyrics</p></div><div class="soundscape-list local-library">{{ range $index, $file := $audioFiles }}{{ $baseName := replaceRE `\.[^.]+$` "" $file.Name }}{{ $artist := "Unknown Artist" }}{{ $title := $baseName }}{{ if in $baseName "-" }}{{ $artist = replaceRE `\s*-.*$` "" $baseName }}{{ $title = replaceRE `^[^-]+-\s*` "" $baseName }}{{ end }}{{ $lyricsPath := printf "static/audio/%s.lrc" $baseName }}<button{{ if eq $index 0 }} class="is-selected"{{ end }} data-local-track="{{ $index }}" data-audio-src="/audio/{{ $file.Name }}" data-track-name="{{ $title }}" data-track-artist="{{ $artist }}"{{ if fileExists $lyricsPath }} data-lyrics-src="/audio/{{ $baseName }}.lrc"{{ end }}><span>{{ printf "%02d" (add $index 1) }}</span><div><b>{{ $title }}</b><small>{{ $artist }}</small></div></button>{{ else }}<div class="empty-library"><b>No local music yet</b><small>Add audio files to static/audio and rebuild.</small></div>{{ end }}</div>
+        <div class="music-controls"><button data-track-step="-1" aria-label="Previous track">‹</button><button class="play-button" data-music-play aria-label="Play"><svg><use href="#i-play"/></svg></button><button data-track-step="1" aria-label="Next track">›</button></div><div class="lyrics-panel" data-lyrics-panel><p>Lyrics will appear here</p></div></div></div>
+        <div class="album-tracklist"><header><span>Album</span><small>{{ len $audioFiles }} songs</small></header><div class="soundscape-list local-library">{{ range $index, $file := $audioFiles }}{{ $baseName := replaceRE `\.[^.]+$` "" $file.Name }}{{ $artist := "Unknown Artist" }}{{ $title := $baseName }}{{ if in $baseName "-" }}{{ $artist = replaceRE `\s*-.*$` "" $baseName }}{{ $title = replaceRE `^[^-]+-\s*` "" $baseName }}{{ end }}{{ $lyricsPath := printf "static/audio/%s.lrc" $baseName }}{{ $coverSrc := "" }}{{ range slice (printf "%s.webp" $title) (printf "%s.png" $title) (printf "%s.jpg" $title) (printf "%s.jpeg" $title) (printf "%s.webp" $baseName) (printf "%s.png" $baseName) (printf "%s.jpg" $baseName) (printf "%s.jpeg" $baseName) }}{{ if and (eq $coverSrc "") (fileExists (printf "static/audio/%s" .)) }}{{ $coverSrc = printf "/audio/%s" . }}{{ end }}{{ end }}<button{{ if eq $index 0 }} class="is-selected"{{ end }} data-local-track="{{ $index }}" data-audio-src="/audio/{{ $file.Name }}" data-track-name="{{ $title }}" data-track-artist="{{ $artist }}"{{ with $coverSrc }} data-cover-src="{{ . }}"{{ end }}{{ if fileExists $lyricsPath }} data-lyrics-src="/audio/{{ $baseName }}.lrc"{{ end }}><span>{{ printf "%02d" (add $index 1) }}</span><div><b>{{ $title }}</b><small>{{ $artist }}</small></div></button>{{ else }}<div class="empty-library"><b>Music Library is empty</b><small>Add songs to continue.</small></div>{{ end }}</div></div>
       </div>
     </section>
 
-    <section class="window compact-window" id="window-game" data-app="game" data-title="2048" style="--x: 36vw; --y: 10vh; --w: min(470px, 72vw); --h: min(620px, 76vh);">
-      <header class="window-bar drag-handle"><div class="traffic-lights"><button class="close" data-window-action="close"></button><button class="minimize" data-window-action="minimize"></button><button class="maximize" data-window-action="maximize"></button></div><div class="window-title">2048</div><div class="window-tools"><span class="game-best">Best <b data-game-best>0</b></span></div></header>
-      <div class="game-app"><div class="game-heading"><div><p class="eyebrow">MINI ARCADE</p><h2>2048</h2><p>Join the tiles. Reach 2048.</p></div><div class="score-card"><span>Score</span><b data-game-score>0</b></div></div><div class="game-board" data-game-board aria-label="2048 game board">{{ range seq 1 16 }}<div class="game-cell"></div>{{ end }}</div><div class="game-message" data-game-message><h3>Game over</h3><p>Try another run?</p><button class="primary-button" data-game-new>New game</button></div><div class="game-actions"><button class="primary-button" data-game-new>New game</button><span>Arrow keys or swipe to move</span></div></div>
+    <section class="window compact-window" id="window-games" data-app="games" data-title="Game" style="--x: 36vw; --y: 8vh; --w: min(510px, 76vw); --h: min(650px, 80vh);">
+      <header class="window-bar drag-handle"><div class="traffic-lights"><button class="close" data-window-action="close"></button><button class="minimize" data-window-action="minimize"></button><button class="maximize" data-window-action="maximize"></button></div><div class="window-title">Game</div><div class="window-tools"><span class="game-best">Best <b data-game-best>0</b></span></div></header>
+      <div class="games-app"><div class="games-intro"><p class="eyebrow">MINI ARCADE</p><h2>Game Room</h2><p>Three small breaks, all inside Chongjie OS.</p></div><div class="game-tabs" role="tablist"><button class="is-selected" data-game-tab="2048" role="tab">2048</button><button data-game-tab="tic-tac-toe" role="tab">Tic-Tac-Toe</button><button data-game-tab="memory" role="tab">Memory</button></div>
+        <section class="game-panel is-visible" data-game-panel="2048"><div class="game-app"><div class="game-heading"><div><h2>2048</h2><p>Join the tiles. Reach 2048.</p></div><div class="score-card"><span>Score</span><b data-game-score>0</b></div></div><div class="game-board" data-game-board aria-label="2048 game board">{{ range seq 1 16 }}<div class="game-cell"></div>{{ end }}</div><div class="game-message" data-game-message><h3>Game over</h3><p>Try another run?</p><button class="primary-button" data-game-new>New game</button></div><div class="game-actions"><button class="primary-button" data-game-new>New game</button><span>Arrow keys or swipe to move</span></div></div></section>
+        <section class="game-panel" data-game-panel="tic-tac-toe"><div class="arcade-card"><div class="arcade-heading"><div><h2>Tic-Tac-Toe</h2><p data-tictactoe-status>X goes first</p></div><span class="arcade-mark">XO</span></div><div class="tic-tac-toe-board" aria-label="Tic-Tac-Toe board">{{ range seq 1 9 }}<button data-tictactoe-cell aria-label="Empty square"></button>{{ end }}</div><button class="primary-button" data-tictactoe-new>New round</button></div></section>
+        <section class="game-panel" data-game-panel="memory"><div class="arcade-card"><div class="arcade-heading"><div><h2>Memory Match</h2><p data-memory-status>Find all six pairs</p></div><span class="arcade-mark">✦</span></div><div class="memory-board" aria-label="Memory game">{{ range seq 1 12 }}<button data-memory-card aria-label="Hidden card">?</button>{{ end }}</div><button class="primary-button" data-memory-new>Shuffle cards</button></div></section>
+      </div>
     </section>
 
     <section class="window compact-window" id="window-welcome" data-app="welcome" data-title="Help" style="--x: 34vw; --y: 20vh; --w: min(520px, 72vw); --h: auto;">
@@ -203,8 +232,13 @@
     <aside class="control-center glass floating-panel" id="controlCenter" aria-label="Control center">
       <header><b>Control Center</b><button class="panel-close" aria-label="Close">×</button></header>
       <div class="control-grid"><button class="control-tile is-on" data-system-toggle="wifi"><span><svg><use href="#i-wifi"/></svg></span><div><b>Wi-Fi</b><small data-system-label="wifi">Portfolio Network</small></div></button><button class="control-tile is-on" data-system-toggle="bluetooth"><span><svg><use href="#i-bluetooth"/></svg></span><div><b>Bluetooth</b><small data-system-label="bluetooth">On</small></div></button><button class="control-tile focus-tile" data-system-toggle="focus"><span><svg><use href="#i-control"/></svg></span><div><b>Focus</b><small data-system-label="focus">Off</small></div></button><div class="battery-tile"><svg><use href="#i-battery"/></svg><div><b>82%</b><small>Battery · 6h 24m</small></div></div></div>
+      <div class="control-grid system-preferences"><button class="control-tile" data-system-toggle="dark"><span>◐</span><div><b>Dark Mode</b><small data-system-label="dark">Off</small></div></button><button class="control-tile" data-system-toggle="motion"><span>◌</span><div><b>Reduce Motion</b><small data-system-label="motion">Off</small></div></button></div>
       <div class="system-slider"><svg><use href="#i-sun"/></svg><input type="range" min="55" max="115" value="100" data-system-range="brightness" aria-label="Display brightness"><span>Display</span></div><div class="system-slider"><svg><use href="#i-volume"/></svg><input type="range" min="0" max="100" value="65" data-system-range="volume" aria-label="Volume"><span data-volume-label>65%</span></div>
       <div class="wallpaper-control"><div><b>Wallpaper</b><small>13 photographs from my library</small></div><div class="wallpaper-options">{{ range (slice 8 10 13 4 1 2 3 5 6 7 9 11 15) }}<button class="wallpaper{{ if eq . 8 }} is-selected{{ end }}" data-wallpaper="{{ . }}" style="background-image:url('/images/background/bg{{ . }}.webp')" aria-label="Use wallpaper {{ . }}"></button>{{ end }}</div></div>
+    </aside>
+
+    <aside class="wechat-contact glass floating-panel" id="wechatContact" aria-label="WeChat contact">
+      <header><b>WeChat</b><button class="panel-close" aria-label="Close">×</button></header><img src="/images/weixin.jpg" alt="Chongjie Si WeChat QR code"><p>Scan the QR code in WeChat to connect.</p>
     </aside>
 
     <aside class="spotlight glass floating-panel" id="spotlight" aria-label="Spotlight search">
@@ -216,7 +250,7 @@
         <button data-open="photos" data-search="photos travel albums photography"><span class="app-icon icon-photos"><svg><use href="#i-photo"/></svg></span><div><b>Photos</b><small>Library</small></div></button>
         <button data-open="cv" data-search="cv resume experience education"><span class="app-icon icon-cv"><svg><use href="#i-cv"/></svg></span><div><b>Résumé</b><small>Document</small></div></button>
         <button data-open="music" data-search="music focus ambient sound audio"><span class="app-icon icon-music"><svg><use href="#i-music"/></svg></span><div><b>Focus Music</b><small>Generative audio</small></div></button>
-        <button data-open="game" data-search="game 2048 arcade play"><span class="app-icon icon-game"><svg><use href="#i-game"/></svg></span><div><b>2048</b><small>Mini Arcade</small></div></button>
+        <button data-open="games" data-search="game games 2048 tic tac toe memory arcade play"><span class="app-icon icon-game"><svg><use href="#i-game"/></svg></span><div><b>Game</b><small>Mini Arcade</small></div></button>
         <button data-open="contact" data-search="contact email mail collaboration"><span class="app-icon icon-mail"><svg><use href="#i-mail"/></svg></span><div><b>Contact</b><small>Mail</small></div></button>
       </div>
     </aside>
@@ -230,13 +264,14 @@
         <button data-open="photos" class="dock-item" data-label="Photos"><span class="app-icon icon-photos"><svg><use href="#i-photo"/></svg></span></button>
         <button data-open="cv" class="dock-item" data-label="Résumé"><span class="app-icon icon-cv"><svg><use href="#i-cv"/></svg></span></button>
         <button data-open="music" class="dock-item" data-label="Focus Music"><span class="app-icon icon-music"><svg><use href="#i-music"/></svg></span></button>
-        <button data-open="game" class="dock-item" data-label="2048"><span class="app-icon icon-game"><svg><use href="#i-game"/></svg></span></button>
+        <button data-open="games" class="dock-item" data-label="Game"><span class="app-icon icon-game"><svg><use href="#i-game"/></svg></span></button>
         <span class="dock-divider"></span>
         <button data-open="contact" class="dock-item" data-label="Contact"><span class="app-icon icon-mail"><svg><use href="#i-mail"/></svg></span></button>
       </div>
     </nav>
     <div class="desktop-hint" id="desktopHint">Double-click an icon or choose an app from the Dock</div>
+    <aside class="system-notifications" id="systemNotifications" aria-live="polite"></aside>
   </main>
-  <script src="/js/macos.js?v=20260718-10"></script>
+  <script src="/js/macos.js?v=20260718-16"></script>
 </body>
 </html>

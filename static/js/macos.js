@@ -11,6 +11,39 @@
   let audioPlayer = null;
   const readStorage = (storage, key) => { try { return storage.getItem(key); } catch (_) { return null; } };
   const writeStorage = (storage, key, value) => { try { storage.setItem(key, value); } catch (_) {} };
+  const notificationHost = document.getElementById('systemNotifications');
+  const notify = (title, detail) => {
+    if (!notificationHost) return;
+    const notice = document.createElement('article');
+    notice.className = 'system-notification';
+    notice.innerHTML = `<span>CS</span><div><b>${title}</b><p>${detail}</p></div>`;
+    notificationHost.appendChild(notice);
+    window.setTimeout(() => notice.classList.add('is-leaving'), 3600);
+    window.setTimeout(() => notice.remove(), 3950);
+  };
+  const windowStateKey = 'chongjie-window-state';
+  const readWindowStates = () => { try { return JSON.parse(readStorage(localStorage, windowStateKey) || '{}'); } catch (_) { return {}; } };
+  const saveWindowState = win => {
+    if (!win || innerWidth < 761) return;
+    const states = readWindowStates();
+    const rect = win.getBoundingClientRect();
+    states[win.id] = { left: rect.left, top: rect.top, width: rect.width, height: rect.height, maximized: win.classList.contains('is-maximized') };
+    writeStorage(localStorage, windowStateKey, JSON.stringify(states));
+  };
+  const restoreWindowStates = () => {
+    if (innerWidth < 761) return;
+    const states = readWindowStates();
+    windows.forEach(win => {
+      const state = states[win.id];
+      if (!state) return;
+      win.style.left = `${Math.max(7, Math.min(innerWidth - 150, state.left))}px`;
+      win.style.top = `${Math.max(39, Math.min(innerHeight - 100, state.top))}px`;
+      win.style.width = `${Math.max(440, Math.min(innerWidth - 14, state.width))}px`;
+      win.style.height = `${Math.max(300, Math.min(innerHeight - 54, state.height))}px`;
+      win.classList.toggle('is-maximized', Boolean(state.maximized));
+    });
+  };
+  restoreWindowStates();
 
   // Never let an optional app failure leave the transparent boot layer over the desktop.
   const finishBoot = () => boot?.classList.add('is-hidden');
@@ -49,8 +82,12 @@
     window.setTimeout(() => {
       lockScreen.classList.add('is-hidden');
       lockScreen.classList.remove('is-unlocking');
-      centerInitialProfile();
+      if (!readWindowStates()['window-about']) centerInitialProfile();
       focusWindow(document.getElementById('window-about'));
+      if (readStorage(localStorage, 'chongjie-welcome-seen') !== 'true') {
+        window.setTimeout(() => notify('Welcome to Chongjie OS', 'Drag windows, use the Dock, or press ⌘ K to search.'), 700);
+        writeStorage(localStorage, 'chongjie-welcome-seen', 'true');
+      }
     }, 430);
   };
   const showLockScreen = () => {
@@ -136,12 +173,17 @@
           syncDock();
         }, action === 'close' ? 210 : 270);
       }
-      if (action === 'maximize') win.classList.toggle('is-maximized');
+      if (action === 'maximize') { win.classList.toggle('is-maximized'); saveWindowState(win); }
       const next = [...windows].filter(item => item.classList.contains('is-open') && !item.classList.contains('is-minimized') && ((action !== 'close' && action !== 'minimize') || item !== win)).sort((a,b) => (+b.style.zIndex || 0) - (+a.style.zIndex || 0))[0];
       focusWindow(next);
       if (!next) document.getElementById('activeAppName').textContent = 'Finder';
       syncDock();
     }));
+    win.querySelector('.drag-handle')?.addEventListener('dblclick', event => {
+      if (event.target.closest('button,input,label') || innerWidth < 761) return;
+      win.classList.toggle('is-maximized');
+      saveWindowState(win);
+    });
   });
 
   document.querySelectorAll('.sidebar [data-tab]').forEach(tab => tab.addEventListener('click', () => {
@@ -290,7 +332,29 @@
     shell.querySelector('[data-resume-view-panel="pdf"]').classList.toggle('is-visible', view === 'pdf');
   }));
 
-  const systemState = { wifi: true, bluetooth: true, focus: false };
+  const systemState = {
+    wifi: true,
+    bluetooth: true,
+    focus: false,
+    dark: readStorage(localStorage, 'chongjie-dark-mode') === 'true',
+    motion: readStorage(localStorage, 'chongjie-reduce-motion') === 'true'
+  };
+  const syncSystemPreference = key => {
+    if (key === 'dark') {
+      desktop.classList.toggle('dark-mode', systemState.dark);
+      writeStorage(localStorage, 'chongjie-dark-mode', String(systemState.dark));
+    }
+    if (key === 'motion') {
+      desktop.classList.toggle('reduce-motion', systemState.motion);
+      writeStorage(localStorage, 'chongjie-reduce-motion', String(systemState.motion));
+    }
+    const tile = document.querySelector(`[data-system-toggle="${key}"]`);
+    tile?.classList.toggle('is-on', systemState[key]);
+    const label = document.querySelector(`[data-system-label="${key}"]`);
+    if (label) label.textContent = systemState[key] ? 'On' : 'Off';
+  };
+  syncSystemPreference('dark');
+  syncSystemPreference('motion');
   document.querySelectorAll('[data-system-toggle]').forEach(tile => tile.addEventListener('click', () => {
     const key = tile.dataset.systemToggle;
     systemState[key] = !systemState[key];
@@ -299,6 +363,7 @@
     if (label) label.textContent = systemState[key] ? (key === 'wifi' ? 'Portfolio Network' : 'On') : 'Off';
     if (key === 'wifi') desktop.classList.toggle('wifi-off', !systemState[key]);
     if (key === 'focus') desktop.classList.toggle('focus-on', systemState[key]);
+    if (key === 'dark' || key === 'motion') syncSystemPreference(key);
   }));
 
   document.querySelectorAll('[data-system-range]').forEach(range => range.addEventListener('input', () => {
@@ -326,12 +391,99 @@
     dragState.win.style.left = `${x}px`;
     dragState.win.style.top = `${y}px`;
   });
-  document.addEventListener('pointerup', () => { dragState.active = false; });
+  const snapWindow = win => {
+    if (!win || innerWidth < 761 || win.classList.contains('is-maximized')) return;
+    const rect = win.getBoundingClientRect();
+    const usableTop = 39;
+    const usableHeight = innerHeight - usableTop - 88;
+    if (rect.top < usableTop + 15) {
+      win.classList.add('is-maximized');
+      return;
+    }
+    if (rect.left < 18 || rect.right > innerWidth - 18) {
+      const halfWidth = Math.max(440, Math.floor((innerWidth - 28) / 2));
+      win.style.left = `${rect.left < 18 ? 7 : innerWidth - halfWidth - 7}px`;
+      win.style.top = `${usableTop + 6}px`;
+      win.style.width = `${halfWidth}px`;
+      win.style.height = `${Math.max(300, usableHeight)}px`;
+    }
+  };
+  document.addEventListener('pointerup', () => {
+    if (dragState.active) { snapWindow(dragState.win); saveWindowState(dragState.win); }
+    dragState.active = false;
+  });
+
+  // Every desktop window gets a native-feeling bottom-right resize affordance.
+  let resizeState = null;
+  windows.forEach(win => {
+    const handle = document.createElement('div');
+    handle.className = 'window-resize-handle';
+    handle.setAttribute('aria-label', 'Resize window');
+    win.appendChild(handle);
+    handle.addEventListener('pointerdown', event => {
+      if (innerWidth < 761 || win.classList.contains('is-maximized')) return;
+      const rect = win.getBoundingClientRect();
+      resizeState = { win, x: event.clientX, y: event.clientY, width: rect.width, height: rect.height };
+      handle.setPointerCapture(event.pointerId);
+      event.preventDefault();
+      event.stopPropagation();
+    });
+  });
+  document.addEventListener('pointermove', event => {
+    if (!resizeState) return;
+    const { win, x, y, width, height } = resizeState;
+    const rect = win.getBoundingClientRect();
+    const maxWidth = Math.max(360, innerWidth - rect.left - 8);
+    const maxHeight = Math.max(260, innerHeight - rect.top - 18);
+    win.style.width = `${Math.min(maxWidth, Math.max(360, width + event.clientX - x))}px`;
+    win.style.height = `${Math.min(maxHeight, Math.max(260, height + event.clientY - y))}px`;
+  });
+  document.addEventListener('pointerup', () => {
+    if (resizeState) saveWindowState(resizeState.win);
+    resizeState = null;
+  });
+
+  // Widgets may be repositioned on the desktop; their location and visibility persist per browser.
+  const desktopWidgets = document.querySelector('[data-desktop-widgets]');
+  const widgetGrab = document.querySelector('[data-widget-grab]');
+  const savedWidgetPosition = JSON.parse(readStorage(localStorage, 'chongjie-widget-position') || 'null');
+  const applyWidgetPosition = position => {
+    if (!desktopWidgets) return;
+    desktopWidgets.style.left = `${Math.max(8, Math.min(innerWidth - 120, position.left))}px`;
+    desktopWidgets.style.top = `${Math.max(42, Math.min(innerHeight - 90, position.top))}px`;
+  };
+  if (savedWidgetPosition && innerWidth > 760) applyWidgetPosition(savedWidgetPosition);
+  const widgetsHidden = readStorage(localStorage, 'chongjie-widgets-hidden') === 'true';
+  desktopWidgets?.classList.toggle('is-hidden', widgetsHidden);
+  const syncWidgetMenuLabel = () => {
+    const hidden = desktopWidgets?.classList.contains('is-hidden');
+    const label = document.querySelector('[data-widget-menu-label]');
+    if (label) label.textContent = hidden ? 'Show Widgets' : 'Hide Widgets';
+  };
+  syncWidgetMenuLabel();
+  let widgetDrag = null;
+  widgetGrab?.addEventListener('pointerdown', event => {
+    if (innerWidth < 761 || !desktopWidgets) return;
+    const rect = desktopWidgets.getBoundingClientRect();
+    widgetDrag = { dx: event.clientX - rect.left, dy: event.clientY - rect.top };
+    widgetGrab.setPointerCapture(event.pointerId);
+    event.preventDefault();
+  });
+  document.addEventListener('pointermove', event => {
+    if (!widgetDrag) return;
+    applyWidgetPosition({ left: event.clientX - widgetDrag.dx, top: event.clientY - widgetDrag.dy });
+  });
+  document.addEventListener('pointerup', () => {
+    if (!widgetDrag || !desktopWidgets) return;
+    widgetDrag = null;
+    const rect = desktopWidgets.getBoundingClientRect();
+    writeStorage(localStorage, 'chongjie-widget-position', JSON.stringify({ left: rect.left, top: rect.top }));
+  });
 
   // Subtle spatial response keeps the desktop feeling dimensional without affecting controls.
   let atmosphereFrame = 0;
   document.addEventListener('pointermove', (event) => {
-    if (dragState.active || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (dragState.active || desktop.classList.contains('reduce-motion') || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     cancelAnimationFrame(atmosphereFrame);
     atmosphereFrame = requestAnimationFrame(() => {
       const nx = event.clientX / innerWidth - 0.5;
@@ -371,6 +523,15 @@
     if (action === 'minimize-active' && activeWindow) activeWindow.classList.add('is-minimized');
     if (action === 'maximize-active' && activeWindow) activeWindow.classList.toggle('is-maximized');
     if (action === 'bring-front') windows.filter(win => win.classList.contains('is-open')).forEach(focusWindow);
+    if (action === 'toggle-widgets' && desktopWidgets) {
+      desktopWidgets.classList.toggle('is-hidden');
+      writeStorage(localStorage, 'chongjie-widgets-hidden', String(desktopWidgets.classList.contains('is-hidden')));
+      syncWidgetMenuLabel();
+    }
+    if (action === 'reset-widgets' && desktopWidgets) {
+      desktopWidgets.style.removeProperty('left'); desktopWidgets.style.removeProperty('top');
+      writeStorage(localStorage, 'chongjie-widget-position', '');
+    }
     closeOverlays(); syncDock();
   };
   document.querySelectorAll('[data-action]').forEach(button => button.addEventListener('click', () => runAction(button.dataset.action)));
@@ -404,6 +565,7 @@
         wallpaperNext.style.backgroundImage = '';
         return;
       }
+      notify('Wallpaper changed', 'Your desktop has a fresh new view.');
       wallpaperNext.style.backgroundImage = `url("${url}")`;
       requestAnimationFrame(() => wallpaperNext.classList.add('is-visible'));
       window.setTimeout(() => {
@@ -438,7 +600,13 @@
   const musicProgress = document.querySelector('[data-music-progress]');
   const musicDuration = document.querySelector('[data-music-duration]');
   const musicStatus = document.querySelector('.music-status');
+  const menuNowPlaying = document.querySelector('.menu-now-playing');
+  const menuTrack = document.querySelector('[data-menu-track]');
+  const menuArtist = document.querySelector('[data-menu-artist]');
   const lyricsPanel = document.querySelector('[data-lyrics-panel]');
+  const albumArt = document.querySelector('[data-album-art]');
+  const albumCover = document.querySelector('[data-album-cover]');
+  const cdFallback = document.querySelector('[data-cd-fallback]');
   const localTracks = [...document.querySelectorAll('[data-local-track]')];
   let currentTrack = 0;
   let lyricLines = [];
@@ -476,14 +644,14 @@
   };
   const loadLyrics = async track => {
     const request = ++lyricRequest;
-    if (!track.dataset.lyricsSrc) { showLyricsMessage('No synced lyrics'); return; }
+    if (!track.dataset.lyricsSrc) { showLyricsMessage('Lyrics are not available'); return; }
     showLyricsMessage('Loading lyrics…');
     try {
       const response = await fetch(track.dataset.lyricsSrc);
       if (!response.ok) throw new Error('Lyrics unavailable');
       const parsed = parseLyrics(await response.text());
       if (request !== lyricRequest) return;
-      if (!parsed.length) { showLyricsMessage('No synced lyrics'); return; }
+      if (!parsed.length) { showLyricsMessage('Lyrics are not available'); return; }
       lyricLines = parsed;
       activeLyric = -1;
       const fragment = document.createDocumentFragment();
@@ -515,29 +683,55 @@
   const syncMusicState = () => {
     const playing = !audioPlayer.paused;
     musicApp?.classList.toggle('is-playing', playing);
+    menuNowPlaying?.classList.toggle('is-playing', playing);
     musicPlay?.setAttribute('aria-label', playing ? 'Pause' : 'Play');
     musicPlay?.querySelector('use')?.setAttribute('href', playing ? '#i-pause' : '#i-play');
-    musicStatus.textContent = playing ? 'Playing' : `${localTracks.length} local tracks`;
+    if (musicStatus) musicStatus.textContent = localTracks.length ? (playing ? 'Playing' : 'Paused') : 'No music';
+  };
+  const syncAlbumCover = track => {
+    const source = track?.dataset.coverSrc;
+    if (!albumArt || !albumCover || !cdFallback) return;
+    if (!source) {
+      albumCover.hidden = true;
+      albumCover.removeAttribute('src');
+      cdFallback.hidden = false;
+      albumArt.classList.remove('has-cover');
+      return;
+    }
+    albumCover.onload = () => {
+      albumCover.hidden = false;
+      cdFallback.hidden = true;
+      albumArt.classList.add('has-cover');
+    };
+    albumCover.onerror = () => {
+      albumCover.hidden = true;
+      cdFallback.hidden = false;
+      albumArt.classList.remove('has-cover');
+    };
+    albumCover.src = source;
   };
   const selectLocalTrack = (index, autoplay = false) => {
-    if (!localTracks.length) { musicStatus.textContent = 'Add music to static/audio'; return; }
+    if (!localTracks.length) { if (musicStatus) musicStatus.textContent = 'No music'; return; }
     currentTrack = (index + localTracks.length) % localTracks.length;
     const track = localTracks[currentTrack];
     localTracks.forEach(button => button.classList.toggle('is-selected', button === track));
     document.querySelector('[data-track-title]').textContent = track.dataset.trackName;
     document.querySelector('[data-track-subtitle]').textContent = track.dataset.trackArtist;
+    if (menuTrack) menuTrack.textContent = track.dataset.trackName;
+    if (menuArtist) menuArtist.textContent = track.dataset.trackArtist;
+    syncAlbumCover(track);
     loadLyrics(track);
     if (audioPlayer.getAttribute('src') !== track.dataset.audioSrc) {
       audioPlayer.src = track.dataset.audioSrc;
       audioPlayer.load();
     }
-    if (autoplay) audioPlayer.play().catch(() => { musicStatus.textContent = 'Press play to start'; });
+    if (autoplay) audioPlayer.play().catch(() => { if (musicStatus) musicStatus.textContent = 'Ready to play'; });
     updateMusicProgress(); syncMusicState();
   };
   musicPlay?.addEventListener('click', () => {
-    if (!localTracks.length) { musicStatus.textContent = 'Add music to static/audio'; return; }
+    if (!localTracks.length) { if (musicStatus) musicStatus.textContent = 'No music'; return; }
     if (!audioPlayer.src) selectLocalTrack(currentTrack);
-    if (audioPlayer.paused) audioPlayer.play().catch(() => { musicStatus.textContent = 'Audio could not be played'; });
+    if (audioPlayer.paused) audioPlayer.play().catch(() => { if (musicStatus) musicStatus.textContent = 'Unable to play this song'; });
     else audioPlayer.pause();
   });
   localTracks.forEach((button, index) => button.addEventListener('click', () => selectLocalTrack(index, true)));
@@ -552,8 +746,55 @@
   audioPlayer.addEventListener('play', syncMusicState);
   audioPlayer.addEventListener('pause', syncMusicState);
   audioPlayer.addEventListener('ended', () => selectLocalTrack(currentTrack + 1, true));
-  audioPlayer.addEventListener('error', () => { musicStatus.textContent = 'Audio file unavailable'; syncMusicState(); });
+  audioPlayer.addEventListener('error', () => { if (musicStatus) musicStatus.textContent = 'Unable to play this song'; });
   if (localTracks.length) selectLocalTrack(0);
+
+  // Small desktop widgets remain local to the OS: a real calendar plus persistent checklist.
+  const widgetCalendar = document.querySelector('[data-widget-calendar]');
+  const widgetMonth = document.querySelector('[data-widget-month]');
+  const widgetDate = document.querySelector('[data-widget-date]');
+  const widgetAgenda = document.querySelector('[data-widget-agenda]');
+  const renderDesktopCalendar = () => {
+    if (!widgetCalendar) return;
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth();
+    const today = now.getDate();
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const previousDays = new Date(year, month, 0).getDate();
+    widgetMonth.textContent = now.toLocaleDateString(undefined, { month: 'long', year: 'numeric' });
+    widgetDate.textContent = now.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+    widgetAgenda.textContent = `Today · ${now.toLocaleDateString(undefined, { weekday: 'short' })}`;
+    widgetCalendar.innerHTML = Array.from({ length: 42 }, (_, index) => {
+      const day = index - firstDay + 1;
+      const outside = day < 1 || day > daysInMonth;
+      const displayDay = day < 1 ? previousDays + day : day > daysInMonth ? day - daysInMonth : day;
+      return `<span class="${outside ? 'is-outside' : ''}${!outside && displayDay === today ? ' is-today' : ''}">${displayDay}</span>`;
+    }).join('');
+  };
+  renderDesktopCalendar();
+  const todayTasks = [...document.querySelectorAll('[data-today-task]')];
+  const todayCount = document.querySelector('[data-today-count]');
+  const syncTodayTasks = () => {
+    const saved = JSON.parse(readStorage(localStorage, 'chongjie-today-tasks') || '{}');
+    let remaining = 0;
+    todayTasks.forEach(task => {
+      const done = Boolean(saved[task.dataset.todayTask]);
+      task.classList.toggle('is-done', done);
+      task.setAttribute('aria-pressed', String(done));
+      if (!done) remaining += 1;
+    });
+    if (todayCount) todayCount.textContent = `${remaining} remaining`;
+  };
+  todayTasks.forEach(task => task.addEventListener('click', () => {
+    const saved = JSON.parse(readStorage(localStorage, 'chongjie-today-tasks') || '{}');
+    saved[task.dataset.todayTask] = !saved[task.dataset.todayTask];
+    writeStorage(localStorage, 'chongjie-today-tasks', JSON.stringify(saved));
+    syncTodayTasks();
+    if (saved[task.dataset.todayTask]) notify('Today', 'Task marked complete.');
+  }));
+  syncTodayTasks();
 
   // Complete 2048 implementation: keyboard, swipe, scoring, best score and game-over state.
   const gameBoard = document.querySelector('[data-game-board]');
@@ -634,6 +875,86 @@
   });
   newGame();
 
+  // Game Room tabs: two additional self-contained games alongside 2048.
+  let activeGame = '2048';
+  const gameTabs = [...document.querySelectorAll('[data-game-tab]')];
+  const gamePanels = [...document.querySelectorAll('[data-game-panel]')];
+  const selectGame = name => {
+    activeGame = name;
+    gameTabs.forEach(tab => {
+      const selected = tab.dataset.gameTab === name;
+      tab.classList.toggle('is-selected', selected);
+      tab.setAttribute('aria-selected', String(selected));
+    });
+    gamePanels.forEach(panel => panel.classList.toggle('is-visible', panel.dataset.gamePanel === name));
+  };
+  gameTabs.forEach(tab => tab.addEventListener('click', () => selectGame(tab.dataset.gameTab)));
+
+  const ticTacToeCells = [...document.querySelectorAll('[data-tictactoe-cell]')];
+  const ticTacToeStatus = document.querySelector('[data-tictactoe-status]');
+  let ticTacToe = Array(9).fill('');
+  let ticTacToeTurn = 'X';
+  let ticTacToeFinished = false;
+  const ticTacToeLines = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+  const renderTicTacToe = () => ticTacToeCells.forEach((cell, index) => {
+    const value = ticTacToe[index];
+    cell.textContent = value;
+    cell.classList.toggle('is-x', value === 'X');
+    cell.classList.toggle('is-o', value === 'O');
+    cell.disabled = Boolean(value) || ticTacToeFinished;
+    cell.setAttribute('aria-label', value || 'Empty square');
+  });
+  const newTicTacToe = () => {
+    ticTacToe = Array(9).fill(''); ticTacToeTurn = 'X'; ticTacToeFinished = false;
+    ticTacToeStatus.textContent = 'X goes first'; renderTicTacToe();
+  };
+  ticTacToeCells.forEach((cell, index) => cell.addEventListener('click', () => {
+    if (ticTacToe[index] || ticTacToeFinished) return;
+    ticTacToe[index] = ticTacToeTurn;
+    const winner = ticTacToeLines.find(line => line.every(position => ticTacToe[position] === ticTacToeTurn));
+    if (winner) { ticTacToeFinished = true; ticTacToeStatus.textContent = `${ticTacToeTurn} wins this round`; }
+    else if (ticTacToe.every(Boolean)) { ticTacToeFinished = true; ticTacToeStatus.textContent = 'A tidy draw'; }
+    else { ticTacToeTurn = ticTacToeTurn === 'X' ? 'O' : 'X'; ticTacToeStatus.textContent = `${ticTacToeTurn}'s turn`; }
+    renderTicTacToe();
+  }));
+  document.querySelector('[data-tictactoe-new]')?.addEventListener('click', newTicTacToe);
+  newTicTacToe();
+
+  const memoryCards = [...document.querySelectorAll('[data-memory-card]')];
+  const memoryStatus = document.querySelector('[data-memory-status]');
+  const memoryFaces = ['🎹', '🎱', '🎮', '✨', '🎧', '📚'];
+  let memoryDeck = []; let memoryOpen = []; let memoryMatched = []; let memoryLocked = false;
+  const renderMemory = () => memoryCards.forEach((card, index) => {
+    const open = memoryOpen.includes(index) || memoryMatched.includes(index);
+    const matched = memoryMatched.includes(index);
+    card.textContent = open ? memoryDeck[index] : '?';
+    card.classList.toggle('is-open', open);
+    card.classList.toggle('is-matched', matched);
+    card.disabled = matched || memoryLocked;
+    card.setAttribute('aria-label', open ? memoryDeck[index] : 'Hidden card');
+  });
+  const newMemoryGame = () => {
+    memoryDeck = [...memoryFaces, ...memoryFaces].sort(() => Math.random() - .5);
+    memoryOpen = []; memoryMatched = []; memoryLocked = false;
+    memoryStatus.textContent = 'Find all six pairs'; renderMemory();
+  };
+  memoryCards.forEach((card, index) => card.addEventListener('click', () => {
+    if (memoryLocked || memoryOpen.includes(index) || memoryMatched.includes(index)) return;
+    memoryOpen.push(index); renderMemory();
+    if (memoryOpen.length !== 2) return;
+    const [first, second] = memoryOpen;
+    if (memoryDeck[first] === memoryDeck[second]) {
+      memoryMatched.push(first, second); memoryOpen = [];
+      memoryStatus.textContent = memoryMatched.length === memoryDeck.length ? 'Perfect match!' : `${memoryMatched.length / 2} of 6 pairs`;
+      renderMemory();
+      return;
+    }
+    memoryLocked = true;
+    setTimeout(() => { memoryOpen = []; memoryLocked = false; renderMemory(); }, 650);
+  }));
+  document.querySelector('[data-memory-new]')?.addEventListener('click', newMemoryGame);
+  newMemoryGame();
+
   const searchInput = document.getElementById('spotlightInput');
   searchInput.addEventListener('input', () => {
     const query = searchInput.value.trim().toLowerCase();
@@ -648,7 +969,7 @@
       return;
     }
     const gameDirections = { ArrowLeft: 'left', ArrowRight: 'right', ArrowUp: 'up', ArrowDown: 'down' };
-    if (activeWindow?.dataset.app === 'game' && gameDirections[event.key]) {
+    if (activeWindow?.dataset.app === 'games' && activeGame === '2048' && gameDirections[event.key]) {
       event.preventDefault();
       moveGame(gameDirections[event.key]);
       return;
