@@ -8,7 +8,14 @@
   <title>Chongjie OS</title>
   <link rel="icon" href="/author/chongjie-si/avatar.png">
   <link rel="preload" as="image" href="/images/background/bg8.webp">
-  <link rel="stylesheet" href="/css/macos.css?v=20260718-2">
+  <link rel="stylesheet" href="/css/macos.css?v=20260718-10">
+  {{ $katexCSS := resources.Get "dist/lib/katex/katex.min.css" | resources.Fingerprint "sha256" }}
+  <link rel="stylesheet" href="{{ $katexCSS.RelPermalink }}" integrity="{{ $katexCSS.Data.Integrity }}">
+  {{ $katexJS := resources.Get "dist/lib/katex/katex.min.js" | resources.Fingerprint "sha256" }}
+  {{ $katexRenderJS := resources.Get "dist/lib/katex/auto-render.min.js" | resources.Fingerprint "sha256" }}
+  <script defer src="{{ $katexJS.RelPermalink }}" integrity="{{ $katexJS.Data.Integrity }}"></script>
+  <script defer src="{{ $katexRenderJS.RelPermalink }}" integrity="{{ $katexRenderJS.Data.Integrity }}"></script>
+  {{ range resources.Match "dist/lib/katex/fonts/*" }}{{ .Publish }}{{ end }}
 </head>
 <body>
   {{ $author := site.GetPage "/authors/admin" }}
@@ -21,6 +28,8 @@
   {{ $photos = $photos.ByDate.Reverse }}
   {{ $newsPage := site.GetPage "/news/news" }}
   {{ $cvPage := site.GetPage "/cv" }}
+  {{ $audioFiles := slice }}
+  {{ range os.ReadDir "static/audio" }}{{ if and (not .IsDir) (findRE `(?i)\.(mp3|m4a|aac|ogg|wav|flac)$` .Name) }}{{ $audioFiles = $audioFiles | append . }}{{ end }}{{ end }}
 
   <svg class="svg-sprite" aria-hidden="true">
     <symbol id="i-apple" viewBox="0 0 24 24"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.79 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.53 4.09ZM12.03 7.25C11.88 5.02 13.69 3.18 15.77 3c.29 2.58-2.34 4.5-3.74 4.25Z"/></symbol>
@@ -54,8 +63,16 @@
     <div class="boot-track"><span></span></div>
   </div>
 
+  <section class="lock-screen" id="lockScreen" aria-label="Chongjie OS lock screen" tabindex="0">
+    <div class="lock-wallpaper" id="lockWallpaper" style="background-image:url('/images/background/bg8.webp')" aria-hidden="true"></div>
+    <div class="lock-status" aria-hidden="true"><svg><use href="#i-wifi"/></svg><svg class="lock-battery"><use href="#i-battery"/></svg></div>
+    <div class="lock-clock"><time id="lockTime">10:09</time><span id="lockDate">Saturday, July 18</span></div>
+    <div class="lock-user"><img src="{{ $avatar.RelPermalink }}" alt="Chongjie Si"><h1>Chongjie Si</h1><p>Click anywhere to enter</p><button data-unlock aria-label="Enter Chongjie OS"><svg><use href="#i-chevron"/></svg></button></div>
+    <div class="lock-footer"><span>Chongjie OS</span><small>Portfolio Edition</small></div>
+  </section>
+
   <main class="desktop" id="desktop" data-wallpaper="8">
-    <div class="wallpaper-layer wallpaper-current" id="wallpaperCurrent" style="background-image:url('/images/background/bg8.webp')" aria-hidden="true"></div><div class="wallpaper-layer wallpaper-next" id="wallpaperNext" aria-hidden="true"></div>
+    <div class="wallpaper-layer wallpaper-current" id="wallpaperCurrent" style="background-image:url('/images/background/bg8.webp')" aria-hidden="true"></div><div class="wallpaper-layer wallpaper-next" id="wallpaperNext" aria-hidden="true"></div><div class="desktop-atmosphere" aria-hidden="true"><i></i><i></i><i></i></div>
     <nav class="menu-bar glass" aria-label="System menu">
       <div class="menu-left">
         <button class="menu-button apple-button" data-menu="systemMenu" aria-label="System menu"><svg><use href="#i-apple"/></svg></button>
@@ -80,10 +97,11 @@
       <hr><button data-open="about">About Chongjie</button><button data-panel="controlCenter">Desktop Settings…</button><hr><button id="replayBoot">Restart Chongjie OS…</button>
     </div>
     <div class="menu-popover glass" id="fileMenu" role="menu"><button data-open="about">Open Profile</button><button data-open="contact">New Message</button><button data-open="cv">Open Résumé</button></div>
-    <div class="menu-popover glass" id="viewMenu" role="menu"><button data-action="show-desktop">Show Desktop</button><button data-panel="spotlight">Open Spotlight</button><hr><button data-panel="controlCenter">Change Wallpaper…</button></div>
+    <div class="menu-popover glass" id="viewMenu" role="menu"><button data-action="mission-control">Mission Control</button><button data-action="show-desktop">Show Desktop</button><button data-panel="spotlight">Open Spotlight</button><hr><button data-panel="controlCenter">Change Wallpaper…</button></div>
     <div class="menu-popover glass" id="goMenu" role="menu"><button data-open="about">About</button><button data-open="papers">Publications</button><button data-open="news">News</button><button data-open="blog">Notes</button><button data-open="photos">Photos</button><button data-open="cv">Résumé</button><hr><button data-open="music">Music</button><button data-open="game">2048</button></div>
     <div class="menu-popover glass" id="windowMenu" role="menu"><button data-action="minimize-active">Minimize</button><button data-action="maximize-active">Zoom</button><hr><button data-action="bring-front">Bring All to Front</button></div>
     <div class="menu-popover glass" id="helpMenu" role="menu"><button data-open="welcome">Chongjie OS Help</button><button data-open="contact">Contact Chongjie</button></div>
+    <div class="menu-popover glass desktop-menu" id="desktopMenu" role="menu"><button data-action="mission-control">Mission Control</button><button data-panel="spotlight">Search…</button><button data-panel="controlCenter">Change Wallpaper…</button><hr><button data-action="show-desktop">Show Desktop</button></div>
 
     <section class="desktop-icons" aria-label="Desktop shortcuts">
       <button class="desktop-icon" data-open="papers"><span class="app-icon icon-papers"><svg><use href="#i-paper"/></svg></span><span>Publications</span></button>
@@ -120,7 +138,7 @@
             </div>
           </div>
           <div class="tab-panel" data-tab-panel="research"><h2>Research focus</h2><div class="tag-cloud">{{ range $author.Params.interests }}<span>{{ . }}</span>{{ end }}</div><p>My current work explores efficient LLM pre-training and supervised fine-tuning, with a broader interest in how parameter spaces encode and adapt knowledge.</p><button class="primary-button" data-open="papers">Explore publications</button></div>
-          <div class="tab-panel" data-tab-panel="experience"><div class="experience-grid"><section><h2>Recent experience</h2><div class="timeline">{{ range first 4 $author.Params.work }}<article><span class="timeline-dot"></span><div class="timeline-copy"><h3>{{ .position }}</h3><small>{{ .company_name }} · {{ time.Format "Jan 2006" .date_start }}</small>{{ with .summary }}<div class="timeline-summary">{{ . | markdownify }}</div>{{ end }}</div></article>{{ end }}</div></section><section><h2 class="beyond-title">Beyond research</h2><div class="life-cards">{{ range where $cvPage.Params.sections "block" "markdown" }}<details class="life-card"><summary><div><strong>{{ .content.title | plainify }}</strong><small>Personal story · Click to read</small></div><svg><use href="#i-chevron"/></svg></summary><div class="life-card-body">{{ .content.text | markdownify }}</div></details>{{ end }}</div><button class="primary-button experience-cv-button" data-open="cv">View complete résumé</button></section></div></div>
+          <div class="tab-panel" data-tab-panel="experience"><div class="experience-grid"><section><h2>Recent experience</h2><div class="timeline">{{ range first 4 $author.Params.work }}<article><span class="timeline-dot"></span><div class="timeline-copy"><h3>{{ .position }}</h3><small>{{ .company_name }} · {{ time.Format "Jan 2006" .date_start }}</small>{{ with .summary }}<div class="timeline-summary">{{ . | markdownify }}</div>{{ end }}</div></article>{{ end }}</div></section><section><h2 class="beyond-title">Beyond research</h2><div class="life-cards">{{ range where $cvPage.Params.sections "block" "markdown" }}{{ $rawTitle := .content.title | plainify }}{{ $isMusic := in (lower $rawTitle) "musician" }}{{ $title := replace (replace $rawTitle "🎵 " "") "🎱 " "" }}<details class="life-card{{ if $isMusic }} music-story{{ else }} snooker-story{{ end }}"><summary><div class="life-card-art" aria-hidden="true">{{ if $isMusic }}<span class="vinyl"><i></i></span><span class="piano-keys">{{ range seq 1 9 }}<i></i>{{ end }}</span><span class="music-wave">{{ range seq 1 7 }}<i></i>{{ end }}</span>{{ else }}<span class="snooker-table"><i class="cue"></i><i class="ball white"></i><i class="ball red one"></i><i class="ball red two"></i><i class="ball black"></i></span>{{ end }}</div><div class="life-card-heading"><span>{{ if $isMusic }}MUSIC · CREATION{{ else }}SNOOKER · PRECISION{{ end }}</span><strong>{{ $title }}</strong><small>{{ if $isMusic }}Composition · Performance · Production{{ else }}Cue craft · Geometry · Competition{{ end }}</small><em>Open story <svg><use href="#i-chevron"/></svg></em></div></summary><div class="life-card-body"><div class="story-intro">{{ if $isMusic }}Music is where structure turns into emotion.{{ else }}A game of geometry, patience, and nerve.{{ end }}</div>{{ .content.text | markdownify }}</div></details>{{ end }}</div><button class="primary-button experience-cv-button" data-open="cv">View complete résumé</button></section></div></div>
         </div>
       </div>
     </section>
@@ -130,8 +148,8 @@
       <div class="library-shell" data-library="papers">
         <div class="library-master"><div class="app-toolbar"><div><p class="eyebrow">RESEARCH LIBRARY</p><h2>Publications</h2></div><label class="inline-search"><svg><use href="#i-search"/></svg><input type="search" placeholder="Filter" data-filter-input="paper"></label></div><div class="scroll-content paper-list">
         {{ range $index, $page := $publications }}
-        <button class="paper-card{{ if eq $index 0 }} is-selected{{ end }}" data-detail="paper-{{ $index }}" data-filter-item="paper" data-filter-text="{{ lower (printf "%s %s %s" .Title (.Params.publication_short | plainify) (delimit .Params.tags " ")) }}"><span class="paper-year">{{ .Date.Format "2006" }}</span><span><span class="paper-meta">{{ .Params.publication_short | default "Research" | plainify }}</span><strong>{{ .Title }}</strong><small>{{ .Params.summary | default (.Summary | plainify) | truncate 110 }}</small></span><svg><use href="#i-chevron"/></svg></button>
-        <template id="paper-{{ $index }}"><article class="reader paper-reader"><button class="reader-back" data-reader-back><svg><use href="#i-back"/></svg> Publications</button><p class="eyebrow">{{ .Params.publication_short | default "RESEARCH" }} · {{ .Date.Format "2006" }}</p><h1>{{ .Title }}</h1><p class="reader-authors">{{ delimit .Params.authors ", " }}</p><div class="reader-tags">{{ range .Params.tags }}<span>{{ . }}</span>{{ end }}</div><h3>Abstract</h3><p class="abstract">{{ .Params.abstract | default .Params.summary }}</p><div class="paper-actions">{{ with .Params.url_pdf }}<a href="{{ . }}" target="_blank" rel="noopener">Read PDF ↗</a>{{ end }}{{ with .Params.url_code }}<a href="{{ . }}" target="_blank" rel="noopener">View code ↗</a>{{ end }}{{ with .Params.url_poster }}<a href="/{{ . }}" target="_blank">Poster ↗</a>{{ end }}</div></article></template>
+        <button class="paper-card{{ if eq $index 0 }} is-selected{{ end }}" data-detail="paper-{{ $index }}" data-filter-item="paper" data-filter-text="{{ lower (printf "%s %s %s" .Title (.Params.publication_short | plainify) (delimit .Params.tags " ")) }}"><span class="paper-year">{{ .Date.Format "2006" }}</span><span><span class="paper-meta">{{ partial "publication-venue.html" (.Params.publication_short | default "Research") }}</span><strong>{{ .Title }}</strong><small>{{ .Params.summary | default (.Summary | plainify) | truncate 110 }}</small></span><svg><use href="#i-chevron"/></svg></button>
+        <template id="paper-{{ $index }}"><article class="reader paper-reader"><button class="reader-back" data-reader-back><svg><use href="#i-back"/></svg> Publications</button><div class="paper-kicker">{{ partial "publication-venue.html" (.Params.publication_short | default "Research") }}<span>{{ .Date.Format "2006" }}</span></div><h1>{{ .Title }}</h1><p class="reader-authors">{{ delimit .Params.authors ", " }}</p><div class="reader-tags">{{ range .Params.tags }}<span>{{ . }}</span>{{ end }}</div><h3>Abstract</h3><p class="abstract">{{ .Params.abstract | default .Params.summary }}</p><div class="paper-actions">{{ with .Params.url_pdf }}<a href="{{ . }}" target="_blank" rel="noopener">Read PDF ↗</a>{{ end }}{{ with .Params.url_code }}<a href="{{ . }}" target="_blank" rel="noopener">View code ↗</a>{{ end }}{{ with .Params.url_poster }}<a href="/{{ . }}" target="_blank">Poster ↗</a>{{ end }}</div></article></template>
         {{ end }}
         </div><footer class="paper-pagination" data-pagination="paper"><button data-page-prev aria-label="Previous publications"><svg><use href="#i-back"/></svg></button><span>Page <b data-page-current>1</b> of <b data-page-total>1</b></span><button data-page-next aria-label="Next publications"><svg><use href="#i-chevron"/></svg></button></footer></div><div class="library-detail scroll-content" data-detail-host="papers"><div class="detail-placeholder"><span class="app-icon icon-papers"><svg><use href="#i-paper"/></svg></span><h3>Select a publication</h3><p>Abstract, authors and research links will appear here.</p></div></div>
       </div>
@@ -163,13 +181,13 @@
     </section>
 
     <section class="window compact-window" id="window-music" data-app="music" data-title="Music" style="--x: 28vw; --y: 13vh; --w: min(570px, 74vw); --h: min(560px, 70vh);">
-      <header class="window-bar drag-handle"><div class="traffic-lights"><button class="close" data-window-action="close"></button><button class="minimize" data-window-action="minimize"></button><button class="maximize" data-window-action="maximize"></button></div><div class="window-title">Focus Music</div><div class="window-tools"><span class="music-status">Generative audio</span></div></header>
-      <div class="music-app">
-        <div class="music-cover"><div class="cover-orb"></div><div class="sound-bars" aria-hidden="true">{{ range seq 1 24 }}<i></i>{{ end }}</div><span>CHONGJIE<br>SESSIONS</span></div>
-        <div class="now-playing"><p class="eyebrow">NOW PLAYING</p><h2 data-track-title>Glass Horizon</h2><p data-track-subtitle>Warm keys for a clear mind</p></div>
-        <div class="music-progress"><span data-music-elapsed>0:00</span><i><b data-music-progress></b></i><span>∞</span></div>
-        <div class="music-controls"><button data-track-step="-1" aria-label="Previous soundscape">‹</button><button class="play-button" data-music-play aria-label="Play"><svg><use href="#i-play"/></svg></button><button data-track-step="1" aria-label="Next soundscape">›</button></div>
-        <div class="soundscape-list"><button class="is-selected" data-soundscape="0"><span>01</span><div><b>Glass Horizon</b><small>Warm · Airy · 64 BPM</small></div></button><button data-soundscape="1"><span>02</span><div><b>Night Drive</b><small>Deep · Electric · 76 BPM</small></div></button><button data-soundscape="2"><span>03</span><div><b>Deep Work</b><small>Minimal · Steady · 58 BPM</small></div></button></div>
+      <header class="window-bar drag-handle"><div class="traffic-lights"><button class="close" data-window-action="close"></button><button class="minimize" data-window-action="minimize"></button><button class="maximize" data-window-action="maximize"></button></div><div class="window-title">Music</div><div class="window-tools"><span class="music-status">{{ len $audioFiles }} local tracks</span></div></header>
+      <div class="music-app scroll-content">
+        <div class="music-cover"><div class="cover-orb"></div><div class="sound-bars" aria-hidden="true">{{ range seq 1 24 }}<i></i>{{ end }}</div><span>CHONGJIE<br>RADIO</span></div>
+        <div class="now-playing"><p class="eyebrow">NOW PLAYING</p>{{ if gt (len $audioFiles) 0 }}{{ $firstName := replaceRE `\.[^.]+$` "" (index $audioFiles 0).Name }}{{ $firstArtist := "Unknown Artist" }}{{ $firstTitle := $firstName }}{{ if in $firstName "-" }}{{ $firstArtist = replaceRE `\s*-.*$` "" $firstName }}{{ $firstTitle = replaceRE `^[^-]+-\s*` "" $firstName }}{{ end }}<h2 data-track-title>{{ $firstTitle }}</h2><p data-track-subtitle>{{ $firstArtist }}</p>{{ else }}<h2 data-track-title>Local Library</h2><p data-track-subtitle>Add music to static/audio</p>{{ end }}</div>
+        <div class="music-progress"><span data-music-elapsed>0:00</span><i data-music-seek><b data-music-progress></b></i><span data-music-duration>0:00</span></div>
+        <div class="music-controls"><button data-track-step="-1" aria-label="Previous track">‹</button><button class="play-button" data-music-play aria-label="Play"><svg><use href="#i-play"/></svg></button><button data-track-step="1" aria-label="Next track">›</button></div>
+        <div class="lyrics-panel" data-lyrics-panel><p>No synced lyrics</p></div><div class="soundscape-list local-library">{{ range $index, $file := $audioFiles }}{{ $baseName := replaceRE `\.[^.]+$` "" $file.Name }}{{ $artist := "Unknown Artist" }}{{ $title := $baseName }}{{ if in $baseName "-" }}{{ $artist = replaceRE `\s*-.*$` "" $baseName }}{{ $title = replaceRE `^[^-]+-\s*` "" $baseName }}{{ end }}{{ $lyricsPath := printf "static/audio/%s.lrc" $baseName }}<button{{ if eq $index 0 }} class="is-selected"{{ end }} data-local-track="{{ $index }}" data-audio-src="/audio/{{ $file.Name }}" data-track-name="{{ $title }}" data-track-artist="{{ $artist }}"{{ if fileExists $lyricsPath }} data-lyrics-src="/audio/{{ $baseName }}.lrc"{{ end }}><span>{{ printf "%02d" (add $index 1) }}</span><div><b>{{ $title }}</b><small>{{ $artist }}</small></div></button>{{ else }}<div class="empty-library"><b>No local music yet</b><small>Add audio files to static/audio and rebuild.</small></div>{{ end }}</div>
       </div>
     </section>
 
@@ -219,6 +237,6 @@
     </nav>
     <div class="desktop-hint" id="desktopHint">Double-click an icon or choose an app from the Dock</div>
   </main>
-  <script src="/js/macos.js?v=20260718-2"></script>
+  <script src="/js/macos.js?v=20260718-10"></script>
 </body>
 </html>

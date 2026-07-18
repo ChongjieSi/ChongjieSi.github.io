@@ -53,8 +53,8 @@ profiles:
     url: /uploads/chongjie-cv.pdf
 
 interests:
-  - LLM Data Pipeline
   - LLM Pre-train
+  - LLM Algorithm Design
   - LLM Supervised Fine-tuning
   # - Weakly Supervised Learning
 
@@ -88,8 +88,11 @@ work:
    company_logo: ''
    date_start: 2026-01-19
   #  date_end: ''
-   summary: |1-
-     LLM Pre-training
+   summary: |2-
+      Responsibilities include:
+      - LLM Pre-training
+      - LLM Algorith Design
+      - LLM Release
  - position: REDstar Intern 
    company_name: Xiaohongshu
    company_url: ''

@@ -3,33 +3,62 @@
   const windows = [...document.querySelectorAll('.window')];
   const panels = [...document.querySelectorAll('.floating-panel, .menu-popover')];
   const boot = document.getElementById('bootScreen');
+  const lockScreen = document.getElementById('lockScreen');
+  const lockWallpaper = document.getElementById('lockWallpaper');
   let topZ = 20;
   let activeWindow = document.querySelector('.window.active');
   let musicVolume = 0.65;
-  let ambientMaster = null;
+  let audioPlayer = null;
   const readStorage = (storage, key) => { try { return storage.getItem(key); } catch (_) { return null; } };
   const writeStorage = (storage, key, value) => { try { storage.setItem(key, value); } catch (_) {} };
 
   // Never let an optional app failure leave the transparent boot layer over the desktop.
-  const finishBoot = () => {
-    boot?.classList.add('is-hidden');
-    writeStorage(sessionStorage, 'chongjie-booted', '1');
-  };
-  if (readStorage(sessionStorage, 'chongjie-booted') || matchMedia('(prefers-reduced-motion: reduce)').matches) finishBoot();
-  else window.setTimeout(finishBoot, 1250);
+  const finishBoot = () => boot?.classList.add('is-hidden');
+  window.setTimeout(finishBoot, matchMedia('(prefers-reduced-motion: reduce)').matches ? 320 : 1250);
 
   const closeOverlays = (except) => panels.forEach(panel => {
     if (panel !== except) panel.classList.remove('is-visible');
   });
 
   const focusWindow = (win) => {
-    if (!win) return;
+    if (!win) {
+      windows.forEach(item => item.classList.remove('active'));
+      activeWindow = null;
+      desktop.classList.remove('has-active-window');
+      return;
+    }
     windows.forEach(item => item.classList.remove('active'));
     win.classList.add('active');
     win.style.zIndex = ++topZ;
     activeWindow = win;
+    desktop.classList.toggle('has-active-window', !!win);
     document.getElementById('activeAppName').textContent = win.dataset.title || 'Finder';
   };
+
+  const centerInitialProfile = () => {
+    const profile = document.getElementById('window-about');
+    if (!profile || innerWidth <= 760) return;
+    const width = profile.offsetWidth;
+    const height = profile.offsetHeight;
+    profile.style.left = `${Math.max(12, (innerWidth - width) / 2)}px`;
+    profile.style.top = `${Math.max(44, (innerHeight - height - 34) / 2)}px`;
+  };
+  const unlockDesktop = () => {
+    if (lockScreen?.classList.contains('is-hidden')) return;
+    lockScreen.classList.add('is-unlocking');
+    window.setTimeout(() => {
+      lockScreen.classList.add('is-hidden');
+      lockScreen.classList.remove('is-unlocking');
+      centerInitialProfile();
+      focusWindow(document.getElementById('window-about'));
+    }, 430);
+  };
+  const showLockScreen = () => {
+    lockScreen?.classList.remove('is-hidden', 'is-unlocking');
+    closeOverlays();
+    centerInitialProfile();
+  };
+  lockScreen?.addEventListener('click', unlockDesktop);
 
   const syncDock = () => {
     document.querySelectorAll('.dock-item[data-open]').forEach(item => {
@@ -42,7 +71,7 @@
     const win = document.getElementById(`window-${name}`);
     if (!win) return;
     win.classList.add('is-open');
-    win.classList.remove('is-minimized');
+    win.classList.remove('is-minimized', 'is-closing', 'is-minimizing');
     focusWindow(win);
     closeOverlays();
     syncDock();
@@ -53,6 +82,11 @@
     if (open) {
       if (open.classList.contains('desktop-icon') && event.detail < 2) return;
       event.preventDefault();
+      if (open.classList.contains('dock-item')) {
+        open.classList.remove('is-launching');
+        requestAnimationFrame(() => open.classList.add('is-launching'));
+        window.setTimeout(() => open.classList.remove('is-launching'), 560);
+      }
       openApp(open.dataset.open);
       return;
     }
@@ -85,14 +119,25 @@
   });
 
   windows.forEach(win => {
-    win.addEventListener('pointerdown', () => focusWindow(win));
+    win.addEventListener('pointerdown', () => {
+      desktop.classList.remove('mission-control');
+      focusWindow(win);
+    });
     win.querySelectorAll('[data-window-action]').forEach(button => button.addEventListener('click', (event) => {
       event.stopPropagation();
       const action = button.dataset.windowAction;
-      if (action === 'close') win.classList.remove('is-open');
-      if (action === 'minimize') win.classList.add('is-minimized');
+      if (action === 'close' || action === 'minimize') {
+        const motionClass = action === 'close' ? 'is-closing' : 'is-minimizing';
+        win.classList.add(motionClass);
+        window.setTimeout(() => {
+          win.classList.remove(motionClass);
+          if (action === 'close') win.classList.remove('is-open');
+          else win.classList.add('is-minimized');
+          syncDock();
+        }, action === 'close' ? 210 : 270);
+      }
       if (action === 'maximize') win.classList.toggle('is-maximized');
-      const next = [...windows].filter(item => item.classList.contains('is-open') && !item.classList.contains('is-minimized')).sort((a,b) => (+b.style.zIndex || 0) - (+a.style.zIndex || 0))[0];
+      const next = [...windows].filter(item => item.classList.contains('is-open') && !item.classList.contains('is-minimized') && ((action !== 'close' && action !== 'minimize') || item !== win)).sort((a,b) => (+b.style.zIndex || 0) - (+a.style.zIndex || 0))[0];
       focusWindow(next);
       if (!next) document.getElementById('activeAppName').textContent = 'Finder';
       syncDock();
@@ -112,7 +157,26 @@
     host.replaceChildren(template.content.cloneNode(true));
     shell?.classList.add('is-reading');
     host.scrollTop = 0;
+    if (host.dataset.detailHost === 'notes') renderNoteMath(host);
   };
+
+  const mathOptions = {
+    delimiters: [
+      { left: '$$', right: '$$', display: true },
+      { left: '$', right: '$', display: false },
+      { left: '\\(', right: '\\)', display: false },
+      { left: '\\[', right: '\\]', display: true }
+    ],
+    throwOnError: false,
+    ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+  };
+  function renderNoteMath(host, attempt = 0) {
+    if (typeof window.renderMathInElement === 'function') {
+      window.renderMathInElement(host, mathOptions);
+      return;
+    }
+    if (attempt < 20) window.setTimeout(() => renderNoteMath(host, attempt + 1), 100);
+  }
 
   document.querySelectorAll('[data-detail]').forEach(item => item.addEventListener('click', () => {
     const shell = item.closest('[data-library]');
@@ -242,7 +306,7 @@
     if (range.dataset.systemRange === 'volume') {
       musicVolume = Number(range.value) / 100;
       document.querySelector('[data-volume-label]').textContent = `${range.value}%`;
-      if (ambientMaster) ambientMaster.gain.setTargetAtTime(musicVolume * 0.12, ambientMaster.context.currentTime, 0.06);
+      if (audioPlayer) audioPlayer.volume = musicVolume;
     }
   }));
 
@@ -264,14 +328,62 @@
   });
   document.addEventListener('pointerup', () => { dragState.active = false; });
 
+  // Subtle spatial response keeps the desktop feeling dimensional without affecting controls.
+  let atmosphereFrame = 0;
+  document.addEventListener('pointermove', (event) => {
+    if (dragState.active || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    cancelAnimationFrame(atmosphereFrame);
+    atmosphereFrame = requestAnimationFrame(() => {
+      const nx = event.clientX / innerWidth - 0.5;
+      const ny = event.clientY / innerHeight - 0.5;
+      desktop.style.setProperty('--mx', `${nx * -8}px`);
+      desktop.style.setProperty('--my', `${ny * -6}px`);
+      desktop.style.setProperty('--px', `${event.clientX}px`);
+      desktop.style.setProperty('--py', `${event.clientY}px`);
+    });
+  });
+
   const runAction = (action) => {
-    if (action === 'show-desktop') windows.forEach(win => win.classList.add('is-minimized'));
+    if (action === 'mission-control') {
+      const openWindows = windows.filter(win => win.classList.contains('is-open'));
+      const entering = !desktop.classList.contains('mission-control');
+      desktop.classList.toggle('mission-control', entering);
+      if (entering && openWindows.length) {
+        const columns = Math.ceil(Math.sqrt(openWindows.length));
+        const rows = Math.ceil(openWindows.length / columns);
+        const gap = 22;
+        const width = Math.min(430, (innerWidth - 80 - gap * (columns - 1)) / columns);
+        const height = Math.min(310, (innerHeight - 150 - gap * (rows - 1)) / rows);
+        const gridWidth = columns * width + (columns - 1) * gap;
+        const gridHeight = rows * height + (rows - 1) * gap;
+        openWindows.forEach((win, index) => {
+          win.style.setProperty('--mission-x', `${(innerWidth - gridWidth) / 2 + (index % columns) * (width + gap)}px`);
+          win.style.setProperty('--mission-y', `${62 + (innerHeight - 120 - gridHeight) / 2 + Math.floor(index / columns) * (height + gap)}px`);
+          win.style.setProperty('--mission-w', `${width}px`);
+          win.style.setProperty('--mission-h', `${height}px`);
+        });
+      }
+    }
+    if (action === 'show-desktop') {
+      desktop.classList.remove('mission-control');
+      windows.forEach(win => win.classList.add('is-minimized'));
+    }
     if (action === 'minimize-active' && activeWindow) activeWindow.classList.add('is-minimized');
     if (action === 'maximize-active' && activeWindow) activeWindow.classList.toggle('is-maximized');
     if (action === 'bring-front') windows.filter(win => win.classList.contains('is-open')).forEach(focusWindow);
     closeOverlays(); syncDock();
   };
   document.querySelectorAll('[data-action]').forEach(button => button.addEventListener('click', () => runAction(button.dataset.action)));
+
+  const desktopMenu = document.getElementById('desktopMenu');
+  desktop.addEventListener('contextmenu', (event) => {
+    if (event.target.closest('.window,.dock,.menu-bar,.floating-panel,.menu-popover')) return;
+    event.preventDefault();
+    closeOverlays(desktopMenu);
+    desktopMenu.style.left = `${Math.min(event.clientX, innerWidth - 235)}px`;
+    desktopMenu.style.top = `${Math.min(Math.max(38, event.clientY), innerHeight - 190)}px`;
+    desktopMenu.classList.add('is-visible');
+  });
 
   const wallpaperCurrent = document.getElementById('wallpaperCurrent');
   const wallpaperNext = document.getElementById('wallpaperNext');
@@ -285,6 +397,7 @@
       committed = true;
       if (request !== wallpaperRequest) return;
       desktop.dataset.wallpaper = value;
+      if (lockWallpaper) lockWallpaper.style.backgroundImage = `url("${url}")`;
       if (!animate) {
         wallpaperCurrent.style.backgroundImage = `url("${url}")`;
         wallpaperNext.classList.remove('is-visible');
@@ -318,99 +431,129 @@
     applyWallpaper(choice.dataset.wallpaper);
   });
 
-  // A small, fully local Web Audio soundscape engine.
+  // Local audio library generated from static/audio at build time.
   const musicApp = document.querySelector('.music-app');
   const musicPlay = document.querySelector('[data-music-play]');
   const musicElapsed = document.querySelector('[data-music-elapsed]');
   const musicProgress = document.querySelector('[data-music-progress]');
+  const musicDuration = document.querySelector('[data-music-duration]');
   const musicStatus = document.querySelector('.music-status');
-  const soundscapes = [
-    { title: 'Glass Horizon', subtitle: 'Warm keys for a clear mind', frequencies: [130.81, 196, 261.63, 329.63], type: 'sine', cutoff: 1250 },
-    { title: 'Night Drive', subtitle: 'Low pulses under neon skies', frequencies: [82.41, 123.47, 164.81, 246.94], type: 'triangle', cutoff: 760 },
-    { title: 'Deep Work', subtitle: 'Minimal motion, steady focus', frequencies: [110, 165, 220, 330], type: 'sine', cutoff: 540 }
-  ];
-  let audioContext = null;
-  let ambientNodes = [];
-  let musicPlaying = false;
-  let currentSoundscape = 0;
-  let elapsedSeconds = 0;
-  let elapsedTimer = null;
+  const lyricsPanel = document.querySelector('[data-lyrics-panel]');
+  const localTracks = [...document.querySelectorAll('[data-local-track]')];
+  let currentTrack = 0;
+  let lyricLines = [];
+  let activeLyric = -1;
+  let lyricRequest = 0;
+  audioPlayer = new Audio();
+  audioPlayer.preload = 'metadata';
+  audioPlayer.volume = musicVolume;
 
-  const formatTime = seconds => `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
+  const formatTime = seconds => Number.isFinite(seconds) ? `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2, '0')}` : '0:00';
   const updateMusicProgress = () => {
-    musicElapsed.textContent = formatTime(elapsedSeconds);
-    musicProgress.style.width = `${(elapsedSeconds % 60) / 60 * 100}%`;
+    musicElapsed.textContent = formatTime(audioPlayer.currentTime);
+    musicDuration.textContent = formatTime(audioPlayer.duration);
+    musicProgress.style.width = `${audioPlayer.duration ? audioPlayer.currentTime / audioPlayer.duration * 100 : 0}%`;
   };
-  const destroyAmbientGraph = () => {
-    ambientNodes.forEach(node => { try { node.stop?.(); } catch (_) {} try { node.disconnect?.(); } catch (_) {} });
-    ambientNodes = [];
-    if (ambientMaster) { try { ambientMaster.disconnect(); } catch (_) {} ambientMaster = null; }
+  const showLyricsMessage = message => {
+    lyricLines = [];
+    activeLyric = -1;
+    lyricsPanel.classList.remove('has-lyrics');
+    const line = document.createElement('p');
+    line.textContent = message;
+    lyricsPanel.replaceChildren(line);
   };
-  const buildAmbientGraph = () => {
-    destroyAmbientGraph();
-    const track = soundscapes[currentSoundscape];
-    ambientMaster = audioContext.createGain();
-    ambientMaster.gain.setValueAtTime(0.0001, audioContext.currentTime);
-    ambientMaster.connect(audioContext.destination);
-    const filter = audioContext.createBiquadFilter();
-    filter.type = 'lowpass';
-    filter.frequency.value = track.cutoff;
-    filter.Q.value = 0.7;
-    filter.connect(ambientMaster);
-    ambientNodes.push(filter);
-    track.frequencies.forEach((frequency, index) => {
-      const oscillator = audioContext.createOscillator();
-      const voiceGain = audioContext.createGain();
-      oscillator.type = track.type;
-      oscillator.frequency.value = frequency;
-      oscillator.detune.value = (index - 1.5) * 3.5;
-      voiceGain.gain.value = 0.18 / track.frequencies.length;
-      oscillator.connect(voiceGain).connect(filter);
-      oscillator.start();
-      ambientNodes.push(oscillator, voiceGain);
+  const parseLyrics = source => {
+    const parsed = [];
+    source.split(/\r?\n/).forEach(row => {
+      const text = row.replace(/\[[0-9]{1,3}:[0-9]{2}(?:[.:][0-9]{1,3})?\]/g, '').trim();
+      if (!text) return;
+      for (const match of row.matchAll(/\[([0-9]{1,3}):([0-9]{2})(?:[.:]([0-9]{1,3}))?\]/g)) {
+        const fraction = match[3] ? Number(`0.${match[3]}`) : 0;
+        parsed.push({ time: Number(match[1]) * 60 + Number(match[2]) + fraction, text });
+      }
     });
-    const lfo = audioContext.createOscillator();
-    const lfoGain = audioContext.createGain();
-    lfo.frequency.value = currentSoundscape === 1 ? 0.13 : 0.07;
-    lfoGain.gain.value = currentSoundscape === 2 ? 80 : 150;
-    lfo.connect(lfoGain).connect(filter.frequency);
-    lfo.start();
-    ambientNodes.push(lfo, lfoGain);
-    ambientMaster.gain.exponentialRampToValueAtTime(Math.max(0.006, musicVolume * 0.12), audioContext.currentTime + 0.8);
+    return parsed.sort((a, b) => a.time - b.time);
   };
-  const setMusicPlaying = async shouldPlay => {
-    if (!musicApp || !musicPlay) return;
-    if (shouldPlay) {
-      const AudioEngine = window.AudioContext || window.webkitAudioContext;
-      if (!AudioEngine) { musicStatus.textContent = 'Audio unavailable'; return; }
-      audioContext ||= new AudioEngine();
-      await audioContext.resume();
-      buildAmbientGraph();
-      musicPlaying = true;
-      elapsedTimer ||= window.setInterval(() => { if (musicPlaying) { elapsedSeconds += 1; updateMusicProgress(); } }, 1000);
-    } else {
-      musicPlaying = false;
-      if (ambientMaster && audioContext) ambientMaster.gain.setTargetAtTime(0.0001, audioContext.currentTime, 0.08);
-      window.setTimeout(() => { if (!musicPlaying) destroyAmbientGraph(); }, 450);
+  const loadLyrics = async track => {
+    const request = ++lyricRequest;
+    if (!track.dataset.lyricsSrc) { showLyricsMessage('No synced lyrics'); return; }
+    showLyricsMessage('Loading lyrics…');
+    try {
+      const response = await fetch(track.dataset.lyricsSrc);
+      if (!response.ok) throw new Error('Lyrics unavailable');
+      const parsed = parseLyrics(await response.text());
+      if (request !== lyricRequest) return;
+      if (!parsed.length) { showLyricsMessage('No synced lyrics'); return; }
+      lyricLines = parsed;
+      activeLyric = -1;
+      const fragment = document.createDocumentFragment();
+      lyricLines.forEach((entry, index) => {
+        const line = document.createElement('p');
+        line.textContent = entry.text;
+        line.dataset.lyricIndex = index;
+        fragment.appendChild(line);
+      });
+      lyricsPanel.replaceChildren(fragment);
+      lyricsPanel.classList.add('has-lyrics');
+      lyricsPanel.scrollTop = 0;
+    } catch (_) {
+      if (request === lyricRequest) showLyricsMessage('Lyrics unavailable');
     }
-    musicApp.classList.toggle('is-playing', musicPlaying);
-    musicPlay.setAttribute('aria-label', musicPlaying ? 'Pause' : 'Play');
-    musicPlay.querySelector('use').setAttribute('href', musicPlaying ? '#i-pause' : '#i-play');
-    musicStatus.textContent = musicPlaying ? 'Playing locally' : 'Paused';
   };
-  const selectSoundscape = index => {
-    currentSoundscape = (index + soundscapes.length) % soundscapes.length;
-    elapsedSeconds = 0;
-    updateMusicProgress();
-    const track = soundscapes[currentSoundscape];
-    document.querySelector('[data-track-title]').textContent = track.title;
-    document.querySelector('[data-track-subtitle]').textContent = track.subtitle;
-    document.querySelectorAll('[data-soundscape]').forEach(button => button.classList.toggle('is-selected', Number(button.dataset.soundscape) === currentSoundscape));
-    if (musicPlaying) buildAmbientGraph();
+  const updateActiveLyric = () => {
+    if (!lyricLines.length) return;
+    let next = -1;
+    for (let index = 0; index < lyricLines.length; index += 1) {
+      if (lyricLines[index].time <= audioPlayer.currentTime + 0.12) next = index;
+      else break;
+    }
+    if (next === activeLyric) return;
+    activeLyric = next;
+    lyricsPanel.querySelectorAll('[data-lyric-index]').forEach((line, index) => line.classList.toggle('is-current', index === next));
+    lyricsPanel.querySelector(`[data-lyric-index="${next}"]`)?.scrollIntoView({ block: 'center', behavior: 'smooth' });
   };
-  musicPlay?.addEventListener('click', () => setMusicPlaying(!musicPlaying));
-  document.querySelectorAll('[data-soundscape]').forEach(button => button.addEventListener('click', () => selectSoundscape(Number(button.dataset.soundscape))));
-  document.querySelectorAll('[data-track-step]').forEach(button => button.addEventListener('click', () => selectSoundscape(currentSoundscape + Number(button.dataset.trackStep))));
+  const syncMusicState = () => {
+    const playing = !audioPlayer.paused;
+    musicApp?.classList.toggle('is-playing', playing);
+    musicPlay?.setAttribute('aria-label', playing ? 'Pause' : 'Play');
+    musicPlay?.querySelector('use')?.setAttribute('href', playing ? '#i-pause' : '#i-play');
+    musicStatus.textContent = playing ? 'Playing' : `${localTracks.length} local tracks`;
+  };
+  const selectLocalTrack = (index, autoplay = false) => {
+    if (!localTracks.length) { musicStatus.textContent = 'Add music to static/audio'; return; }
+    currentTrack = (index + localTracks.length) % localTracks.length;
+    const track = localTracks[currentTrack];
+    localTracks.forEach(button => button.classList.toggle('is-selected', button === track));
+    document.querySelector('[data-track-title]').textContent = track.dataset.trackName;
+    document.querySelector('[data-track-subtitle]').textContent = track.dataset.trackArtist;
+    loadLyrics(track);
+    if (audioPlayer.getAttribute('src') !== track.dataset.audioSrc) {
+      audioPlayer.src = track.dataset.audioSrc;
+      audioPlayer.load();
+    }
+    if (autoplay) audioPlayer.play().catch(() => { musicStatus.textContent = 'Press play to start'; });
+    updateMusicProgress(); syncMusicState();
+  };
+  musicPlay?.addEventListener('click', () => {
+    if (!localTracks.length) { musicStatus.textContent = 'Add music to static/audio'; return; }
+    if (!audioPlayer.src) selectLocalTrack(currentTrack);
+    if (audioPlayer.paused) audioPlayer.play().catch(() => { musicStatus.textContent = 'Audio could not be played'; });
+    else audioPlayer.pause();
+  });
+  localTracks.forEach((button, index) => button.addEventListener('click', () => selectLocalTrack(index, true)));
+  document.querySelectorAll('[data-track-step]').forEach(button => button.addEventListener('click', () => selectLocalTrack(currentTrack + Number(button.dataset.trackStep), !audioPlayer.paused)));
+  document.querySelector('[data-music-seek]')?.addEventListener('click', event => {
+    if (!audioPlayer.duration) return;
+    const rect = event.currentTarget.getBoundingClientRect();
+    audioPlayer.currentTime = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width)) * audioPlayer.duration;
+  });
+  audioPlayer.addEventListener('timeupdate', () => { updateMusicProgress(); updateActiveLyric(); });
+  audioPlayer.addEventListener('loadedmetadata', updateMusicProgress);
+  audioPlayer.addEventListener('play', syncMusicState);
+  audioPlayer.addEventListener('pause', syncMusicState);
+  audioPlayer.addEventListener('ended', () => selectLocalTrack(currentTrack + 1, true));
+  audioPlayer.addEventListener('error', () => { musicStatus.textContent = 'Audio file unavailable'; syncMusicState(); });
+  if (localTracks.length) selectLocalTrack(0);
 
   // Complete 2048 implementation: keyboard, swipe, scoring, best score and game-over state.
   const gameBoard = document.querySelector('[data-game-board]');
@@ -499,6 +642,11 @@
   document.querySelectorAll('.panel-close').forEach(button => button.addEventListener('click', () => closeOverlays()));
 
   document.addEventListener('keydown', (event) => {
+    if (lockScreen && !lockScreen.classList.contains('is-hidden')) {
+      if (event.key === 'Enter' || event.key === ' ') unlockDesktop();
+      event.preventDefault();
+      return;
+    }
     const gameDirections = { ArrowLeft: 'left', ArrowRight: 'right', ArrowUp: 'up', ArrowDown: 'down' };
     if (activeWindow?.dataset.app === 'game' && gameDirections[event.key]) {
       event.preventDefault();
@@ -507,8 +655,20 @@
     }
     if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') { event.preventDefault(); document.getElementById('spotlight').classList.add('is-visible'); setTimeout(() => searchInput.focus(), 20); }
     if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'w' && activeWindow) { event.preventDefault(); activeWindow.classList.remove('is-open'); syncDock(); }
+    if ((event.metaKey || event.ctrlKey) && event.key === 'Tab') {
+      event.preventDefault();
+      const openWindows = windows.filter(win => win.classList.contains('is-open')).sort((a,b) => (+b.style.zIndex || 0) - (+a.style.zIndex || 0));
+      if (openWindows.length) {
+        const current = openWindows.indexOf(activeWindow);
+        const next = openWindows[(current + 1) % openWindows.length];
+        next.classList.remove('is-minimized');
+        desktop.classList.remove('mission-control');
+        focusWindow(next); syncDock();
+      }
+    }
     if (event.altKey && event.key.toLowerCase() === 'd') { event.preventDefault(); runAction('show-desktop'); }
     if (event.key === 'Escape') {
+      if (desktop.classList.contains('mission-control')) { desktop.classList.remove('mission-control'); return; }
       const lightbox = document.querySelector('[data-lightbox-host]');
       if (lightbox.classList.contains('is-visible')) lightbox.classList.remove('is-visible');
       else closeOverlays();
@@ -522,9 +682,21 @@
     const date = now.toLocaleDateString(undefined, {weekday:'short', month:'short', day:'numeric'});
     const time = now.toLocaleTimeString(undefined, {hour:'2-digit', minute:'2-digit'});
     document.getElementById('clock').textContent = `${date}  ${time}`;
+    const lockTime = document.getElementById('lockTime');
+    const lockDate = document.getElementById('lockDate');
+    if (lockTime) lockTime.textContent = now.toLocaleTimeString(undefined, {hour:'2-digit', minute:'2-digit'});
+    if (lockDate) lockDate.textContent = now.toLocaleDateString(undefined, {weekday:'long', month:'long', day:'numeric'});
   };
   updateClock(); setInterval(updateClock, 30000);
 
-  document.getElementById('replayBoot')?.addEventListener('click', () => { closeOverlays(); boot?.classList.remove('is-hidden'); setTimeout(finishBoot, 1250); });
+  requestAnimationFrame(centerInitialProfile);
+  window.addEventListener('resize', () => { if (!lockScreen?.classList.contains('is-hidden')) centerInitialProfile(); });
+  document.getElementById('replayBoot')?.addEventListener('click', () => {
+    showLockScreen();
+    const progress = boot?.querySelector('.boot-track span');
+    if (progress) { progress.style.animation = 'none'; void progress.offsetWidth; progress.style.animation = ''; }
+    boot?.classList.remove('is-hidden');
+    setTimeout(finishBoot, 1250);
+  });
   syncDock();
 })();

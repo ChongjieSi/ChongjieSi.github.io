@@ -1,0 +1,6 @@
+{{- $raw := . | default "Research" -}}
+{{- $clean := replaceRE `<[^>]+>` "" $raw -}}
+{{- $clean = replace $clean "**" "" -}}
+{{- $clean = replace $clean "__" "" -}}
+{{- $parts := split ($clean | plainify) "," -}}
+<span class="publication-venue"><span class="venue-name">{{ trim (index $parts 0) " " }}</span>{{ range after 1 $parts }}{{ $label := trim . " " }}{{ if $label }}<span class="venue-badge">{{ $label }}</span>{{ end }}{{ end }}</span>
