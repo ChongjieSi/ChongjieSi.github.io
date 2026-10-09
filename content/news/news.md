@@ -2,6 +2,8 @@
 title: "Recent News"
 date: 2023-09-05
 news:
+  - title: "📘 One paper has been accepted to NeurIPS 2026."
+    date: "2026-09-25"
   - title: "📘 One paper has been accepted to ECCV 2026."
     date: "2026-06-18"
   - title: "🎯 See you in Wuhan, Valse 2026!"

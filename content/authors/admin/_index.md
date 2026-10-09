@@ -87,7 +87,7 @@ work:
    company_url: ''
    company_logo: ''
    date_start: 2026-01-19
-  #  date_end: ''
+   date_end: 2026-09-01
    summary: |2-
       Responsibilities include:
       - LLM Pre-training
