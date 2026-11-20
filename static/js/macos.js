@@ -27,7 +27,7 @@
     if (!win || innerWidth < 761) return;
     const states = readWindowStates();
     const rect = win.getBoundingClientRect();
-    states[win.id] = { left: rect.left, top: rect.top, width: rect.width, height: rect.height, maximized: win.classList.contains('is-maximized') };
+    states[win.id] = { left: rect.left, top: rect.top, width: rect.width, height: rect.height, maximized: win.classList.contains('is-maximized'), arcadeLayout: 6 };
     writeStorage(localStorage, windowStateKey, JSON.stringify(states));
   };
   const restoreWindowStates = () => {
@@ -36,6 +36,7 @@
     windows.forEach(win => {
       const state = states[win.id];
       if (!state) return;
+      if ((win.classList.contains('arcade-game-window') || win.classList.contains('arcade-lobby-window')) && state.arcadeLayout !== 6) return;
       win.style.left = `${Math.max(7, Math.min(innerWidth - 150, state.left))}px`;
       win.style.top = `${Math.max(39, Math.min(innerHeight - 100, state.top))}px`;
       win.style.width = `${Math.max(440, Math.min(innerWidth - 14, state.width))}px`;
@@ -796,165 +797,6 @@
   }));
   syncTodayTasks();
 
-  // Complete 2048 implementation: keyboard, swipe, scoring, best score and game-over state.
-  const gameBoard = document.querySelector('[data-game-board]');
-  const gameCells = [...document.querySelectorAll('.game-cell')];
-  const gameScore = document.querySelector('[data-game-score]');
-  const gameBest = document.querySelector('[data-game-best]');
-  const gameMessage = document.querySelector('[data-game-message]');
-  let board = Array(16).fill(0);
-  let score = 0;
-  let bestScore = Number(readStorage(localStorage, 'chongjie-2048-best') || 0);
-  let newTileIndex = -1;
-  const renderGame = () => {
-    gameCells.forEach((cell, index) => {
-      const value = board[index];
-      cell.textContent = value || '';
-      if (value) cell.dataset.value = value; else delete cell.dataset.value;
-      cell.classList.toggle('is-new', index === newTileIndex);
-    });
-    gameScore.textContent = score;
-    bestScore = Math.max(bestScore, score);
-    writeStorage(localStorage, 'chongjie-2048-best', bestScore);
-    gameBest.textContent = bestScore;
-  };
-  const addRandomTile = () => {
-    const empty = board.map((value, index) => value ? -1 : index).filter(index => index >= 0);
-    if (!empty.length) return;
-    newTileIndex = empty[Math.floor(Math.random() * empty.length)];
-    board[newTileIndex] = Math.random() < 0.9 ? 2 : 4;
-  };
-  const mergeLine = line => {
-    const values = line.filter(Boolean);
-    const merged = [];
-    for (let index = 0; index < values.length; index += 1) {
-      if (values[index] === values[index + 1]) {
-        const value = values[index] * 2;
-        merged.push(value);
-        score += value;
-        index += 1;
-      } else merged.push(values[index]);
-    }
-    return [...merged, ...Array(4 - merged.length).fill(0)];
-  };
-  const canGameMove = () => board.some(value => !value) || board.some((value, index) => (index % 4 < 3 && value === board[index + 1]) || (index < 12 && value === board[index + 4]));
-  const moveGame = direction => {
-    const before = board.join(',');
-    const next = Array(16).fill(0);
-    for (let lineIndex = 0; lineIndex < 4; lineIndex += 1) {
-      const indices = direction === 'left' || direction === 'right'
-        ? [0, 1, 2, 3].map(column => lineIndex * 4 + column)
-        : [0, 1, 2, 3].map(row => row * 4 + lineIndex);
-      if (direction === 'right' || direction === 'down') indices.reverse();
-      const merged = mergeLine(indices.map(index => board[index]));
-      indices.forEach((index, offset) => { next[index] = merged[offset]; });
-    }
-    board = next;
-    if (board.join(',') === before) return false;
-    addRandomTile();
-    renderGame();
-    gameMessage.classList.toggle('is-visible', !canGameMove());
-    return true;
-  };
-  const newGame = () => {
-    board = Array(16).fill(0);
-    score = 0;
-    gameMessage.classList.remove('is-visible');
-    addRandomTile(); addRandomTile(); renderGame();
-  };
-  document.querySelectorAll('[data-game-new]').forEach(button => button.addEventListener('click', newGame));
-  let swipeStart = null;
-  gameBoard?.addEventListener('pointerdown', event => { swipeStart = { x: event.clientX, y: event.clientY }; gameBoard.setPointerCapture(event.pointerId); });
-  gameBoard?.addEventListener('pointerup', event => {
-    if (!swipeStart) return;
-    const dx = event.clientX - swipeStart.x;
-    const dy = event.clientY - swipeStart.y;
-    swipeStart = null;
-    if (Math.max(Math.abs(dx), Math.abs(dy)) < 24) return;
-    moveGame(Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'right' : 'left') : (dy > 0 ? 'down' : 'up'));
-  });
-  newGame();
-
-  // Game Room tabs: two additional self-contained games alongside 2048.
-  let activeGame = '2048';
-  const gameTabs = [...document.querySelectorAll('[data-game-tab]')];
-  const gamePanels = [...document.querySelectorAll('[data-game-panel]')];
-  const selectGame = name => {
-    activeGame = name;
-    gameTabs.forEach(tab => {
-      const selected = tab.dataset.gameTab === name;
-      tab.classList.toggle('is-selected', selected);
-      tab.setAttribute('aria-selected', String(selected));
-    });
-    gamePanels.forEach(panel => panel.classList.toggle('is-visible', panel.dataset.gamePanel === name));
-  };
-  gameTabs.forEach(tab => tab.addEventListener('click', () => selectGame(tab.dataset.gameTab)));
-
-  const ticTacToeCells = [...document.querySelectorAll('[data-tictactoe-cell]')];
-  const ticTacToeStatus = document.querySelector('[data-tictactoe-status]');
-  let ticTacToe = Array(9).fill('');
-  let ticTacToeTurn = 'X';
-  let ticTacToeFinished = false;
-  const ticTacToeLines = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
-  const renderTicTacToe = () => ticTacToeCells.forEach((cell, index) => {
-    const value = ticTacToe[index];
-    cell.textContent = value;
-    cell.classList.toggle('is-x', value === 'X');
-    cell.classList.toggle('is-o', value === 'O');
-    cell.disabled = Boolean(value) || ticTacToeFinished;
-    cell.setAttribute('aria-label', value || 'Empty square');
-  });
-  const newTicTacToe = () => {
-    ticTacToe = Array(9).fill(''); ticTacToeTurn = 'X'; ticTacToeFinished = false;
-    ticTacToeStatus.textContent = 'X goes first'; renderTicTacToe();
-  };
-  ticTacToeCells.forEach((cell, index) => cell.addEventListener('click', () => {
-    if (ticTacToe[index] || ticTacToeFinished) return;
-    ticTacToe[index] = ticTacToeTurn;
-    const winner = ticTacToeLines.find(line => line.every(position => ticTacToe[position] === ticTacToeTurn));
-    if (winner) { ticTacToeFinished = true; ticTacToeStatus.textContent = `${ticTacToeTurn} wins this round`; }
-    else if (ticTacToe.every(Boolean)) { ticTacToeFinished = true; ticTacToeStatus.textContent = 'A tidy draw'; }
-    else { ticTacToeTurn = ticTacToeTurn === 'X' ? 'O' : 'X'; ticTacToeStatus.textContent = `${ticTacToeTurn}'s turn`; }
-    renderTicTacToe();
-  }));
-  document.querySelector('[data-tictactoe-new]')?.addEventListener('click', newTicTacToe);
-  newTicTacToe();
-
-  const memoryCards = [...document.querySelectorAll('[data-memory-card]')];
-  const memoryStatus = document.querySelector('[data-memory-status]');
-  const memoryFaces = ['🎹', '🎱', '🎮', '✨', '🎧', '📚'];
-  let memoryDeck = []; let memoryOpen = []; let memoryMatched = []; let memoryLocked = false;
-  const renderMemory = () => memoryCards.forEach((card, index) => {
-    const open = memoryOpen.includes(index) || memoryMatched.includes(index);
-    const matched = memoryMatched.includes(index);
-    card.textContent = open ? memoryDeck[index] : '?';
-    card.classList.toggle('is-open', open);
-    card.classList.toggle('is-matched', matched);
-    card.disabled = matched || memoryLocked;
-    card.setAttribute('aria-label', open ? memoryDeck[index] : 'Hidden card');
-  });
-  const newMemoryGame = () => {
-    memoryDeck = [...memoryFaces, ...memoryFaces].sort(() => Math.random() - .5);
-    memoryOpen = []; memoryMatched = []; memoryLocked = false;
-    memoryStatus.textContent = 'Find all six pairs'; renderMemory();
-  };
-  memoryCards.forEach((card, index) => card.addEventListener('click', () => {
-    if (memoryLocked || memoryOpen.includes(index) || memoryMatched.includes(index)) return;
-    memoryOpen.push(index); renderMemory();
-    if (memoryOpen.length !== 2) return;
-    const [first, second] = memoryOpen;
-    if (memoryDeck[first] === memoryDeck[second]) {
-      memoryMatched.push(first, second); memoryOpen = [];
-      memoryStatus.textContent = memoryMatched.length === memoryDeck.length ? 'Perfect match!' : `${memoryMatched.length / 2} of 6 pairs`;
-      renderMemory();
-      return;
-    }
-    memoryLocked = true;
-    setTimeout(() => { memoryOpen = []; memoryLocked = false; renderMemory(); }, 650);
-  }));
-  document.querySelector('[data-memory-new]')?.addEventListener('click', newMemoryGame);
-  newMemoryGame();
-
   const searchInput = document.getElementById('spotlightInput');
   searchInput.addEventListener('input', () => {
     const query = searchInput.value.trim().toLowerCase();
@@ -966,12 +808,6 @@
     if (lockScreen && !lockScreen.classList.contains('is-hidden')) {
       if (event.key === 'Enter' || event.key === ' ') unlockDesktop();
       event.preventDefault();
-      return;
-    }
-    const gameDirections = { ArrowLeft: 'left', ArrowRight: 'right', ArrowUp: 'up', ArrowDown: 'down' };
-    if (activeWindow?.dataset.app === 'games' && activeGame === '2048' && gameDirections[event.key]) {
-      event.preventDefault();
-      moveGame(gameDirections[event.key]);
       return;
     }
     if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') { event.preventDefault(); document.getElementById('spotlight').classList.add('is-visible'); setTimeout(() => searchInput.focus(), 20); }

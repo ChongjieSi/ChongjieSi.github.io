@@ -1,0 +1,27 @@
+{
+  "tool": "Built-in image_gen",
+  "created": "2026-11-20",
+  "purpose": "Original photographic texture assets used in Coast City",
+  "assets": [
+    {
+      "file": "facade-v1.jpg",
+      "prompt": "Use case: photorealistic-natural. Asset type: a production-ready seamless square base-color texture for a 3D coastal city building facade, NOT a photo of a complete building. Straight-on orthographic elevation, a tightly repeating 3 by 3 grid of realistic recessed rectangular apartment windows in lightly weathered ivory limestone / pale warm concrete, charcoal gray anodized window frames, glass with subtle blue-gray sky reflections and occasional neutral curtains. Tile repeats exactly at all four edges with consistent window spacing. Entire frame filled by the facade material. Flat neutral diffuse daylight, no cast sun shadows, no sky or ground visible, no perspective, no borders, no signage, no text, no people. High photographic detail of small stone pores, window sills and aluminum frames; restrained wear suitable for a clean real seaside town. Square 1024x1024."
+    },
+    {
+      "file": "asphalt-v1.jpg",
+      "prompt": "Use case: photorealistic-natural. Asset type: seamless square base-color asphalt material for a realistic 3D open-world coastal city road. Exact overhead orthographic material scan of neutral dark gray weathered road asphalt, fine gritty mineral aggregate, faint tire-polished variation, a few thin subtle natural cracks and occasional lighter specks, dry surface. Photographic ground texture, not a scene. Uniform neutral overcast lighting, no baked directional shadows, no perspective, no road markings, no lane lines, no curbs, no litter, no leaves, no manholes, no text. Seamlessly tileable on all edges, natural detail at approximately 2 meters square of real surface. Avoid dramatic cracks or large patches that reveal repetition. Square 1024x1024."
+    },
+    {
+      "file": "grass-v1.jpg",
+      "prompt": "Use case: photorealistic-natural. Asset type: seamless square grass ground albedo texture for a realistic 3D seaside city park. Perfectly overhead orthographic close scan of dense short natural green grass with fine individual blades, restrained variation of olive, fresh and slightly dry grass, tiny subtle bare soil flecks. A maintained park lawn, not ornamental stripes, not artificial turf. Uniform neutral soft overcast light without cast shadows, no horizon, no perspective, no objects, flowers, bushes, fallen leaves, paths, text or borders. Seamlessly repeatable on all four edges. Photographic texture detail over approximately two meters of lawn, moderate low-contrast natural variation to avoid visible tiling. Square 1024x1024."
+    },
+    {
+      "file": "sky-coast-v1.jpg",
+      "prompt": "Use case: photorealistic-natural. Asset type: a 360-degree equirectangular environment background for a realistic coastal-city 3D driving game. A full-sphere latitude-longitude panorama, exactly 2:1 aspect ratio, 2048 by 1024. Real pale blue seaside sky with softly detailed high cirrus and a few broad white cumulus clouds, late-afternoon natural sunlight, physically plausible gentle blue haze near a perfectly level distant horizon. The lower half shows calm blue coastal sea and a very distant low hazy island ridge across a small portion of the horizon; the upper hemisphere is mostly open sky. Very subtle sun glow, not a large sun disk. Camera at sea level, no foreground land, no buildings, no vehicles, no vegetation, no boats, no text, no artificial structures. Photographic landscape realism, restrained natural color and realistic cloud microstructure; avoid oversaturated video-game colors. Left and right edges must match continuously for seamless horizontal wrapping. Zenith and nadir should be distortion-correct for spherical mapping. This is an environment texture, not a cinematic framed screenshot."
+    },
+    {
+      "file": "tree-coast-v1.png",
+      "prompt": "Use case: photorealistic-natural. Asset type: a single photorealistic tree billboard sprite with real transparent background for a 3D coastal city game. One mature Mediterranean stone pine / coastal broadleaf pine tree, full tree from base of trunk to crown, straight-on view from a standing person's eye height, broad irregular rounded airy canopy of richly detailed natural olive-green needles and small branches, realistic rough gray-brown trunk and spreading branches. Entire tree isolated, tightly framed with a little transparent breathing room around all sides, trunk base at the bottom center. Soft neutral diffuse daylight, no hard directional shadow. Accurate believable proportions, crown wider than trunk, natural asymmetry. Crisp individual leaf clusters with detailed alpha edges. Transparent background; no ground plane, no grass, no sky, no white or colored backdrop, no other objects, no text, no cast shadow outside the tree. Photographic realism, not a 3D low-poly model, not cartoon."
+    }
+  ]
+}

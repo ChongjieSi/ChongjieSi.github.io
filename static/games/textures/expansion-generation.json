@@ -1,0 +1,36 @@
+{
+  "tool": "Built-in image_gen",
+  "purpose": "Enterable city interiors, landscaped park and forest",
+  "assets": [
+    {
+      "name": "interior-finishes-v1",
+      "file": "interior-finishes-v1.png",
+      "prompt": "Use case: photorealistic-natural. Asset type: production texture atlas for a richly detailed walkable coastal Chinese city game. Create a perfectly orthographic flat 4 by 4 grid of SIXTEEN equally sized square PBR-style finish samples, edge to edge, no margins, no text, no labels, no perspective. Each cell has realistic fine grain and soft neutral diffuse studio light without directional shadows. Row 1 left to right: pale natural oak floor planks; warm walnut cabinet wood; creamy terrazzo with tiny aggregate; pale limestone floor tiles. Row 2: deep emerald glazed square ceramic tiles with subtle grout; warm white plaster wall; fluted dark walnut paneling; handmade red brick wall. Row 3: soft beige woven linen upholstery; warm caramel leather with subtle stitching; brushed charcoal steel; ivory marble with restrained grey veins. Row 4: blue-grey carpet textile; pale concrete lightly weathered; tiny muted geometric bathroom mosaic tiles; medium brown herringbone parquet. Premium architectural visualization quality, actual photographic material detail. All cells perfectly front-facing, grid boundaries at precisely quarter dimensions. Consistent restrained contemporary coastal-city style, absolutely no furniture, objects, room scenes, logos or writing. High-resolution square texture sheet.",
+      "transparent": false
+    },
+    {
+      "name": "interior-decor-v1",
+      "file": "interior-decor-v1.png",
+      "prompt": "Use case: photorealistic-natural. Asset type: art-directed interior decal atlas for a detailed realistic coastal-city game. A perfectly orthographic 4 by 4 grid of SIXTEEN equal square panels, flush edge-to-edge, no border between cells, no labels. Each panel a professionally styled flat photographic decor asset, viewed head-on or top-down as appropriate, with no perspective distortion. Row1: abstract blue and terracotta gallery painting; tranquil seascape art photograph; botanical herbarium art print; tasteful warm geometric woven rug top-down. Row2: diverse realistic book spines packed flush in a shelf section; cafe pastry display front view; potted small-leaf greenery against neutral warm background; framed architectural line drawing. Row3: linen cushion textile with subtle navy stripe; contemporary muted kilim rug top-down; board of appealing coffee and bread photographs WITHOUT ANY WRITING; close view of neatly arranged ceramic tableware in a wooden cabinet. Row4: tasteful abstract ochre painting; framed mountain and stream photograph; realistic indoor climbing plant foliage against warm grey; noticeboard with tiny blank pinned paper cards and subtle travel photos, NO LEGIBLE TEXT. Cohesive premium contemporary residential, cafe, shop, office and hotel aesthetic. Beautiful tactile texture detail, soft neutral light. No watermarks, no arbitrary logos, no words. High-resolution square atlas.",
+      "transparent": false
+    },
+    {
+      "name": "nature-surfaces-v1",
+      "file": "nature-surfaces-v1.png",
+      "prompt": "Use case: photorealistic-natural. Asset type: production terrain material atlas for a beautiful explorable temperate coastal forest and landscaped city park game. Perfectly orthographic top-down 2 by 2 grid of FOUR equally sized seamless-looking square texture samples, flush edge to edge, no gutters, no labels, no perspective. Top left: lush natural meadow turf with tiny clover, fine moss, occasional tiny white wildflowers, rich but restrained realistic greens. Top right: shallow stream bed with rounded wet river pebbles in grey, warm tan and slate, no large water reflections, visible natural stone grain. Bottom left: richly layered mossy granite and slate rock face surface, fine lichen, fissures and restrained green moss, no scene lighting. Bottom right: woodland earth hiking trail, compact ochre-brown soil, scattered little dry leaves, fine roots and small stones. Photorealistic field-captured natural surface detail, diffuse overcast light, no directional shadows, no landscape scene, people, objects, writing or watermark. High-resolution square game material atlas.",
+      "transparent": false
+    },
+    {
+      "name": "forest-canopies-v1",
+      "file": "forest-canopies-v1.png",
+      "prompt": "Use case: photorealistic-natural. Asset type: transparent vegetation cutout atlas for an explorable natural forest in a realistic coastal city game. Create a 2 by 2 grid of FOUR equally sized cells on a genuinely fully TRANSPARENT RGBA background. Each cell contains ONE complete distinct tree, upright, whole roots/trunk through canopy, all leaves within its own cell with generous transparent breathing room. Top left a mature broadleaf oak with irregular layered crown. Top right an elegant tall birch with white bark and airy fine leaves. Bottom left a natural coastal pine with spreading branches and asymmetrical evergreen canopy. Bottom right a graceful cedar with tiered green foliage. Each tree isolated, matching photographic natural detail and soft diffuse daylight, eye-level front elevation, no visible ground plane, no cast ground shadow, no scenery or sky. Make these beautiful believable trees, not plastic, not stylized geometric trees. No text, cell dividers, frames, people or watermark. Preserve intricate natural leaf silhouettes with real transparency. All cells equal quarter-square regions, no tree crosses a cell boundary. High resolution.",
+      "transparent": true
+    },
+    {
+      "name": "garden-understory-v1",
+      "file": "garden-understory-v1.png",
+      "prompt": "Use case: photorealistic-natural. Asset type: transparent small nature-detail cutout atlas for a carefully landscaped park and streamside forest game. A precise 2 by 2 grid of FOUR equal square cells on a genuine transparent RGBA background. Top left: a lush beautiful cluster of ferns with naturally arching fine fronds, front elevation. Top right: a full cluster of soft pink, white and lavender meadow flowers with green leaves, front elevation. Bottom left: a natural cluster of riverbank reeds and sedges with delicate seed heads, front elevation. Bottom right: an attractive low flowering hydrangea shrub with airy white blossoms and rich green leaves, front elevation. Each plant fully isolated inside its own cell, no crossing boundaries, ample transparent breathing room. Photorealistic fine leaves and stems, soft neutral overcast daylight, no ground, soil platform, background scene, drop shadow, frame, labels or text. Cohesive lush temperate coastal naturalism, premium game foliage cutouts, actual transparency.",
+      "transparent": true
+    }
+  ]
+}

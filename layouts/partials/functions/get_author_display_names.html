@@ -1,0 +1,14 @@
+{{/* Resolve author profile identifiers to their public display names. */}}
+{{ $names := slice }}
+{{ range . }}
+  {{ $name := . }}
+  {{ with site.GetPage (printf "/authors/%s" (urlize $name)) }}
+    {{ $name = .Title }}
+  {{ else }}
+    {{ if eq (lower $name) "admin" }}
+      {{ $name = "Chongjie Si" }}
+    {{ end }}
+  {{ end }}
+  {{ $names = $names | append $name }}
+{{ end }}
+{{ return $names }}
