@@ -1,5 +1,6 @@
 /* Detailed, walkable interiors. Four rooms are retained; all other addresses are lazy. */
 window.ArcadeCityInteriorScene=(T,{scene,detail,material,sky})=>{
+  const serviceMat=new T.MeshBasicMaterial({color:0xd9bc7f,transparent:true,opacity:.65,depthWrite:false});
   const rooms=new Map(),shared=new Set(),unitBox=new T.BoxGeometry(1,1,1),unitSphere=new T.SphereGeometry(1,16,10),unitCylinder=new T.CylinderGeometry(.5,.5,1,16);shared.add(unitBox);shared.add(unitSphere);shared.add(unitCylinder);
   const shape=new T.Shape();shape.moveTo(-.4,-.5);shape.lineTo(.4,-.5);shape.quadraticCurveTo(.5,-.5,.5,-.4);shape.lineTo(.5,.4);shape.quadraticCurveTo(.5,.5,.4,.5);shape.lineTo(-.4,.5);shape.quadraticCurveTo(-.5,.5,-.5,.4);shape.lineTo(-.5,-.4);shape.quadraticCurveTo(-.5,-.5,-.4,-.5);
   const rounded=new T.ExtrudeGeometry(shape,{depth:.9,bevelEnabled:true,bevelSize:.05,bevelThickness:.05,bevelSegments:3,steps:1,curveSegments:4});rounded.translate(0,0,-.45);shared.add(rounded);
@@ -15,8 +16,23 @@ window.ArcadeCityInteriorScene=(T,{scene,detail,material,sky})=>{
   function tabletop(parent,w,d,height=.8,mat=wood){cube(0,height,0,w,.12,d,mat,parent,true);legs(parent,w,d,height-.07);}
   function chair(parent,w,d,cloth){cube(0,.47,0,w,.15,d,cloth,parent,true);cube(0,.91,-d*.42,w,.78,.12,cloth,parent,true);legs(parent,w,d,.4);}
   function picture(parent,x,y,z,w,h,index,rotation=0){const frame=new T.Group();frame.position.set(x,y,z);frame.rotation.y=rotation;parent.add(frame);cube(0,0,0,w+.13,h+.13,.08,wood,frame);plane(0,0,.048,w,h,detail.decal(index),frame);}
-  function itemScene(item,spec,root){const group=new T.Group();group.position.set(item.x,0,item.z);group.rotation.y=-item.rotation;root.add(group);const w=item.w,d=item.d,cloth=detail.finish(item.finish??8,spec.accent),variant=(spec.variant+Math.round(item.x*3))&3;
-    if(item.kind==='sofa'){
+  function itemScene(item,spec,root){const group=new T.Group();group.position.set(item.x,0,item.z);group.rotation.y=-item.rotation;root.add(group);const wood=detail.finish(spec.wood??1),oak=detail.finish(spec.wood??0),w=item.w,d=item.d,cloth=detail.finish(item.finish??8,spec.accent),variant=(spec.variant+Math.round(item.x*3))&3;
+    if(['wall-shelf','sconce','clock','gallery-strip'].includes(item.kind)){
+      if(item.kind==='wall-shelf'){cube(0,item.y,0,w,.09,.35,wood,group);for(let i=0;i<5;i++){const col=material([0x6f8b80,0xb59071,0x8d829e,0xbbaf8c][((item.variant||0)+i)%4]);cube(-w*.36+i*w*.17,item.y+.24,.03,w*.1,.39+(i%2)*.08,.2,col,group);}plant(group,w*.35,item.y+.06,0,.25,item.variant%4);}
+      else if(item.kind==='sconce'){cube(0,item.y,0,.12,.45,.12,metal,group);ball(0,item.y,.15,.18,.24,.18,lamp,group);}
+      else if(item.kind==='clock'){const face=new T.Mesh(new T.CircleGeometry(.35,32),ceramic);face.position.set(0,item.y,.04);group.add(face);cube(0,item.y+.07,.05,.025,.22,.015,dark,group);const hand=cube(.09,item.y,.055,.2,.022,.015,dark,group);hand.rotation.z=(spec.signature%12)*Math.PI/6;}
+      else{const count=2+(item.variant%3);for(let i=0;i<count;i++)picture(group,(i-(count-1)/2)*w/count,item.y,0,w/count*.78,.8+(i%2)*.18,[0,1,2,7,12,13][(item.art+i)%6]);}
+    }else if(['pastry-case','fridge','oven','atm','vault','teller','queue-terminal','washer','bread-rack','clothes-rail'].includes(item.kind)){
+      const kind=item.kind,steel=detail.finish(10),frame=kind==='teller'?wood:steel;cube(0,kind==='vault'?1.4:1.05,0,w,kind==='vault'?2.8:2.1,d,frame,group);
+      if(kind==='pastry-case'||kind==='fridge'){const glass=new T.MeshPhysicalMaterial({color:0xb7ddd9,transparent:true,opacity:.22,roughness:.16,depthWrite:false});root.userData.ownedMaterials.push(glass);cube(0,1.35,d*.51,w*.94,1.3,.035,glass,group);for(let row=0;row<3;row++){cube(0,.65+row*.5,0,w*.94,.05,d*.9,ceramic,group);for(let col=0;col<5;col++){if(kind==='pastry-case')ball((col-2)*w/5,.75+row*.5,0,w*.07,.1,d*.2,material([0xc99d64,0xa77c4e,0xe4c18b][(col+row)%3]),group);else cylinder((col-2)*w/5,.85+row*.5,0,.14,.35,.14,material([0x93b5aa,0xd6a164,0xb77b6e][col%3]),group);}}}
+      else if(kind==='teller'){cube(0,1.05,d*.52,w,1.3,.04,material(0x7badaa),group);cube(-w*.26,1.4,-.1,.6,.42,.08,dark,group);cube(w*.3,.8,d*.56,.7,.12,.1,metal,group);}
+      else if(kind==='atm'||kind==='queue-terminal'){plane(0,1.45,d*.51,w*.75,.5,detail.decal(7),group);cube(0,.96,d*.55,w*.6,.09,.15,dark,group);cube(0,.6,d*.52,w*.5,.07,.025,dark,group);}
+      else if(kind==='vault'){const door=new T.Mesh(new T.CircleGeometry(.85,32),steel);door.position.set(0,1.5,d*.52);group.add(door);const wheel=new T.Mesh(new T.TorusGeometry(.34,.035,8,24),wood);wheel.position.set(0,1.5,d*.55);group.add(wheel);}
+      else if(kind==='washer'){for(const x of [-w*.25,w*.25]){const door=new T.Mesh(new T.TorusGeometry(.38,.07,10,32),ceramic);door.position.set(x,.9,d*.55);group.add(door);}}
+      else if(kind==='oven'){plane(0,1,d*.51,w*.8,.65,detail.decal(5),group);for(const x of [-.2,.2])cylinder(x,1.8,d*.52,.08,.08,.08,ceramic,group);}
+      else{for(let row=0;row<3;row++){cube(0,.4+row*.6,0,w,.06,d,wood,group);for(let i=0;i<4;i++)cube((i-1.5)*w/4,.55+row*.6,0,w*.16,.24,d*.7,detail.decal(kind==='bread-rack'?5:8),group,true);}}
+    }else if(item.kind==='menu-board'){picture(root,item.x,item.y,item.z,item.w,item.d,item.art);root.remove(group);}
+    else if(item.kind==='sofa'){
       cube(0,.36,0,w,.38,d,wood,group,true);cube(0,.88,-d*.43,w,1.05,.24,cloth,group,true);for(const side of [-1,1])cube(side*(w/2-.1),.72,0,.22,.65,d,cloth,group,true);
       for(let i=0;i<3;i++)cube(-w/3+i*w/3,.6,.06,w/3-.08,.25,d*.77,cloth,group,true);for(const side of [-1,1]){const cushion=cube(side*w*.31,.91,-d*.12,.48,.48,.18,detail.finish(8,side<0?0xc3a78e:0x65868a),group,true);cushion.rotation.z=side*.16;}legs(group,w,d,.22);
     }else if(['table','dining','conference'].includes(item.kind)){
@@ -51,7 +67,7 @@ window.ArcadeCityInteriorScene=(T,{scene,detail,material,sky})=>{
       cube(0,item.y,0,w+.2,d+.2,.14,wood,group);const windowMaterial=new T.MeshBasicMaterial({map:sky,color:0xc0d4de});root.userData.ownedMaterials.push(windowMaterial);root.userData.windows.push(windowMaterial);plane(0,item.y,.09,w,d,windowMaterial,group);
       for(const side of [-1,1]){cube(side*w*.25,item.y,.13,.06,d,.05,white,group);for(let i=0;i<3;i++)cube(side*(w/2-.1-i*.12),item.y,.24,.15,d+.35,.15,detail.finish(8),group,true);}cube(0,item.y-d/2-.1,.22,w+.3,.12,.45,ceramic,group);
     }else if(item.kind==='pendant'){
-      cylinder(0,item.y+.2,0,.035,.7,.035,metal,group);const shade=new T.Mesh(new T.ConeGeometry(.6,.35,24,1,true),metal);shade.position.set(0,item.y,0);group.add(shade);cylinder(0,item.y-.16,0,.82,.04,.82,lamp,group);
+      cylinder(0,item.y+.2,0,.035,.7,.035,metal,group);const shade=new T.Mesh(item.variant===1?new T.SphereGeometry(.4,20,12):item.variant===2?new T.CylinderGeometry(.35,.45,.35,20,1,true):new T.ConeGeometry(.6,.35,24,1,true),metal);shade.position.set(0,item.y,0);group.add(shade);cylinder(0,item.y-.16,0,.82,.04,.82,lamp,group);
     }else if(item.kind==='partition'){cube(0,1.5,0,w,3,d,detail.finish(5),group);}
     else if(item.kind==='bath-floor'){const floor=plane(0,.025,0,w,d,detail.finish(14),group,0,true);floor.rotation.x=-Math.PI/2;}
     else if(item.kind==='shower'){
@@ -70,14 +86,16 @@ window.ArcadeCityInteriorScene=(T,{scene,detail,material,sky})=>{
     for(const side of [-1,1]){cube(side*(spec.width/2-.05),.09,0,.09,.18,spec.depth,wood,root);cube(side*(spec.width/2-.06),spec.height-.14,0,.13,.18,spec.depth,white,root);}for(const side of [-1,1]){cube(0,.09,side*(spec.depth/2-.05),spec.width,.18,.09,wood,root);cube(0,spec.height-.14,side*(spec.depth/2-.06),spec.width,.18,.13,white,root);}
     cube(0,1.45,spec.depth/2-.08,2.3,2.9,.1,wood,root);cube(.76,1.35,spec.depth/2-.17,.08,.32,.08,metal,root);label('出口 · E',0,3.3,spec.depth/2-.16,2.5,root,Math.PI);
     if(spec.floorCount>1){const p=spec.lift;cube(p.x,1.5,spec.depth/2-.12,1.7,3,.08,metal,root);cube(p.x,1.5,spec.depth/2-.19,.04,2.8,.03,dark,root);label((spec.floor+1)+' 楼 · E 选择楼层',p.x,3.25,spec.depth/2-.2,2.3,root,Math.PI);}
+    const dado=detail.finish(spec.wood??1);for(const side of [-1,1]){cube(side*(spec.width/2-.04),.5,0,.035,.75,spec.depth,dado,root);}
+    if(['convenience','cafe','bakery','bank'].includes(spec.kind)&&spec.floor===0){const spot=spec.hotspots.find(h=>h.kind==='room-note');if(spot){const marker=new T.Mesh(new T.RingGeometry(.42,.49,32),serviceMat);marker.rotation.x=-Math.PI/2;marker.position.set(spot.x,.065,spot.z);root.add(marker);root.userData.serviceMarker=marker;}}
     for(const item of spec.furniture)itemScene(item,spec,root);
-    for(const x of [-spec.width*.26,spec.width*.26])for(const z of [-spec.depth*.22,spec.depth*.22]){const glow=new T.PointLight(0xffe6c2,48,18,2);glow.position.set(x,spec.height-.5,z);root.add(glow);cylinder(x,spec.height-.06,z,.2,.06,.2,lamp,root);}
+    for(const x of [-spec.width*.26,spec.width*.26])for(const z of [-spec.depth*.22,spec.depth*.22]){const glow=new T.PointLight(spec.theme?.light||0xffe6c2,42+(spec.signature||0)%17,18,2);glow.position.set(x,spec.height-.5,z);root.add(glow);cylinder(x,spec.height-.06,z,.2,.06,.2,lamp,root);}
     root.visible=false;return root;
   }
   function release(root){root.removeFromParent();const geometries=new Set();root.traverse(o=>{if(o.geometry&&!shared.has(o.geometry))geometries.add(o.geometry);});geometries.forEach(g=>g.dispose());root.userData.ownedTextures.forEach(t=>t.dispose());root.userData.ownedMaterials.forEach(m=>m.dispose());}
   function update(state,night){const spec=state.interior?.furniture?state.interior:null;for(const root of rooms.values())root.visible=false;if(!spec)return;
-    let root=rooms.get(spec.id);if(!root){root=build(spec);rooms.set(spec.id,root);}else{rooms.delete(spec.id);rooms.set(spec.id,root);}root.visible=true;for(const mat of root.userData.windows)mat.color.set(night?0x263b50:0xc0d4de);
+    let root=rooms.get(spec.id);if(!root){root=build(spec);rooms.set(spec.id,root);}else{rooms.delete(spec.id);rooms.set(spec.id,root);}root.visible=true;if(root.userData.serviceMarker)root.userData.serviceMarker.visible=!state.shopVisits.has(spec.buildingId);for(const mat of root.userData.windows)mat.color.set(night?0x263b50:0xc0d4de);
     while(rooms.size>4){const [id,old]=rooms.entries().next().value;rooms.delete(id);release(old);}
   }
-  return {update,rooms,dispose(){for(const root of rooms.values())release(root);rooms.clear();for(const g of shared)g.dispose();lamp.dispose();}};
+  return {update,rooms,dispose(){for(const root of rooms.values())release(root);rooms.clear();for(const g of shared)g.dispose();lamp.dispose();serviceMat.dispose();}};
 };

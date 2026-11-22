@@ -1,0 +1,37 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "chongjie-arcade-leaderboard",
+  "main": "src/index.js",
+  "compatibility_date": "2026-07-30",
+  "workers_dev": true,
+  "vars": {
+    "ALLOWED_ORIGINS": "https://chongjiesi.site,https://www.chongjiesi.site,https://chongjiesi.github.io,http://localhost:1313,http://127.0.0.1:1313"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "arcade-leaderboard",
+      "database_id": "64338a19-f122-4d29-a903-9bd53043fd94",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "ratelimits": [
+    {
+      "name": "READ_LIMITER",
+      "namespace_id": "8032101",
+      "simple": {
+        "limit": 120,
+        "period": 60
+      }
+    },
+    {
+      "name": "WRITE_LIMITER",
+      "namespace_id": "8032102",
+      "simple": {
+        "limit": 12,
+        "period": 60
+      }
+    }
+  ],
+  "account_id": "09442730623b3eb0830bbd86bf57caa1"
+}

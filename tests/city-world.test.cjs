@@ -55,8 +55,8 @@ test('Traffic stays inside the map over a long simulation and the world stays fi
   assert.ok(Number.isFinite(world.player.x)&&Number.isFinite(world.player.z));
 });
 
-test('Expanded map has over ten times the original playable area and all eight entrances are reachable',()=>{
-  const world=City.create(),b=world.bounds;assert.ok((b.maxX-b.minX)*(b.maxZ-b.minZ)>216*216*10);assert.ok(world.buildings.length>200&&world.buildings.length<400);assert.equal(world.places.length,8);
+test('Expanded map has over ten times the original playable area and all nine entrances are reachable',()=>{
+  const world=City.create(),b=world.bounds;assert.ok((b.maxX-b.minX)*(b.maxZ-b.minZ)>216*216*10);assert.ok(world.buildings.length>200&&world.buildings.length<400);assert.equal(world.places.length,9);
   for(const p of world.places)assert.equal(City.blocked(world,p.door.x,p.door.z,.45),false,p.id);
 });
 test('Cafe, museum and stadium enter real bounded interiors and return to the same exterior entrance',()=>{

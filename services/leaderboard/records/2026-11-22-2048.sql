@@ -1,0 +1,5 @@
+-- User-requested historical 2048 records. Re-running this file adds no duplicates.
+UPDATE scores SET max_tile = 2048 WHERE game = '2048' AND name = 'Liv' AND score = 31532 AND max_tile IS NULL;
+INSERT INTO scores (game, player_hash, name, score, created_at, max_tile) SELECT '2048', 'd8d03cd62a9b89178c1175a1c2f21ddd346424558cf682f78cab59cfc0df6ac7', 'Liv', 31532, CAST(strftime('%s','now') AS INTEGER) * 1000, 2048 WHERE NOT EXISTS (SELECT 1 FROM scores WHERE game = '2048' AND name = 'Liv' AND score = 31532) ON CONFLICT(game, player_hash) DO NOTHING;
+UPDATE scores SET max_tile = 2048 WHERE game = '2048' AND name = 'juejue' AND score = 23664 AND max_tile IS NULL;
+INSERT INTO scores (game, player_hash, name, score, created_at, max_tile) SELECT '2048', '0310ab1ee82df3015bb77177f2c9089005384578d53dda25d699bb734a1b8635', 'juejue', 23664, CAST(strftime('%s','now') AS INTEGER) * 1000, 2048 WHERE NOT EXISTS (SELECT 1 FROM scores WHERE game = '2048' AND name = 'juejue' AND score = 23664) ON CONFLICT(game, player_hash) DO NOTHING;

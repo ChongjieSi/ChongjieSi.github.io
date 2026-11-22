@@ -10,14 +10,40 @@ window.ArcadeCityWorld = (() => {
   const places=[
     {id:'cafe',name:'海岸咖啡',kind:'cafe',x:80,z:80,w:18,d:16,h:7,door:{x:80,z:91},reward:200,description:'到吧台喝杯咖啡，恢复体力，听听店员的城市推荐。'},
     {id:'museum',name:'潮汐艺术馆',kind:'museum',x:160,z:160,w:42,d:36,h:15,door:{x:160,z:181},reward:300,description:'走进展厅，近距离查看三件城市艺术作品。'},
-    {id:'stadium',name:'海湾体育场',kind:'stadium',x:-240,z:380,w:50,d:50,h:14,door:{x:-240,z:410},reward:350,description:'进入运动场，在跑道上完成四个检查点的计时训练。'},
+    {id:'stadium',name:'海湾体育场',kind:'stadium',x:-240,z:380,w:50,d:50,h:14,door:{x:-240,z:410},reward:350,description:'进入运动场，挑战跑道计时或五球点球训练。'},
     {id:'tower',name:'海湾之塔',kind:'tower',x:-160,z:-160,w:22,d:22,h:82,elevation:71,door:{x:-160,z:-146},reward:400,description:'搭乘电梯抵达观景台，从高处眺望整座海岸城。'},
     {id:'surf',name:'沙湾冲浪屋',kind:'surf',x:344,z:-160,w:18,d:24,h:7,door:{x:332,z:-160},reward:250,description:'找工作人员接取海滩探访任务，沿海寻找四枚海螺。'},
     {id:'lighthouse',name:'白沙灯塔',kind:'tower',x:360,z:-288,w:13,d:13,h:31,elevation:25,door:{x:349,z:-288},reward:300,description:'登上灯塔，看看海面、沙滩与远处的城市天际线。'},
-    {id:'station',name:'西城车站',kind:'station',x:-160,z:224,w:42,d:24,h:14,door:{x:-160,z:239},reward:200,description:'查看城市旅行提示，并为下一处目的地设置导航。'},
+    {id:'station',name:'西城车站',kind:'station',x:-160,z:224,w:42,d:24,h:14,door:{x:-160,z:239},reward:200,description:'穿过钢拱候车厅，看列车进站，或到服务台帮乘客寻找行李。'},
+    {id:'skyline',name:'云际中心',kind:'skyscraper',x:224,z:-224,w:38,d:38,h:214,elevation:186,door:{x:224,z:-202},reward:450,description:'乘坐外置玻璃电梯，抵达 186 米高的全景露台，俯瞰海湾、城区和林海。'},
     {id:'pier',name:'日落码头',kind:'pier',x:384,z:224,w:64,d:18,h:2,door:{x:330,z:224},reward:250,description:'漫步木栈桥，在海风里完成一次码头打卡。'}
   ];
   const routes=[{x:96,z:32,name:'海岸书店'},{x:-16,z:16,name:'中央公园'},...places.filter(p=>p.id!=='lighthouse').map(p=>({...p.door,name:p.name}))];
+  const skyViews=[{id:'sea',name:'海湾与灯塔',x:11,z:0,yaw:Math.PI/2},{id:'city',name:'城市与体育场',x:0,z:13,yaw:Math.PI},{id:'forest',name:'森林与群山',x:-11,z:0,yaw:-Math.PI/2},{id:'north',name:'海岸天际线',x:0,z:-13,yaw:0}];
+  const skyObstacles=[{x:-6.5,z:-4,w:6,d:9,h:7},{x:4.5,z:-5,w:3.4,d:1.1,h:1.1},{x:-3,z:8,w:3.4,d:1.1,h:1.1},...skyViews.map(v=>({x:v.x,z:v.z,w:.5,d:.5,h:1.5}))];
+  function skyLift(world,to){
+    const place=places.find(p=>p.id==='skyline');
+    if(world.skyLift||to==='deck'&&world.interior?.id!=='skyline'||to==='lobby'&&world.onTower!=='skyline')return false;
+    if(world.job||world.trial||world.penalty){notify(world,'先完成当前委托或挑战，再乘坐观光电梯');return false;}
+    world.dialog=null;world.skyFocus=null;world.interior=null;world.onTower='skyline';world.vehicle=-1;world.elevation=to==='deck'?0:place.elevation;
+    Object.assign(world.player,{x:place.x+16.5,z:place.z+3,yaw:-Math.PI/2});world.cameraYaw=-Math.PI/2;world.walking=false;
+    world.skyLift={to,elapsed:0,duration:4,from:world.elevation,target:to==='deck'?place.elevation:0};return true;
+  }
+  function skyStep(world,seconds,input){
+    const place=places.find(p=>p.id==='skyline'),p=world.player;
+    if(world.skyLift){
+      const ride=world.skyLift;ride.elapsed=Math.min(ride.duration,ride.elapsed+seconds);const t=ride.elapsed/ride.duration;
+      world.elevation=ride.from+(ride.target-ride.from)*t*t*(3-2*t);world.walking=false;
+      if(t===1){world.skyLift=null;if(ride.to==='deck'){Object.assign(p,{x:place.x+10,z:place.z+5,yaw:Math.PI/2});world.cameraYaw=Math.PI/2;notify(world,'云际中心 · 186 m 全景露台 · 拖动环顾，WASD 走动',5);}else{world.onTower=null;world.interior=room('skyline');world.elevation=0;Object.assign(p,{x:0,z:-5,yaw:Math.PI});world.cameraYaw=Math.PI;notify(world,'已回到云际中心大堂');}}
+      return;
+    }
+    const forward=(input.forward?1:0)-(input.back?1:0),side=(input.right?1:0)-(input.left?1:0),length=Math.hypot(forward,side)||1,speed=input.sprint?5:3.2,old={x:p.x,z:p.z};if(forward||side)world.skyFocus=null;
+    const dx=(Math.sin(world.cameraYaw)*forward+Math.cos(world.cameraYaw)*side)/length*speed*seconds,dz=(-Math.cos(world.cameraYaw)*forward+Math.sin(world.cameraYaw)*side)/length*speed*seconds;
+    const hits=(x,z)=>blocked(world,x,z,.42);
+    if(!hits(p.x+dx,p.z))p.x+=dx;if(!hits(p.x,p.z+dz))p.z+=dz;
+    world.walking=distance(p,old)>.001;world.sprinting=false;if(world.walking)p.yaw+=angleDelta(p.yaw,Math.atan2(dx,-dz))*Math.min(1,seconds*12);
+    world.meters+=distance(p,old);world.area='云际中心 · 186 m 观景台';
+  }
   const exhibits=[
     {id:'tide',x:-12,z:-6,label:'潮汐之环',body:'由同心圆环构成的雕塑，记录着海湾潮汐的往复。'},
     {id:'sail',x:0,z:-7,label:'风之帆',body:'白色曲面像被风撑起的帆，向这座城的航海历史致意。'},
@@ -29,17 +55,55 @@ window.ArcadeCityWorld = (() => {
     {id:'coast-run',name:'海岸拉力',limit:180,start:{x:320,z:-128},checkpoints:[{x:320,z:-256},{x:192,z:-256},{x:192,z:0},{x:320,z:0},{x:320,z:224}]}
   ];
   const jobTypes=[{id:'taxi',name:'海湾接送',description:'驾车接上乘客，平稳送达目的地。'},{id:'coffee',name:'咖啡急送',description:'进入咖啡馆取餐，在时限内完成配送。'}];
+  function trainStatus(world){
+    const t=((world.time%90)+90)%90,ease=v=>v*v*(3-2*v);
+    if(t<12)return {phase:'arrive',x:-105*(1-ease(t/12)),doors:0,wait:12-t};
+    if(t<49)return {phase:'dwell',x:0,doors:clamp(Math.min((t-12)/1.1,(49-t)/1.1),0,1),wait:0};
+    if(t<64)return {phase:'depart',x:105*ease((t-49)/15),doors:0,wait:102-t};
+    return {phase:'away',x:105,doors:0,wait:102-t};
+  }
+  function beginPenalty(world){
+    if(world.interior?.id!=='stadium'||distance(world.player,{x:0,z:-10})>6||world.job||world.trial||world.race||world.penalty&&world.penalty.phase!=='finished')return false;
+    world.penalty={round:0,goals:0,phase:'aim',clock:0,elapsed:0,aim:0,power:0,keeper:0,history:[]};
+    Object.assign(world.player,{x:0,z:-10.8,yaw:0});world.cameraYaw=0;world.dialog=null;notify(world,'E 锁定方向，再按 E 踢球 · 五球挑战',5);return true;
+  }
+  function kickPenalty(world){
+    const p=world.penalty;if(!p)return false;
+    if(p.phase==='aim'){p.phase='power';p.clock=0;return true;}
+    if(p.phase==='power'){p.phase='flight';p.elapsed=0;return true;}
+    if(p.phase==='result'){p.phase='aim';p.clock=0;p.aim=p.power=0;return true;}
+    return false;
+  }
+  function penaltyStep(world,seconds){
+    const p=world.penalty;if(!p)return false;if(p.phase==='finished'){world.penalty=null;return false;}
+    p.clock+=seconds;
+    if(p.phase==='aim')p.aim=Math.sin(p.clock*1.6)*3.9;
+    if(p.phase==='power')p.power=(1-Math.cos(p.clock*2.8))/2;
+    if(p.phase==='aim'||p.phase==='power')p.keeper=Math.sin(world.time*.8+p.round*1.7)*2.5;
+    if(p.phase==='flight'){
+      p.elapsed+=seconds;
+      if(p.elapsed>=1.05){
+        p.outcome=Math.abs(p.aim)>3.05?'偏出球门':p.power>.88?'高出横梁':p.power<.28?'力量不足':Math.abs(p.aim-p.keeper)<.95?'被门将扑出':'进球';
+        if(p.outcome==='进球')p.goals++;p.history.push(p.outcome==='进球');p.round++;p.phase='result';
+        if(p.round===5){
+          p.phase='finished';const score=p.goals*180+(p.goals===5?500:0),earned=Math.max(0,score-world.penaltyBest);world.score+=earned;world.penaltyBest=Math.max(world.penaltyBest,score);
+          world.dialog={title:p.goals===5?'五球全进！':'点球挑战完成',body:`命中 ${p.goals} / 5 · 本次 +${earned} 分。再次挑战只奖励超过本局最佳的部分。`,actions:[{id:'penalty-replay',label:'再挑战一轮'},{id:'penalty-close',label:'回到运动场'}]};
+        }
+      }
+    }
+    world.walking=false;world.area='海湾体育场 · 点球训练';return true;
+  }
   function jobGoal(world){const job=world.job;if(!job)return null;const place=places.find(p=>p.id===(job.phase==='pickup'?job.pickup:job.destination));return {...place.door,name:place.name};}
   function reputation(world){return world.jobsCompleted>=6?'海湾达人':world.jobsCompleted>=3?'街区熟客':'新城旅人';}
   function startJob(world,id){
     if(!jobTypes.some(j=>j.id===id))return false;
-    if(world.job||world.race||world.trial){notify(world,'先完成或结束当前挑战，再接取新委托');return false;}
+    if(world.job||world.race||world.trial||world.penalty){notify(world,'先完成或结束当前挑战，再接取新委托');return false;}
     const options=id==='taxi'?[['station','museum'],['cafe','pier'],['surf','tower']]:[['cafe','museum'],['cafe','station'],['cafe','surf']];
     const pair=options[(world.jobCounts[id]||0)%options.length],pickup=places.find(p=>p.id===pair[0]),destination=places.find(p=>p.id===pair[1]);
-    world.job={id,phase:'pickup',pickup:pair[0],destination:pair[1],elapsed:0,limit:Math.ceil(90+distance(pickup.door,destination.door)/3),quality:100,hits:0};world.dialog=null;
+    window.ArcadeCityTours?.pause(world);world.job={id,phase:'pickup',pickup:pair[0],destination:pair[1],elapsed:0,limit:Math.ceil(90+distance(pickup.door,destination.door)/3),quality:100,hits:0};world.dialog=null;
     notify(world,id==='taxi'?'海湾接送 · 驾车到起点停车，按 E 接乘客':'咖啡急送 · 进入海岸咖啡，到吧台按 E 取餐',5);return true;
   }
-  function cancelJob(world,message='委托已结束 · 可在地图重新接单'){
+  function cancelJob(world,message='委托已结束 · 可在任务中重新接单'){
     if(!world.job)return;world.jobResult={id:world.job.id,success:false,reason:message};world.job=null;world.jobChain=0;notify(world,message,5);
   }
   function collectJob(world){world.job.phase='deliver';world.job.elapsed=0;world.job.detour=false;notify(world,(world.job.id==='taxi'?'乘客已上车':'取餐完成')+' · 前往'+jobGoal(world).name,5);}
@@ -51,8 +115,10 @@ window.ArcadeCityWorld = (() => {
   }
   function objective(world){
     if(world.race){const course=races.find(r=>r.id===world.race.id);return {...course.checkpoints[world.race.index],name:course.name};}
+    if(world.findingCar&&world.summonedCar&&world.vehicle<0){const car=world.summonedCar,door=vehicleDoors(world,car)[0];return {...(door||{x:car.x,z:car.z,y:car.elevation||0}),name:'召唤车辆'};}
     if(world.job)return world.job.detour&&world.waypoint?world.waypoint:jobGoal(world);
-    return world.waypoint||world.mission;
+    const tourGoal=window.ArcadeCityTours?.goal(world);if(tourGoal)return tourGoal;
+    return world.waypoint||trailStatus(world)?.goal||world.mission;
   }
   function navigationPath(world){
     if(world.interior||world.onTower)return world.emptyNavigation||(world.emptyNavigation=[]);
@@ -86,12 +152,120 @@ window.ArcadeCityWorld = (() => {
     world.navigationCache={x:goal.x,z:goal.z,revision,vehicle,origin:{x:p.x,z:p.z,y:p.y},path};return path;
   }
   function room(id){
+    if(id==='skyline')return {id,kind:'skyscraper',name:'云际中心大堂',width:28,depth:28,height:8.5,exit:{x:0,z:12.5},obstacles:[{x:-8,z:1,w:7,d:2,h:1.2},{x:7,z:3,w:3.6,d:1.1,h:1.2},{x:7,z:-3,w:3.6,d:1.1,h:1.2},{x:0,z:-10.8,w:7,d:2,h:8}],hotspots:[{kind:'sky-elevator',x:0,z:-7,label:'搭乘观光电梯'}]};
     if(id==='tower-hall'||id==='lighthouse-hall'){const place=places.find(p=>p.id===id.slice(0,-5)),spec=Interiors.plan({id,interiorType:'hotel',floorCount:1,w:18,d:16,name:place.name+'观景厅',architecture:{id:id==='tower-hall'?902:903,accent:0x69877c}},0);return {...spec,id,buildingId:null,name:place.name+'观景厅'};}
     const place=places.find(p=>p.id===id);if(!place)return null;
-    if(id==='surf'||id==='station'){const spec=Interiors.plan({id,interiorType:id==='surf'?'shop':'hotel',floorCount:1,w:id==='surf'?15:20,d:16,name:place.name,architecture:{id:id==='surf'?900:901,accent:0x69877c}},0);return {...spec,id,buildingId:null,name:id==='surf'?'冲浪屋展厅':'西城车站候车厅'};}
+    if(id==='station')return {id,kind:'station',name:'西城车站候车厅',width:44,depth:44,height:12.5,exit:{x:0,z:20.5},obstacles:[{x:0,z:-16.5,w:44,d:10.5,h:1},{x:13,z:12,w:6,d:2,h:2.2},...[-17,-15.75,-14.5].map(x=>({x,z:12,w:.95,d:.75,h:2.1})),...[-1,1].flatMap(side=>[7,-2].map(z=>({x:side*11,z,w:4,d:.9,h:1.3})))],hotspots:[{kind:'station-desk',x:13,z:9.5,label:'问询 / 失物招领'},{kind:'station-case',x:-14,z:-1.5,label:'查看座椅旁的行李'},{kind:'station-board',x:3.5,z:-2,label:'查看列车时刻'},{kind:'station-platform',x:0,z:-8.4,label:'站台观车'}]};
+    if(id==='surf'){const spec=Interiors.plan({id,interiorType:'shop',floorCount:1,w:15,d:16,name:place.name,architecture:{id:900,accent:0x69877c}},0);return {...spec,id,buildingId:null,name:'冲浪屋展厅'};}
     const config=place.kind==='stadium'?{width:54,depth:76,height:14}:place.kind==='museum'?{width:42,depth:32,height:7}:place.kind==='surf'?{width:22,depth:20,height:5}:{width:28,depth:22,height:5.5};
-    const obstacles=place.kind==='cafe'?[{x:-7,z:1,w:3,d:3},{x:7,z:1,w:3,d:3},{x:-7,z:-5,w:3,d:3},{x:7,z:-5,w:3,d:3},{x:0,z:-8,w:16,d:2}]:place.kind==='museum'?exhibits.map(e=>({x:e.x,z:e.z,w:2.5,d:2.5})):[];
+    const obstacles=place.kind==='cafe'?[{x:-7,z:1,w:3,d:3},{x:7,z:1,w:3,d:3},{x:-7,z:-5,w:3,d:3},{x:7,z:-5,w:3,d:3},{x:0,z:-8,w:16,d:2}]:place.kind==='museum'?exhibits.map(e=>({x:e.x,z:e.z,w:2.5,d:2.5})):place.kind==='stadium'?[...[-1,1].map(side=>({x:side*24.5,z:0,w:5,d:55,h:6})),...[-1,1].map(side=>({x:0,z:side*24.5,w:6.7,d:.1,h:2.4}))]:[];
     return {...config,id,kind:place.kind,name:place.name,exit:{x:0,z:config.depth/2-1.2},obstacles};
+  }
+  function initializeLife(world){
+    const definitions=[['night-market','海湾夜市','market',-240,240,'热腾腾的小食、手写菜单与暖色灯串，让夜晚的街角慢下来。'],['music-corner','海风音乐角','music',-48,210,'街头乐手正在排练。停下脚步看看街角演出，给城市留一点闲暇。'],['street-library','共享书屋','books',208,80,'翻开共享书架上的旅行笔记，也可以把这处小书屋记进你的城市手册。'],['flower-court','花艺小庭','garden',240,-240,'花台、香草和长椅组成一处安静的小庭院。休息一下，恢复全部体力。'],['makers-market','手作集市','craft',80,-240,'陶器、画作和木作摆满小摊，每一件小物都带着这座城的日常。'],['photo-corner','城市摄影角','photo',-240,-80,'取景框收进街道与天际线，完成一次城市取景打卡。']];
+    world.citySpots=[];world.cityStamps=new Set();const candidates=[];
+    for(let x=-304;x<=304;x+=16)for(let z=-304;z<=304;z+=16){if(Terrain.inPark(x,z,8)||roads.some(n=>Math.abs(x-n)<window.ArcadeCityArchitecture.streetProfile(n).width/2+6.8||Math.abs(z-n)<window.ArcadeCityArchitecture.streetProfile(n).width/2+6.8))continue;if(blocked(world,x,z,4.6)||blocked(world,x,z+4.4,.75)||world.buildings.some(b=>distance(b.door,{x,z})<7)||[...world.cars,...world.traffic].some(c=>distance(c,{x,z})<8))continue;candidates.push({x,z});}
+    for(const [id,name,kind,x,z,description]of definitions){const point=candidates.filter(p=>world.citySpots.every(s=>distance(s,p)>64)).sort((a,b)=>distance(a,{x,z})-distance(b,{x,z}))[0];if(point)world.citySpots.push({id,name,kind,...point,door:{x:point.x,z:point.z+4.4},description});}
+  }
+  const shopKinds=[{id:'convenience',name:'便利店采购'},{id:'cafe',name:'咖啡手作'},{id:'bakery',name:'烘焙火候'},{id:'bank',name:'柜台号码分拣'}];
+  function initializeTrails(world){
+    const spot=id=>world.citySpots.find(p=>p.id===id);
+    const place=id=>world.places.find(p=>p.id===id)||world.destinations.find(p=>p.id===id);
+    const shop=(kind,anchor)=>world.buildings.filter(b=>b.interiorType==='shop'&&b.shopType===kind).sort((a,b)=>distance(a,anchor)-distance(b,anchor))[0];
+    const stop=(kind,target,label,hint)=>({kind,target:target.id,label,hint,goal:{...target.door,name:target.name}});
+    const music=spot('music-corner'),craft=spot('makers-market'),market=spot('night-market');
+    const animal=world.animals.find(a=>a.home.x<-370);
+    const observation=[0,1.5,2.8].flatMap(radius=>Array.from({length:12},(_,i)=>{const x=animal.home.x+Math.cos(i*Math.PI/6)*radius,z=animal.home.z+Math.sin(i*Math.PI/6)*radius;return {x,z,y:Terrain.groundHeight(world,x,z)};})).find(p=>!blocked(world,p.x,p.z,.55,p.y))||{...animal.home,y:Terrain.groundHeight(world,animal.home.x,animal.home.z)};
+    world.trails=[
+      {id:'slow-coast',name:'海湾慢生活',subtitle:'一杯咖啡，一段海风',color:'#4d827e',reward:900,stops:[
+        stop('shop',shop('cafe',music),'亲手做一杯咖啡','进店后靠近吧台按 E，完成咖啡手作'),
+        stop('life',music,'听听街角演出','到音乐角按 E，听一段街头故事'),
+        stop('art',place('museum'),'欣赏三件展品','进入艺术馆，走近三件展品分别按 E'),
+        stop('landmark',place('pier'),'在日落码头打卡','走到码头入口按 E，完成海岸旅程')
+      ]},
+      {id:'local-day',name:'街坊的一天',subtitle:'从采购到热闹的夜市',color:'#a67750',reward:1100,stops:[
+        stop('shop',shop('convenience',craft),'完成邻里采购','进入便利店，按清单完成采购体验'),
+        stop('life',craft,'逛逛手作摊位','到手作集市按 E，看看街坊的作品'),
+        stop('shop',shop('bakery',market),'烤一炉金黄面包','进入面包店，在金色火候区间出炉'),
+        stop('life',market,'逛一回海湾夜市','到夜市按 E，给这一天收个尾')
+      ]},
+      {id:'forest-walk',name:'林海寻踪',subtitle:'从湖畔走向山脊',color:'#658254',reward:1300,stops:[
+        stop('nature',place('city-park'),'漫步湖畔公园','到公园入口按 E，开始自然之旅'),
+        stop('nature',place('forest'),'探访林海溪谷','沿林间公路到溪谷入口按 E'),
+        {kind:'wildlife',target:'forest-animal',label:'观察一只林间动物',hint:'下车步行，靠近林间动物按 E 观察',goal:{...observation,name:'林缘观察点'}},
+        stop('nature',place('hill-lookout'),'登上山脊观景台','沿山路到观景台按 E，回望整座城市')
+      ]}
+    ];
+    world.trailProgress=Object.fromEntries(world.trails.map(t=>[t.id,0]));
+    world.completedTrails=new Set();world.activeTrail=null;world.landmarkInteractions=new Set();
+  }
+  function trailStatus(world){
+    const trail=world.trails?.find(t=>t.id===world.activeTrail);if(!trail)return null;
+    const index=world.trailProgress[trail.id],stop=trail.stops[index];
+    return stop?{...trail,index,stop,goal:stop.goal}:null;
+  }
+  function trailStopDone(world,stop){
+    if(stop.kind==='shop')return world.shopVisits.has(stop.target);
+    if(stop.kind==='life')return world.cityStamps.has(stop.target);
+    if(stop.kind==='nature')return world.natureVisited.has(stop.target);
+    if(stop.kind==='art')return world.inspected.size===exhibits.length;
+    if(stop.kind==='landmark')return world.landmarkInteractions.has(stop.target);
+    return stop.kind==='wildlife'&&world.animals.some(a=>a.home.x<-370&&world.observedWildlife.has(a.id));
+  }
+  function updateTrail(world){
+    let current=trailStatus(world);if(!current)return;
+    const trail=current;let advanced=false;
+    while(current&&trailStopDone(world,current.stop)){
+      advanced=true;world.trailProgress[trail.id]++;current=trailStatus(world);
+    }
+    if(!advanced)return;
+    world.navigationCache=null;
+    let message;
+    if(!current){
+      world.activeTrail=null;
+      if(world.completedTrails.has(trail.id))return;
+      world.completedTrails.add(trail.id);world.score+=trail.reward;
+      message=trail.name+'已完成 · +'+trail.reward+' 分';
+    }else message=trail.name+' · 下一站：'+current.stop.label;
+    notify(world,message,6);
+    if(world.dialog&&world.dialog.kind!=='map'){
+      world.dialog={...world.dialog,body:(world.dialog.body||'')+'\n'+message,actions:[
+        ...(current?[{id:'trail-resume',label:'继续路线 · '+current.goal.name}]:[{id:'map',label:'查看漫游手册'}]),
+        ...(world.dialog.actions||[])
+      ]};
+    }
+  }
+  function startTrail(world,id){
+    const trail=world.trails.find(t=>t.id===id);
+    if(!trail||world.completedTrails.has(id))return false;
+    if(world.job||world.race||world.trial||world.penalty){notify(world,'先完成当前委托或挑战，再开始漫游路线',4);return false;}
+    window.ArcadeCityTours?.pause(world);world.activeTrail=id;world.waypoint=null;world.dialog=null;world.navigationCache=null;
+    updateTrail(world);const current=trailStatus(world);
+    if(current)notify(world,trail.name+' · '+current.stop.hint,6);
+    return true;
+  }
+  function shopDestinations(world){const p=world.interior?world.returnTo:world.player;return shopKinds.map(kind=>{const candidates=world.buildings.filter(b=>b.interiorType==='shop'&&b.shopType===kind.id).sort((a,b)=>Number(world.shopVisits.has(a.id))-Number(world.shopVisits.has(b.id))||distance(a,p)-distance(b,p));return {...kind,building:candidates[0],completed:candidates.filter(b=>world.shopVisits.has(b.id)).length};});}
+  function shopHeat(activity){const phase=activity.elapsed%6;return phase<3?phase/3:(6-phase)/3;}
+  function shopDialog(world,feedback=''){
+    const a=world.shopActivity;if(!a)return;const kind=shopKinds.find(k=>k.id===a.kind),base={kind:'shop-challenge',shop:a.buildingId,title:kind.name,body:'',actions:[]};
+    if(a.kind==='convenience'){base.body='采购清单：'+a.order.join('、')+'。'+(a.selected.length?' 已找到：'+a.selected.join('、')+'。':'')+feedback;base.actions=a.options.filter(item=>!a.selected.includes(item)).map((item,i)=>({id:'shop-pick-'+i,label:item}));a.currentOptions=a.options.filter(item=>!a.selected.includes(item));}
+    if(a.kind==='cafe'){const recipes=[{name:'海盐拿铁',steps:['研磨咖啡豆','萃取浓缩','加入温牛奶']},{name:'清爽美式',steps:['研磨咖啡豆','萃取浓缩','加入清水']},{name:'冷萃特调',steps:['研磨咖啡豆','冷水浸泡','过滤咖啡']}],recipe=recipes[a.variant%3];a.recipe=recipe;base.body='今日订单：'+recipe.name+'。按顺序完成：'+recipe.steps.join(' · ')+'。进度 '+a.stage+'/3。'+feedback;a.currentOptions=['研磨咖啡豆','萃取浓缩','加入温牛奶','加入清水','冷水浸泡','过滤咖啡'];base.actions=a.currentOptions.map((label,i)=>({id:'shop-pick-'+i,label}));}
+    if(a.kind==='bank'){a.currentOptions=['047','281','509','836'];a.ticket=a.currentOptions[(a.variant+a.stage)%4];base.body='请找到当前叫号：'+a.ticket+'。已完成 '+a.stage+'/3 位访客的号码核对。'+feedback;base.actions=a.currentOptions.map((label,i)=>({id:'shop-pick-'+i,label:'号码 '+label}));}
+    if(a.kind==='bakery'){base.body='观察火候标尺，在金色区域内点击「现在出炉」。'+feedback;base.actions=[{id:'shop-bake-stop',label:'现在出炉'}];}
+    base.actions.push({id:'shop-cancel',label:'先逛逛店里'});world.dialog=base;
+  }
+  function startShop(world){const r=world.interior,b=r&&world.buildingMap.get(r.buildingId);if(!b||r.floor!==0||b.interiorType!=='shop'||!shopKinds.some(k=>k.id===b.shopType)||world.dialog?.shop!==b.id)return false;world.shopActivity={buildingId:b.id,kind:b.shopType,variant:b.architecture.id%3,elapsed:0,stage:0,order:[['牛奶','面包','苹果'],['矿泉水','酸奶','饼干'],['果汁','纸巾','三明治']][b.architecture.id%3],options:['牛奶','面包','苹果','矿泉水','酸奶','饼干','果汁','纸巾','三明治'],selected:[]};const a=world.shopActivity,decoys=[a.options[(a.variant*3+4)%9],a.options[(a.variant*3+7)%9]];a.options=a.options.filter(item=>a.order.includes(item)||decoys.includes(item)).map((item,i)=>({item,key:(i*7+a.variant*3)%11})).sort((a,b)=>a.key-b.key).map(p=>p.item);shopDialog(world);return true;}
+  function finishShop(world){const a=world.shopActivity,first=!world.shopVisits.has(a.buildingId);if(first){world.shopVisits.add(a.buildingId);world.score+=180;}world.shopBadges.add(a.kind);let bonus=0;if(world.shopBadges.size===shopKinds.length&&!world.shopTourComplete){world.shopTourComplete=true;world.score+=500;bonus=500;}world.dialog={kind:'shop-result',shop:a.buildingId,title:'店内体验完成',body:(first?'首次完成本店体验 +180 分。':'本店体验已完成，可以继续练习。')+(bonus?' 四类店铺体验集齐，额外 +500 分。':''),actions:[{id:'shop-replay',label:'再体验一次'},{id:'shop-next',label:'寻找下一家店'},{id:'job-close',label:'继续参观'}]};world.shopActivity=null;}
+  function shopChoice(world,id){
+    if(id==='shop-start'||id==='shop-replay'){startShop(world);return;}
+    if(id==='shop-next'){const next=shopDestinations(world).find(k=>!world.shopBadges.has(k.id)&&k.building)||shopDestinations(world).find(k=>k.building);world.shopActivity=null;if(next)navigate(world,next.building.id);return;}
+    const a=world.shopActivity;if(!a||world.dialog?.kind!=='shop-challenge'||world.interior?.buildingId!==a.buildingId)return;
+    if(id==='shop-cancel'){world.shopActivity=null;world.dialog=null;return;}
+    if(id==='shop-bake-stop'&&a.kind==='bakery'){const heat=shopHeat(a);if(heat>=.55&&heat<=.8)finishShop(world);else{a.elapsed=0;shopDialog(world,heat<.55?'还没烤透，再试一次。':'火候稍过，再试一次。');}return;}
+    if(!/^shop-pick-\d+$/.test(id))return;const selected=a.currentOptions[Number(id.slice(10))];if(!selected)return;
+    if(a.kind==='convenience'){if(!a.order.includes(selected)){shopDialog(world,'这件不在清单中，换一件看看。');return;}a.selected.push(selected);if(a.selected.length===a.order.length)finishShop(world);else shopDialog(world);}
+    if(a.kind==='cafe'){if(selected!==a.recipe.steps[a.stage]){shopDialog(world,'先完成当前步骤，再继续。');return;}if(++a.stage===3)finishShop(world);else shopDialog(world);}
+    if(a.kind==='bank'){if(selected!==a.ticket){shopDialog(world,'这个号码不匹配，请再核对一次。');return;}if(++a.stage===3)finishShop(world);else shopDialog(world);}
   }
   function create(seed=17){
     let randomSeed=seed;const random=()=>{randomSeed=(Math.imul(randomSeed,1664525)+1013904223)>>>0;return randomSeed/4294967296;};
@@ -109,7 +283,7 @@ window.ArcadeCityWorld = (() => {
         if((Math.abs(x)>200||Math.abs(z)>200)&&(xi+zi+col+row)%5===0)continue;
         const w=Math.min(17,cellW-(columns>1?5:1))*(.84+random()*.14),d=Math.min(17,cellD-(rows>1?5:1))*(.84+random()*.14),b={x:left+(col+.5)*cellW,z:back+(row+.5)*cellD,w:Math.max(6,w),d:Math.max(6,d),hue:190+random()*35,style:Math.floor(random()*4)};
         if(Terrain.reserveBuilding({roadPlan},b)||places.some(p=>p.kind!=='pier'&&Math.abs(b.x-p.x)<(b.w+p.w)/2+5&&Math.abs(b.z-p.z)<(b.d+p.d)/2+5))continue;
-        const i=buildings.length;b.architecture=Architecture.design(b,i,seed,buildings[i-1]?.architecture.kind);b.h=b.architecture.height;b.baseY=0;Interiors.assign(b);buildings.push(b);
+        const i=buildings.length;b.architecture=Architecture.design(b,i,seed,buildings[i-1]?.architecture.kind);if(b.architecture.kind==='shop'){const shopIndex=buildings.filter(p=>p.interiorType==='shop').length;if(shopIndex<4)b.architecture.sign=[9,12,13,2][shopIndex];}b.h=b.architecture.height;b.baseY=0;Interiors.assign(b);buildings.push(b);
       }
     }
     const parked=[{x:3,z:13,yaw:0,color:0xe8ab63},{x:35,z:-18,yaw:0,color:0x6cb4aa},{x:-35,z:42,yaw:Math.PI,color:0xe08782},{x:67,z:72,yaw:Math.PI,color:0x9ba9dd},
@@ -126,13 +300,15 @@ window.ArcadeCityWorld = (() => {
     const obstacles=[{x:19.2,z:19.2,w:5.8,d:5.8},...places.filter(p=>p.kind!=='pier').map(p=>({...p}))];
     const world={bounds:{...bounds},roads:[...roads],roadPlan,destinations:Terrain.destinations.map(p=>({...p})),places:places.map(p=>({...p})),buildings,buildingMap:new Map(buildings.map(b=>[b.id,b])),obstacles,cars,traffic,pedestrians,tokens,shells,player:{x:0,z:13,yaw:0},vehicle:-1,cameraYaw:0,elevation:0,enteredBuildings:new Set(),roomNotes:new Set(),natureVisited:new Set(),
       time:0,score:0,meters:0,deliveries:0,collected:0,route:0,visited:new Set(),discovered:new Set(),inspected:new Set(),mission:routes[0],waypoint:null,interior:null,returnTo:null,onTower:null,dialog:null,
-      stamina:100,beachQuest:false,beachComplete:false,cafeReward:false,explorerReward:false,trial:null,stadiumBest:0,race:null,raceBest:{},raceResult:null,job:null,jobResult:null,jobCounts:{},jobsCompleted:0,jobChain:0,message:'M 查看城市地图 · 靠近车辆或建筑按 E 互动',messageTime:8,crashCooldown:0,hornTime:0};
-    const index=new Map();for(const b of [...buildings,...obstacles])for(let x=Math.floor((b.x-b.w/2)/32);x<=Math.floor((b.x+b.w/2)/32);x++)for(let z=Math.floor((b.z-b.d/2)/32);z<=Math.floor((b.z+b.d/2)/32);z++){const key=x+','+z;if(!index.has(key))index.set(key,[]);index.get(key).push(b);}world.collisionIndex=index;
+      stamina:100,skyLift:null,skyFocus:null,skyViews:new Set(),stationQuest:null,stationStamp:false,penalty:null,penaltyBest:0,beachQuest:false,beachComplete:false,cafeReward:false,explorerReward:false,trial:null,stadiumBest:0,race:null,raceBest:{},raceResult:null,job:null,jobResult:null,jobCounts:{},jobsCompleted:0,jobChain:0,message:'M 地图 · J 任务 · 靠近车辆或建筑按 E 互动',messageTime:8,crashCooldown:0,hornTime:0};
+    world.shopVisits=new Set();world.shopBadges=new Set();world.shopActivity=null;world.shopTourComplete=false;world.observedWildlife=new Set();world.animals=Array.from({length:28},(_,i)=>{const species=['鹿','野兔','狐狸','松鼠','林鸟','绿头鸭'][i%6],park=i>=22,home=species==='绿头鸭'?{x:-285+(i%4)*5,z:-241}:park?{x:-281+(i-22)*5,z:-240}:{x:-520-(i%5)*24,z:90-Math.floor(i/5)*44};return {id:'wildlife-'+i,species,home,x:home.x,z:home.z,y:Terrain.groundHeight(world,home.x,home.z),phase:i*1.71,yaw:0};});
+    const index=new Map();for(const b of [...buildings,...obstacles])for(let x=Math.floor((b.x-b.w/2)/32);x<=Math.floor((b.x+b.w/2)/32);x++)for(let z=Math.floor((b.z-b.d/2)/32);z<=Math.floor((b.z+b.d/2)/32);z++){const key=x+','+z;if(!index.has(key))index.set(key,[]);index.get(key).push(b);}world.collisionIndex=index;initializeLife(world);initializeTrails(world);
     // Keep all generated vehicles clear of each other and of the actual car footprint.
     const placed=[];for(const car of [...cars,...traffic]){if(vehicleContact(world,car,placed,false)){const start={x:car.x,z:car.z};for(let n=1;n<100;n++){const candidate={...car,[car.lane||'z']:(car.lane==='x'?start.x:start.z)+((n%2?1:-1)*Math.ceil(n/2)*5)};if(!vehicleContact(world,candidate,placed,false)){Object.assign(car,{x:candidate.x,z:candidate.z});break;}}}placed.push(car);}
-    return world;
+    window.ArcadeCityTours?.init(world);return world;
   }
   function blocked(world,x,z,radius=.42,elevation=world.elevation||0){
+    if(world.onTower==='skyline'&&!world.skyLift&&Math.abs(elevation-186)<2){const p=places.find(p=>p.id==='skyline');return Math.abs(x-p.x)>12.3-radius||Math.abs(z-p.z)>14.3-radius||skyObstacles.some(b=>pointHits(b,x-p.x,z-p.z,radius));}
     if(world.interior){const r=world.interior;if(Math.abs(x)>r.width/2-radius||Math.abs(z)>r.depth/2-radius)return true;return r.obstacles.some(b=>pointHits(b,x,z,radius));}
     if(x>374-radius&&Math.abs(z-224)>8-radius)return true;
     const limit=world.bounds;if(x<limit.minX+radius||x>limit.maxX-radius||z<limit.minZ+radius||z>limit.maxZ-radius)return true;
@@ -143,6 +319,15 @@ window.ArcadeCityWorld = (() => {
   function pointHits(b,x,z,radius){const r=b.rotation||0,dx=x-b.x,dz=z-b.z;return Math.abs(dx*Math.cos(r)+dz*Math.sin(r))<b.w/2+radius&&Math.abs(-dx*Math.sin(r)+dz*Math.cos(r))<b.d/2+radius;}
   function verticalOverlap(y,height,b){const min=b.minY??b.baseY??0,max=b.maxY??(min+(b.h||1.5));return y+height>min+.02&&y<max-.02;}
   function carBox(car){const width=car.type===1?1.12:1.06,length=car.type===1?2.05:car.type===2?1.66:1.9,yaw=car.yaw||0;return {x:car.x,z:car.z,hw:width,hl:length,right:{x:Math.cos(yaw),z:Math.sin(yaw)},forward:{x:Math.sin(yaw),z:-Math.cos(yaw)}};}
+  function vehicleDoors(world,car){
+    const box=carBox(car),y=car.elevation||0,outside={...world,interior:null,onTower:null,skyLift:null,elevation:y},origin=world.interior?world.returnTo||world.player:world.player;
+    const offsets=[[box.right.x*(box.hw+.85),box.right.z*(box.hw+.85)],[-box.right.x*(box.hw+.85),-box.right.z*(box.hw+.85)],[box.forward.x*(box.hl+.9),box.forward.z*(box.hl+.9)],[-box.forward.x*(box.hl+.9),-box.forward.z*(box.hl+.9)]];
+    return offsets.map(([dx,dz])=>{const x=car.x+dx,z=car.z+dz,surface=Terrain.roadAt(outside,x,z,y,false,{id:car.surfaceId});return {x,z,y:surface.y,surfaceId:surface.path?.id||null};}).filter(p=>Math.abs(p.y-y)<.6&&!walkBlocked(outside,p.x,p.z,.45)&&!world.pedestrians.some(person=>distance(p,person)<.8&&Math.abs(Terrain.groundHeight(world,person.x,person.z)-p.y)<1.8)).sort((a,b)=>distance(origin,a)-distance(origin,b));
+  }
+  function boardable(world,car){
+    if(Math.abs((car.elevation||0)-world.elevation)>=1.8||blocked(world,(car.x+world.player.x)/2,(car.z+world.player.z)/2,.22,world.elevation))return false;
+    const steps=Math.max(1,Math.ceil(distance(world.player,car)/.35));for(let i=1;i<steps;i++){const t=i/steps;if(blocked(world,world.player.x+(car.x-world.player.x)*t,world.player.z+(car.z-world.player.z)*t,.22,world.elevation))return false;}return true;
+  }
   function boxContact(a,b){
     const dx=a.x-b.x,dz=a.z-b.z;let depth=Infinity,normal=null;
     for(const axis of [a.right,a.forward,b.right,b.forward]){const dot=(u,v)=>u.x*v.x+u.z*v.z;
@@ -208,6 +393,11 @@ window.ArcadeCityWorld = (() => {
     if(!world.enteredBuildings.has(id)){world.enteredBuildings.add(id);world.score+=100;}return true;}
   function context(world){
     const p=world.player;
+    if(world.onTower==='skyline'){
+      if(world.skyLift)return null;if(world.skyFocus)return {kind:'sky-view-exit',label:'退出全景眺望'};const place=places.find(p=>p.id==='skyline');
+      if(distance(p,{x:place.x+10,z:place.z+5})<2.3)return {kind:'sky-elevator',label:'乘电梯返回大堂'};
+      const view=skyViews.find(v=>distance(p,{x:place.x+v.x,z:place.z+v.z})<2.5);return view?{kind:'sky-view',id:view.id,label:'眺望'+view.name}:null;
+    }
     if(world.onTower)return {kind:'leave-tower',label:'返回地面'};
     if(world.job&&!world.interior&&world.elevation<2.5&&distance(p,jobGoal(world))<4&&(!world.cars[world.vehicle]||motionSpeed(world.cars[world.vehicle])<1)){
       if(world.job.id==='taxi'&&world.vehicle>=0)return {kind:world.job.phase==='pickup'?'job-pickup':'job-dropoff',label:world.job.phase==='pickup'?'接乘客上车':'送达乘客'};
@@ -215,6 +405,7 @@ window.ArcadeCityWorld = (() => {
     }
     if(world.vehicle>=0){
       const car=world.cars[world.vehicle];
+      const tourStop=window.ArcadeCityTours?.context(world);if(tourStop)return tourStop;
       const station=places.find(place=>place.id==='station');if(!world.serviceExit&&!world.race&&motionSpeed(car)<2&&distance(p,station.door)<8)return {kind:'service',label:'车辆检修'};
       const race=!world.race&&!world.job&&races.find(r=>distance(p,r.start)<7);
       if(race&&motionSpeed(car)<2)return {kind:'race',id:race.id,label:'开始「'+race.name+'」'};
@@ -222,27 +413,55 @@ window.ArcadeCityWorld = (() => {
     }
     if(world.interior){
       const r=world.interior;if(distance(p,r.exit)<2.6)return {kind:'leave',label:'离开'+r.name};
-      if(r.kind==='cafe'&&distance(p,{x:0,z:-5})<3)return {kind:'coffee',label:'与店员交谈 / 补给'};
+      if(r.kind==='stadium'&&world.penalty)return {kind:'penalty-kick',label:world.penalty.phase==='aim'?'锁定射门方向':world.penalty.phase==='power'?'踢球':world.penalty.phase==='result'?'准备下一球':'等待射门结果'};
+      if(r.kind==='stadium'&&distance(p,{x:0,z:-10})<3)return {kind:'penalty',label:'五球点球挑战'};
+      if(r.id==='cafe'&&distance(p,{x:0,z:-5})<3)return {kind:'coffee',label:'与店员交谈 / 补给'};
       if(r.kind==='museum'){const e=exhibits.find(e=>distance(p,e)<3.3);if(e)return {kind:'exhibit',id:e.id,label:'欣赏「'+e.label+'」'};}
       if(r.kind==='stadium'&&distance(p,{x:-16,z:28})<4)return {kind:'training',label:world.trial?'重新开始计时训练':'开始计时训练'};
-      const spot=r.hotspots?.find(h=>distance(p,h)<2.7);if(spot)return {kind:spot.kind,label:spot.label};
+      const spot=r.hotspots?.find(h=>distance(p,h)<2.7);if(spot)return {kind:spot.kind,label:spot.kind==='room-note'&&r.floor===0&&shopKinds.some(k=>k.id===r.kind)?'店内体验 / '+spot.label:spot.label};
       return null;
     }
+    if(world.summonedCar&&distance(p,world.summonedCar)<3&&boardable(world,world.summonedCar))return {kind:'car-enter',id:world.cars.indexOf(world.summonedCar),label:'驾驶召唤车辆'};
     const place=world.places.find(place=>distance(p,place.door)<3.6&&world.elevation<2.5);if(place)return {kind:'place',id:place.id,label:place.kind==='tower'?'登上'+place.name:place.kind==='pier'?'码头打卡':place.kind==='surf'?'与冲浪屋交谈':place.kind==='station'?'查看旅行指南':'进入'+place.name};
     const building=world.buildings.filter(b=>distance(p,b.door)<2.3&&Math.abs(world.elevation-(b.baseY||0))<2.5).sort((a,b)=>distance(p,a.door)-distance(p,b.door))[0];if(building)return {kind:'building',id:building.id,label:'进入'+building.name};
     const nature=world.destinations.find(n=>distance(p,n.door)<7);if(nature)return {kind:'nature',id:nature.id,label:'探索'+nature.name};
-    const nearby=world.cars.map((car,i)=>({i,d:distance(p,car)})).filter(v=>v.d<4).sort((a,b)=>a.d-b.d)[0];if(nearby)return {kind:'car-enter',id:nearby.i,label:motionSpeed(world.cars[nearby.i])>.6?'等待车辆停稳':'驾驶车辆'};
-    const traffic=world.traffic.map(car=>({car,d:distance(p,car)})).filter(v=>v.d<9).sort((a,b)=>a.d-b.d)[0];
+    const citySpot=world.citySpots.find(s=>distance(p,s.door)<3.4&&world.elevation<1);if(citySpot)return {kind:'city-life',id:citySpot.id,label:world.cityStamps.has(citySpot.id)?'再逛逛'+citySpot.name:'探索'+citySpot.name};
+    const animal=world.animals.find(a=>distance(p,a)<4);if(animal)return {kind:'wildlife',id:animal.id,label:'观察'+animal.species};
+    const nearby=world.cars.map((car,i)=>({i,d:distance(p,car)})).filter(v=>v.d<4&&boardable(world,world.cars[v.i])).sort((a,b)=>a.d-b.d)[0];if(nearby)return {kind:'car-enter',id:nearby.i,label:motionSpeed(world.cars[nearby.i])>.6?'等待车辆停稳':'驾驶车辆'};
+    const traffic=world.traffic.map(car=>({car,d:distance(p,car)})).filter(v=>v.d<9&&boardable(world,v.car)).sort((a,b)=>a.d-b.d)[0];
     if(traffic)return motionSpeed(traffic.car)<.6&&traffic.d<4?{kind:'traffic-enter',id:traffic.car.id,label:'换乘这辆车'}:{kind:'traffic-stop',id:traffic.car.id,label:traffic.car.stopTime>0?'车辆已拦停 · 靠近车门换乘':'拦停车辆'};
     return null;
   }
-  function interact(world){
+  function interact(world){const result=performInteraction(world);updateTrail(world);return result;}
+  function performInteraction(world){
     if(world.dialog)return false;const action=context(world),p=world.player;
     if(!action){notify(world,'靠近地图上的建筑入口或车辆，按 E 互动');return false;}
+    if(action.kind==='tour-stop')return window.ArcadeCityTours.stamp(world);
+    if(action.kind==='sky-view-exit'){world.skyFocus=null;return true;}
+    if(action.kind==='sky-elevator'){world.dialog={title:'云际中心 · 观光电梯',body:world.onTower==='skyline'?'返回一层大堂。':'玻璃观光电梯通往 186 米高的露台。抵达后可自由走动、环顾城市。',actions:[{id:world.onTower==='skyline'?'sky-lobby':'sky-deck',label:world.onTower==='skyline'?'返回一层大堂':'前往 186 m 观景台'},{id:'job-close',label:'再逛逛'}]};return true;}
+    if(action.kind==='sky-view'){const v=skyViews.find(v=>v.id===action.id),first=!world.skyViews.has(v.id);world.skyFocus=v.id;world.cameraYaw=v.yaw;if(first){world.skyViews.add(v.id);world.score+=100;if(world.skyViews.size===4)world.score+=350;}notify(world,v.name+(first?' · 观景印记 +100':'')+(first&&world.skyViews.size===4?' · 全景探索完成 +350':''),5);return true;}
+    if(action.kind==='penalty-kick')return kickPenalty(world);
+    if(action.kind==='penalty'){if(world.job||world.trial){notify(world,'先完成当前挑战，再开始点球训练');return false;}world.dialog={title:'五球点球挑战',body:'先按 E 锁定射门方向，再在力量条的绿色区间按 E 踢球。观察门将位置，尝试打向球门两侧。',actions:[{id:'penalty-start',label:'开始挑战'},{id:'job-close',label:'再逛逛'}]};return true;}
+    if(action.kind.startsWith('station-')){
+      const close={id:'job-close',label:'继续探索'};
+      if(action.kind==='station-desk')world.dialog={title:'失物招领',body:world.stationQuest==='done'?'谢谢你帮旅客找回了行李。':world.stationQuest==='return'?'这正是旅客遗失的红色行李箱，请在这里办理归还。':world.stationQuest==='search'?'请找找候车区西侧座椅旁的红色行李箱。':'一位旅客遗失了红色行李箱。愿意帮忙在候车区找一找吗？',actions:[...(world.stationQuest==='done'?[]:[{id:world.stationQuest==='return'?'station-return':'station-search',label:world.stationQuest==='return'?'归还行李':'帮忙寻找'}]),close]};
+      if(action.kind==='station-case'){
+        if(world.stationQuest==='search'){world.stationQuest='return';world.dialog={title:'找到行李了',body:'提起红色行李箱，到大厅东侧的失物招领服务台归还。',actions:[close]};}
+        else world.dialog={title:'候车区',body:world.stationQuest==='return'||world.stationQuest==='done'?'座椅旁已整理干净。':'座椅旁放着一只红色行李箱，可以先去问询台问问。',actions:[close]};
+      }
+      if(action.kind==='station-board'||action.kind==='station-platform'){
+        const train=trainStatus(world),dwell=train.phase==='dwell';
+        const stamp=action.kind==='station-platform'&&dwell&&!world.stationStamp;if(stamp){world.stationStamp=true;world.score+=200;}
+        world.dialog={title:action.kind==='station-board'?'西城车站 · 列车动态':'01 站台',body:(dwell?'区间列车正在停靠。双扇门会在发车前关闭，请留在黄色安全线内。':train.phase==='arrive'?'列车正在缓缓进站，请站在安全线内等候。':'下一班列车约 '+Math.ceil(train.wait)+' 秒后进站。可以先逛逛候车厅，帮助服务台寻找行李。')+(stamp?' 观车纪念已收集 +200 分。':''),actions:[close]};
+      }
+      return true;
+    }
+    if(action.kind==='city-life'){const spot=world.citySpots.find(s=>s.id===action.id),first=!world.cityStamps.has(spot.id);if(first){world.cityStamps.add(spot.id);world.score+=120;if(world.cityStamps.size===world.citySpots.length)world.score+=800;}if(spot.kind==='garden')world.stamina=100;world.dialog={title:spot.name,body:spot.description+(first?' 首次到访 +120 分。':'')+(first&&world.cityStamps.size===world.citySpots.length?' 街区漫游集章完成，额外 +800 分。':''),actions:[{id:'life-next',label:world.cityStamps.size===world.citySpots.length?'再选一处逛逛':'导航到下一处'},{id:'job-close',label:'继续漫游'}]};return true;}
+    if(action.kind==='wildlife'){const a=world.animals.find(a=>a.id===action.id);if(!world.observedWildlife.has(a.id)){world.observedWildlife.add(a.id);world.score+=80;}world.dialog={title:'林间偶遇 · '+a.species,body:({'鹿':'鹿会在林缘觅食，靠近时会警觉地离开。','野兔':'野兔常在草丛边活动，留意它轻快的跳跃。','狐狸':'狐狸沿灌木丛巡游，保持距离，安静观察。','松鼠':'松鼠在林地收集食物，蓬松的尾巴帮助保持平衡。','林鸟':'留意树林上方掠过的飞鸟。','绿头鸭':'绿头鸭在水岸觅食、梳理羽毛。'})[a.species],actions:[{id:'job-close',label:'继续观察'}]};return true;}
     if(action.kind==='building')return enterBuilding(world,action.id);
     if(action.kind==='nature'){const place=world.destinations.find(n=>n.id===action.id);if(!world.natureVisited.has(place.id)){world.natureVisited.add(place.id);world.score+=300;}world.dialog={title:place.name,body:place.description+' 可沿步道继续自由探索。',actions:[{id:'job-close',label:'继续探索'}]};return true;}
     if(action.kind==='elevator'){world.dialog={kind:'elevator',title:'选择楼层',elevator:world.interior.buildingId,currentFloor:world.interior.floor,floorCount:world.interior.floorCount};return true;}
-    if(action.kind==='room-note'){const key=world.interior.id;if(!world.roomNotes.has(key)){world.roomNotes.add(key);world.score+=60;}const notes={residential:'窗边的住户手册写着：周末不妨去海湾公园读一本书，再沿林海步道走到溪边。',courtyard:'住户们共同照料中庭的植物，每一扇窗都面向安静的生活。',office:'工作区留言：忙碌之余，记得去窗边看看城市，也给自己留一杯咖啡的时间。',studio:'创作记录里贴着海岸、林地和街头的照片，它们是这间工作室的灵感来源。',warehouse:'工作记录：货架之间保持通道畅通，窗边的老工具经过细心整理，仍在继续使用。',shop:'店主在手记里留下了街区故事，欢迎慢慢看看陈列和窗边的小收藏。',hotel:'旅行册推荐：沿海湾大道看城市，走过公园木桥，再去森林听溪水。',guestroom:'房间留言册记录着来自不同城市的旅人。放下行李，窗外还有一座城等你探索。'};world.dialog={title:world.interior.name,body:notes[world.interior.kind]||'每一处日常陈设都留下了这座城市的生活痕迹。',actions:[{id:'job-close',label:'继续参观'}]};return true;}
+    if(action.kind==='room-note'){const key=world.interior.id;if(!world.roomNotes.has(key)){world.roomNotes.add(key);world.score+=60;}const notes={residential:'窗边的住户手册写着：周末不妨去海湾公园读一本书，再沿林海步道走到溪边。',courtyard:'住户们共同照料中庭的植物，每一扇窗都面向安静的生活。',office:'工作区留言：忙碌之余，记得去窗边看看城市，也给自己留一杯咖啡的时间。',studio:'创作记录里贴着海岸、林地和街头的照片，它们是这间工作室的灵感来源。',warehouse:'工作记录：货架之间保持通道畅通，窗边的老工具经过细心整理，仍在继续使用。',shop:'店主在手记里留下了街区故事，欢迎慢慢看看陈列和窗边的小收藏。',hotel:'旅行册推荐：沿海湾大道看城市，走过公园木桥，再去森林听溪水。',convenience:'店员准备了一张小小采购清单，试着在货架间找到所需物品。',cafe:'今日咖啡风味卡放在吧台上，欢迎按照订单体验一杯咖啡的制作。',bakery:'烤炉已经预热，留意出炉火候，让面包保留金黄的外皮。',bank:'柜台工作人员邀请你帮忙核对叫号，完成一次号码分拣练习。',bookshop:'书页里夹着店主的阅读推荐，窗边留着适合慢慢翻书的位置。',florist:'花木养护卡记录了本店植物的浇水与光照习惯。',pharmacy:'陈列分区清楚，便民服务册记录着街坊的日常。',guestroom:'房间留言册记录着来自不同城市的旅人。放下行李，窗外还有一座城等你探索。'};world.dialog={title:world.interior.name,body:notes[world.interior.kind]||'每一处日常陈设都留下了这座城市的生活痕迹。',shop:world.interior.buildingId,actions:[...(world.interior.floor===0&&shopKinds.some(k=>k.id===world.interior.kind)?[{id:'shop-start',label:'体验'+shopKinds.find(k=>k.id===world.interior.kind).name}]:[]),{id:'job-close',label:'继续参观'}]};return true;}
     if(action.kind==='job-pickup'){if(world.cars[world.vehicle].health<=0){notify(world,'先修复车辆，再接乘客');return false;}collectJob(world);return true;}
     if(action.kind==='job-dropoff'){completeJob(world);return true;}
     if(action.kind==='service'){world.dialog={title:'西城车辆服务站',body:'原地修复车身、恢复车况，保留当前车型和探索进度。',vehicle:world.vehicle,actions:[{id:'repair-car',label:'免费检修'},{id:'leave-service',label:'返回驾驶'},{id:'service-exit',label:'下车步行'}]};return true;}
@@ -250,24 +469,25 @@ window.ArcadeCityWorld = (() => {
     if(action.kind==='traffic-enter'){
       const i=world.traffic.findIndex(c=>c.id===action.id),car=world.traffic[i];world.traffic.splice(i,1);car.speed=0;car.driftX=car.driftZ=0;world.cars.push(car);action.kind='car-enter';action.id=world.cars.length-1;
     }
-    if(action.kind==='car-enter'){const car=world.cars[action.id];if(motionSpeed(car)>.6){notify(world,'等车辆停稳后再上车');return false;}world.vehicle=action.id;car.speed=0;car.driftX=car.driftZ=0;p.x=car.x;p.z=car.z;p.yaw=car.yaw;world.elevation=car.elevation||0;world.surfaceId=car.surfaceId||null;world.cameraYaw=car.yaw;notify(world,'W 加速 · S 刹车 / 倒车 · A D 转向');return true;}
+    if(action.kind==='car-enter'){const car=world.cars[action.id];if(motionSpeed(car)>.6){notify(world,'等车辆停稳后再上车');return false;}world.vehicle=action.id;world.findingCar=false;world.navigationCache=null;car.speed=0;car.driftX=car.driftZ=0;p.x=car.x;p.z=car.z;p.yaw=car.yaw;world.elevation=car.elevation||0;world.surfaceId=car.surfaceId||null;world.cameraYaw=car.yaw;notify(world,'W 加速 · S 刹车 / 倒车 · A D 转向');return true;}
     if(action.kind==='race'){
+      window.ArcadeCityTours?.pause(world);
       if(world.cars[world.vehicle].health<=0){notify(world,'先按 R 修复车辆，再来挑战');return false;}
       world.race={id:action.id,index:0,elapsed:0,countdown:3,penalty:0,hits:0};world.raceResult=null;notify(world,'按顺序穿过蓝色检查点 · 碰撞罚时 2 秒',4);return true;
     }
     if(action.kind==='car-exit'){
       const car=world.cars[world.vehicle];if(motionSpeed(car)>2){notify(world,'先停稳，再下车');return false;}
-      const exits=[[Math.cos(car.yaw)*2,Math.sin(car.yaw)*2],[-Math.cos(car.yaw)*2,-Math.sin(car.yaw)*2],[Math.sin(car.yaw)*3,-Math.cos(car.yaw)*3],[-Math.sin(car.yaw)*3,Math.cos(car.yaw)*3]];const safe=exits.find(([x,z])=>!walkBlocked(world,car.x+x,car.z+z,.45));if(!safe){notify(world,'周围没有安全的下车空间');return false;}
-      p.x=car.x+safe[0];p.z=car.z+safe[1];car.speed=0;car.driftX=car.driftZ=0;world.vehicle=-1;world.surfaceId=car.surfaceId||null;world.race=null;if(world.job?.id==='taxi'&&world.job.phase==='deliver')cancelJob(world,'接送已结束，乘客已下车');else notify(world,'自由步行 · 靠近路上车辆按 E 拦停换乘');return true;
+      const safe=vehicleDoors(world,car)[0];if(!safe){notify(world,'周围没有安全的下车空间');return false;}
+      p.x=safe.x;p.z=safe.z;world.elevation=safe.y;car.speed=0;car.driftX=car.driftZ=0;world.vehicle=-1;world.surfaceId=safe.surfaceId;world.race=null;if(world.job?.id==='taxi'&&world.job.phase==='deliver')cancelJob(world,'接送已结束，乘客已下车');else notify(world,'自由步行 · 靠近路上车辆按 E 拦停换乘');return true;
     }
     if(action.kind==='leave'||action.kind==='leave-tower'){
       if(action.kind==='leave'&&world.savedTower){const saved=world.savedTower;Object.assign(p,saved.player);world.onTower=saved.id;world.elevation=saved.elevation;world.returnTo=saved.returnTo;world.interior=null;world.savedTower=null;world.cameraYaw=saved.cameraYaw;notify(world,'回到观景台 · E 返回地面');return true;}
-      Object.assign(p,world.returnTo);world.cameraYaw=p.yaw;world.interior=null;world.onTower=null;world.elevation=world.returnTo.elevation||0;world.trial=null;world.returnTo=null;notify(world,'回到城市');return true;
+      Object.assign(p,world.returnTo);world.cameraYaw=p.yaw;world.interior=null;world.onTower=null;world.elevation=world.returnTo.elevation||0;world.trial=null;world.penalty=null;world.returnTo=null;notify(world,'回到城市');return true;
     }
     if(action.kind==='place'){
-      const place=world.places.find(v=>v.id===action.id);discover(world,place);
+      const place=world.places.find(v=>v.id===action.id);discover(world,place);world.landmarkInteractions.add(place.id);
       if(place.kind==='surf'){world.dialog={title:place.name,body:world.beachComplete?'海岸印记收集完成，感谢你探索这片海滩。':place.description,actions:[...(world.beachQuest?[{id:'navigate-shell',label:'标记下一枚海螺'}]:[{id:'beach-quest',label:'接取海滩探访'}]),{id:'enter-surf',label:'进入冲浪屋'}]};return true;}
-      if(place.kind==='station'){world.dialog={title:'下一站去哪里？',body:'沿海公路通往海滩，西侧山路与隧道通往林海溪谷。你可以在城市地图中选择目的地导航。',actions:[{id:'map',label:'打开城市地图'},{id:'enter-station',label:'进入候车大厅'}]};return true;}
+      if(place.kind==='station'){world.dialog={title:place.name,body:'钢拱顶下的候车大厅已开放。去站台看看列车进站，也可以到问询台帮助旅客寻找行李。',actions:[{id:'enter-station',label:'进入候车大厅'},{id:'map',label:'打开城市地图'}]};return true;}
       if(place.kind==='pier'){notify(world,'日落码头已记入探索手册',4);return true;}
       world.returnTo={x:p.x,z:p.z,yaw:p.yaw,elevation:world.elevation};
       if(place.kind==='tower'){world.onTower=place.id;world.elevation=place.elevation;p.x=place.x;p.z=place.z;world.cameraYaw=place.id==='tower'?Math.PI/2:-Math.PI/2;notify(world,'拖动环顾城市 · E 返回地面',5);return true;}
@@ -282,13 +502,29 @@ window.ArcadeCityWorld = (() => {
       const e=exhibits.find(v=>v.id===action.id);if(!world.inspected.has(e.id)){world.inspected.add(e.id);world.score+=150;}
       world.dialog={title:e.label,body:e.body+(world.inspected.size===3?' 你已欣赏全部三件展品。':''),actions:[]};return true;
     }
-    if(action.kind==='training'){if(world.job){notify(world,'先完成当前委托，再开始训练');return false;}world.trial={index:0,elapsed:0};world.stamina=100;notify(world,'训练开始 · 按顺序跑过四个金色检查点',5);return true;}
+    if(action.kind==='training'){if(world.job||world.penalty){notify(world,'先完成当前挑战，再开始训练');return false;}world.trial={index:0,elapsed:0};world.stamina=100;notify(world,'训练开始 · 按顺序跑过四个金色检查点',5);return true;}
     return false;
   }
-  function choose(world,id){
+  function choose(world,id){performChoice(world,id);updateTrail(world);}
+  function performChoice(world,id){
+    if(id==='sky-panorama'&&world.onTower==='skyline'&&!world.skyLift){world.dialog={title:'云际中心 · 全景眺望',body:'选择一个方向。拖动可以环顾，按 E 或移动即可回到露台。',actions:skyViews.map(v=>({id:'sky-look-'+v.id,label:v.name}))};return;}
+    if(id.startsWith('sky-look-')&&world.onTower==='skyline'&&!world.skyLift){const v=skyViews.find(v=>v.id===id.slice(9));if(v){world.skyFocus=v.id;world.cameraYaw=v.yaw;world.dialog=null;}return;}
+    if(id==='sky-deck'||id==='sky-lobby'){skyLift(world,id==='sky-deck'?'deck':'lobby');return;}
+    if(id==='penalty-start'||id==='penalty-replay'){beginPenalty(world);return;}
+    if(id==='penalty-close'){world.penalty=null;world.dialog=null;return;}
+    if(id==='station-search'||id==='station-return'){
+      if(world.interior?.id!=='station'||distance(world.player,{x:13,z:9.5})>3)return;
+      if(id==='station-search'&&!world.stationQuest){world.stationQuest='search';notify(world,'寻找红色行李箱 · 西侧候车区的座椅旁',6);}
+      if(id==='station-return'&&world.stationQuest==='return'){world.stationQuest='done';world.score+=250;notify(world,'行李物归原主 · +250 分',5);}world.dialog=null;return;
+    }
+    if(id.startsWith('trail-start-')){startTrail(world,id.slice(12));return;}
+    if(id==='trail-resume'){if(!world.activeTrail)return;if(world.job||world.race||world.trial){notify(world,'完成当前委托或挑战后，再继续漫游路线',4);return;}world.waypoint=null;world.navigationCache=null;world.dialog=null;return;}
+    if(id==='trail-pause'){world.activeTrail=null;world.dialog=null;world.navigationCache=null;notify(world,'路线已收起 · 手册保留本局进度');return;}
+    if(id.startsWith('shop-')){shopChoice(world,id);return;}
+    if(id==='life-next'){const next=world.citySpots.find(s=>!world.cityStamps.has(s.id))||world.citySpots[0];if(next)navigate(world,next.id);return;}
     const service=world.dialog?.vehicle,elevator=world.dialog?.elevator,station=places.find(p=>p.id==='station');
     world.dialog=null;
-    if(id==='tower-hall'&&world.onTower){const tower=world.onTower;world.savedTower={id:tower,player:{...world.player},elevation:world.elevation,returnTo:world.returnTo,cameraYaw:world.cameraYaw};enterRoom(world,room(tower+'-hall'));world.onTower=null;}
+    if(id==='tower-hall'&&world.onTower&&world.onTower!=='skyline'){const tower=world.onTower;world.savedTower={id:tower,player:{...world.player},elevation:world.elevation,returnTo:world.returnTo,cameraYaw:world.cameraYaw};enterRoom(world,room(tower+'-hall'));world.onTower=null;}
     if(id==='enter-surf'||id==='enter-station')enterRoom(world,room(id.slice(6)));
     if(id.startsWith('floor-')&&elevator&&world.interior?.buildingId===elevator){const b=world.buildingMap.get(elevator),floor=Number(id.slice(6));if(Number.isInteger(floor)&&floor>=0&&floor<b.floorCount)enterBuilding(world,elevator,floor);}
     if(id==='job-taxi'||id==='job-coffee')startJob(world,id.slice(4));
@@ -300,19 +536,84 @@ window.ArcadeCityWorld = (() => {
     if(id==='beach-quest'||id==='navigate-shell'){const next=world.shells.find(s=>!s.taken);if(next)world.waypoint={...next,name:'海滩海螺'};}
     if(id.startsWith('navigate-')&&id!=='navigate-shell'){const place=places.find(p=>p.id===id.slice(9));if(place)world.waypoint={...place.door,name:place.name};}
   }
-  function navigate(world,id){const place=[...world.places,...world.destinations,...world.roadPlan.entrances].find(p=>p.id===id)||world.buildingMap.get(id),race=races.find(r=>r.id===id);world.waypoint=place?{...place.door,name:place.name}:race?{...race.start,name:race.name+' · 起点'}:null;if(world.job)world.job.detour=true;world.dialog=null;}
+  function locateVehicle(world,enabled=true){
+    if(!world.summonedCar||world.vehicle>=0)return false;
+    world.findingCar=enabled;world.navigationCache=null;world.dialog=null;
+    notify(world,enabled?world.interior||world.onTower?'车辆在入口附近 · 返回街道后跟随寻车路线':'寻车导航已开启 · 靠近车辆按 E 驾驶':'已恢复原来的路线',4);return true;
+  }
+  function navigate(world,id){if(id==='summoned-vehicle'){locateVehicle(world);return;}window.ArcadeCityTours?.pause(world);world.findingCar=false;const place=mapEntries(world).find(p=>p.id===id),race=races.find(r=>r.id===id);world.waypoint=place?{...place.door,name:place.name}:race?{...race.start,name:race.name+' · 起点'}:null;if(world.job)world.job.detour=true;world.dialog=null;}
+  function mapEntries(world){
+    const pack=(items,category,label)=>items.map(p=>({...p,category,label}));
+    const summoned=world.summonedCar?[{id:'summoned-vehicle',name:'召唤车辆',door:vehicleDoors(world,world.summonedCar)[0]||{x:world.summonedCar.x,z:world.summonedCar.z,y:world.summonedCar.elevation||0}}]:[];
+    return [...pack(world.places,'landmark','城市地标'),...pack(world.destinations,'nature','自然景观'),...pack(world.citySpots,'life','街区生活'),...pack([...summoned,{id:'central-stop',name:'中央公园入口',door:{x:0,z:13}},...world.roadPlan.entrances],'transport','交通入口'),...pack(world.buildings,'building','建筑')];
+  }
+  function summonVehicle(world){
+    if(world.vehicle>=0){notify(world,'你已在驾驶车辆 · 下车后可再次召唤');return false;}
+    const car=world.cars[0],entrance=world.onTower?world.places.find(p=>p.id===world.onTower)?.door:world.interior?world.returnTo:null,origin=entrance||world.player;
+    const elevation=entrance?(entrance.elevation??entrance.y??Terrain.groundHeight(world,origin.x,origin.z)):world.elevation;
+    const outside={...world,interior:null,onTower:null,skyLift:null},others=[...world.cars,...world.traffic].filter(v=>v!==car),candidates=[];
+    // Project onto real drivable roads, including curved roads, tunnels and decks.
+    // Keep the entire car on its chosen surface, with a clear side for boarding.
+    for(const path of world.roadPlan.paths){
+      if(['trail','garden-path'].includes(path.type)||path.width<5.2)continue;
+      for(let i=1;i<path.points.length;i++){
+        const a=path.points[i-1],b=path.points[i],near=Terrain.nearest([a,b],origin.x,origin.z);if(near.d>260)continue;
+        const length=Math.hypot(b.x-a.x,b.z-a.z);if(length<.01)continue;
+        const dx=(b.x-a.x)/length,dz=(b.z-a.z)/length,yaw=Math.atan2(dx,-dz);
+        for(const along of [0,-4,4,-8,8])for(const side of [-1,1]){
+          const t=clamp(near.t+along/length,0,1),offset=Math.min(2.5,path.width*.24),x=a.x+(b.x-a.x)*t-dz*offset*side,z=a.z+(b.z-a.z)*t+dx*offset*side,y=a.y+(b.y-a.y)*t,d=distance(origin,{x,z});
+          if(d<3||d>260)continue;
+          candidates.push({x,z,yaw,elevation:y,surfaceId:path.id,cost:d+Math.abs(y-elevation)*6,path});
+        }
+      }
+    }
+    candidates.sort((a,b)=>a.cost-b.cost);let landing=null;
+    for(const p of candidates){
+      const candidate={...car,...p},surface=Terrain.roadAt(outside,p.x,p.z,p.elevation,true,{id:p.surfaceId,yaw:p.yaw});if(surface.path?.id!==p.surfaceId||Math.abs(surface.y-p.elevation)>.35)continue;
+      if(vehicleContact(outside,candidate,others,!entrance))continue;
+      const box=carBox(candidate);let supported=true;
+      for(const side of [-1,1])for(const end of [-1,1]){const x=p.x+box.right.x*box.hw*side+box.forward.x*box.hl*end,z=p.z+box.right.z*box.hw*side+box.forward.z*box.hl*end,s=Terrain.roadAt(outside,x,z,p.elevation,true,{id:p.surfaceId,yaw:p.yaw});if(s.path?.id!==p.surfaceId||s.d>s.path.width/2-.05||Math.abs(s.y-p.elevation)>.8)supported=false;}
+      if(!supported||world.pedestrians.some(person=>Math.abs(Terrain.groundHeight(world,person.x,person.z)-p.elevation)<2&&personContact(candidate,person.x,person.z,.8)))continue;
+      if(![-1,1].some(side=>{const x=p.x+box.right.x*(box.hw+.85)*side,z=p.z+box.right.z*(box.hw+.85)*side,s=Terrain.roadAt(outside,x,z,p.elevation,false,{id:p.surfaceId});return Math.abs(s.y-p.elevation)<.6&&!blocked(outside,x,z,.45,p.elevation)&&!others.some(v=>Math.abs((v.elevation||0)-p.elevation)<1.8&&personContact(v,x,z,.45));}))continue;
+      landing=p;break;
+    }
+    if(!landing){notify(world,'附近道路暂时没有安全停车位 · 换个位置再召唤',5);return false;}
+    Object.assign(car,{x:landing.x,z:landing.z,yaw:landing.yaw,elevation:landing.elevation,surfaceId:landing.surfaceId,speed:0,driftX:0,driftZ:0,steer:0,health:100,braking:false,summonRevision:(car.summonRevision||0)+1});
+    world.summonedCar=car;world.navigationCache=null;world.renderPrevious?.cars.delete(car);
+    notify(world,(entrance?'车辆已停在入口附近':'车辆已到达')+' · '+Math.round(distance(origin,car))+' m · 靠近后按 E 驾驶',6);return true;
+  }
+  function teleportReason(world){return world.skyLift?'电梯运行中':world.job||world.race||world.trial||world.penalty&&world.penalty.phase!=='finished'||world.shopActivity?'完成或结束当前任务后可传送':'';}
+  function teleport(world,id){
+    const reason=teleportReason(world);if(reason){notify(world,reason);return false;}
+    const target=mapEntries(world).find(p=>p.id===id);if(!target)return false;
+    const outside={...world,interior:null,onTower:null,skyLift:null,elevation:0},door=target.door,reference=door.y??Terrain.groundHeight(outside,door.x,door.z);let landing=null;
+    for(let ring=0;ring<=10&&!landing;ring++)for(let i=0;i<(ring?16:1);i++){
+      const radius=ring*.75,a=i*Math.PI/8,x=door.x+Math.sin(a)*radius,z=door.z+Math.cos(a)*radius,surface=Terrain.roadAt(outside,x,z,reference,false);outside.elevation=surface.y;
+      if(Math.abs(surface.y-reference)<3&&!walkBlocked(outside,x,z,.45)){landing={x,z,elevation:surface.y,surfaceId:surface.path?.id||null};break;}
+    }
+    if(!landing){notify(world,'入口暂时被占用，可稍后传送或选择导航');return false;}
+    window.ArcadeCityTours?.pause(world);
+    const car=world.cars[world.vehicle];if(car){car.speed=0;car.driftX=car.driftZ=0;car.steer=0;car.braking=false;}
+    world.vehicle=-1;world.findingCar=false;world.interior=null;world.onTower=null;world.returnTo=null;world.savedTower=null;world.skyFocus=null;world.skyLift=null;world.penalty=null;world.dialog=null;
+    const yaw=target.x!==undefined&&target.z!==undefined?Math.atan2(target.x-landing.x,-(target.z-landing.z)):0;
+    Object.assign(world.player,{x:landing.x,z:landing.z,yaw});world.elevation=landing.elevation;world.surfaceId=landing.surfaceId;world.cameraYaw=yaw;world.walking=world.sprinting=false;
+    world.renderPrevious=null;world.renderAlpha=1;world.navigationCache=null;world.waypoint={...door,name:target.name};world.area=target.name;notify(world,'已到达 '+target.name,4);return true;
+  }
   function recover(world){
+    window.ArcadeCityTours?.pause(world);
+    world.findingCar=false;
     if(world.job)cancelJob(world,'返回车站，当前委托已取消');
-    world.interior=null;world.onTower=null;world.savedTower=null;world.elevation=0;world.surfaceId=null;world.dialog=null;world.trial=null;world.race=null;world.returnTo=null;
+    world.shopActivity=null;world.penalty=null;world.skyLift=null;world.skyFocus=null;world.interior=null;world.onTower=null;world.savedTower=null;world.elevation=0;world.surfaceId=null;world.dialog=null;world.trial=null;world.race=null;world.returnTo=null;
     if(world.vehicle>=0){const car=world.cars[world.vehicle];for(let n=0;n<50;n++){const candidate={...car,x:3,z:13+n*5,yaw:0,elevation:0,surfaceId:null};if(!vehicleContact(world,candidate,[...world.cars,...world.traffic].filter(v=>v!==car),false)){Object.assign(car,{x:3,z:candidate.z,yaw:0,elevation:0,surfaceId:null,speed:0,driftX:0,driftZ:0,health:100,steer:0});break;}}}
     const car=world.cars[world.vehicle];let footZ=13;if(!car)for(let n=0;n<50;n++)if(!walkBlocked(world,0,13+n*2)){footZ=13+n*2;break;}
     Object.assign(world.player,{x:car?car.x:0,z:car?car.z:footZ,yaw:0});world.cameraYaw=0;world.stamina=100;notify(world,'已回到中央公园入口');
   }
   function step(world,dt,input={}){
     const seconds=clamp(dt,0,.05),p=world.player;world.time+=seconds;world.messageTime=Math.max(0,world.messageTime-seconds);world.crashCooldown=Math.max(0,world.crashCooldown-seconds);world.hornTime=Math.max(0,world.hornTime-seconds);
-    if(world.dialog){world.walking=false;return;}const oldX=p.x,oldZ=p.z;
+    if(world.shopActivity&&world.dialog?.kind!=='shop-challenge')world.shopActivity=null;if(world.dialog){if(world.shopActivity?.kind==='bakery')world.shopActivity.elapsed+=seconds;world.walking=false;return;}if(penaltyStep(world,seconds))return;const oldX=p.x,oldZ=p.z;
     if(world.job?.phase==='deliver'){world.job.elapsed+=seconds;if(world.job.elapsed>=world.job.limit)cancelJob(world,(world.job.id==='taxi'?'接送':'配送')+'超时 · 连单已中断，可重新接取委托');}
     if(world.race?.countdown>0){world.race.countdown=Math.max(0,world.race.countdown-seconds);world.cars[world.vehicle].speed=0;if(!world.race.countdown)notify(world,'出发！穿过蓝色检查点',2);return;}
+    if(world.onTower==='skyline'){skyStep(world,seconds,input);return;}
     if(world.onTower){world.walking=false;world.area=world.places.find(v=>v.id===world.onTower).name;return;}
     let turnDelta=0;
     if(world.vehicle>=0){
@@ -352,6 +653,7 @@ window.ArcadeCityWorld = (() => {
         }
       }
     }
+    world.wildlifeClock=(world.wildlifeClock||0)+seconds;if(world.wildlifeClock>.18){const wildlifeDt=world.wildlifeClock;world.wildlifeClock=0;for(const a of world.animals){if(distance(p,a)>180)continue;a.phase+=wildlifeDt*(distance(p,a)<9?1.8:.35);const radius=a.species==='林鸟'?10:a.species==='绿头鸭'?3:5,x=a.home.x+Math.sin(a.phase)*radius,z=a.home.z+Math.cos(a.phase*.7)*radius;if(!blocked(world,x,z,.15)&&!Terrain.roadAt(world,x,z,Terrain.rawHeight(x,z)).path){a.yaw=Math.atan2(x-a.x,z-a.z);a.x=x;a.z=z;}a.y=Terrain.groundHeight(world,a.x,a.z)+(a.species==='林鸟'?4+Math.sin(a.phase)*1.2:0);}}
     for(const npc of world.pedestrians)npc.phase+=seconds*.7;
     for(const token of world.tokens)if(!token.taken&&distance(p,token)<1.7){token.taken=true;world.collected++;world.score+=100;notify(world,'城市印记 +100');}
     if(world.beachQuest)for(const shell of world.shells)if(!shell.taken&&distance(p,shell)<2){shell.taken=true;world.score+=150;const count=world.shells.filter(s=>s.taken).length;notify(world,'海滩海螺 '+count+' / 4');const next=world.shells.find(s=>!s.taken);if(next)world.waypoint={...next,name:'海滩海螺'};else if(!world.beachComplete){world.beachComplete=true;world.score+=1200;world.waypoint=null;notify(world,'海滩探访完成 +1200',6);}}
@@ -362,5 +664,5 @@ window.ArcadeCityWorld = (() => {
     if(!world.visited.has(world.area)){world.visited.add(world.area);world.score+=150;}
   }
   function crash(world){if(world.race){world.race.penalty+=2;world.race.hits++;notify(world,'碰撞 · 罚时 +2 秒',2);}else if(world.job?.phase==='deliver'){world.job.hits++;world.job.quality=Math.max(0,world.job.quality-(world.job.id==='taxi'?20:25));if(!world.job.quality)cancelJob(world,'服务评价耗尽 · 本次委托结束');else notify(world,'碰撞 · '+(world.job.id==='taxi'?'乘客舒适度':'包装完整度')+' '+world.job.quality+'%',3);}else notify(world,'碰撞！放慢速度，小心转弯');}
-  return {create,step,interact,context,choose,navigate,recover,blocked,distance,angleDelta,routes,places,room,enterBuilding,exhibits,checkpoints,races,objective,navigationPath,vehicleTypes,jobTypes,jobGoal,startJob,cancelJob,reputation,carBox,boxContact,vehicleContact,addCollider,bounds,roads};
+  return {create,step,interact,context,choose,navigate,recover,blocked,distance,angleDelta,routes,places,room,enterBuilding,exhibits,checkpoints,races,objective,navigationPath,vehicleTypes,shopKinds,shopDestinations,shopHeat,trailStatus,startTrail,jobTypes,jobGoal,startJob,cancelJob,reputation,carBox,boxContact,vehicleContact,vehicleDoors,locateVehicle,addCollider,bounds,roads,trainStatus,skyViews,skyObstacles,mapEntries,teleportReason,teleport,summonVehicle};
 })();

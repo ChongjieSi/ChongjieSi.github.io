@@ -1,5 +1,7 @@
 /* Distinct urban destinations and walkable interior sets. */
 window.ArcadeCityLandmarks = (T,{scene,exterior,box,material,person,detail},world) => {
+  const skyline=ArcadeCitySkyscraper(T,{scene,exterior,detail,material,person},world);
+  const civic=ArcadeCityCivic(T,{detail,material,person},world);
   const Sim=ArcadeCityWorld,interiors=new Map(),animated=[],signTextures=[];let parcel=null;
   function add(geo,mat,x,y,z,parent=exterior){const mesh=new T.Mesh(geo,mat);mesh.position.set(x,y,z);mesh.castShadow=true;mesh.receiveShadow=true;parent.add(mesh);return mesh;}
   function text(label,x,y,z,width=8,parent=exterior,rotation=0){
@@ -12,16 +14,10 @@ window.ArcadeCityLandmarks = (T,{scene,exterior,box,material,person,detail},worl
   const doorBeacons=[];
   for(const place of world.places){
     const {x,z}=place;
-    if(place.kind==='stadium'){
-      const plaza=box(x,.005,z,66,.03,66,0xd2d4ca,exterior,'limestone');plaza.castShadow=false;
-      const field=box(x,.08,z,29,.16,39,0x7c9a6c,exterior,'grass-park');field.castShadow=false;
-      for(let level=0;level<5;level++){
-        const ring=add(new T.RingGeometry(16.6+level*1.1,18+level*1.1,72),material(level%2?0xb9b8ad:0xd3d0c2),x,1.2+level*.85,z);ring.rotation.x=-Math.PI/2;ring.scale.set(1.06,1,1);
-      }
-      const canopy=add(new T.TorusGeometry(21.7,1.4,10,72),white,x,11.5,z);canopy.rotation.x=Math.PI/2;canopy.scale.set(1.06,1,1);
-      for(let i=0;i<24;i++){const a=i*Math.PI/12;box(x+Math.cos(a)*23,6,z+Math.sin(a)*22,.28,11,.28,0x7b8c8e,exterior);}
-      for(const dx of [-21,21])for(const dz of [-21,21]){box(x+dx,9,z+dz,.45,18,.45,0x78878b,exterior);box(x+dx,18,z+dz,4,1,.5,0xe5dfbd,exterior);}
-      text(place.name,x,6,z+25.15,13);
+    if(place.kind==='skyscraper'){
+      // The skyline builder owns the landmark's exterior and elevated terrace.
+    }else if(place.kind==='stadium'){
+      civic.stadium(exterior,false,place);
     }else if(place.kind==='museum'){
       box(x,4,z,42,8,36,0xe3dfd0,exterior);box(x,4,z+18.1,30,6,.16,0x738e9b,exterior,'glass');
       const roof=add(new T.SphereGeometry(1,32,14,0,Math.PI*2,0,Math.PI/2),white,x,8,z);roof.scale.set(24,7,20);
@@ -48,10 +44,7 @@ window.ArcadeCityLandmarks = (T,{scene,exterior,box,material,person,detail},worl
       for(let i=0;i<4;i++){const board=add(new T.CapsuleGeometry(.35,2.7,4,12),material([0xc9b68c,0x8eada6,0xb98a74,0xd5cfb0][i]),x-9.5,2.2,z-8+i*1.05);board.scale.set(1,1,.17);board.rotation.z=.12;}
       text(place.name,x-9.3,4.2,z,9,exterior,-Math.PI/2);
     }else if(place.kind==='station'){
-      box(x,4.5,z,42,9,24,0xd5c6ad,exterior,'facade:1:4');
-      const roof=add(new T.CylinderGeometry(8,8,46,24,1,false,0,Math.PI),material(0x728b8f),x,10,z);roof.rotation.z=Math.PI/2;
-      for(let dx=-16;dx<=16;dx+=8)box(x+dx,3.2,z+12.1,4.5,6,.12,0x547483,exterior,'glass');text(place.name,x,8.2,z+12.3,15);
-      text('车辆检修',x+12,2.8,z+12.25,6);
+      civic.stationExterior(exterior,place);
       const padZ=place.door.z+2;for(const side of [-1,1]){box(x+side*4.5,.08,padZ,.12,.025,6,0x87b5bd,exterior).castShadow=false;box(x,.08,padZ+side*3,9,.025,.12,0x87b5bd,exterior).castShadow=false;}
     }else if(place.kind==='pier'){
       for(let px=330;px<414;px+=2)box(px,.02,z,1.9,.12,16,0x9a896d,exterior);
@@ -66,6 +59,8 @@ window.ArcadeCityLandmarks = (T,{scene,exterior,box,material,person,detail},worl
   }
   function interior(place){
     const spec=Sim.room(place.id),root=new T.Group();root.name='interior:'+place.id;root.visible=false;scene.add(root);
+    if(spec.kind==='skyscraper'){skyline.lobby(root);interiors.set(place.id,root);return root;}
+    if(spec.kind==='station'){civic.stationInterior(root);interiors.set(place.id,root);return root;}
     const floorColor=spec.kind==='stadium'?0x849b76:spec.kind==='museum'?0xd7d0bf:0xb6a58d;
     const roomFloor=box(0,-.15,0,spec.width,.3,spec.depth,floorColor,root,spec.kind==='stadium'?'grass-park':'paint');if(detail&&spec.kind!=='stadium')roomFloor.material=detail.finish(spec.kind==='cafe'?15:3);
     if(spec.kind!=='stadium'){
@@ -94,13 +89,7 @@ window.ArcadeCityLandmarks = (T,{scene,exterior,box,material,person,detail},worl
       for(let i=0;i<4;i++)box(12+(i%2-.5)*.8,1.5+i*.35,-6,(4-i)*.6,.5,(4-i)*.6,[0x829ea6,0xbd9c78,0xa8b3a1,0xd5c9b4][i],root);
       text('潮汐 · 风 · 城市',0,4.5,-15.7,16,root);
     }else if(spec.kind==='stadium'){
-      box(0,.015,0,31,.03,48,0xcbd5b4,root);box(0,.035,0,29.7,.035,46.7,0x7e9e70,root,'grass-park');
-      box(0,.06,0,30,.025,.1,0xf1f0df,root);
-      const circle=add(new T.TorusGeometry(4,.045,4,48),white,0,.065,0,root);circle.rotation.x=-Math.PI/2;
-      for(const z of [-24,24]){box(0,.075,z,30,.03,.12,0xf1f0df,root);box(0,1,z,.12,2,.12,0xf0efde,root);for(const x of [-3,3])box(x,1,z,.12,2,.12,0xf0efde,root);box(0,2,z,6,.12,.12,0xf0efde,root);}
-      for(const side of [-1,1])for(let tier=0;tier<4;tier++)box(side*(19+tier*1.5),tier*.7+.5,0,1.4,1.1,64,tier%2?0xaab9bd:0xd0d3c5,root);
-      const coach=person(0x6e95a4,2);root.add(coach.group);coach.group.position.set(-16,0,28);
-      text('E 开始训练',-16,2.8,28,5,root);
+      civic.stadium(root,true);
     }
     if(detail&&spec.kind!=='stadium'){
       root.traverse(o=>{const color=o.material?.color?.getHex?.();if([0xe7e2d6,0xd9d5c8,0xe8e3d7].includes(color))o.material=detail.finish(5);else if([0x9e8060,0x8f7459,0x8c7458].includes(color))o.material=detail.finish(1);else if(color===0x7d927e)o.material=detail.finish(8,0x92a591);else if(color===0xc7bba5)o.material=detail.finish(11);});
@@ -109,15 +98,16 @@ window.ArcadeCityLandmarks = (T,{scene,exterior,box,material,person,detail},worl
     const exitRing=add(new T.TorusGeometry(.8,.06,6,24),new T.MeshBasicMaterial({color:0x92c5b0}),spec.exit.x,.1,spec.exit.z,root);exitRing.rotation.x=-Math.PI/2;
     interiors.set(place.id,root);return root;
   }
-  for(const place of world.places.filter(p=>['cafe','museum','stadium'].includes(p.kind)))interior(place);
+  for(const place of world.places.filter(p=>['cafe','museum','stadium','station','skyscraper'].includes(p.kind)))interior(place);
   const checks=Sim.checkpoints.map((point,i)=>{const group=new T.Group();interiors.get('stadium').add(group);group.position.set(point.x,0,point.z);const ring=add(new T.TorusGeometry(1.5,.1,8,32),new T.MeshBasicMaterial({color:0xf1c873}),0,.2,0,group);ring.rotation.x=-Math.PI/2;add(new T.ConeGeometry(.3,1,10),material(0xd5a65d),0,.5,0,group);return group;});
   function update(state){
+    civic.update(state);skyline.update(state);
     if(parcel)parcel.visible=state.job?.id==='coffee'&&state.job.phase==='pickup';
     for(const [id,group]of interiors)group.visible=state.interior?.id===id;
     for(let i=0;i<checks.length;i++)checks[i].visible=!!state.trial&&state.trial.index===i;
     for(const value of animated)if(value.type==='sculpture')value.mesh.rotation.y=state.time*.12;
     doorBeacons.forEach((ring,i)=>{ring.visible=Sim.distance(state.player,world.places[i].door)<65;ring.material.opacity=.4+Math.sin(state.time*1.8+i)*.12;});
   }
-  function dispose(){signTextures.forEach(t=>t.dispose());}
-  return {update,dispose,interiors};
+  function dispose(){skyline.dispose();civic.dispose();signTextures.forEach(t=>t.dispose());}
+  return {update,dispose,interiors,lighting:value=>{civic.lighting(value);skyline.lighting(value);}};
 };

@@ -8,16 +8,18 @@
   $('#title').textContent=game.name;$('#category').textContent=Arcade.categoryNames[game.tag];$('#instructions').textContent=game.controls;$('#rule').textContent=game.rule;
   const stage=$('#stage'),controls=$('#touch-controls');
   let score=0,ended=false,paused=false,hostActive=window.parent===window,started=false,submitted=false,engine=null;
-  let roundTime=0,lastTime=0;
+  let roundTime=0,lastTime=0,roundId=0,submissionId=null,submitting=false,roundDetails={};
+  const leaderboard=window.ArcadeLeaderboard;
+  for(const note of document.querySelectorAll('.local-note'))note.textContent=leaderboard?.online?'可选择提交 · 昵称和成绩将公开显示在联机排行榜':'可选择提交 · 仅保存在当前浏览器';
   const active=()=>!ended&&!paused&&hostActive&&!document.hidden;
   const points=n=>{const next=Math.max(0,Math.floor(n));if(next!==score){score=next;$('#score').textContent=score.toLocaleString();if(game.id!=='city3d'&&game.id!=='flight3d')pulse($('#score'));}};
   const reduceMotion=()=>window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   function pulse(element){if(element?.animate&&!reduceMotion())element.animate([{transform:'scale(1)'},{transform:'scale(1.12)'},{transform:'scale(1)'}],{duration:220,easing:'ease-out'});}
-  function finish(title,detail=''){
-    if(ended)return;ended=true;$('#status').textContent=title;
+  function finish(title,detail='',details={}){
+    if(ended)return;ended=true;roundDetails=details;$('#status').textContent=title;
     const undoButton=$('#gomoku-undo');if(undoButton)undoButton.disabled=true;
     $('#result-title').textContent=title;$('#result-detail').textContent=detail;$('#final-score').textContent=score.toLocaleString();
-    $('#nickname').value=Arcade.nickname();$('#save-score').disabled=false;$('#save-score').textContent='提交成绩';$('#submit-message').textContent='';$('#skip').textContent='暂不提交';
+    $('#nickname').readOnly=false;$('#nickname').value=Arcade.nickname();$('#save-score').disabled=false;$('#save-score').textContent='提交成绩';$('#submit-message').textContent='';$('#skip').textContent='暂不提交';
     $('#result').showModal();syncPause();
   }
   function syncPause(){
@@ -27,7 +29,7 @@
   }
   function start(){
     if(started&&!ended&&!confirm('要重新开始吗？本局进度将被清空。'))return;
-    ended=false;paused=false;submitted=false;started=true;roundTime=0;points(0);engine?.dispose?.();$('#gomoku-undo')?.remove();$('#gomoku-zoom')?.remove();stage.replaceChildren();controls.replaceChildren();$('#result').close();
+    ended=false;paused=false;submitted=false;submitting=false;submissionId=null;roundDetails={};roundId++;started=true;roundTime=0;points(0);engine?.dispose?.();$('#gomoku-undo')?.remove();$('#gomoku-zoom')?.remove();stage.replaceChildren();controls.replaceChildren();$('#result').close();
     engine=factories[game.id]();fitStage();syncPause();
   }
   let helpWasPaused=false;
@@ -39,10 +41,17 @@
   $('#resume').onclick=()=>{paused=false;syncPause();};
   $('#again').onclick=()=>{ended=true;start();};
   $('#skip').onclick=()=>$('#result').close();
-  $('#submit-score').onsubmit=e=>{
-    e.preventDefault();if(submitted)return;const name=$('#nickname').value.trim();if(!name){$('#nickname').setCustomValidity('请输入昵称。');$('#nickname').reportValidity();return;}
-    try{Arcade.submit(game.id,name,score);submitted=true;$('#submit-message').textContent='成绩已保存到本机排行榜。';$('#save-score').disabled=true;$('#save-score').textContent='已提交成绩';$('#skip').textContent='关闭';parent.postMessage({type:'arcade-score'},location.origin);}
-    catch{$('#submit-message').textContent='浏览器存储不可用，未能保存本次成绩。';}
+  $('#submit-score').onsubmit=async e=>{
+    e.preventDefault();if(submitted||submitting)return;const name=$('#nickname').value.trim().normalize('NFKC');if(!name||[...name].length>20||/[\u0000-\u001f\u007f-\u009f\u202a-\u202e\u2066-\u2069]/.test(name)){$('#nickname').setCustomValidity('请输入 1–20 个字符的昵称。');$('#nickname').reportValidity();return;}
+    const thisRound=roundId;submitting=true;$('#nickname').readOnly=true;$('#save-score').disabled=true;$('#save-score').textContent='正在提交…';
+    try{
+      let result;if(leaderboard){submissionId??=leaderboard.newSubmissionId();result=await leaderboard.submit(game.id,name,score,submissionId,roundDetails);}else{Arcade.submit(game.id,name,score,roundDetails);result={mode:'local',saved:true};}
+      if(thisRound!==roundId)return;
+      if(result.saved){submitted=true;$('#submit-message').textContent=result.mode==='online'?(result.bestScore>score?'已提交联机排行榜 · 你的最高分仍为 '+result.bestScore.toLocaleString():'成绩已提交到联机排行榜。'):'成绩已保存到本机排行榜。';$('#save-score').disabled=true;$('#save-score').textContent='已提交成绩';$('#skip').textContent='关闭';}
+      else{$('#submit-message').textContent=(result.localSaved?'成绩已保存到本机；':'')+(result.error||'未能保存成绩')+'。可以重试。';$('#save-score').disabled=false;$('#save-score').textContent=leaderboard?.online?'重试联机提交':'重新提交';}
+      if(result.saved||result.localSaved)parent.postMessage({type:'arcade-score'},location.origin);
+    }catch{if(thisRound===roundId){$('#submit-message').textContent='未能保存成绩，请重试。';$('#save-score').disabled=false;$('#save-score').textContent='重新提交';}}
+    finally{if(thisRound===roundId)submitting=false;}
   };
   $('#nickname').oninput=()=>$('#nickname').setCustomValidity('');
   window.addEventListener('message',e=>{if(e.source===parent&&e.origin===location.origin&&e.data?.type==='arcade-active'){hostActive=!!e.data.active;if(!hostActive)engine?.release?.();syncPause();}});
@@ -99,7 +108,7 @@
         ids.forEach((id,i)=>board[id]=result[i]||0);
       }
       if(board.join()!==before){points(score+earned);spawn();render();}
-      if(board.every(Boolean)&&!board.some((v,i)=>(i%4<3&&v===board[i+1])||(i<12&&v===board[i+4])))finish('游戏结束','最大数字：'+Math.max(...board));
+      if(board.every(Boolean)&&!board.some((v,i)=>(i%4<3&&v===board[i+1])||(i<12&&v===board[i+4])))finish('游戏结束','最大数字：'+Math.max(...board),{maxTile:Math.max(...board)});
       return true;
     };spawn();spawn();render();swipe(div,move);return {key:move};
   };
@@ -267,6 +276,6 @@
   };
   Object.assign(factories,Arcade3D({canvas,button,points,finish,active,status:text=>$('#status').textContent=text}));
   Object.assign(factories,ArcadeCity({canvas,button,points,finish,active,status:text=>$('#status').textContent=text}));
-  function loop(now){const dt=Math.min(50,Math.max(0,now-lastTime));lastTime=now;if(active()){roundTime+=dt;engine?.tick?.(dt);}if(active())engine?.draw?.();requestAnimationFrame(loop);}
+  function loop(now){const dt=Math.min(50,Math.max(0,now-lastTime));lastTime=now;if(active()){roundTime+=dt;engine?.tick?.(dt);}if(active())engine?.draw?.(dt);requestAnimationFrame(loop);}
   start();requestAnimationFrame(loop);
 })();

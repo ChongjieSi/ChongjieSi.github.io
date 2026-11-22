@@ -1,0 +1,11 @@
+const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm'),path=require('node:path');
+const realm={window:{}};vm.createContext(realm);for(const name of ['city-architecture','city-terrain','city-interiors','city-world'])vm.runInContext(fs.readFileSync(path.join(__dirname,'../static/games/'+name+'.js'),'utf8'),realm);const City=realm.window.ArcadeCityWorld,Architecture=realm.window.ArcadeCityArchitecture;
+test('Six neighbourhood experiences occupy distinct clear parcels with walkable doors',()=>{
+ for(const seed of [17,19,23]){const w=City.create(seed);assert.equal(w.citySpots.length,6);assert.equal(new Set(w.citySpots.map(s=>s.kind)).size,6);for(const spot of w.citySpots){assert.equal(City.blocked(w,spot.x,spot.z,4.6),false);assert.equal(City.blocked(w,spot.door.x,spot.door.z,.7),false);for(const road of w.roads){const radius=Architecture.streetProfile(road).width/2+6.8;assert.ok(Math.abs(spot.x-road)>=radius);assert.ok(Math.abs(spot.z-road)>=radius);}}}
+});
+test('Every street experience supports navigation and first-visit stamps without repeat score farming',()=>{
+ const w=City.create();w.cars=[];w.traffic=[];for(const spot of w.citySpots){City.navigate(w,spot.id);assert.equal(w.waypoint.name,spot.name);assert.ok(City.navigationPath(w).length>1);Object.assign(w.player,spot.door);w.elevation=0;assert.equal(City.context(w).kind,'city-life');City.interact(w);assert.ok(w.cityStamps.has(spot.id));City.choose(w,'job-close');const score=w.score;City.interact(w);assert.equal(w.score,score);City.choose(w,'job-close');}assert.equal(w.score,6*120+800);
+});
+test('Next stop navigates without teleporting; garden restores stamina and recovery retains stamps',()=>{
+ const w=City.create(),spot=w.citySpots[0];Object.assign(w.player,spot.door);City.interact(w);const p={...w.player};City.choose(w,'life-next');assert.equal(w.dialog,null);assert.notEqual(w.waypoint.name,spot.name);assert.equal(w.player.x,p.x);assert.equal(w.player.z,p.z);const garden=w.citySpots.find(s=>s.kind==='garden');w.stamina=12;Object.assign(w.player,garden.door);City.interact(w);assert.equal(w.stamina,100);City.choose(w,'job-close');City.recover(w);assert.equal(w.cityStamps.size,2);
+});
