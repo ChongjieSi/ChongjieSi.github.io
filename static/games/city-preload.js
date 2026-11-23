@@ -8,7 +8,7 @@ window.ArcadeCityPreload=(()=>{
     const promise=new Promise(resolve=>{
       let worker,timeout;const done=value=>{clearTimeout(timeout);worker?.terminate();resolve(value);};
       try{
-        worker=new Worker('/games/city-worker.js?v=32');
+        worker=new Worker('/games/city-worker.js?v=33');
         worker.onmessage=e=>done(e.data.error?null:e.data.result);worker.onerror=()=>done(null);
         timeout=setTimeout(()=>done(null),45000);worker.postMessage({kind,payload});
       }catch{done(null);}

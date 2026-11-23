@@ -41,6 +41,7 @@
   $('#resume').onclick=()=>{paused=false;syncPause();};
   $('#again').onclick=()=>{ended=true;start();};
   $('#skip').onclick=()=>$('#result').close();
+  if(parent!==window){const rankings=document.createElement('button');rankings.type='button';rankings.textContent='查看排行';rankings.dataset.showRankings='';rankings.onclick=()=>parent.postMessage({type:'arcade-rankings'},location.origin);document.querySelector('.result-actions').append(rankings);}
   $('#submit-score').onsubmit=async e=>{
     e.preventDefault();if(submitted||submitting)return;const name=$('#nickname').value.trim().normalize('NFKC');if(!name||[...name].length>20||/[\u0000-\u001f\u007f-\u009f\u202a-\u202e\u2066-\u2069]/.test(name)){$('#nickname').setCustomValidity('请输入 1–20 个字符的昵称。');$('#nickname').reportValidity();return;}
     const thisRound=roundId;submitting=true;$('#nickname').readOnly=true;$('#save-score').disabled=true;$('#save-score').textContent='正在提交…';

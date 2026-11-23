@@ -4,6 +4,12 @@
   if(!list)return;
   let selected=games[0]; let filter='ALL',rankingRequest=0;
   const leaderboard=window.ArcadeLeaderboard;
+  const mobile=window.matchMedia('(max-width:540px), (max-width:900px) and (pointer:coarse)');
+  const picker=document.querySelector('[data-ranking-game]');
+  if(picker){for(const game of games){const option=document.createElement('option');option.value=game.id;option.textContent=game.name;picker.append(option);}picker.onchange=()=>{const game=games.find(g=>g.id===picker.value);if(game)showDetail(game);};}
+  function setView(view){document.querySelector('.arcade-lobby').dataset.mobileView=view;document.querySelectorAll('[data-arcade-view]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.arcadeView===view)));if(view==='rankings')refreshRankings();}
+  function showRankings(game){showDetail(game);setView('rankings');if(mobile.matches)picker?.focus({preventScroll:true});}
+  document.querySelectorAll('[data-arcade-view]').forEach(b=>b.onclick=()=>setView(b.dataset.arcadeView));
   function art(host,game){
     host.replaceChildren();const ns='http://www.w3.org/2000/svg';
     const svg=document.createElementNS(ns,'svg');svg.setAttribute('viewBox','0 0 160 100');svg.setAttribute('aria-hidden','true');
@@ -12,12 +18,13 @@
   const launch=id=>{
     const win=document.getElementById(`window-arcade-${id}`);
     const frame=win.querySelector('iframe');
-    if(!frame.src)frame.src=`/games/index.html?game=${id}&v=32`;
+    if(!frame.src)frame.src=`/games/index.html?game=${id}&v=33`;
     document.querySelector(`[data-open="arcade-${id}"]`).click();
     frame.focus();
   };
   function showDetail(game){
     selected=game;
+    if(picker)picker.value=game.id;
     list.querySelectorAll('[data-select-game]').forEach(b=>b.classList.toggle('selected',b.dataset.selectGame===game.id));
     const detail=document.querySelector('[data-arcade-detail]');
     detail.style.setProperty('--game-accent',game.color);
@@ -51,7 +58,8 @@
       card.querySelector('small').textContent=categoryNames[game.tag];card.querySelector('b').textContent=game.name;
       select.addEventListener('click',()=>{showDetail(game);launch(game.id);});
       select.addEventListener('focus',()=>showDetail(game));
-      card.addEventListener('pointerenter',()=>showDetail(game));
+      card.addEventListener('pointerenter',event=>{if(event.pointerType==='mouse'||!mobile.matches)showDetail(game);});
+      const rankingButton=document.createElement('button');rankingButton.type='button';rankingButton.className='arcade-card-ranking';rankingButton.textContent='查看排行';rankingButton.setAttribute('aria-label',`查看${game.name}排行榜`);rankingButton.onclick=()=>showRankings(game);card.append(rankingButton);
       select.setAttribute('aria-label',`开始${game.name}`);
       list.append(card);
     });showDetail(selected);
@@ -61,6 +69,7 @@
   window.addEventListener('message',event=>{
     const frame=[...document.querySelectorAll('.arcade-frame')].find(f=>f.contentWindow===event.source);
     if(!frame||event.origin!==location.origin)return;
+    if(event.data?.type==='arcade-rankings'){const game=games.find(g=>g.id===frame.dataset.gameId);if(game){showRankings(game);document.querySelector('[data-open="games"]').click();}return;}
     if(event.data?.type==='arcade-focus')frame.closest('.window').dispatchEvent(new PointerEvent('pointerdown',{bubbles:true}));
     if(event.data?.type==='arcade-score')refreshRankings(true);
     if(event.data?.type==='arcade-maximize'){const win=frame.closest('.window');if(!win.classList.contains('is-maximized'))win.querySelector('[data-window-action="maximize"]').click();}

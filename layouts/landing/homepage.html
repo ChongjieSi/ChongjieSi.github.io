@@ -8,8 +8,8 @@
   <title>Chongjie OS</title>
   <link rel="icon" href="/author/chongjie-si/avatar.png">
   <link rel="preload" as="image" href="/images/background/bg8.webp">
-  <link rel="stylesheet" href="/css/macos.css?v=32261121-arcade32">
-  <link rel="stylesheet" href="/css/arcade.css?v=32">
+  <link rel="stylesheet" href="/css/macos.css?v=33261121-arcade33">
+  <link rel="stylesheet" href="/css/arcade.css?v=33">
   {{ $katexCSS := resources.Get "dist/lib/katex/katex.min.css" | resources.Fingerprint "sha256" }}
   <link rel="stylesheet" href="{{ $katexCSS.RelPermalink }}" integrity="{{ $katexCSS.Data.Integrity }}">
   {{ $katexJS := resources.Get "dist/lib/katex/katex.min.js" | resources.Fingerprint "sha256" }}
@@ -219,9 +219,9 @@
 
     <section lang="zh-CN" class="window arcade-lobby-window" id="window-games" data-app="games" data-title="游戏大厅" style="--x: max(7px, calc(50vw - 560px)); --y: 9vh; --w: min(1120px, 94vw); --h: min(740px, 81vh);">
       <header class="window-bar drag-handle"><div class="traffic-lights"><button class="close" data-window-action="close" aria-label="关闭"></button><button class="minimize" data-window-action="minimize" aria-label="最小化"></button><button class="maximize" data-window-action="maximize" aria-label="最大化"></button></div><div class="window-title">游戏大厅</div><div class="window-tools">游乐空间</div></header>
-      <div class="arcade-lobby"><main class="arcade-library"><header class="arcade-library-heading"><h2>游乐空间</h2><span>10 GAMES</span></header>
+      <div class="arcade-lobby" data-mobile-view="library"><nav class="arcade-mobile-tabs" aria-label="游戏大厅视图"><button type="button" data-arcade-view="library" aria-pressed="true" aria-controls="arcade-library-panel">游戏</button><button type="button" data-arcade-view="rankings" aria-pressed="false" aria-controls="arcade-ranking-panel">排行榜</button></nav><main class="arcade-library" id="arcade-library-panel"><header class="arcade-library-heading"><h2>游乐空间</h2><span>10 GAMES</span></header>
         <nav class="arcade-filters" aria-label="筛选游戏"><button class="selected" data-arcade-filter="ALL">全部</button><button data-arcade-filter="PUZZLE">益智</button><button data-arcade-filter="CLASSIC">经典</button><button data-arcade-filter="STRATEGY">策略</button><button data-arcade-filter="ACTION">动作</button><button data-arcade-filter="3D">3D 世界</button></nav><div class="arcade-projects" data-arcade-library></div>
-      </main><aside class="arcade-detail" data-arcade-detail><div class="arcade-detail-art" data-detail-symbol></div><p class="arcade-label" data-detail-tag></p><h3></h3><p class="arcade-detail-desc" data-detail-desc></p><button class="arcade-launch" data-launch-selected>打开游戏</button><section class="arcade-ranking"><div><h4>排行榜</h4><span data-ranking-source>本机前十</span></div><p data-ranking-status role="status">按最高分排序</p><ol data-rankings></ol></section><details class="arcade-rules"><summary>计分</summary><p data-detail-rule></p></details></aside></div>
+      </main><aside class="arcade-detail" id="arcade-ranking-panel" data-arcade-detail><label class="arcade-ranking-picker">选择游戏<select data-ranking-game aria-label="选择排行榜游戏"></select></label><div class="arcade-detail-art" data-detail-symbol></div><p class="arcade-label" data-detail-tag></p><h3></h3><p class="arcade-detail-desc" data-detail-desc></p><button class="arcade-launch" data-launch-selected>打开游戏</button><section class="arcade-ranking"><div><h4>排行榜</h4><span data-ranking-source>本机前十</span></div><p data-ranking-status role="status">按最高分排序</p><ol data-rankings></ol></section><details class="arcade-rules"><summary>计分</summary><p data-detail-rule></p></details></aside></div>
     </section>
     {{ range slice (dict "id" "2048" "name" "数字合成 2048" "width" 590 "height" 700) (dict "id" "gomoku" "name" "五子棋" "width" 1120 "height" 1120) (dict "id" "memory" "name" "记忆翻牌" "width" 690 "height" 790) (dict "id" "tetris" "name" "俄罗斯方块" "width" 670 "height" 900) (dict "id" "snake" "name" "贪吃蛇" "width" 700 "height" 790) (dict "id" "breakout" "name" "霓虹打砖块" "width" 720 "height" 850) (dict "id" "mines" "name" "扫雷" "width" 730 "height" 810) (dict "id" "stack3d" "name" "3D 方块叠塔" "width" 720 "height" 880) (dict "id" "flight3d" "name" "3D 星际穿梭" "width" 1040 "height" 780) (dict "id" "city3d" "name" "3D 海岸城" "width" 1180 "height" 850) }}
     <section lang="zh-CN" class="window arcade-game-window" id="window-arcade-{{ .id }}" data-app="arcade-{{ .id }}" data-title="{{ .name }}" style="--x: max(7px, calc(50vw - {{ div .width 2 }}px)); --y: {{ if eq .id "gomoku" }}39px{{ else }}6vh{{ end }}; --w: min({{ .width }}px, 94vw); --h: {{ if eq .id "gomoku" }}calc(100vh - var(--menu-h) - var(--dock-h) - 15px){{ else }}min({{ .height }}px, 84vh){{ end }};">
@@ -276,10 +276,10 @@
     <div class="desktop-hint" id="desktopHint">Double-click an icon or choose an app from the Dock</div>
     <aside class="system-notifications" id="systemNotifications" aria-live="polite"></aside>
   </main>
-  <script src="/js/macos.js?v=32261121-arcade32"></script>
-  <script src="/games/leaderboard-config.js?v=32"></script>
-  <script src="/games/catalog.js?v=32"></script>
-  <script src="/games/leaderboard.js?v=32"></script>
-  <script src="/js/arcade-lobby.js?v=32"></script>
+  <script src="/js/macos.js?v=33261121-arcade33"></script>
+  <script src="/games/leaderboard-config.js?v=33"></script>
+  <script src="/games/catalog.js?v=33"></script>
+  <script src="/games/leaderboard.js?v=33"></script>
+  <script src="/js/arcade-lobby.js?v=33"></script>
 </body>
 </html>
