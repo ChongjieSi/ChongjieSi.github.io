@@ -18,7 +18,7 @@
   const launch=id=>{
     const win=document.getElementById(`window-arcade-${id}`);
     const frame=win.querySelector('iframe');
-    if(!frame.src)frame.src=`/games/index.html?game=${id}&v=33`;
+    if(!frame.src)frame.src=`/games/index.html?game=${id}&v=37`;
     document.querySelector(`[data-open="arcade-${id}"]`).click();
     frame.focus();
   };

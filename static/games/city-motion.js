@@ -4,15 +4,16 @@ window.ArcadeCityMotion=(()=>{
   const angle=(a,b,t)=>a+Math.atan2(Math.sin(b-a),Math.cos(b-a))*t;
   const space=w=>w.interior?.id||w.onTower||'outside';
   function capture(w){
-    const previous=w.renderPrevious||(w.renderPrevious={player:{},cars:new Map()});
+    const previous=w.renderPrevious||(w.renderPrevious={player:{},cars:new Map(),actors:new Map()});
     Object.assign(previous.player,w.player,{elevation:w.elevation,cameraYaw:w.cameraYaw});previous.space=space(w);previous.vehicle=w.vehicle;
     for(const car of [...w.cars,...w.traffic]){let p=previous.cars.get(car);if(!p){p={};previous.cars.set(car,p);}Object.assign(p,{x:car.x,z:car.z,yaw:car.yaw,elevation:car.elevation||0});}
+    previous.actors??=new Map();for(const actor of [...(w.pedestrians||[]),...(w.animals||[])]){let p=previous.actors.get(actor);if(!p){p={};previous.actors.set(actor,p);}Object.assign(p,{x:actor.x,z:actor.z,yaw:actor.yaw||0,elevation:actor.y||0});}
   }
   function pose(w,body,isPlayer=false,out={}){
-    const previous=w.renderPrevious,old=isPlayer?previous?.player:previous?.cars.get(body);
+    const previous=w.renderPrevious,old=isPlayer?previous?.player:previous?.cars.get(body)||previous?.actors?.get(body);
     const t=old&&previous.space===space(w)&&previous.vehicle===w.vehicle&&Math.hypot(body.x-old.x,body.z-old.z)<20?clamp(w.renderAlpha??1,0,1):1;
     const from=old||body;out.x=from.x+(body.x-from.x)*t;out.z=from.z+(body.z-from.z)*t;out.yaw=angle(from.yaw||0,body.yaw||0,t);
-    const elevation=isPlayer?w.elevation:body.elevation;out.elevation=(from.elevation||0)+((elevation||0)-(from.elevation||0))*t;
+    const elevation=isPlayer?w.elevation:(body.elevation??body.y);out.elevation=(from.elevation||0)+((elevation||0)-(from.elevation||0))*t;
     if(isPlayer)out.cameraYaw=angle(from.cameraYaw??w.cameraYaw,w.cameraYaw,t);return out;
   }
   function rig(){return {ready:false,offset:{x:0,y:0,z:0},focus:{x:0,y:0,z:0},ratio:1,hold:0,space:null};}

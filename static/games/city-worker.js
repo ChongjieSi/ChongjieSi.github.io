@@ -1,6 +1,6 @@
 /* CPU-only geometry and route construction. Buffers move to the rendering thread. */
 self.window=self;
-const version=new URL(self.location.href).searchParams.get('v')||'33';
+const version=new URL(self.location.href).searchParams.get('v')||'37';
 const script=name=>new URL(name+'.js?v='+version,self.location.href).href;
 importScripts(...['city-architecture','city-terrain','city-interiors','city-world','city-terrain-mesh'].map(script));
 self.onmessage=async({data:{kind,payload}})=>{

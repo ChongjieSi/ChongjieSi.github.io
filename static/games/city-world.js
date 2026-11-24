@@ -301,19 +301,19 @@ window.ArcadeCityWorld = (() => {
     const world={bounds:{...bounds},roads:[...roads],roadPlan,destinations:Terrain.destinations.map(p=>({...p})),places:places.map(p=>({...p})),buildings,buildingMap:new Map(buildings.map(b=>[b.id,b])),obstacles,cars,traffic,pedestrians,tokens,shells,player:{x:0,z:13,yaw:0},vehicle:-1,cameraYaw:0,elevation:0,enteredBuildings:new Set(),roomNotes:new Set(),natureVisited:new Set(),
       time:0,score:0,meters:0,deliveries:0,collected:0,route:0,visited:new Set(),discovered:new Set(),inspected:new Set(),mission:routes[0],waypoint:null,interior:null,returnTo:null,onTower:null,dialog:null,
       stamina:100,skyLift:null,skyFocus:null,skyViews:new Set(),stationQuest:null,stationStamp:false,penalty:null,penaltyBest:0,beachQuest:false,beachComplete:false,cafeReward:false,explorerReward:false,trial:null,stadiumBest:0,race:null,raceBest:{},raceResult:null,job:null,jobResult:null,jobCounts:{},jobsCompleted:0,jobChain:0,message:'M 地图 · J 任务 · 靠近车辆或建筑按 E 互动',messageTime:8,crashCooldown:0,hornTime:0};
-    world.shopVisits=new Set();world.shopBadges=new Set();world.shopActivity=null;world.shopTourComplete=false;world.observedWildlife=new Set();world.animals=Array.from({length:28},(_,i)=>{const species=['鹿','野兔','狐狸','松鼠','林鸟','绿头鸭'][i%6],park=i>=22,home=species==='绿头鸭'?{x:-285+(i%4)*5,z:-241}:park?{x:-281+(i-22)*5,z:-240}:{x:-520-(i%5)*24,z:90-Math.floor(i/5)*44};return {id:'wildlife-'+i,species,home,x:home.x,z:home.z,y:Terrain.groundHeight(world,home.x,home.z),phase:i*1.71,yaw:0};});
-    const index=new Map();for(const b of [...buildings,...obstacles])for(let x=Math.floor((b.x-b.w/2)/32);x<=Math.floor((b.x+b.w/2)/32);x++)for(let z=Math.floor((b.z-b.d/2)/32);z<=Math.floor((b.z+b.d/2)/32);z++){const key=x+','+z;if(!index.has(key))index.set(key,[]);index.get(key).push(b);}world.collisionIndex=index;initializeLife(world);initializeTrails(world);
+    world.fieldNotes=new Set();world.scenicView=null;world.shopVisits=new Set();world.shopBadges=new Set();world.shopActivity=null;world.shopTourComplete=false;world.observedWildlife=new Set();world.animals=Array.from({length:28},(_,i)=>{const species=['鹿','野兔','狐狸','松鼠','林鸟','绿头鸭'][i%6],park=i>=22,home=species==='绿头鸭'?{x:-285+(i%4)*5,z:-241}:park?{x:-281+(i-22)*5,z:-240}:{x:-520-(i%5)*24,z:90-Math.floor(i/5)*44};return {id:'wildlife-'+i,species,home,x:home.x,z:home.z,y:Terrain.groundHeight(world,home.x,home.z),phase:i*1.71,yaw:0};});
+    const index=new Map();for(const b of [...buildings,...obstacles])for(let x=Math.floor((b.x-b.w/2)/32);x<=Math.floor((b.x+b.w/2)/32);x++)for(let z=Math.floor((b.z-b.d/2)/32);z<=Math.floor((b.z+b.d/2)/32);z++){const key=x+','+z;if(!index.has(key))index.set(key,[]);index.get(key).push(b);}world.collisionIndex=index;initializeLife(world);settleActors(world);initializeTrails(world);
     // Keep all generated vehicles clear of each other and of the actual car footprint.
     const placed=[];for(const car of [...cars,...traffic]){if(vehicleContact(world,car,placed,false)){const start={x:car.x,z:car.z};for(let n=1;n<100;n++){const candidate={...car,[car.lane||'z']:(car.lane==='x'?start.x:start.z)+((n%2?1:-1)*Math.ceil(n/2)*5)};if(!vehicleContact(world,candidate,placed,false)){Object.assign(car,{x:candidate.x,z:candidate.z});break;}}}placed.push(car);}
     window.ArcadeCityTours?.init(world);return world;
   }
-  function blocked(world,x,z,radius=.42,elevation=world.elevation||0){
+  function blocked(world,x,z,radius=.42,elevation=world.elevation||0,height=1.8,terrain=true){
     if(world.onTower==='skyline'&&!world.skyLift&&Math.abs(elevation-186)<2){const p=places.find(p=>p.id==='skyline');return Math.abs(x-p.x)>12.3-radius||Math.abs(z-p.z)>14.3-radius||skyObstacles.some(b=>pointHits(b,x-p.x,z-p.z,radius));}
     if(world.interior){const r=world.interior;if(Math.abs(x)>r.width/2-radius||Math.abs(z)>r.depth/2-radius)return true;return r.obstacles.some(b=>pointHits(b,x,z,radius));}
     if(x>374-radius&&Math.abs(z-224)>8-radius)return true;
     const limit=world.bounds;if(x<limit.minX+radius||x>limit.maxX-radius||z<limit.minZ+radius||z>limit.maxZ-radius)return true;
-    if(Terrain.landscapeBlocked(world,x,z,radius,elevation,false))return true;
-    const seen=new Set();for(let gx=Math.floor((x-radius)/32);gx<=Math.floor((x+radius)/32);gx++)for(let gz=Math.floor((z-radius)/32);gz<=Math.floor((z+radius)/32);gz++)for(const b of world.collisionIndex.get(gx+','+gz)||[]){if(seen.has(b))continue;seen.add(b);if(b.roadDeck){const surface=Terrain.roadAt(world,x,z,elevation);if(surface.path?.id===b.surfaceId&&Math.abs(surface.y-elevation)<.6)continue;}if(verticalOverlap(elevation,1.8,b)&&pointHits(b,x,z,radius))return true;}
+    if(terrain&&Terrain.landscapeBlocked(world,x,z,radius,elevation,false))return true;
+    const seen=new Set();for(let gx=Math.floor((x-radius)/32);gx<=Math.floor((x+radius)/32);gx++)for(let gz=Math.floor((z-radius)/32);gz<=Math.floor((z+radius)/32);gz++)for(const b of world.collisionIndex.get(gx+','+gz)||[]){if(seen.has(b))continue;seen.add(b);if(b.roadDeck){const surface=Terrain.roadAt(world,x,z,elevation);if(surface.path?.id===b.surfaceId&&Math.abs(surface.y-elevation)<.6)continue;}if(verticalOverlap(elevation,height,b)&&pointHits(b,x,z,radius))return true;}
     return false;
   }
   function pointHits(b,x,z,radius){const r=b.rotation||0,dx=x-b.x,dz=z-b.z;return Math.abs(dx*Math.cos(r)+dz*Math.sin(r))<b.w/2+radius&&Math.abs(-dx*Math.sin(r)+dz*Math.cos(r))<b.d/2+radius;}
@@ -342,9 +342,84 @@ window.ArcadeCityWorld = (() => {
       if(px<limit.minX||px>limit.maxX||pz<limit.minZ||pz>limit.maxZ||(px>374&&Math.abs(pz-224)>8)||Terrain.landscapeBlocked(world,px,pz,.08,car.elevation||0,true))return {kind:'wall',x:0,z:0};}
     const seen=new Set();for(let x=Math.floor((car.x-reach)/32);x<=Math.floor((car.x+reach)/32);x++)for(let z=Math.floor((car.z-reach)/32);z<=Math.floor((car.z+reach)/32);z++)for(const b of world.collisionIndex.get(x+','+z)||[]){if(seen.has(b)||b.roadDeck&&b.surfaceId===car.surfaceId||!verticalOverlap(car.elevation||0,1.65,b))continue;seen.add(b);const r=b.rotation||0,hit=boxContact(a,{x:b.x,z:b.z,hw:b.w/2,hl:b.d/2,right:{x:Math.cos(r),z:Math.sin(r)},forward:{x:Math.sin(r),z:-Math.cos(r)}});if(hit)return {...hit,kind:'wall'};}
     for(const other of others){if(other===car||Math.abs(car.x-other.x)>5||Math.abs(car.z-other.z)>5||Math.abs((car.elevation||0)-(other.elevation||0))>1.8)continue;const hit=boxContact(a,carBox(other));if(hit)return {...hit,kind:'car',other};}
+    for(const list of [world.pedestrians||[],world.animals||[]])for(const actor of list){if((car.elevation||0)+1.65>(actor.y||0)+.02&&(car.elevation||0)<(actor.y||0)+(actor.bodyHeight||1.9)&&personContact(car,actor.x,actor.z,actor.radius||.42))return {kind:'person',actor,x:0,z:0};}
     if(includePlayer&&world.vehicle<0&&!world.interior&&!world.onTower&&Math.abs((car.elevation||0)-world.elevation)<1.8&&personContact(car,world.player.x,world.player.z))return {kind:'person',x:0,z:0};return null;
   }
-  function walkBlocked(world,x,z,radius=.42){return blocked(world,x,z,radius)||(!world.interior&&[...world.cars,...world.traffic].some(car=>Math.abs((car.elevation||0)-world.elevation)<1.8&&personContact(car,x,z,radius)));}
+  // Living bodies use simulation positions, heights and swept movement, just like vehicles.
+  const animalBodies={鹿:[1.12,2.35,.65,2.8],野兔:[.47,.95,.55,2.4],狐狸:[.88,1.1,.7,2.6],松鼠:[.7,1.15,.55,2.2],林鸟:[.43,.65,1.5,2.4],绿头鸭:[.4,.65,.5,1.1]};
+  function actorContact(world,x,z,radius,y,height=1.8,ignore=null){
+    if(world.interior||world.onTower)return null;
+    for(const list of [world.pedestrians||[],world.animals||[]])for(const a of list){
+      if(a===ignore||a.disabled)continue;const r=a.radius??(animalBodies[a.species]?.[0]||.42),h=a.bodyHeight??(animalBodies[a.species]?.[1]||1.95),ay=a.y??0;
+      if(y+height<=ay+.02||y>=ay+h-.02||Math.abs(x-a.x)>radius+r||Math.abs(z-a.z)>radius+r)continue;
+      if(Math.hypot(x-a.x,z-a.z)<radius+r)return a;
+    }return null;
+  }
+  function actorSurface(world,a,x,z){
+    if(a.species==='林鸟')return {y:Terrain.groundHeight(world,x,z)+4+Math.sin(a.phase)*.7,path:null};
+    const pond=Terrain.park.pond,swimming=a.species==='绿头鸭'&&Math.hypot((x-pond.x)/pond.rx,(z-pond.z)/pond.rz)<.96;
+    return swimming?{y:-.02,path:null,swimming:true}:Terrain.roadAt(world,x,z,a.y??Terrain.rawHeight(x,z),false,{id:a.surfaceId});
+  }
+  function actorBlocked(world,a,x,z,surface,people=true){
+    const y=surface.y,flying=a.species==='林鸟',onRoad=surface.path&&surface.d<surface.path.width/2-a.radius*.4;
+    if(blocked(world,x,z,a.radius,y,a.bodyHeight,false))return true;
+    if(!flying&&!surface.swimming){
+      const pond=Terrain.park.pond;if(((x-pond.x)/(pond.rx+a.radius))**2+((z-pond.z)/(pond.rz+a.radius))**2<1&&!(onRoad&&y>.5))return true;
+      if(x<-400){const stream=Terrain.riverAt(x,z);if(stream.d<3.5+a.radius&&!(onRoad&&y>stream.y+.5))return true;}
+      if(a.species)for(const {a:start,b:end,path}of world.roadPlan.spatial.get(Math.floor(x/32)+','+Math.floor(z/32))||[]){if(['trail','garden-path'].includes(path.type))continue;const p=Terrain.nearest([start,end],x,z);if(p.d<path.width/2+a.radius+.35&&Math.abs(p.y-y)<1.2)return true;}
+      if(!onRoad&&x<-370){const cache=world.actorSlopeCache||(world.actorSlopeCache=new Map()),key=Math.floor(x)+','+Math.floor(z);let slope=cache.get(key);if(slope===undefined){const sx=Math.floor(x)+.5,sz=Math.floor(z)+.5;slope=Math.hypot(Terrain.groundHeight(world,sx+1,sz)-Terrain.groundHeight(world,sx-1,sz),Terrain.groundHeight(world,sx,sz+1)-Terrain.groundHeight(world,sx,sz-1))/2;if(cache.size>8000)cache.clear();cache.set(key,slope);}if(slope>1.25)return true;}
+    }
+    if((world.cars||[]).some(c=>y+a.bodyHeight>(c.elevation||0)+.05&&y<(c.elevation||0)+1.65&&personContact(c,x,z,a.radius+.05))||(world.traffic||[]).some(c=>y+a.bodyHeight>(c.elevation||0)+.05&&y<(c.elevation||0)+1.65&&personContact(c,x,z,a.radius+.05)))return true;
+    if(people&&actorContact(world,x,z,a.radius,y,a.bodyHeight,a))return true;
+    return world.vehicle<0&&!world.interior&&!world.onTower&&y+a.bodyHeight>world.elevation+.02&&y<world.elevation+1.8&&Math.hypot(x-world.player.x,z-world.player.z)<a.radius+.44;
+  }
+
+  function settleActors(world){
+    const outside=world.interior||world.onTower?{...world,interior:null,onTower:null}:world;
+    for(const [i,a]of [...world.pedestrians,...world.animals].entries()){
+      const profile=animalBodies[a.species]||[.42,1.95,1.05,1.5];a.radius=profile[0];a.bodyHeight=profile[1];a.walkSpeed=profile[2];a.fleeSpeed=profile[3];a.home??={x:a.x,z:a.z};a.yaw??=0;a.motionPhase??=a.phase||0;a.patrolSign??=i%2?1:-1;
+      let surface=actorSurface(outside,a,a.x,a.z);
+      if(actorBlocked(outside,a,a.x,a.z,surface)){
+        let placed=false;for(let ring=1;ring<=22&&!placed;ring++)for(let j=0;j<16;j++){
+          const angle=(j+i*.37)*Math.PI/8,x=a.home.x+Math.cos(angle)*ring*.7,z=a.home.z+Math.sin(angle)*ring*.7,s=actorSurface(outside,a,x,z);
+          if(actorBlocked(outside,a,x,z,s))continue;
+          a.x=x;a.z=z;a.home={x,z};world.renderPrevious?.actors?.delete(a);surface=s;placed=true;break;
+        }
+      }
+      a.y=surface.y;a.surfaceId=surface.path?.id||null;a.walking=false;
+    }
+    world.actorSlopeCache?.clear();world.actorsRevision=world.colliderRevision||0;
+    const observation=world.trails?.find(t=>t.id==='forest-walk')?.stops.find(s=>s.kind==='wildlife'),animal=world.animals.find(a=>a.home.x<-370);
+    if(observation&&animal){for(let i=0;i<16;i++){const angle=i*Math.PI/8,x=animal.home.x+Math.cos(angle)*2.3,z=animal.home.z+Math.sin(angle)*2.3,y=Terrain.groundHeight(outside,x,z);if(!blocked(outside,x,z,.45,y)&&!actorContact(outside,x,z,.42,y)){Object.assign(observation.goal,{x,z,y});break;}}}
+  }
+  function moveActor(world,a,dx,dz){
+    const startX=a.x,startZ=a.z,n=Math.max(1,Math.ceil(Math.hypot(dx,dz)/.12));
+    const attempt=(x,z)=>{const s=actorSurface(world,a,x,z);if(a.species!=='林鸟'&&Math.abs(s.y-a.y)>.42||actorBlocked(world,a,x,z,s))return false;a.x=x;a.z=z;a.y=s.y;a.surfaceId=s.path?.id||null;return true;};
+    for(let i=0;i<n;i++){if(attempt(a.x+dx/n,a.z+dz/n))continue;if(dx)attempt(a.x+dx/n,a.z);if(dz)attempt(a.x,a.z+dz/n);}
+    const moved=Math.hypot(a.x-startX,a.z-startZ);a.walking=moved>.0001;
+    if(a.walking){a.yaw+=angleDelta(a.yaw,Math.atan2(a.x-startX,-(a.z-startZ)))*.3;a.motionPhase+=moved*(a.species?2.2:4.8);}return moved;
+  }
+  function stepActors(world,seconds){
+    if(world.actorsRevision!==(world.colliderRevision||0))settleActors(world);
+    for(const a of [...world.pedestrians,...world.animals]){
+      a.walking=false;if(distance(a,world.player)>180)continue;a.phase+=seconds*(a.species?.23:.45);a.thinkClock=(a.thinkClock||0)-seconds;if(a.thinkClock>0){if(Number.isFinite(a.moveHeading)&&moveActor(world,a,Math.sin(a.moveHeading)*a.moveSpeed*seconds,Math.cos(a.moveHeading)*a.moveSpeed*seconds)<.0001)a.thinkClock=0;continue;}a.thinkClock=.12;a.moveHeading=null;
+      let gx=a.home.x,gz=a.home.z+a.patrolSign*5.5,speed=a.walkSpeed;
+      if(a.species){const radius=a.species==='林鸟'?9:a.species==='绿头鸭'?3:5;gx+=Math.sin(a.phase)*radius;gz=a.home.z+Math.cos(a.phase*.7)*radius;}
+      else if(Math.hypot(gx-a.x,gz-a.z)<.4)a.patrolSign*=-1;
+      let threat=null,best=a.species?7:1.8;
+      if(!world.interior&&!world.onTower&&Math.abs((a.y||0)-world.elevation)<2.4&&world.vehicle<0&&distance(a,world.player)<best){threat=world.player;best=distance(a,world.player);}
+      for(const car of [...world.cars,...world.traffic]){
+        if(Math.abs((car.elevation||0)-a.y)>2)continue;const look=Math.min(6,Math.max(0,car.speed||0)*.65),p={x:car.x+Math.sin(car.yaw)*look,z:car.z-Math.cos(car.yaw)*look},d=Math.min(distance(a,car),distance(a,p));
+        if(d<Math.max(best,3+a.radius)){threat=d<distance(a,car)?p:car;best=d;}
+      }
+      if(threat){const len=Math.hypot(a.x-threat.x,a.z-threat.z)||1;gx=a.x+(a.x-threat.x)/len*5;gz=a.z+(a.z-threat.z)/len*5;speed=a.fleeSpeed;}
+      const d=Math.hypot(gx-a.x,gz-a.z);if(d<.1)continue;const heading=Math.atan2(gx-a.x,gz-a.z);let chosen=null;
+      for(const turn of [0,.45,-.45,.9,-.9,1.4,-1.4]){const x=a.x+Math.sin(heading+turn)*.6,z=a.z+Math.cos(heading+turn)*.6,s=actorSurface(world,a,x,z);if(!actorBlocked(world,a,x,z,s)){chosen=heading+turn;break;}}
+      if(chosen===null){a.waitTime=(a.waitTime||0)+.12;if(a.waitTime>1.1){a.patrolSign*=-1;a.phase+=.5;a.waitTime=0;}continue;}
+      a.waitTime=0;a.moveHeading=chosen;a.moveSpeed=speed;moveActor(world,a,Math.sin(chosen)*Math.min(d,speed*seconds),Math.cos(chosen)*Math.min(d,speed*seconds));
+    }
+  }
+  function walkBlocked(world,x,z,radius=.42){return blocked(world,x,z,radius)||!!actorContact(world,x,z,radius,world.elevation||0)||(!world.interior&&[...world.cars,...world.traffic].some(car=>Math.abs((car.elevation||0)-world.elevation)<1.8&&personContact(car,x,z,radius)));}
   function move(world,entity,dx,dz,radius){let hit=false;const count=Math.max(1,Math.ceil(Math.hypot(dx,dz)/.18));for(let n=0;n<count;n++){if(!walkBlocked(world,entity.x+dx/count,entity.z,radius))entity.x+=dx/count;else hit=true;if(!walkBlocked(world,entity.x,entity.z+dz/count,radius))entity.z+=dz/count;else hit=true;}return hit;}
   function velocity(car){return {x:Math.sin(car.yaw)*car.speed+(car.driftX||0),z:-Math.cos(car.yaw)*car.speed+(car.driftZ||0)};}
   function motionSpeed(car){const v=velocity(car);return Math.hypot(v.x,v.z);}
@@ -381,7 +456,7 @@ window.ArcadeCityWorld = (() => {
     for(const car of world.traffic){
       car.stopTime=Math.max(0,(car.stopTime||0)-seconds);const f={x:Math.sin(car.yaw),z:-Math.cos(car.yaw)},r={x:Math.cos(car.yaw),z:Math.sin(car.yaw)},look=9+Math.max(0,car.speed)*.8;
       const ahead=target=>{const dx=target.x-car.x,dz=target.z-car.z;return dx*f.x+dz*f.z>0&&dx*f.x+dz*f.z<look&&Math.abs(dx*r.x+dz*r.z)<2.5;};
-      const yielding=bodies.some(other=>other!==car&&ahead(other))||(world.vehicle<0&&!world.onTower&&ahead(world.player));
+      const sameLevel=a=>Math.abs((a.y??a.elevation??0)-(car.elevation||0))<1.8;const yielding=bodies.some(other=>other!==car&&sameLevel(other)&&ahead(other))||world.pedestrians.some(a=>sameLevel(a)&&ahead(a))||world.animals.some(a=>sameLevel(a)&&ahead(a))||(world.vehicle<0&&!world.interior&&!world.onTower&&Math.abs(world.elevation-(car.elevation||0))<1.8&&ahead(world.player));
       const target=car.stopTime>0||yielding||car.health<=0?0:car.cruiseSpeed;car.braking=target<car.speed;car.speed+=clamp(target-car.speed,-18*seconds,3*seconds);
       if(Math.abs(car[car.lane])>337&&distance(world.player,car)>90){const candidate={...car,[car.lane]:car[car.lane]>0?-337:337};if(distance(world.player,candidate)>90&&!vehicleContact(world,candidate,bodies.filter(other=>other!==car))){car[car.lane]=candidate[car.lane];}}
     }
@@ -391,8 +466,20 @@ window.ArcadeCityWorld = (() => {
   function enterRoom(world,spec){world.returnTo={...world.player,elevation:world.elevation};world.interior=spec;world.elevation=0;Object.assign(world.player,{x:0,z:spec.depth/2-4,yaw:0});world.cameraYaw=0;world.walking=false;notify(world,'已进入 '+spec.name+' · E 互动',4);}
   function enterBuilding(world,id,floor=0){const b=world.buildingMap.get(id);if(!b)return false;const spec=Interiors.plan(b,floor);if(!world.interior)enterRoom(world,spec);else{world.interior=spec;world.elevation=0;Object.assign(world.player,{x:spec.lift.x,z:spec.lift.z-.8,yaw:0});world.cameraYaw=0;}
     if(!world.enteredBuildings.has(id)){world.enteredBuildings.add(id);world.score+=100;}return true;}
+  function leaveScenic(world){if(!world.scenicView)return;world.cameraYaw=world.scenicView.returnYaw;world.scenicView=null;}
+  function scenicPose(world){
+    const view=world.scenicView,stop=world.roadPlan.restStops?.find(s=>s.id===view?.id);if(!stop?.scope)return null;
+    const yaw=world.cameraYaw,pitch=clamp(view.pitch,-.45,.7),forward={x:Math.sin(yaw)*Math.cos(pitch),y:-Math.sin(pitch),z:-Math.cos(yaw)*Math.cos(pitch)},eye={x:stop.scope.x+forward.x*.6,y:stop.scope.y+forward.y*.6,z:stop.scope.z+forward.z*.6};
+    return {eye,target:{x:eye.x+forward.x*300,y:eye.y+forward.y*300,z:eye.z+forward.z*300},fov:clamp(view.fov,18,58)};
+  }
+  function fieldDialog(world,stop,first=false){
+    const text={refill:'沿着林间步道，可以走到溪畔观察台，再登上山脊。这里的饮水点可以补充体力。',creek:'溪水从山脊流向低地。安静地看看水面和林缘，也许会遇见飞鸟；请保持距离，不投喂动物。',lookout:'从山脊望向海湾，城市的高楼、体育场和海岸线会展开在眼前。观景镜可以拖动环顾，也可以调节放大程度。'};
+    const next=world.roadPlan.restStops[(world.roadPlan.restStops.indexOf(stop)+1)%3];
+    world.dialog={kind:'field-note',stop:stop.id,title:stop.name,body:text[stop.kind]+(first?' 已收录一页林间手记。':'')+' 本局手记 '+world.fieldNotes.size+'/3。',actions:[{id:stop.kind==='refill'?'field-refill':'field-view',label:stop.kind==='refill'?'补充饮水':'使用观景镜'},{id:'field-next',label:'导航到'+next.name},{id:'job-close',label:'继续漫游'}]};
+  }
   function context(world){
     const p=world.player;
+    if(world.scenicView)return {kind:'scenic-exit',label:'离开观景镜'};
     if(world.onTower==='skyline'){
       if(world.skyLift)return null;if(world.skyFocus)return {kind:'sky-view-exit',label:'退出全景眺望'};const place=places.find(p=>p.id==='skyline');
       if(distance(p,{x:place.x+10,z:place.z+5})<2.3)return {kind:'sky-elevator',label:'乘电梯返回大堂'};
@@ -424,6 +511,7 @@ window.ArcadeCityWorld = (() => {
     if(world.summonedCar&&distance(p,world.summonedCar)<3&&boardable(world,world.summonedCar))return {kind:'car-enter',id:world.cars.indexOf(world.summonedCar),label:'驾驶召唤车辆'};
     const place=world.places.find(place=>distance(p,place.door)<3.6&&world.elevation<2.5);if(place)return {kind:'place',id:place.id,label:place.kind==='tower'?'登上'+place.name:place.kind==='pier'?'码头打卡':place.kind==='surf'?'与冲浪屋交谈':place.kind==='station'?'查看旅行指南':'进入'+place.name};
     const building=world.buildings.filter(b=>distance(p,b.door)<2.3&&Math.abs(world.elevation-(b.baseY||0))<2.5).sort((a,b)=>distance(p,a.door)-distance(p,b.door))[0];if(building)return {kind:'building',id:building.id,label:'进入'+building.name};
+    const field=world.roadPlan.restStops?.find(s=>distance(p,s.door)<2.5&&Math.abs(world.elevation-s.y)<.6);if(field)return {kind:'field-stop',id:field.id,label:field.kind==='refill'?'溪谷补给与导览':field.name};
     const nature=world.destinations.find(n=>distance(p,n.door)<7);if(nature)return {kind:'nature',id:nature.id,label:'探索'+nature.name};
     const citySpot=world.citySpots.find(s=>distance(p,s.door)<3.4&&world.elevation<1);if(citySpot)return {kind:'city-life',id:citySpot.id,label:world.cityStamps.has(citySpot.id)?'再逛逛'+citySpot.name:'探索'+citySpot.name};
     const animal=world.animals.find(a=>distance(p,a)<4);if(animal)return {kind:'wildlife',id:animal.id,label:'观察'+animal.species};
@@ -436,6 +524,8 @@ window.ArcadeCityWorld = (() => {
   function performInteraction(world){
     if(world.dialog)return false;const action=context(world),p=world.player;
     if(!action){notify(world,'靠近地图上的建筑入口或车辆，按 E 互动');return false;}
+    if(action.kind==='scenic-exit'){leaveScenic(world);return true;}
+    if(action.kind==='field-stop'){const stop=world.roadPlan.restStops.find(s=>s.id===action.id),first=!world.fieldNotes.has(stop.id);if(first){world.fieldNotes.add(stop.id);world.score+=80;if(world.fieldNotes.size===3)world.score+=240;}fieldDialog(world,stop,first);return true;}
     if(action.kind==='tour-stop')return window.ArcadeCityTours.stamp(world);
     if(action.kind==='sky-view-exit'){world.skyFocus=null;return true;}
     if(action.kind==='sky-elevator'){world.dialog={title:'云际中心 · 观光电梯',body:world.onTower==='skyline'?'返回一层大堂。':'玻璃观光电梯通往 186 米高的露台。抵达后可自由走动、环顾城市。',actions:[{id:world.onTower==='skyline'?'sky-lobby':'sky-deck',label:world.onTower==='skyline'?'返回一层大堂':'前往 186 m 观景台'},{id:'job-close',label:'再逛逛'}]};return true;}
@@ -507,6 +597,11 @@ window.ArcadeCityWorld = (() => {
   }
   function choose(world,id){performChoice(world,id);updateTrail(world);}
   function performChoice(world,id){
+    if(id.startsWith('field-')){const stop=world.roadPlan.restStops?.find(s=>s.id===world.dialog?.stop);if(world.dialog?.kind!=='field-note'||!stop||world.vehicle>=0||distance(world.player,stop.door)>=2.5)return;
+      if(id==='field-next'){const next=world.roadPlan.restStops[(world.roadPlan.restStops.indexOf(stop)+1)%3];navigate(world,next.id);return;}
+      if(id==='field-refill'&&stop.kind==='refill'){world.stamina=100;world.refillUntil=world.time+2;world.dialog=null;notify(world,'饮水已补充 · 体力恢复',3);return;}
+      if(id==='field-view'&&stop.scope){world.scenicView={id:stop.id,returnYaw:world.cameraYaw,pitch:stop.scope.pitch,fov:36};world.cameraYaw=stop.scope.yaw;world.dialog=null;notify(world,'拖动环顾 · 调焦查看远景 · E 返回',4);}return;
+    }
     if(id==='sky-panorama'&&world.onTower==='skyline'&&!world.skyLift){world.dialog={title:'云际中心 · 全景眺望',body:'选择一个方向。拖动可以环顾，按 E 或移动即可回到露台。',actions:skyViews.map(v=>({id:'sky-look-'+v.id,label:v.name}))};return;}
     if(id.startsWith('sky-look-')&&world.onTower==='skyline'&&!world.skyLift){const v=skyViews.find(v=>v.id===id.slice(9));if(v){world.skyFocus=v.id;world.cameraYaw=v.yaw;world.dialog=null;}return;}
     if(id==='sky-deck'||id==='sky-lobby'){skyLift(world,id==='sky-deck'?'deck':'lobby');return;}
@@ -541,13 +636,14 @@ window.ArcadeCityWorld = (() => {
     world.findingCar=enabled;world.navigationCache=null;world.dialog=null;
     notify(world,enabled?world.interior||world.onTower?'车辆在入口附近 · 返回街道后跟随寻车路线':'寻车导航已开启 · 靠近车辆按 E 驾驶':'已恢复原来的路线',4);return true;
   }
-  function navigate(world,id){if(id==='summoned-vehicle'){locateVehicle(world);return;}window.ArcadeCityTours?.pause(world);world.findingCar=false;const place=mapEntries(world).find(p=>p.id===id),race=races.find(r=>r.id===id);world.waypoint=place?{...place.door,name:place.name}:race?{...race.start,name:race.name+' · 起点'}:null;if(world.job)world.job.detour=true;world.dialog=null;}
+  function navigate(world,id){leaveScenic(world);if(id==='summoned-vehicle'){locateVehicle(world);return;}window.ArcadeCityTours?.pause(world);world.findingCar=false;const place=mapEntries(world).find(p=>p.id===id),race=races.find(r=>r.id===id);world.waypoint=place?{...place.door,name:place.name}:race?{...race.start,name:race.name+' · 起点'}:null;if(world.job)world.job.detour=true;world.dialog=null;}
   function mapEntries(world){
     const pack=(items,category,label)=>items.map(p=>({...p,category,label}));
     const summoned=world.summonedCar?[{id:'summoned-vehicle',name:'召唤车辆',door:vehicleDoors(world,world.summonedCar)[0]||{x:world.summonedCar.x,z:world.summonedCar.z,y:world.summonedCar.elevation||0}}]:[];
-    return [...pack(world.places,'landmark','城市地标'),...pack(world.destinations,'nature','自然景观'),...pack(world.citySpots,'life','街区生活'),...pack([...summoned,{id:'central-stop',name:'中央公园入口',door:{x:0,z:13}},...world.roadPlan.entrances],'transport','交通入口'),...pack(world.buildings,'building','建筑')];
+    return [...pack(world.places,'landmark','城市地标'),...pack(world.destinations,'nature','自然景观'),...pack(world.roadPlan.restStops||[],'nature','林间停留点'),...pack(world.citySpots,'life','街区生活'),...pack([...summoned,{id:'central-stop',name:'中央公园入口',door:{x:0,z:13}},...world.roadPlan.entrances],'transport','交通入口'),...pack(world.buildings,'building','建筑')];
   }
   function summonVehicle(world){
+    leaveScenic(world);
     if(world.vehicle>=0){notify(world,'你已在驾驶车辆 · 下车后可再次召唤');return false;}
     const car=world.cars[0],entrance=world.onTower?world.places.find(p=>p.id===world.onTower)?.door:world.interior?world.returnTo:null,origin=entrance||world.player;
     const elevation=entrance?(entrance.elevation??entrance.y??Terrain.groundHeight(world,origin.x,origin.z)):world.elevation;
@@ -594,12 +690,13 @@ window.ArcadeCityWorld = (() => {
     if(!landing){notify(world,'入口暂时被占用，可稍后传送或选择导航');return false;}
     window.ArcadeCityTours?.pause(world);
     const car=world.cars[world.vehicle];if(car){car.speed=0;car.driftX=car.driftZ=0;car.steer=0;car.braking=false;}
-    world.vehicle=-1;world.findingCar=false;world.interior=null;world.onTower=null;world.returnTo=null;world.savedTower=null;world.skyFocus=null;world.skyLift=null;world.penalty=null;world.dialog=null;
+    world.scenicView=null;world.vehicle=-1;world.findingCar=false;world.interior=null;world.onTower=null;world.returnTo=null;world.savedTower=null;world.skyFocus=null;world.skyLift=null;world.penalty=null;world.dialog=null;
     const yaw=target.x!==undefined&&target.z!==undefined?Math.atan2(target.x-landing.x,-(target.z-landing.z)):0;
     Object.assign(world.player,{x:landing.x,z:landing.z,yaw});world.elevation=landing.elevation;world.surfaceId=landing.surfaceId;world.cameraYaw=yaw;world.walking=world.sprinting=false;
     world.renderPrevious=null;world.renderAlpha=1;world.navigationCache=null;world.waypoint={...door,name:target.name};world.area=target.name;notify(world,'已到达 '+target.name,4);return true;
   }
   function recover(world){
+    leaveScenic(world);
     window.ArcadeCityTours?.pause(world);
     world.findingCar=false;
     if(world.job)cancelJob(world,'返回车站，当前委托已取消');
@@ -610,6 +707,7 @@ window.ArcadeCityWorld = (() => {
   }
   function step(world,dt,input={}){
     const seconds=clamp(dt,0,.05),p=world.player;world.time+=seconds;world.messageTime=Math.max(0,world.messageTime-seconds);world.crashCooldown=Math.max(0,world.crashCooldown-seconds);world.hornTime=Math.max(0,world.hornTime-seconds);
+    if(world.scenicView&&!world.dialog){if(input.forward||input.back||input.left||input.right){leaveScenic(world);world.walking=false;return;}input={};}
     if(world.shopActivity&&world.dialog?.kind!=='shop-challenge')world.shopActivity=null;if(world.dialog){if(world.shopActivity?.kind==='bakery')world.shopActivity.elapsed+=seconds;world.walking=false;return;}if(penaltyStep(world,seconds))return;const oldX=p.x,oldZ=p.z;
     if(world.job?.phase==='deliver'){world.job.elapsed+=seconds;if(world.job.elapsed>=world.job.limit)cancelJob(world,(world.job.id==='taxi'?'接送':'配送')+'超时 · 连单已中断，可重新接取委托');}
     if(world.race?.countdown>0){world.race.countdown=Math.max(0,world.race.countdown-seconds);world.cars[world.vehicle].speed=0;if(!world.race.countdown)notify(world,'出发！穿过蓝色检查点',2);return;}
@@ -653,8 +751,7 @@ window.ArcadeCityWorld = (() => {
         }
       }
     }
-    world.wildlifeClock=(world.wildlifeClock||0)+seconds;if(world.wildlifeClock>.18){const wildlifeDt=world.wildlifeClock;world.wildlifeClock=0;for(const a of world.animals){if(distance(p,a)>180)continue;a.phase+=wildlifeDt*(distance(p,a)<9?1.8:.35);const radius=a.species==='林鸟'?10:a.species==='绿头鸭'?3:5,x=a.home.x+Math.sin(a.phase)*radius,z=a.home.z+Math.cos(a.phase*.7)*radius;if(!blocked(world,x,z,.15)&&!Terrain.roadAt(world,x,z,Terrain.rawHeight(x,z)).path){a.yaw=Math.atan2(x-a.x,z-a.z);a.x=x;a.z=z;}a.y=Terrain.groundHeight(world,a.x,a.z)+(a.species==='林鸟'?4+Math.sin(a.phase)*1.2:0);}}
-    for(const npc of world.pedestrians)npc.phase+=seconds*.7;
+    stepActors(world,seconds);
     for(const token of world.tokens)if(!token.taken&&distance(p,token)<1.7){token.taken=true;world.collected++;world.score+=100;notify(world,'城市印记 +100');}
     if(world.beachQuest)for(const shell of world.shells)if(!shell.taken&&distance(p,shell)<2){shell.taken=true;world.score+=150;const count=world.shells.filter(s=>s.taken).length;notify(world,'海滩海螺 '+count+' / 4');const next=world.shells.find(s=>!s.taken);if(next)world.waypoint={...next,name:'海滩海螺'};else if(!world.beachComplete){world.beachComplete=true;world.score+=1200;world.waypoint=null;notify(world,'海滩探访完成 +1200',6);}}
     const speed=world.vehicle>=0?Math.abs(world.cars[world.vehicle].speed):0;
@@ -664,5 +761,5 @@ window.ArcadeCityWorld = (() => {
     if(!world.visited.has(world.area)){world.visited.add(world.area);world.score+=150;}
   }
   function crash(world){if(world.race){world.race.penalty+=2;world.race.hits++;notify(world,'碰撞 · 罚时 +2 秒',2);}else if(world.job?.phase==='deliver'){world.job.hits++;world.job.quality=Math.max(0,world.job.quality-(world.job.id==='taxi'?20:25));if(!world.job.quality)cancelJob(world,'服务评价耗尽 · 本次委托结束');else notify(world,'碰撞 · '+(world.job.id==='taxi'?'乘客舒适度':'包装完整度')+' '+world.job.quality+'%',3);}else notify(world,'碰撞！放慢速度，小心转弯');}
-  return {create,step,interact,context,choose,navigate,recover,blocked,distance,angleDelta,routes,places,room,enterBuilding,exhibits,checkpoints,races,objective,navigationPath,vehicleTypes,shopKinds,shopDestinations,shopHeat,trailStatus,startTrail,jobTypes,jobGoal,startJob,cancelJob,reputation,carBox,boxContact,vehicleContact,vehicleDoors,locateVehicle,addCollider,bounds,roads,trainStatus,skyViews,skyObstacles,mapEntries,teleportReason,teleport,summonVehicle};
+  return {create,step,interact,context,choose,navigate,recover,blocked,distance,angleDelta,routes,places,room,enterBuilding,exhibits,checkpoints,races,objective,navigationPath,vehicleTypes,shopKinds,shopDestinations,shopHeat,trailStatus,startTrail,jobTypes,jobGoal,startJob,cancelJob,reputation,carBox,boxContact,vehicleContact,vehicleDoors,locateVehicle,addCollider,bounds,roads,trainStatus,skyViews,skyObstacles,mapEntries,teleportReason,teleport,summonVehicle,actorContact,settleActors,moveActor,stepActors,scenicPose};
 })();

@@ -2,6 +2,7 @@
 window.Arcade = (() => {
   const categoryNames = {PUZZLE:'益智', STRATEGY:'策略', CLASSIC:'经典', ACTION:'动作', '3D':'3D 世界'};
   const games = [
+    {id:'ski3d',name:'勃朗峰 · 雪境',symbol:'△',tag:'3D',color:'#729eae',description:'在真实勃朗峰地貌中自由滑降，让双板与雪山留下彼此的记忆。',controls:'A D / 左右键刻滑，W 撑杖，S / 空格刹车，J 起跳。R 返回最近安全点，C 切换视角，按住 V 回望，M 地形图；手机使用屏幕按钮。三条探索起点与顺坡标记；陡坡扰动可能引发雪崩，雪层试验可主动释放上坡积雪。保存雪面可保留雪迹和沉积。',rule:'每个路线标记 150 分，完成一段加 1500 分，累计下降每米 0.8 分，刻滑距离每米 0.12 分。地形采用历史 DEM；动态雪层和雪崩为游戏物理模型，不是实地安全预测。'},
     {id:'2048',name:'数字合成 2048',symbol:'2048',tag:'PUZZLE',color:'#d99239',description:'滑动、合并，向下一个更大的数字进发。',controls:'方向键 / WASD 或滑动操作。每次移动，相同数字只能合并一次。',rule:'每次合并获得合成数字对应的分数，达到 2048 后可继续挑战。'},
     {id:'gomoku',name:'五子棋',symbol:'● ○',tag:'STRATEGY',color:'#708c69',description:'你执黑先行，与电脑展开一场十五路对弈。',controls:'点击 15 × 15 棋盘的交叉点落子。你执黑，电脑执白。',rule:'获胜得 1,000 分，另加每个空位 20 分；和棋 500 分；落败 0 分。采用自由规则，五子或以上连线即胜。'},
     {id:'memory',name:'记忆翻牌',symbol:'✦',tag:'PUZZLE',color:'#a581c9',description:'36 张卡片、18 对图案，考验你的记忆。',controls:'每次翻开两张卡片，在 6 × 6 牌阵中找齐 18 对相同图案。',rule:'得分 = 6,000 − 尝试次数 × 50 − 用时秒数 × 5，最低 100 分。'},

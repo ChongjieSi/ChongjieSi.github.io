@@ -1,0 +1,122 @@
+{
+  "name": "Mont Blanc massif",
+  "west": 6.79,
+  "east": 6.97,
+  "south": 45.8,
+  "north": 45.94,
+  "size": 769,
+  "heightScale": 0.25,
+  "width": 13951.954680165214,
+  "depth": 15584.800000000063,
+  "minHeight": 939.8928833007812,
+  "maxHeight": 4789.2568359375,
+  "sha256": "1bd2115e7ff6d639e2b459791c6eb7d491df410dde1d99dc7cf9b036e7681cf3",
+  "downloadDate": "2026-11-24",
+  "source": "AWS Terrain Tiles / Mapzen Terrarium",
+  "zoom": 13,
+  "attribution": "Terrain Tiles via AWS Open Data / Mapzen; Europe: Copernicus EU-DEM, funded by the European Union; global SRTM / GMTED2010 courtesy USGS.",
+  "licenseReference": "https://github.com/tilezen/joerd/blob/master/docs/attribution.md",
+  "sources": [
+    {
+      "url": "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/13/4250/2916.png",
+      "sha256": "80522bb064012ad5183e5b0ee3648827f3d138b51b02aa344eb03de2b1740c03"
+    },
+    {
+      "url": "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/13/4250/2917.png",
+      "sha256": "115ef7f541427f45abdc64c25ec5df105b4b6ca123da26d7ff9638c020b29703"
+    },
+    {
+      "url": "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/13/4250/2918.png",
+      "sha256": "f8c7086c88579a1c90300ec1d29ebe51187e2e8bfb674b3d699894df9d3449d6"
+    },
+    {
+      "url": "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/13/4250/2919.png",
+      "sha256": "38ff8f9fe7e19454471f0a30ccb78c2bdbd0b776c9d7ac2fb8d9f3b37da77f2d"
+    },
+    {
+      "url": "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/13/4250/2920.png",
+      "sha256": "85dca4431a718caa925127ed61c32a4efb67388b521a93fa52bd301a4bf7e874"
+    },
+    {
+      "url": "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/13/4251/2916.png",
+      "sha256": "8e31204619e563d87ae2493c5a980789e0ceae679af27b580371dad23ff6af30"
+    },
+    {
+      "url": "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/13/4251/2917.png",
+      "sha256": "e9ec597ae9ee68516ac49444e835930558e7e590a511f0df4edc5fc9644e25ee"
+    },
+    {
+      "url": "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/13/4251/2918.png",
+      "sha256": "9fe230d84cb88ea3ee5231f87d95b9cdd0fa786bcc40c401d740746fc980b99f"
+    },
+    {
+      "url": "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/13/4251/2919.png",
+      "sha256": "16afe85729fd90392b7e5d92ebb181a7a113fd8fe88a917bff815488ceff2ed1"
+    },
+    {
+      "url": "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/13/4251/2920.png",
+      "sha256": "b225df5c04b29b3b79ee5a0bac81453fc2dab66159aae242e9cdcc3905371b70"
+    },
+    {
+      "url": "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/13/4252/2916.png",
+      "sha256": "4bcbc397fe9f7bfa8394c093cdc813550f0822fdd19ee105c150140d747e3235"
+    },
+    {
+      "url": "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/13/4252/2917.png",
+      "sha256": "563cb462f19534e96750f545412db5faba1dab5e8e0f17eabf857f36b0a31278"
+    },
+    {
+      "url": "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/13/4252/2918.png",
+      "sha256": "48df03679eb2ac06f0b6285f79b3c5f4566968d455e0ab460a0ced8171456f64"
+    },
+    {
+      "url": "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/13/4252/2919.png",
+      "sha256": "7a6f068e8605633b73ab4b8d5716098961b8ed75bc8c54999753f087d20a29f0"
+    },
+    {
+      "url": "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/13/4252/2920.png",
+      "sha256": "c4e73f118b490235e8039e2345cc5f6438573b36699ad95cb699eeb97b39dbdf"
+    },
+    {
+      "url": "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/13/4253/2916.png",
+      "sha256": "285370885c71d2414bb01316361343ef9f983e1535424fed1c3010e42c8ada2a"
+    },
+    {
+      "url": "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/13/4253/2917.png",
+      "sha256": "6ab0ce59d52334ecb3e16480bcf3f916eedc350e2141bbe50c57b143c46d9b39"
+    },
+    {
+      "url": "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/13/4253/2918.png",
+      "sha256": "0bddc9e7e7d3304d755144bc7d3d505c4e77a52f4e289bf9b8d3752c172e21bf"
+    },
+    {
+      "url": "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/13/4253/2919.png",
+      "sha256": "6a5fa7318d8efe8145cf59d698dd5a58a90b9f6deb2a0fa786699659b7c843df"
+    },
+    {
+      "url": "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/13/4253/2920.png",
+      "sha256": "52556ae1d99c3dc08806f108f441664b2a87a183ff6dee208b90475c473cf0aa"
+    },
+    {
+      "url": "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/13/4254/2916.png",
+      "sha256": "4f2ae8a04ce0a93781891777595e0fbf48be612adafd7354b0d455434e38d7b7"
+    },
+    {
+      "url": "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/13/4254/2917.png",
+      "sha256": "7121d926578b5ed4a86141d96fc5a2fd3f4b27c0bd68c9ea79f1c5b3cad8a637"
+    },
+    {
+      "url": "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/13/4254/2918.png",
+      "sha256": "3c0330c1b4e254d58064b4d6abbf6652471333c199ffcb25ea71514576b29454"
+    },
+    {
+      "url": "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/13/4254/2919.png",
+      "sha256": "679966647344d48b0504048d803c4bcc7e6b6c84e751d14a42de88ef16b71481"
+    },
+    {
+      "url": "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/13/4254/2920.png",
+      "sha256": "defb6068cdb7e76b115d3156decd4ab2f2770be3df2eef691c83115fb104f551"
+    }
+  ],
+  "note": "Historical DEM, resampled into a local equirectangular grid. Not a current snow-depth survey; source cells are tens of metres, not ski-scale measurements."
+}

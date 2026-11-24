@@ -13,6 +13,7 @@ window.ArcadeCity = ({canvas,button,points,finish,active,status}) => {
     const reward=document.createElement('div');reward.className='city-reward';reward.setAttribute('aria-live','polite');overlay.append(reward);
     const locator=document.createElement('button');locator.className='city-vehicle-locator';locator.hidden=true;locator.type='button';locator.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m5 10 2-5h10l2 5M4 10h16v8H4zM6 18v2m12-2v2M7 13h2m6 0h2"/></svg><span></span><i aria-hidden="true">↑</i>';locator.onclick=()=>{if(playing&&active()){Sim.locateVehicle(state,!state.findingCar);hud();}};overlay.append(locator);
     const sports=document.createElement('section');sports.className='city-sports';sports.hidden=true;sports.innerHTML='<div class="city-sports-heading"><b>五球挑战</b><span data-shot-score></span><button aria-label="结束点球训练">×</button></div><div class="city-shot-goal" role="img" aria-label="球门、门将和射门方向"><i class="city-shot-keeper"></i><i class="city-shot-target"></i></div><div class="city-shot-meter" role="meter" aria-label="射门力量" aria-valuemin="0" aria-valuemax="100"><span></span><i></i></div><p data-shot-hint></p>';overlay.append(sports);sports.querySelector('button').onclick=()=>Sim.choose(state,'penalty-close');
+    const viewfinder=document.createElement('section');viewfinder.className='city-viewfinder';viewfinder.hidden=true;viewfinder.innerHTML='<span data-view-title></span><i aria-hidden="true"></i><div><button type="button" aria-label="缩小观景镜">−</button><button type="button" aria-label="放大观景镜">+</button></div><small>拖动环顾 · E 返回</small>';overlay.append(viewfinder);viewfinder.querySelectorAll('button').forEach((b,i)=>b.onclick=()=>{if(state.scenicView)state.scenicView.fov=ArcadeWorld.clamp(state.scenicView.fov+(i?-6:6),18,58);});
     wrap.append(overlay);
     const ui=selector=>overlay.querySelector(selector),map=ui('.city-map canvas').getContext('2d');
     let playing=false,disposed=false,renderer=null,view=null,night=false,orbitTime=0,hudClock=0,physicsClock=0;
@@ -37,7 +38,7 @@ window.ArcadeCity = ({canvas,button,points,finish,active,status}) => {
     const brake=button('手刹',()=>{});brake.classList.add('city-brake');brake.hidden=true;
     brake.addEventListener('pointerdown',e=>{if(active()){held.add(' ');brake.setPointerCapture(e.pointerId);}});
     for(const event of ['pointerup','pointercancel','lostpointercapture'])brake.addEventListener(event,()=>held.delete(' '));
-    const end=button('结束漫游',()=>finish('本次漫游完成',`点球最佳 ${state.penaltyBest} 分 · 漫游路线 ${state.completedTrails.size}/3 · 委托 ${state.jobsCompleted} 单 · ${Sim.reputation(state)} · 店铺体验 ${state.shopBadges.size}/4 · 街区集章 ${state.cityStamps.size}/${state.citySpots.length} · 建筑 ${state.enteredBuildings.size}/${state.buildings.length} · 动物 ${state.observedWildlife.size}/${state.animals.length} · 自然探索 ${state.natureVisited.size}/3 · 地标 ${state.discovered.size}/${state.places.length} · 展品 ${state.inspected.size}/3 · 海螺 ${state.shells.filter(s=>s.taken).length}/4`));
+    const end=button('结束漫游',()=>finish('本次漫游完成',`点球最佳 ${state.penaltyBest} 分 · 漫游路线 ${state.completedTrails.size}/3 · 委托 ${state.jobsCompleted} 单 · ${Sim.reputation(state)} · 店铺体验 ${state.shopBadges.size}/4 · 街区集章 ${state.cityStamps.size}/${state.citySpots.length} · 建筑 ${state.enteredBuildings.size}/${state.buildings.length} · 动物 ${state.observedWildlife.size}/${state.animals.length} · 林间手记 ${state.fieldNotes.size}/3 · 自然探索 ${state.natureVisited.size}/3 · 地标 ${state.discovered.size}/${state.places.length} · 展品 ${state.inspected.size}/3 · 海螺 ${state.shells.filter(s=>s.taken).length}/4`));
     for(const [label,key]of [['前进','w'],['左转','a'],['后退','s'],['右转','d']]){
       const b=button(label,()=>{});b.classList.add('direction-control');
       b.addEventListener('pointerdown',e=>{if(active()){held.add(key);b.setPointerCapture(e.pointerId);}});
@@ -56,10 +57,10 @@ window.ArcadeCity = ({canvas,button,points,finish,active,status}) => {
     }):null;
     viewportObserver?.observe(wrap);
     function bindOrbit(node){
-      node.addEventListener('pointerdown',e=>{if(active()&&playing){drag={x:e.clientX,y:e.clientY,yaw:state.cameraYaw,pitch:camPitch};node.setPointerCapture(e.pointerId);}});
-      node.addEventListener('pointermove',e=>{if(drag&&active()){state.cameraYaw=drag.yaw-(e.clientX-drag.x)*.007;camPitch=ArcadeWorld.clamp(drag.pitch+(e.clientY-drag.y)*.004,-.55,.7);orbitTime=3;}});
+      node.addEventListener('pointerdown',e=>{if(active()&&playing){drag={x:e.clientX,y:e.clientY,yaw:state.cameraYaw,pitch:state.scenicView?.pitch??camPitch,scenic:!!state.scenicView};node.setPointerCapture(e.pointerId);}});
+      node.addEventListener('pointermove',e=>{if(drag&&active()){state.cameraYaw=drag.yaw-(e.clientX-drag.x)*.007;if(drag.scenic&&state.scenicView)state.scenicView.pitch=ArcadeWorld.clamp(drag.pitch+(e.clientY-drag.y)*.004,-.45,.7);else camPitch=ArcadeWorld.clamp(drag.pitch+(e.clientY-drag.y)*.004,-.55,.7);orbitTime=3;}});
       for(const event of ['pointerup','pointercancel'])node.addEventListener(event,()=>drag=null);
-      node.addEventListener('wheel',e=>{if(active()){e.preventDefault();camDistance=ArcadeWorld.clamp(camDistance+e.deltaY*.008,state.interior?2.8:7,state.interior?10:22);}},{passive:false});
+      node.addEventListener('wheel',e=>{if(active()){e.preventDefault();if(state.scenicView){state.scenicView.fov=ArcadeWorld.clamp(state.scenicView.fov+e.deltaY*.04,18,58);return;}camDistance=ArcadeWorld.clamp(camDistance+e.deltaY*.008,state.interior?2.8:7,state.interior?10:22);}},{passive:false});
     }
     bindOrbit(c);
     const panel=document.createElement('dialog');panel.className='city-dialog';document.body.append(panel);let shownDialog=null,mapController=null,taskPage='contracts';
@@ -161,6 +162,7 @@ window.ArcadeCity = ({canvas,button,points,finish,active,status}) => {
         ];
         for(const task of tasks){const item=document.createElement('button');item.innerHTML='<b></b><span></span>';item.querySelector('b').textContent=task.name;item.querySelector('span').textContent=task.detail;item.classList.toggle('completed',task.done);item.onclick=()=>{Sim.navigate(state,task.id);updatePanel();hud();};activities.append(item);}pages.challenges.append(activities);
         const life=document.createElement('details');life.className='city-life-journal';const lifeTitle=document.createElement('summary');lifeTitle.textContent=`街区漫游 · 集章 ${state.cityStamps.size} / ${state.citySpots.length}`;life.append(lifeTitle);const lifeCards=document.createElement('div');lifeCards.className='city-activities';for(const spot of state.citySpots){const b=document.createElement('button');b.dataset.citySpot=spot.id;const name=document.createElement('b'),copy=document.createElement('span');name.textContent=spot.name;copy.textContent=state.cityStamps.has(spot.id)?'已集章 · 再去逛逛':'到访 +120 · 六处集齐 +800';b.append(name,copy);b.onclick=()=>{Sim.navigate(state,spot.id);updatePanel();hud();};lifeCards.append(b);}life.append(lifeCards);pages.explore.append(life);
+        const field=document.createElement('details');field.className='city-life-journal';const fieldTitle=document.createElement('summary');fieldTitle.textContent=`林间手记 · 已收录 ${state.fieldNotes.size} / 3`;field.append(fieldTitle);const fieldCards=document.createElement('div');fieldCards.className='city-activities';for(const stop of state.roadPlan.restStops){const b=document.createElement('button');b.dataset.fieldStop=stop.id;const name=document.createElement('b'),copy=document.createElement('span');name.textContent=stop.name;copy.textContent=state.fieldNotes.has(stop.id)?'已收录 · 再去看看':({refill:'饮水与步道导览',creek:'观察溪流和林间动物',lookout:'登高看城市 · 观景镜'}[stop.kind]);b.append(name,copy);b.onclick=()=>{Sim.navigate(state,stop.id);updatePanel();hud();};fieldCards.append(b);}field.append(fieldCards);pages.explore.append(field);
         const shops=document.createElement('details');shops.className='city-shop-journal';const shopTitle=document.createElement('summary');shopTitle.textContent=`店铺体验 · 已集齐 ${state.shopBadges.size} / ${Sim.shopKinds.length} 类`;shops.append(shopTitle);const shopCards=document.createElement('div');shopCards.className='city-activities';for(const item of Sim.shopDestinations(state)){const b=document.createElement('button');b.dataset.shopKind=item.id;b.disabled=!item.building;const name=document.createElement('b'),copy=document.createElement('span');name.textContent=item.name;copy.textContent=item.building?`${item.completed?'已完成 '+item.completed+' 家 · ':'首次 +180 · '}${item.building.name}`:'暂无店铺';b.append(name,copy);b.onclick=()=>{Sim.navigate(state,item.building.id);updatePanel();hud();};shopCards.append(b);}shops.append(shopCards);pages.explore.append(shops);
         if(state.raceResult){const result=document.createElement('p');result.className='city-race-result';const r=state.raceResult;result.textContent=`最近挑战：${r.name} · ${r.time.toFixed(1)} 秒（碰撞罚时 ${r.penalty} 秒）· 本次 +${r.earned}`;pages.challenges.append(result);}
       }else if(state.dialog.kind==='elevator'){
@@ -170,11 +172,12 @@ window.ArcadeCity = ({canvas,button,points,finish,active,status}) => {
         const copy=document.createElement('p');copy.textContent=state.dialog.body;panel.append(copy);
         if(state.dialog.kind==='tour-postcard'){const earned=document.createElement('p');earned.className='city-tour-earned';earned.textContent=(state.dialog.finished?'旅程完成 · ':'风景印记 · ')+(state.dialog.earned?'本次 +'+state.dialog.earned:'已收进图册');panel.append(earned);}
         if(state.dialog.kind==='shop-challenge'&&state.shopActivity?.kind==='bakery'){const widget=document.createElement('div');widget.className='city-bake-widget';const meter=document.createElement('div');meter.className='city-bake-meter';meter.dataset.shopMeter='';meter.setAttribute('role','meter');meter.setAttribute('aria-label','烘焙火候');meter.setAttribute('aria-valuemin','0');meter.setAttribute('aria-valuemax','100');meter.setAttribute('aria-valuenow','0');const target=document.createElement('span');target.className='city-bake-target';target.setAttribute('aria-hidden','true');const cursor=document.createElement('i');cursor.className='city-bake-cursor';cursor.setAttribute('aria-hidden','true');meter.append(target,cursor);const legend=document.createElement('p');legend.textContent='偏生 · 金色区间刚刚好 · 偏焦';widget.append(meter,legend);panel.append(widget);}
-        const actions=document.createElement('div');actions.className='city-panel-actions';for(const choice of state.dialog.actions||[]){const b=document.createElement('button');b.textContent=choice.label;b.onclick=()=>{if(choice.id==='map')openMap();else{Sim.choose(state,choice.id);updatePanel();}hud();};actions.append(b);}panel.append(actions);
+        const actions=document.createElement('div');actions.className='city-panel-actions';for(const choice of state.dialog.actions||[]){const b=document.createElement('button');b.textContent=choice.label;if(choice.id==='field-view'&&!view){b.disabled=true;b.textContent='此设备暂不支持观景镜';}b.onclick=()=>{if(choice.id==='map')openMap();else{Sim.choose(state,choice.id);updatePanel();}hud();};actions.append(b);}panel.append(actions);
       }
       if(!panel.open)panel.showModal();
     }
     function hud(){
+      viewfinder.hidden=!state.scenicView;overlay.classList.toggle('is-scenic',!!state.scenicView);if(state.scenicView)viewfinder.querySelector('[data-view-title]').textContent=state.roadPlan.restStops.find(s=>s.id===state.scenicView.id).name;
       saveAlbum();
       ui('[data-city-area]').textContent=state.interior?'室内漫游':state.area||'中央公园';ui('[data-city-notebook]').textContent=state.jobsCompleted?`${Sim.reputation(state)} · ${state.jobsCompleted} 单`:`探索 ${state.discovered.size}/${state.places.length}`;
       const goal=Sim.objective(state);
@@ -412,8 +415,10 @@ window.ArcadeCity = ({canvas,button,points,finish,active,status}) => {
     const deliveryBag=new T.Group();deliveryBag.name='delivery-bag';hero.group.add(deliveryBag);box(0,1.1,.35,.42,.48,.24,0xb08d62,deliveryBag);box(0,1.1,.48,.08,.48,.02,0xe1cda6,deliveryBag);deliveryBag.visible=false;
     const stationCarry=new T.Group();stationCarry.name='station-carried-case';hero.group.add(stationCarry);box(.5,.43,.05,.48,.65,.3,0xae6559,stationCarry);box(.5,.87,.05,.25,.25,.04,0x526a70,stationCarry);
     const cityLife=ArcadeCityLife(T,{state,exterior,detail,material,person});
+    const streetDetails=ArcadeCityDetails(T,{state,exterior,detail,material});
     const landmarks=ArcadeCityLandmarks(T,{scene,exterior,box,material,person,detail},state);
     const interiorScenes=ArcadeCityInteriorScene(T,{scene,detail,material,sky:assetMaterials.sky});
+    Sim.settleActors(state);
     yield 90;
     const tokenGeo=new T.TorusGeometry(.55,.12,6,16),tokenMat=new T.MeshStandardMaterial({color:0xf2cb77,emissive:0xc28d31,emissiveIntensity:.3,metalness:.6,roughness:.35});
     const tokens=state.tokens.map(v=>{const m=new T.Mesh(tokenGeo,tokenMat);m.position.set(v.x,1.5,v.z);exterior.add(m);return m;});
@@ -448,14 +453,14 @@ window.ArcadeCity = ({canvas,button,points,finish,active,status}) => {
       nightMode=isNight;applySky();scene.fog.color.set(isNight?0x172b43:0xc7d3df);scene.fog.density=isNight ? .0028 : .00145;
       hemi.intensity=isNight ? .28 : .95;sun.intensity=isNight ? .22 : 2.5;renderer.toneMappingExposure=isNight?1.05:1;
       streets.lighting(isNight);
-      landscape.lighting(isNight);cityLife.lighting(isNight);landmarks.lighting(isNight);
+      landscape.lighting(isNight);cityLife.lighting(isNight);streetDetails.lighting(isNight);landmarks.lighting(isNight);
     }
     function draw(time,pitch,distance,renderDelta){
-      const dt=Math.min(.05,Math.max(0,renderDelta??(time-lastTime)));lastTime=time;const p=Motion.pose(state,state.player,true,playerPose);
-      scene.fog.density=(nightMode?.0028:.00145)*(state.onTower==='skyline'?.42:1);
-      exterior.visible=!state.interior;landmarks.update(state);interiorScenes.update(state,nightMode);landscape.update(time);cityLife.update(time);
+      const dt=Math.min(.05,Math.max(0,renderDelta??(time-lastTime)));lastTime=time;const optical=state.scenicView?Sim.scenicPose(state):null,p=Motion.pose(state,state.player,true,playerPose);
+      scene.fog.density=(nightMode ? .0028 : .00145)*((state.onTower==='skyline'||state.scenicView?.id==='ridge-scope') ? .42 : 1);
+      exterior.visible=!state.interior;landmarks.update(state);interiorScenes.update(state,nightMode);landscape.update(time);cityLife.update(time);streetDetails.update();
       function vehicle(mesh,v){
-        mesh.visible=!state.interior&&Sim.distance(state.player,v)<150;if(!mesh.visible)return;
+        const dist=Sim.distance(state.player,v),inLens=!optical||dist<45||((v.x-optical.eye.x)*Math.sin(state.cameraYaw)-(v.z-optical.eye.z)*Math.cos(state.cameraYaw))/(Math.hypot(v.x-optical.eye.x,v.z-optical.eye.z)||1)>.75;mesh.visible=!state.interior&&dist<(optical?1200:150)&&inLens;if(!mesh.visible)return;
         let pose=carPoses.get(v);if(!pose){pose={};carPoses.set(v,pose);}Motion.pose(state,v,false,pose);
         const yaw=pose.yaw,data=mesh.userData,reset=data.lastX===undefined||data.summonRevision!==v.summonRevision||Math.hypot(pose.x-data.lastX,pose.z-data.lastZ)>20;data.summonRevision=v.summonRevision;
         data.slopeClock=(data.slopeClock||0)+dt;
@@ -474,12 +479,12 @@ window.ArcadeCity = ({canvas,button,points,finish,active,status}) => {
       for(const v of [...state.cars,...state.traffic])vehicle(carMeshes.get(v),v);
       const action=Sim.context(state),target=action?.kind==='traffic-stop'||action?.kind==='traffic-enter'?state.traffic.find(v=>v.id===action.id):state.vehicle<0?state.summonedCar:null;
       carHighlight.visible=!!target&&!state.interior&&!state.onTower;if(target){carHighlight.position.set(target.x,(target.elevation||0)+.08,target.z);const pulse=state.findingCar?1+Math.sin(time*2)*.04:1;carHighlight.scale.setScalar(pulse);}
-      hero.group.visible=state.vehicle<0&&!state.skyFocus;hero.group.position.set(p.x,p.elevation||0,p.z);hero.group.rotation.y=-p.yaw;
+      hero.group.visible=state.vehicle<0&&!state.skyFocus&&!state.scenicView;hero.group.position.set(p.x,p.elevation||0,p.z);hero.group.rotation.y=-p.yaw;
       const swing=state.walking?Math.sin(time*(state.sprinting?11:8))*.38:0;hero.legs[0].rotation.x=swing;hero.legs[1].rotation.x=-swing;hero.arms[0].rotation.x=-swing*.65;hero.arms[1].rotation.x=swing*.65;if(state.penalty?.phase==='flight')hero.legs[1].rotation.x=-Math.sin(Math.min(1,state.penalty.elapsed/.3)*Math.PI)*1.05;
       deliveryBag.visible=state.job?.id==='coffee'&&state.job.phase==='deliver';stationCarry.visible=state.stationQuest==='return';
       passenger.group.visible=state.job?.id==='taxi'&&!state.interior;
       if(passenger.group.visible){const waiting=state.job.phase==='pickup',spot=waiting?Sim.jobGoal(state):state.player;passenger.group.position.set(spot.x+(waiting?2.5:Math.cos(p.yaw)*.43),waiting?0:.02,spot.z+(waiting?0:Math.sin(p.yaw)*.43));passenger.group.rotation.y=waiting?-Math.atan2(p.x-spot.x,-(p.z-spot.z)):-p.yaw;passenger.group.scale.setScalar(waiting?1:.82);passenger.legs.forEach(leg=>leg.rotation.x=waiting?0:-1.3);passenger.arms[1].rotation.z=waiting?-.8-Math.sin(time*3)*.12:0;passenger.group.visible=Sim.distance(p,spot)<100;}
-      people.forEach((person,i)=>{const npc=state.pedestrians[i];person.group.visible=!state.interior&&Sim.distance(p,npc)<90;if(!person.group.visible)return;person.group.position.set(npc.x+Math.sin(npc.phase)*.25,0,npc.z+Math.cos(npc.phase)*5);person.group.rotation.y=-Math.atan2(Math.cos(npc.phase)*.25,Math.sin(npc.phase)*5);const a=Math.sin(time*6+i)*.24;person.legs[0].rotation.x=a;person.legs[1].rotation.x=-a;person.arms[0].rotation.x=-a*.6;person.arms[1].rotation.x=a*.6;});
+      people.forEach((person,i)=>{const npc=state.pedestrians[i],pose=Motion.pose(state,npc);person.group.visible=!state.interior&&Sim.distance(p,npc)<90;if(!person.group.visible)return;person.group.position.set(pose.x,pose.elevation,pose.z);person.group.rotation.y=-pose.yaw;const a=npc.walking?Math.sin(npc.motionPhase)*.24:0;person.legs[0].rotation.x=a;person.legs[1].rotation.x=-a;person.arms[0].rotation.x=-a*.6;person.arms[1].rotation.x=a*.6;});
       tokens.forEach((mesh,i)=>{mesh.visible=!state.tokens[i].taken&&Sim.distance(p,state.tokens[i])<100;mesh.rotation.y=time*.9;mesh.position.y=1.5+Math.sin(time*2+i)*.17;});
       shells.forEach((mesh,i)=>{mesh.visible=state.beachQuest&&!state.shells[i].taken;mesh.rotation.y=time*.4;});
       const destination=Sim.objective(state);marker.position.set(destination.x,ArcadeCityTerrain.height(state,destination.x,destination.z,destination.y??ArcadeCityTerrain.rawHeight(destination.x,destination.z),state.vehicle>=0),destination.z);marker.visible=!state.race;diamond.rotation.y=time*.8;diamond.position.y=3.8+Math.sin(time*2)*.2;
@@ -499,7 +504,7 @@ window.ArcadeCity = ({canvas,button,points,finish,active,status}) => {
       skidClock+=state.dialog?0:dt;
       if(driving?.braking&&Math.abs(driving.speed)>7&&skidClock>.06){skidClock=0;for(const side of [-.78,.78]){Object.assign(skidSlots[skidIndex++%96],{life:6,x:driving.x+Math.cos(driving.yaw)*side-Math.sin(driving.yaw),z:driving.z+Math.sin(driving.yaw)*side+Math.cos(driving.yaw),yaw:driving.yaw});}}
       skidSlots.forEach((slot,i)=>{slot.life=Math.max(0,slot.life-(state.dialog?0:dt));skidDummy.position.set(slot.x,.065,slot.z);skidDummy.rotation.y=-slot.yaw;skidDummy.scale.set(slot.life>0?.2*Math.min(1,slot.life):0,1,slot.life>0?.8:0);skidDummy.updateMatrix();skids.setMatrixAt(i,skidDummy.matrix);});skids.instanceMatrix.needsUpdate=true;
-      const fieldOfView=driving?62:58;if(Math.abs(camera.fov-fieldOfView)>.02){camera.fov=Motion.damp(camera.fov,fieldOfView,3,dt);camera.updateProjectionMatrix();}
+      const fieldOfView=optical?optical.fov:driving?62:58;if(Math.abs(camera.fov-fieldOfView)>.02){camera.fov=Motion.damp(camera.fov,fieldOfView,3,dt);camera.updateProjectionMatrix();}
       const indoor=state.interior&&state.interior.kind!=='stadium';if(indoor){distance=Math.min(distance,state.interior.furniture?5.2:7);pitch=Math.max(.08,Math.min(pitch,.24));}
       const road=state.interior?null:ArcadeCityTerrain.roadAt(state,p.x,p.z,state.elevation,state.vehicle>=0);if(road?.path?.type==='tunnel'&&ArcadeCityTerrain.rawHeight(p.x,p.z)>state.elevation+3){distance=Math.min(distance,6);pitch=Math.min(pitch,.12);}
       const elevation=activeMesh?activeMesh.position.y-.085:p.elevation||0;
@@ -523,14 +528,14 @@ window.ArcadeCity = ({canvas,button,points,finish,active,status}) => {
         return 1;
       });
       camera.position.set(result.eye.x,result.eye.y,result.eye.z);camera.lookAt(result.target.x,result.target.y,result.target.z);
-      if(state.onTower==='skyline'&&state.skyFocus){const v=Sim.skyViews.find(v=>v.id===state.skyFocus),tower=state.places.find(p=>p.id==='skyline'),reset=panoramaRig.space!==v.id;panoramaRig.yaw=reset?p.cameraYaw:Motion.angle(panoramaRig.yaw,p.cameraYaw,-Math.expm1(-9*dt));panoramaRig.pitch=reset?pitch+.25:Motion.damp(panoramaRig.pitch,pitch+.25,9,dt);panoramaRig.space=v.id;const x=tower.x+(v.x?Math.sign(v.x)*13.1:0),z=tower.z+(v.z?Math.sign(v.z)*15.1:0),y=tower.elevation+1.7,heading=panoramaRig.yaw,tilt=panoramaRig.pitch;camera.position.set(x,y,z);camera.lookAt(x+Math.sin(heading)*Math.cos(tilt)*200,y-Math.sin(tilt)*200,z-Math.cos(heading)*Math.cos(tilt)*200);}else panoramaRig.space=null;
+      if(state.onTower==='skyline'&&state.skyFocus){const v=Sim.skyViews.find(v=>v.id===state.skyFocus),tower=state.places.find(p=>p.id==='skyline'),reset=panoramaRig.space!==v.id;panoramaRig.yaw=reset?p.cameraYaw:Motion.angle(panoramaRig.yaw,p.cameraYaw,-Math.expm1(-9*dt));panoramaRig.pitch=reset?pitch+.25:Motion.damp(panoramaRig.pitch,pitch+.25,9,dt);panoramaRig.space=v.id;const x=tower.x+(v.x?Math.sign(v.x)*13.1:0),z=tower.z+(v.z?Math.sign(v.z)*15.1:0),y=tower.elevation+1.7,heading=panoramaRig.yaw,tilt=panoramaRig.pitch;camera.position.set(x,y,z);camera.lookAt(x+Math.sin(heading)*Math.cos(tilt)*200,y-Math.sin(tilt)*200,z-Math.cos(heading)*Math.cos(tilt)*200);}else if(optical){const v=optical;camera.position.set(v.eye.x,v.eye.y,v.eye.z);camera.lookAt(v.target.x,v.target.y,v.target.z);panoramaRig.space='field:'+state.scenicView.id;}else panoramaRig.space=null;
       const shadowGrid=88/2048,shadowX=Math.round(p.x/shadowGrid)*shadowGrid,shadowZ=Math.round(p.z/shadowGrid)*shadowGrid;sun.position.set(shadowX-45,elevation+75,shadowZ+30);sun.target.position.set(shadowX,elevation,shadowZ);sun.target.updateMatrixWorld();
       const positions=seaGeometry.attributes.position;
       for(let i=0;i<positions.count;i++){const x=positions.getX(i),z=positions.getZ(i);positions.setY(i,Math.sin(x*.17+time*.6)*Math.cos(z*.13+time*.4)*.035);}
       positions.needsUpdate=true;waveNormal.offset.set(time*.004,time*.002);
       streets.update(dt,camera);renderer.render(scene,camera);
     }
-    function dispose(){interiorScenes.dispose();const geometries=new Set(geometryTypes.values()),mats=new Set();scene.traverse(o=>{if(o.geometry)geometries.add(o.geometry);if(o.material)for(const m of Array.isArray(o.material)?o.material:[o.material])mats.add(m);});geometries.forEach(g=>g.dispose());mats.forEach(m=>m.dispose());signTexture.dispose();landscape.dispose();cityLife.dispose();streets.dispose();landmarks.dispose();detail.dispose();assetMaterials.dispose();}
+    function dispose(){interiorScenes.dispose();const geometries=new Set(geometryTypes.values()),mats=new Set();scene.traverse(o=>{if(o.geometry)geometries.add(o.geometry);if(o.material)for(const m of Array.isArray(o.material)?o.material:[o.material])mats.add(m);});geometries.forEach(g=>g.dispose());mats.forEach(m=>m.dispose());signTexture.dispose();landscape.dispose();cityLife.dispose();streetDetails.dispose();streets.dispose();landmarks.dispose();detail.dispose();assetMaterials.dispose();}
     function resize(width,height){camera.aspect=width/height;camera.updateProjectionMatrix();}
     async function prepare(cancelled=()=>false){
       landmarks.update(state);

@@ -77,7 +77,7 @@
     const width=stage.clientWidth,height=stage.clientHeight;
     if(!width||!height)return;
     const wrap=stage.querySelector('.canvas-wrap');
-    if(wrap&&game.id==='city3d'){
+    if(wrap&&['city3d','ski3d'].includes(game.id)){
       wrap.style.width=`${width}px`;wrap.style.height=`${height}px`;engine?.resize?.(width,height);return;
     }
     if(wrap){
@@ -277,6 +277,7 @@
   };
   Object.assign(factories,Arcade3D({canvas,button,points,finish,active,status:text=>$('#status').textContent=text}));
   Object.assign(factories,ArcadeCity({canvas,button,points,finish,active,status:text=>$('#status').textContent=text}));
+  if(window.ArcadeSki)Object.assign(factories,ArcadeSki({canvas,button,points,finish,active,status:text=>$('#status').textContent=text}));
   function loop(now){const dt=Math.min(50,Math.max(0,now-lastTime));lastTime=now;if(active()){roundTime+=dt;engine?.tick?.(dt);}if(active())engine?.draw?.(dt);requestAnimationFrame(loop);}
   start();requestAnimationFrame(loop);
 })();

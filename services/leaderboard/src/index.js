@@ -1,4 +1,4 @@
-const GAMES = new Set(['2048','gomoku','memory','tetris','snake','breakout','mines','stack3d','flight3d','city3d']);
+const GAMES = new Set(['2048','gomoku','memory','tetris','snake','breakout','mines','stack3d','flight3d','city3d','ski3d']);
 const MAX_SCORE = {gomoku:5500, memory:6000, mines:10000};
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const json = (value,status=200,extra={}) => Response.json(value,{status,headers:{'Cache-Control':'no-store','X-Content-Type-Options':'nosniff',...extra}});

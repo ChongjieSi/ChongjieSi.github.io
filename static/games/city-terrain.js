@@ -73,12 +73,29 @@ window.ArcadeCityTerrain=(()=>{
     walking.forEach((p,i)=>{const s=nearest(river,p.x,p.z),road=nearest(woodland,p.x,p.z);if(road.d<6.2)anchors.push([i,road.y]);else if(s.d<8)anchors.push([i,s.y+1.6]);});
     gradeAnchored(walking,.3,anchors);add('woodland-walk','trail',3,walking);
     const restArea={id:'lookout-parking',type:'parking',width:22,x:-650,z:-530,y:woodland.at(-1).y,rx:11,rz:10,pavilion:{x:-650,z:-550}};
-    add('lookout-walk','trail',3,curve([[-650,-530],[-650,-537],[-650,-544.8]],2).map(p=>({...p,y:restArea.y})));
+    add('lookout-walk','trail',3,curve([[-650,-530],[-650,-539],[-650,-547]],2).map(p=>({...p,y:restArea.y})));
+    const walkSurfaces=[{id:'lookout-pavilion-floor',type:'plaza',width:8.4,x:restArea.pavilion.x,z:restArea.pavilion.z,rx:4.2,rz:3.6,y:restArea.y+.175},{id:'park-pavilion-floor',type:'plaza',width:7,x:park.x+35,z:park.z-33,rx:3.5,rz:3,y:.175}];
     const clearings=[restArea,{x:restArea.pavilion.x,z:restArea.pavilion.z,y:restArea.y,rx:5.4,rz:4.8}];
+    // Rest stops are attached to the existing graded route, with authored level decks.
+    const entryPoint=nearest(woodland,-510,80),visitor={id:'forest-welcome',name:'溪谷驿站',kind:'refill',x:-494.5,z:74,y:entryPoint.y,rx:4,rz:3};
+    const bank=nearest(walking,-524,133),water=riverAt(bank.x,bank.z),away=Math.hypot(bank.x-water.x,bank.z-water.z),creek={id:'creek-hide',name:'溪畔观察台',kind:'creek',x:bank.x+(bank.x-water.x)/away*4.8,z:bank.z+(bank.z-water.z)/away*4.8,y:bank.y,rx:3.2,rz:2.6};
+    const lookout={id:'ridge-scope',name:'山脊观景镜',kind:'lookout',x:restArea.pavilion.x,z:restArea.pavilion.z,y:restArea.y+.175,rx:4.2,rz:3.6};
+    const restStops=[visitor,creek,lookout];
+    for(const stop of restStops){stop.door={x:stop.x,z:stop.z+1.2,y:stop.y};}
+    for(const [stop,start]of [[visitor,entryPoint],[creek,bank]]){
+      clearings.push({x:stop.x,z:stop.z,y:stop.y,rx:stop.rx*1.4,rz:stop.rz*1.4,levelDeck:true});
+      walkSurfaces.push({id:stop.id+'-deck',type:'plaza',width:stop.rx*2,x:stop.x,z:stop.z,rx:stop.rx,rz:stop.rz,y:stop.y});
+      const approach=curve(stop.kind==='refill'?[[start.x,start.z],[stop.x-7,stop.z+4.8],[stop.x,stop.z+4.8],[stop.door.x,stop.door.z]]:[[start.x,start.z],[stop.x-5,stop.z+1.2],[stop.door.x,stop.door.z]],1.5).map(p=>({...p,y:start.y}));
+      const approachAnchors=[[0,start.y],[approach.length-1,stop.y]];
+      if(stop.kind==='refill')approach.forEach((p,i)=>{const road=nearest(woodland,p.x,p.z);if(road.d<5.3){p.y=road.y;approachAnchors.push([i,road.y]);}});
+      gradeAnchored(approach,.3,approachAnchors);add(stop.id+'-approach','trail',2.6,approach);
+    }
+    for(const stop of [creek,lookout]){const target=stop===creek?riverAt(stop.x,stop.z):{x:0,z:0};stop.scope={x:stop.x+(stop===lookout?2.3:0),z:stop.z+(stop===lookout?.3:-1),y:stop.y+1.55};stop.scope.yaw=Math.atan2(target.x-stop.scope.x,-(target.z-stop.scope.z));stop.scope.pitch=Math.atan2(stop.scope.y-(target.y||0),Math.hypot(target.x-stop.scope.x,target.z-stop.scope.z));}
     const spatial=new Map();for(const path of paths)for(let i=1;i<path.points.length;i++){const a=path.points[i-1],b=path.points[i],pad=path.width/2+9;for(let x=Math.floor((Math.min(a.x,b.x)-pad)/32);x<=Math.floor((Math.max(a.x,b.x)+pad)/32);x++)for(let z=Math.floor((Math.min(a.z,b.z)-pad)/32);z<=Math.floor((Math.max(a.z,b.z)+pad)/32);z++){const key=x+','+z;if(!spatial.has(key))spatial.set(key,[]);spatial.get(key).push({a,b,path,index:i});}}
-    return {paths,river,park,destinations,boulevard,spatial,entrances,restArea,clearings};
+    return {paths,river,park,destinations,boulevard,spatial,entrances,restArea,clearings,walkSurfaces,restStops};
   }
-  function groundHeight(world,x,z){let ground=rawHeight(x,z);const stream=riverAt(x,z);for(const c of world.roadPlan.clearings||[]){const radius=Math.hypot((x-c.x)/c.rx,(z-c.z)/c.rz),t=clamp((radius-1)/.5,0,1);if(t<1)ground=mix(c.y-.24,ground,t*t*(3-2*t));}let best=null;for(const {a,b,path}of world.roadPlan.spatial.get(Math.floor(x/32)+','+Math.floor(z/32))||[]){if(!['forest-road','tunnel','boulevard','trail'].includes(path.type))continue;const n=nearest([a,b],x,z),dist=n.d-path.width/2;if(dist>7)continue;if(path.type==='tunnel'&&ground>n.y+10)continue;if(stream.d<4.2&&n.y>stream.y+.5)continue;const priority=(dist>(path.type==='trail'?3.2:0)?10:0)+(path.type==='tunnel'?3:path.type==='trail'?2:0);if(!best||priority<best.priority||priority===best.priority&&dist<best.dist-.00001)best={...n,dist,priority,shoulder:3.2};}if(!best)return ground;const t=clamp((best.dist-best.shoulder)/7,0,1);return mix(best.y-.24,ground,t*t*(3-2*t));}
+  function levelDeckHeight(world,x,z,height){for(const c of world.roadPlan.clearings||[]){if(!c.levelDeck)continue;const radius=Math.hypot((x-c.x)/c.rx,(z-c.z)/c.rz),t=clamp((radius-1)/.35,0,1);if(t<1)height=mix(c.y-.24,height,t*t*(3-2*t));}return height;}
+  function groundHeight(world,x,z){let ground=rawHeight(x,z);const stream=riverAt(x,z);for(const c of world.roadPlan.clearings||[]){const radius=Math.hypot((x-c.x)/c.rx,(z-c.z)/c.rz),t=clamp((radius-1)/.5,0,1);if(t<1)ground=mix(c.y-.24,ground,t*t*(3-2*t));}let best=null;for(const {a,b,path}of world.roadPlan.spatial.get(Math.floor(x/32)+','+Math.floor(z/32))||[]){if(!['forest-road','tunnel','boulevard','trail'].includes(path.type))continue;const n=nearest([a,b],x,z),dist=n.d-path.width/2;if(dist>7)continue;if(path.type==='tunnel'&&ground>n.y+10)continue;if(stream.d<4.2&&n.y>stream.y+.5)continue;const priority=(dist>(path.type==='trail'?3.2:0)?10:0)+(path.type==='tunnel'?3:path.type==='trail'?2:0);if(!best||priority<best.priority||priority===best.priority&&dist<best.dist-.00001)best={...n,dist,priority,shoulder:3.2};}if(!best)return levelDeckHeight(world,x,z,ground);const t=clamp((best.dist-best.shoulder)/7,0,1);return levelDeckHeight(world,x,z,mix(best.y-.24,ground,t*t*(3-2*t)));}
   function roadAt(world,x,z,previous=0,vehicle=false,tracking=null){
     const ground=groundHeight(world,x,z);let best={y:ground,d:Infinity,path:null,delta:Math.abs(ground-previous)},score=Infinity;
     // Choose the actual nearest segment first. Filtering its end cap earlier can
@@ -100,6 +117,7 @@ window.ArcadeCityTerrain=(()=>{
     }
     const rest=world.roadPlan.restArea;
     if(rest){const d=Math.hypot((x-rest.x)/rest.rx,(z-rest.z)/rest.rz)*rest.rx,delta=Math.abs(rest.y-previous);if(d<rest.rx&&delta<2.5&&(!best.path||best.path.type==='trail'||best.d>best.path.width/2))best={y:rest.y,d,path:rest,delta};}
+    if(!vehicle)for(const pad of world.roadPlan.walkSurfaces||[]){if(Math.abs(x-pad.x)<pad.rx&&Math.abs(z-pad.z)<pad.rz&&Math.abs(pad.y-previous)<2.5)best={y:pad.y,d:0,path:pad,delta:Math.abs(pad.y-previous)};}
     return best;
   }
   function height(world,x,z,previous=0,vehicle=false){return roadAt(world,x,z,previous,vehicle).y;}

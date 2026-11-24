@@ -1,0 +1,67 @@
+/* A quiet, full-bleed alpine view. Canvas wrappers use zero line-height in the arcade;
+   restore it explicitly here for every HUD child. */
+.game-shell[data-game="ski3d"]{position:relative;display:block;padding:0;background:#99b4c8;overflow:hidden;--tone:#e4b188}
+.game-shell[data-game="ski3d"] #stage,.game-shell[data-game="ski3d"] .canvas-wrap{position:absolute;inset:0;width:100%!important;height:100%!important;max-width:none;max-height:none;border-radius:0;line-height:1.5}
+.game-shell[data-game="ski3d"] .arcade-canvas{display:block;width:100%;height:100%;border-radius:0;box-shadow:none}
+.game-shell[data-game="ski3d"] .game-toolbar,.game-shell[data-game="ski3d"] .game-top h1{display:none}
+.game-shell[data-game="ski3d"] .game-top{position:absolute;right:26px;top:24px;z-index:4;padding:4px 6px;border:1px solid #ffffff28;background:#16304480;border-radius:25px;backdrop-filter:blur(14px);color:#fff}
+.game-shell[data-game="ski3d"] .score-box{background:none;color:#fff;padding:0 12px;margin:0;border-right:1px solid #ffffff30;border-radius:0}
+.game-shell[data-game="ski3d"] .score-box small{color:#d8e4eb}.game-shell[data-game="ski3d"] .score-box strong{color:#fff;font-size:18px;font-weight:500}
+.game-shell[data-game="ski3d"] .quiet-button,.game-shell[data-game="ski3d"] .help-button{color:#f2f5f7;font-size:13px}
+.game-shell[data-game="ski3d"] .help-button{border-color:#ffffff55;margin:0 4px}
+.game-shell[data-game="ski3d"] button:hover:not(:disabled){background:#ffffff28;color:#fff}
+.ski-hud{position:absolute;inset:0;pointer-events:none;color:#f7fafb;line-height:1.5;text-shadow:0 2px 12px #16334b70;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
+.ski-hud:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#122b4322,transparent 24%,transparent 65%,#132e4a48);pointer-events:none}
+.ski-heading{position:absolute;left:34px;top:27px;display:grid;grid-template-columns:auto auto;align-items:baseline;gap:1px 12px}
+.ski-heading small{grid-column:1/3;font-size:10px;letter-spacing:.19em;color:#dce8ef}
+.ski-heading b{font-size:25px;letter-spacing:.12em;font-weight:500}.ski-heading span{font-size:12px;color:#dce8ef}
+.ski-live{position:absolute;right:34px;bottom:88px;display:grid;grid-template-columns:auto auto;align-items:baseline;gap:0 8px;text-align:right}
+.ski-live>b{font-size:70px;line-height:1;font-weight:250;letter-spacing:-.055em;font-variant-numeric:tabular-nums}.ski-live>span{font-size:12px;opacity:.8}
+.ski-live small{grid-column:1/3;font-size:12px;color:#dce8ef;line-height:2}
+.ski-journey{position:absolute;left:34px;bottom:90px;display:grid;gap:3px}
+.ski-journey>span{font-size:13px;letter-spacing:.08em;color:#e0eaf0}.ski-journey>b{font-size:32px;font-weight:350;font-variant-numeric:tabular-nums;line-height:1.25}.ski-journey small{font-size:12px;color:#dce8ef}
+.ski-notice{position:absolute;left:50%;top:30px;transform:translateX(-50%);font-size:13px;line-height:1.5;padding:10px 18px;background:#163044b3;border:1px solid #ffffff25;border-radius:24px;backdrop-filter:blur(16px);text-align:center;max-width:45%}.ski-notice:empty{display:none}
+.ski-peaks span{position:absolute;transform:translate(-50%,-100%);font-size:12px;line-height:1.4;letter-spacing:.08em;padding:6px 10px;background:#1630445c;border:1px solid #ffffff25;border-radius:20px;color:#f2f6f9}.ski-peaks span:after{content:"";display:block;position:absolute;bottom:-17px;left:50%;height:16px;border-left:1px solid #ffffff80}.ski-peaks span[hidden]{display:none}
+.ski-navigation{position:absolute;left:34px;top:101px;display:flex;gap:6px;pointer-events:auto}
+.ski-navigation button{border:1px solid #ffffff40;background:#16304480;backdrop-filter:blur(12px);color:#f5f8fa;padding:8px 15px;border-radius:20px;font-size:12px;line-height:1.5;text-shadow:none}
+.ski-navigation button[aria-expanded=true]{background:#ecf0f1;color:#203749}
+.ski-map,.ski-tools{position:absolute;top:151px;left:34px;width:260px;padding:12px;border:1px solid #ffffff30;border-radius:14px;background:#142e42e8;backdrop-filter:blur(20px);pointer-events:auto;text-shadow:none;z-index:3;box-shadow:0 12px 35px #0d233c26}
+.ski-map[hidden],.ski-tools[hidden]{display:none}.ski-map canvas{display:block;width:100%;border-radius:7px}.ski-map p{margin:10px 0 0;font-size:12px;color:#bfced9}
+.ski-tools{left:118px;width:180px;display:grid;gap:4px;padding:6px}
+.game-shell[data-game="ski3d"] .ski-tools button{background:none;border:0;border-radius:8px;color:#ecf2f5;font-size:13px;padding:11px 14px;text-align:left;min-height:42px}
+.ski-tools button:last-child{border-top:1px solid #ffffff20!important;border-radius:0 0 8px 8px!important;color:#edb18e!important}
+.ski-key-guide{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);display:flex;gap:20px;font-size:12px;color:#e0e9ef;white-space:nowrap}
+.ski-key-guide>span{display:flex;align-items:center;gap:5px}.ski-key-guide kbd{display:inline-grid;place-items:center;padding:2px 5px;min-width:23px;font:11px/1.5 inherit;border:1px solid #ffffff50;border-radius:4px;background:#142d4540;color:#fff}
+.ski-hud>footer{position:absolute;bottom:6px;left:14px;font-size:10px;line-height:1.5;color:#dce8ef99}.ski-hud>footer a{color:inherit;pointer-events:auto}
+.ski-intro{position:absolute;inset:0;display:flex;align-items:center;pointer-events:auto;text-shadow:none;background:linear-gradient(90deg,#0d233cdb 0%,#132f4878 39%,#193d5015 68%,transparent)}
+.ski-intro[hidden]{display:none}.ski-intro-content{padding:36px clamp(30px,7vw,110px);max-width:640px}
+.ski-intro-content>small{font-size:10px;letter-spacing:.26em;color:#b7cbd9}
+.ski-intro h2{font-size:clamp(70px,10vw,128px);font-family:"Songti SC","STSong",Georgia,serif;font-weight:400;letter-spacing:.14em;line-height:1.15;margin:26px 0 18px;color:#f4f3ec}
+.ski-intro h2 span{display:block;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;font-size:15px;letter-spacing:.25em;line-height:1.8;margin-top:15px;font-weight:400;color:#d7e2e9}
+.ski-intro-content>p{font-size:14px;line-height:1.8;color:#b9cad7;margin:0 0 28px}
+.ski-route-select{display:flex;gap:8px;margin:0 0 18px}
+.ski-route-select button{display:grid;gap:6px;text-align:left;min-width:104px;padding:12px 14px;background:#ffffff08;color:#d4e0e8;border:1px solid #ffffff27;border-radius:9px;font-size:13px;line-height:1.5}
+.ski-route-select small{font-size:11px;color:#9cb5c8;letter-spacing:.08em}.ski-route-select button[aria-pressed=true]{background:#f0f0e7;color:#243b4b;border-color:#f0f0e7}.ski-route-select button[aria-pressed=true] small{color:#758c99}
+.game-shell[data-game="ski3d"] .ski-route-select button[aria-pressed=true]:hover{background:#fff;color:#243b4b}
+.ski-intro .ski-begin{display:block;width:100%;border:1px solid #d27d50;border-radius:9px;background:#c26c42;color:#fff;font-size:15px;letter-spacing:.15em;padding:14px 25px;min-height:50px;box-shadow:0 8px 24px #102a4633}
+.game-shell[data-game="ski3d"] .ski-begin:hover:not(:disabled){background:#d47f54;color:#fff}
+.ski-load-note{display:block;font-size:11px;line-height:1.6;color:#a3bbc9;margin:12px 0 22px}
+.ski-intro details{font-size:12px;line-height:1.7;color:#a3bbc9;max-width:360px}.ski-intro summary{cursor:pointer;list-style:none;display:inline-block;border-bottom:1px solid #a3bbc950;padding-bottom:3px}.ski-intro details p{margin:12px 0 0}
+.ski-hud.is-buried:after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 140px 50px #e9f2f0b0;pointer-events:none}
+.game-shell[data-game="ski3d"] #touch-controls{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:4;width:max-content;max-width:96%;padding:6px;border:1px solid #ffffff30;border-radius:15px;background:#163044a0;backdrop-filter:blur(14px);gap:5px}
+.game-shell[data-game="ski3d"] #touch-controls .ski-control{min-height:48px;min-width:55px;padding:8px 12px;background:#e7edf0e8;color:#263d4f;border:0;font-size:13px;touch-action:none}
+.game-shell[data-game="ski3d"].ski-is-intro .game-top,.ski-is-intro #touch-controls,.ski-is-intro .ski-heading,.ski-is-intro .ski-journey,.ski-is-intro .ski-live,.ski-is-intro .ski-navigation,.ski-is-intro .ski-notice,.ski-is-intro .ski-key-guide,.ski-is-intro .ski-peaks{display:none!important}
+@media(hover:hover) and (pointer:fine){.game-shell[data-game="ski3d"] #touch-controls{display:none}}
+@media(hover:none),(pointer:coarse){.ski-key-guide{display:none}.ski-live,.ski-journey{bottom:112px}}
+@media(max-width:600px){
+ .ski-heading{left:18px;top:21px;gap:1px 8px}.ski-heading b{font-size:22px}.ski-heading small{font-size:9px}.ski-heading span{display:none}
+ .game-shell[data-game="ski3d"] .game-top{top:18px;right:12px;padding:4px}.game-shell[data-game="ski3d"] .score-box{display:none}
+ .ski-navigation{left:18px;top:89px}.ski-map,.ski-tools{top:136px;left:18px}.ski-tools{left:100px}.ski-map{width:230px}
+ .ski-live{right:20px;bottom:115px}.ski-live>b{font-size:51px}.ski-live small{font-size:11px}.ski-journey{left:20px;bottom:120px}.ski-journey>b{font-size:27px}.ski-journey>span,.ski-journey small{font-size:11px}
+ .ski-notice{top:145px;max-width:88%;width:max-content;font-size:12px;padding:8px 13px}.ski-peaks span{font-size:10px;padding:4px 7px}
+ .ski-key-guide{display:none}.ski-intro-content{padding:28px;max-width:100%;width:100%}.ski-intro h2{font-size:88px;margin:24px 0 18px}.ski-intro h2 span{font-size:13px}.ski-intro-content>p{font-size:13px;margin-bottom:24px}
+ .ski-intro-content>small{font-size:9px}.ski-route-select{gap:6px}.ski-route-select button{min-width:0;flex:1;padding:11px 9px;font-size:12px}.ski-load-note{font-size:11px;margin:12px 0 18px}.ski-intro details{font-size:12px;max-height:110px;overflow:auto}
+ .ski-hud>footer{font-size:8px;left:8px}.game-shell[data-game="ski3d"] #touch-controls{bottom:24px}.game-shell[data-game="ski3d"] #touch-controls .ski-control{min-width:50px;font-size:12px;padding:8px 10px}
+}
+@media(max-height:570px){.ski-intro-content{padding:20px 40px;max-width:530px}.ski-intro h2{font-size:68px;margin:12px 0}.ski-intro h2 span{margin-top:6px;font-size:12px}.ski-intro-content>p{margin-bottom:14px;font-size:12px}.ski-route-select{margin-bottom:12px}.ski-route-select button{padding:8px 12px}.ski-load-note{margin:8px 0}.ski-intro details{display:none}.ski-heading{top:18px}.ski-navigation{top:87px}.ski-live,.ski-journey{bottom:84px}.ski-key-guide{bottom:25px}}
+#pause-cover button{color:#27394f}

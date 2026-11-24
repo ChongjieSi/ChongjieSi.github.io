@@ -1,7 +1,7 @@
 /* Terrain buffers are shared across scene restarts and can be built off-thread. */
 window.ArcadeCityTerrainMesh=(()=>{
   let cachedKey=null,cachedData=null;
-  const key=state=>JSON.stringify([state.roadPlan.paths,state.roadPlan.clearings]);
+  const key=state=>JSON.stringify(['forest-clearance-v2',state.roadPlan.paths,state.roadPlan.clearings]);
   function geometry(T,data){
     const g=new T.BufferGeometry();
     for(const [name,size]of [['position',3],['normal',3],['uv',2]])g.setAttribute(name,new T.BufferAttribute(data[name],size));
@@ -22,6 +22,7 @@ window.ArcadeCityTerrainMesh=(()=>{
   for(const path of state.roadPlan.paths.filter(p=>p.type==='tunnel')){
     const right=offset(path.points,path.width/2),left=offset(path.points,-path.width/2);
     for(let i=1;i<path.points.length;i++){
+      if(Math.max(Terrain.rawHeight(path.points[i-1].x,path.points[i-1].z)-path.points[i-1].y,Terrain.rawHeight(path.points[i].x,path.points[i].z)-path.points[i].y)<=10)continue;
       const volumes=[];
       for(const vertices of [[right[i-1],left[i-1],right[i]],[left[i-1],left[i],right[i]]]){
         const [a,b,c]=vertices,den=(b.x-a.x)*(c.z-a.z)-(c.x-a.x)*(b.z-a.z),sign=Math.sign(den);
